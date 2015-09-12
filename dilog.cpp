@@ -23,6 +23,8 @@ namespace {
  * @return \f$\mathrm{Li}_2(z)\f$
  */
 double dilog(double x) {
+   using std::log;
+
    const double PI = M_PI;
    const double HF  = 0.5;
    const double PI2 = PI*PI;
