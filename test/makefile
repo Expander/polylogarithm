@@ -1,4 +1,3 @@
-CPPFLAGS := -Wall -Wextra -pedantic
 CXXFLAGS := -I.. $(shell gsl-config --cflags)
 LIBS     := $(shell gsl-config --libs)
 DILOGLIB := ../dilog.o
