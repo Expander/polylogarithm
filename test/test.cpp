@@ -21,6 +21,14 @@ bool is_equal(double a, double b, double eps = std::numeric_limits<double>::epsi
    return std::abs(a - b) < eps;
 }
 
+std::complex<double> clog(std::complex<double> z) {
+   std::complex<double> zf(z);
+   // convert -0.0 to 0.0
+   if (std::real(zf) == 0.0) zf.real() = 0.0;
+   if (std::imag(zf) == 0.0) zf.imag() = 0.0;
+   return std::log(zf);
+}
+
 std::size_t run_real_tests() {
    std::size_t errors = 0;
 
@@ -85,7 +93,7 @@ struct Relation_2 {
    static std::string name() { return "2"; }
    std::complex<double> operator()(std::complex<double> z) const {
       return dilogarithm::dilog(1.-z) + dilogarithm::dilog(1.-1./z)
-         + std::log(z)*std::log(z)/2.;
+         + clog(z)*clog(z)/2.;
    }
 };
 
@@ -93,7 +101,7 @@ struct Relation_3 {
    static std::string name() { return "3"; }
    std::complex<double> operator()(std::complex<double> z) const {
       return dilogarithm::dilog(z) + dilogarithm::dilog(1.-z)
-         - (M_PI*M_PI/6. - std::log(z) * std::log(1.-z));
+         - (M_PI*M_PI/6. - clog(z) * clog(1.-z));
    }
 };
 
@@ -102,7 +110,7 @@ struct Relation_4 {
    std::complex<double> operator()(std::complex<double> z) const {
       return dilogarithm::dilog(-z) - dilogarithm::dilog(1.-z)
          + dilogarithm::dilog(1.-z*z)/2.
-         - (-M_PI*M_PI/12. - std::log(z) * std::log(1.+z));
+         - (-M_PI*M_PI/12. - clog(z) * clog(1.+z));
    }
 };
 
@@ -110,7 +118,7 @@ struct Relation_5 {
    static std::string name() { return "5"; }
    std::complex<double> operator()(std::complex<double> z) const {
       return dilogarithm::dilog(z) + dilogarithm::dilog(1./z)
-         - (-M_PI*M_PI/6. - std::log(-z)*std::log(-z)/2.);
+         - (-M_PI*M_PI/6. - clog(-z)*clog(-z)/2.);
    }
 };
 
