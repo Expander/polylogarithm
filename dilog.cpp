@@ -18,7 +18,7 @@ namespace {
 
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(z)\f$
- * @param z real argument
+ * @param x real argument
  * @note Implementation translated by R.Brun from CERNLIB DILOG function C332
  * @return \f$\mathrm{Li}_2(z)\f$
  */
