@@ -24,8 +24,8 @@ bool is_equal(double a, double b, double eps = std::numeric_limits<double>::epsi
 std::complex<double> clog(std::complex<double> z) {
    std::complex<double> zf(z);
    // convert -0.0 to 0.0
-   if (std::real(zf) == 0.0) zf.real() = 0.0;
-   if (std::imag(zf) == 0.0) zf.imag() = 0.0;
+   if (std::real(zf) == 0.0) zf.real(0.0);
+   if (std::imag(zf) == 0.0) zf.imag(0.0);
    return std::log(zf);
 }
 
