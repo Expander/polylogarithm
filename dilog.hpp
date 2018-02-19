@@ -18,6 +18,9 @@ double dilog(double);
 /// complex dilogarithm
 std::complex<double> dilog(const std::complex<double>&);
 
+// Clausen function
+double clausen_2(double);
+
 } // namespace dilogarithm
 
 #endif
