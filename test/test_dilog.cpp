@@ -32,13 +32,25 @@ std::complex<double> clog(std::complex<double> z) {
    return std::log(zf);
 }
 
+double gsl_dilog(double x) {
+   gsl_sf_result li2_gsl{};
+   gsl_sf_dilog_e(x, &li2_gsl);
+   return li2_gsl.val;
+}
+
+std::complex<double> gsl_dilog(std::complex<double> z) {
+   gsl_sf_result li2_gsl_re{}, li2_gsl_im{};
+   gsl_sf_complex_dilog_e(std::abs(z), std::arg(z), &li2_gsl_re, &li2_gsl_im);
+   return {li2_gsl_re.val, li2_gsl_im.val};
+}
+
 const auto Relation_1 = [](std::complex<double> z) {
    return dilogarithm::dilog(z) + dilogarithm::dilog(-z)
       - dilogarithm::dilog(z*z)/2.;
 };
 
 const auto Relation_2 = [](std::complex<double> z) {
-   if (std::abs(z) < 1e-10)
+   if (std::abs(z) < 1e-10 || std::real(z) < 0.)
       return zero;
 
    return dilogarithm::dilog(1.-z) + dilogarithm::dilog(1.-1./z)
@@ -54,7 +66,8 @@ const auto Relation_3 = [](std::complex<double> z) {
 };
 
 const auto Relation_4 = [](std::complex<double> z) {
-   if (std::abs(z) < 1e-10 || std::abs(std::real(z) + 1.) < 1e-10)
+   if (std::abs(z) < 1e-10 || std::abs(std::real(z) + 1.) < 1e-10
+       || std::real(z) < 0. || std::imag(z) < 0.)
       return zero;
 
    return dilogarithm::dilog(-z) - dilogarithm::dilog(1.-z)
@@ -63,7 +76,8 @@ const auto Relation_4 = [](std::complex<double> z) {
 };
 
 const auto Relation_5 = [](std::complex<double> z) {
-   if (std::abs(z) < 1e-10)
+   if (std::abs(z) < 1e-10
+       || (std::real(z) > 0. && std::real(z) < 1.))
       return zero;
 
    return dilogarithm::dilog(z) + dilogarithm::dilog(1./z)
@@ -71,10 +85,11 @@ const auto Relation_5 = [](std::complex<double> z) {
 };
 
 template <class T>
-std::size_t check_relation(T r, std::complex<double> z)
+std::size_t check_relation(T rel, std::complex<double> z)
 {
-   const std::complex<double> result = r(z);
+   const std::complex<double> result = rel(z);
    CHECK_SMALL(std::real(result), 1e-9);
+   CHECK_SMALL(std::imag(result), 1e-9);
 }
 
 TEST_CASE("test_real")
@@ -82,23 +97,20 @@ TEST_CASE("test_real")
    for (auto v: values) {
       const double x = std::real(v);
       const double li2 = dilogarithm::dilog(x);
-      gsl_sf_result li2_gsl{};
-      gsl_sf_dilog_e(x, &li2_gsl);
+      const double li2_gsl = gsl_dilog(x);
 
-      CHECK_CLOSE(li2, li2_gsl.val, 1e-10);
+      CHECK_CLOSE(li2, li2_gsl, 1e-10);
    }
 }
 
 TEST_CASE("test_complex")
 {
    for (auto v: values) {
-      const std::complex<double> z = v;
-      const std::complex<double> li2 = dilogarithm::dilog(z);
-      gsl_sf_result li2_gsl_re{}, li2_gsl_im{};
-      gsl_sf_complex_dilog_e(std::abs(z), std::arg(z), &li2_gsl_re, &li2_gsl_im);
+      const std::complex<double> li2 = dilogarithm::dilog(v);
+      const std::complex<double> li2_gsl = gsl_dilog(v);
 
-      CHECK_CLOSE(std::real(li2), li2_gsl_re.val, 1e-8);
-      CHECK_CLOSE(std::imag(li2), li2_gsl_im.val, 1e-8);
+      CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-8);
+      CHECK_CLOSE(std::imag(li2), std::imag(li2_gsl), 1e-8);
    }
 }
 
