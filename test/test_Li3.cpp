@@ -17,8 +17,11 @@ TEST_CASE("test_special_values")
    const double ln2 = std::log(2.);
    const double pi2 = sqr(M_PI);
    const double zeta3 = 1.2020569031595942853997381615114;
+   const double phi = 0.5*(std::sqrt(5.) + 1); // golden ratio
 
+   CHECK_CLOSE(Li3(0), 0, 1e-15);
    CHECK_CLOSE(Li3(1), zeta3, 1e-15);
    CHECK_CLOSE(Li3(-1), -3./4.*zeta3, 1e-15);
    CHECK_CLOSE(Li3(0.5), pow3(ln2)/6. - pi2/12.*ln2 + 7./8.*zeta3, 1e-15);
+   CHECK_CLOSE(Li3(1/sqr(phi)), 4./5.*zeta3 + 2./3.*pow3(std::log(phi)) - 2./15.*pi2*std::log(phi), 1e-15);
 }
