@@ -13,10 +13,10 @@
 namespace dilogarithm {
 
 /// real dilogarithm
-double dilog(double);
+double Li2(double);
 
 /// complex dilogarithm
-std::complex<double> dilog(const std::complex<double>&);
+std::complex<double> Li2(const std::complex<double>&);
 
 // Clausen function
 double clausen_2(double);

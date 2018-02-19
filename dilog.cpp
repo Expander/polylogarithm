@@ -22,7 +22,7 @@ namespace {
  * @note Implementation translated by R.Brun from CERNLIB DILOG function C332
  * @return \f$\mathrm{Li}_2(z)\f$
  */
-double dilog(double x) {
+double Li2(double x) {
    using std::log;
 
    const double PI = M_PI;
@@ -98,7 +98,7 @@ double dilog(double x) {
  * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
  */
-std::complex<double> dilog(const std::complex<double>& z) {
+std::complex<double> Li2(const std::complex<double>& z) {
    std::complex<double> cy, cz;
    int jsgn, ipi12;
    static const unsigned N = 20;
@@ -135,9 +135,9 @@ std::complex<double> dilog(const std::complex<double>& z) {
    // special cases
    if (iz == 0.) {
       if (rz <= 1.)
-         return {dilog(rz), 0.};
+         return {Li2(rz), 0.};
       if (rz > 1.)
-         return {dilog(rz), -M_PI*std::log(rz)};
+         return {Li2(rz), -M_PI*std::log(rz)};
    } else if (az < std::numeric_limits<double>::epsilon()) {
       return z;
    }
@@ -195,7 +195,7 @@ double clausen_2(double x)
    using std::exp;
    const std::complex<double> i(0.,1.);
 
-   return std::imag(dilog(exp(i*x)));
+   return std::imag(Li2(exp(i*x)));
 }
 
 } // namespace dilogarithm

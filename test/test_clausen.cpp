@@ -42,7 +42,7 @@ TEST_CASE("test_kummer_relation")
    const auto thetas = float_range(0., 2*pi, 100);
 
    for (const auto t: thetas) {
-      const auto lhs = dilog(exp(i*t));
+      const auto lhs = Li2(exp(i*t));
       const auto rhs = z2 - t*(2*pi - t)/4. + i*clausen_2(t);
 
       CHECK_CLOSE(std::real(lhs), std::real(rhs), 1e-15);
