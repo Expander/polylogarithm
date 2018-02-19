@@ -14,7 +14,7 @@ namespace dilogarithm {
 namespace {
    template <typename T>
    T sqr(T x) { return x*x; }
-}
+} // anonymous namespace
 
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(z)\f$
@@ -135,9 +135,9 @@ std::complex<double> dilog(const std::complex<double>& z) {
    // special cases
    if (iz == 0.) {
       if (rz <= 1.)
-         return std::complex<double>(dilog(rz), 0.);
+         return {dilog(rz), 0.};
       if (rz > 1.)
-         return std::complex<double>(dilog(rz), -M_PI*std::log(rz));
+         return {dilog(rz), -M_PI*std::log(rz)};
    } else if (az < std::numeric_limits<double>::epsilon()) {
       return z;
    }

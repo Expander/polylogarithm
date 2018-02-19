@@ -3,15 +3,16 @@
 #include "doctest.h"
 #include "dilog.hpp"
 #include <cmath>
+#include <gsl/gsl_sf_dilog.h>
 #include <iostream>
 #include <limits>
 #include <string>
-#include <gsl/gsl_sf_dilog.h>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-#define CHECK_SMALL(a,eps) CHECK((a) < eps)
+#define CHECK_SMALL(a,eps) CHECK((a) < (eps))
 
 const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
+const std::complex<double> zero(0.,0.);
 
 const std::vector<std::complex<double>> values = {
    0., 0.5, 1., 1.5,
@@ -38,7 +39,7 @@ const auto Relation_1 = [](std::complex<double> z) {
 
 const auto Relation_2 = [](std::complex<double> z) {
    if (std::abs(z) < 1e-10)
-      return std::complex<double>(0.,0.);
+      return zero;
 
    return dilogarithm::dilog(1.-z) + dilogarithm::dilog(1.-1./z)
       + clog(z)*clog(z)/2.;
@@ -46,7 +47,7 @@ const auto Relation_2 = [](std::complex<double> z) {
 
 const auto Relation_3 = [](std::complex<double> z) {
    if (std::abs(z) < 1e-10 || std::abs(std::real(z) - 1.) < 1e-10)
-      return std::complex<double>(0.,0.);
+      return zero;
 
    return dilogarithm::dilog(z) + dilogarithm::dilog(1.-z)
       - (M_PI*M_PI/6. - clog(z) * clog(1.-z));
@@ -54,7 +55,7 @@ const auto Relation_3 = [](std::complex<double> z) {
 
 const auto Relation_4 = [](std::complex<double> z) {
    if (std::abs(z) < 1e-10 || std::abs(std::real(z) + 1.) < 1e-10)
-      return std::complex<double>(0.,0.);
+      return zero;
 
    return dilogarithm::dilog(-z) - dilogarithm::dilog(1.-z)
       + dilogarithm::dilog(1.-z*z)/2.
@@ -63,7 +64,7 @@ const auto Relation_4 = [](std::complex<double> z) {
 
 const auto Relation_5 = [](std::complex<double> z) {
    if (std::abs(z) < 1e-10)
-      return std::complex<double>(0.,0.);
+      return zero;
 
    return dilogarithm::dilog(z) + dilogarithm::dilog(1./z)
       - (-M_PI*M_PI/6. - clog(-z)*clog(-z)/2.);
@@ -81,7 +82,7 @@ TEST_CASE("test_real")
    for (auto v: values) {
       const double x = std::real(v);
       const double li2 = dilogarithm::dilog(x);
-      gsl_sf_result li2_gsl;
+      gsl_sf_result li2_gsl{};
       gsl_sf_dilog_e(x, &li2_gsl);
 
       CHECK_CLOSE(li2, li2_gsl.val, 1e-10);
@@ -93,7 +94,7 @@ TEST_CASE("test_complex")
    for (auto v: values) {
       const std::complex<double> z = v;
       const std::complex<double> li2 = dilogarithm::dilog(z);
-      gsl_sf_result li2_gsl_re, li2_gsl_im;
+      gsl_sf_result li2_gsl_re{}, li2_gsl_im{};
       gsl_sf_complex_dilog_e(std::abs(z), std::arg(z), &li2_gsl_re, &li2_gsl_im);
 
       CHECK_CLOSE(std::real(li2), li2_gsl_re.val, 1e-8);
