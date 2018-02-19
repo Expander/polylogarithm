@@ -3,11 +3,13 @@
 #include "doctest.h"
 #include "dilog.hpp"
 #include <cmath>
+#include <complex>
 #include <gsl/gsl_sf_dilog.h>
 #include <iostream>
 #include <limits>
 #include <random>
 #include <string>
+#include <vector>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
