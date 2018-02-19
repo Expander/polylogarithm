@@ -15,6 +15,9 @@
 const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
 const std::complex<double> zero(0.,0.);
 
+template <class T> T sqr(T x) { return x*x; }
+
+/// special values to be checked
 const std::vector<std::complex<double>> values = {
    0., 0.5, 1., 1.5,
    -0., -0.5, -1., -1.5,
@@ -128,6 +131,70 @@ TEST_CASE("test_real_fixed_values")
 
       CHECK_CLOSE(li2, li2_gsl, 1e-10);
    }
+}
+
+TEST_CASE("test_special_values")
+{
+   using dilogarithm::dilog;
+   using std::log;
+   const double eps = 1e-10;
+   const double pi  = M_PI;
+   const double pi2 = sqr(pi);
+   const double ln2 = std::log(2.);
+   const double ln3 = std::log(3.);
+
+   // special values
+   CHECK_CLOSE(dilog(-1.), -pi2/12., eps);
+
+   CHECK_CLOSE(dilog(0.), 0., eps);
+
+   CHECK_CLOSE(dilog(0.5), pi2/12. - 0.5*sqr(ln2), eps);
+
+   CHECK_CLOSE(dilog(1.), pi2/6., eps);
+
+   {
+      const auto i = std::complex<double>(0.,1.);
+      const std::complex<double> c2(2.,0.);
+      const std::complex<double> dc2 = dilog(c2);
+      const std::complex<double> dc2_res = pi2/4. - i*pi*ln2;
+
+      CHECK_CLOSE(std::real(dc2), std::real(dc2_res), eps);
+      CHECK_CLOSE(std::imag(dc2), std::imag(dc2_res), eps);
+   }
+
+   CHECK_CLOSE(dilog(-(sqrt(5.)-1.)/2.),
+               -pi2/15. + 0.5*sqr(log((sqrt(5.)-1.)/2.)), eps);
+
+   CHECK_CLOSE(dilog(-(sqrt(5.)+1.)/2.),
+               -pi2/10. - sqr(log((sqrt(5.)+1.)/2.)), eps);
+
+   CHECK_CLOSE(dilog((3.-sqrt(5.))/2.),
+               pi2/15. - sqr(log((sqrt(5.)-1.)/2.)), eps);
+
+   CHECK_CLOSE(dilog((sqrt(5.)-1.)/2.),
+               pi2/10. - sqr(log((sqrt(5.)-1.)/2.)), eps);
+
+   // special value identities
+   CHECK_CLOSE(dilog(1./3.) - dilog(1./9.)/6.,
+               pi2/18. - sqr(ln3)/6., eps);
+
+   CHECK_CLOSE(dilog(-0.5) + dilog(1./9.)/6.,
+               -pi2/18. + ln2*ln3
+               - sqr(ln2)/2. - sqr(ln3)/3., eps);
+
+   CHECK_CLOSE(dilog(0.25) + dilog(1./9.)/3.,
+               pi2/18. + 2.*ln2*ln3
+               - 2.*sqr(ln2) - 2.*sqr(ln3)/3., eps);
+
+   CHECK_CLOSE(dilog(-1./3.) - dilog(1./9.)/3.,
+               -pi2/18. + sqr(ln3)/6., eps);
+
+   CHECK_CLOSE(dilog(-1./8.) + dilog(1./9.),
+               - 0.5*sqr(log(9./8.)), eps);
+
+   CHECK_CLOSE(36.*dilog(0.5) - 36.*dilog(0.25)
+               - 12.*dilog(1./8.) + 6.*dilog(1./64.),
+               pi2, eps);
 }
 
 TEST_CASE("test_real_random_values")
