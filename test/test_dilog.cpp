@@ -135,9 +135,8 @@ TEST_CASE("test_real_random_values")
    const auto values = generate_random_doubles(10000, -10, 10);
 
    for (auto v: values) {
-      const double x = std::real(v);
-      const double li2 = dilogarithm::dilog(x);
-      const double li2_gsl = gsl_dilog(x);
+      const double li2 = dilogarithm::dilog(v);
+      const double li2_gsl = gsl_dilog(v);
 
       CHECK_CLOSE(li2, li2_gsl, 1e-10);
    }
@@ -170,12 +169,10 @@ TEST_CASE("test_complex_random_values")
 TEST_CASE("test_relations")
 {
    for (auto v: values) {
-      const std::complex<double> z = v;
-
-      check_relation(Relation_1, z);
-      check_relation(Relation_2, z);
-      check_relation(Relation_3, z);
-      check_relation(Relation_4, z);
-      check_relation(Relation_5, z);
+      check_relation(Relation_1, v);
+      check_relation(Relation_2, v);
+      check_relation(Relation_3, v);
+      check_relation(Relation_4, v);
+      check_relation(Relation_5, v);
    }
 }
