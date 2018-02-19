@@ -18,8 +18,11 @@ double Li2(double);
 /// complex dilogarithm
 std::complex<double> Li2(const std::complex<double>&);
 
+/// real trilogarithm
+double Li3(double);
+
 // Clausen function
-double clausen_2(double);
+double Cl2(double);
 
 } // namespace dilogarithm
 

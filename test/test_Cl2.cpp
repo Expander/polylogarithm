@@ -28,7 +28,7 @@ TEST_CASE("test_special_values")
    const double pi  = M_PI;
    const double catalan = 0.91596559417721901505460351493238411077414937428167;
 
-   CHECK_CLOSE(clausen_2(pi/2.), catalan, 1e-15);
+   CHECK_CLOSE(Cl2(pi/2.), catalan, 1e-15);
 }
 
 TEST_CASE("test_kummer_relation")
@@ -43,7 +43,7 @@ TEST_CASE("test_kummer_relation")
 
    for (const auto t: thetas) {
       const auto lhs = Li2(exp(i*t));
-      const auto rhs = z2 - t*(2*pi - t)/4. + i*clausen_2(t);
+      const auto rhs = z2 - t*(2*pi - t)/4. + i*Cl2(t);
 
       CHECK_CLOSE(std::real(lhs), std::real(rhs), 1e-15);
       CHECK_CLOSE(std::imag(lhs), std::imag(rhs), 1e-15);

@@ -13,5 +13,6 @@ function(add_dilog_test name)
   add_test(NAME ${name} COMMAND ${name})
 endfunction()
 
-add_dilog_test(test_clausen)
-add_dilog_test(test_dilog)
+add_dilog_test(test_Cl2)
+add_dilog_test(test_Li2)
+add_dilog_test(test_Li3)
