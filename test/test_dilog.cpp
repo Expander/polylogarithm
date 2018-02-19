@@ -9,7 +9,7 @@
 #include <string>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-#define CHECK_SMALL(a,eps) CHECK((a) < (eps))
+#define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
 
 const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
 const std::complex<double> zero(0.,0.);
