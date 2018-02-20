@@ -186,11 +186,11 @@ std::complex<double> Li2(const std::complex<double>& z) {
 }
 
 /**
- * @brief Real trilogarithm \f$\mathrm{Li}_3(z)\f$
- * @param x real argument
+ * @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$
+ * @param x complex argument
  * @return \f$\mathrm{Li}_3(z)\f$
  */
-double Li3(double x)
+std::complex<double> Li3(const std::complex<double>& x)
 {
    const double PI = M_PI;
    const double PI2 = PI*PI;
@@ -231,9 +231,9 @@ double Li3(double x)
       return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.;
    }
 
-   const double u = std::log(1. - x);
-   double f = 1.;
-   double sum = 0.;
+   const std::complex<double> u = std::log(1. - x);
+   std::complex<double> f = 1.;
+   std::complex<double> sum = 0.;
 
    for (int n = 0; n < N; n++) {
       f *= u;

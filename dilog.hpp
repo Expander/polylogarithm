@@ -19,7 +19,7 @@ double Li2(double);
 std::complex<double> Li2(const std::complex<double>&);
 
 /// real trilogarithm
-double Li3(double);
+std::complex<double> Li3(const std::complex<double>&);
 
 // Clausen function
 double Cl2(double);
