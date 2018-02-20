@@ -12,6 +12,10 @@
 #include <vector>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
+#define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
+      CHECK(std::real(a) == doctest::Approx(std::real(b)).epsilon(eps)); \
+      CHECK(std::imag(a) == doctest::Approx(std::imag(b)).epsilon(eps)); \
+   } while (0);
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
 
 const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
@@ -122,14 +126,6 @@ const auto Relation_5 = [](std::complex<double> z) {
       - (-M_PI*M_PI/6. - clog(-z)*clog(-z)/2.);
 };
 
-template <class T>
-std::size_t check_relation(T rel, std::complex<double> z)
-{
-   const std::complex<double> result = rel(z);
-   CHECK_SMALL(std::real(result), 1e-9);
-   CHECK_SMALL(std::imag(result), 1e-9);
-}
-
 TEST_CASE("test_real_fixed_values")
 {
    for (auto v: values) {
@@ -162,12 +158,7 @@ TEST_CASE("test_special_values")
 
    {
       const auto i = std::complex<double>(0.,1.);
-      const std::complex<double> c2(2.,0.);
-      const std::complex<double> dc2 = Li2(c2);
-      const std::complex<double> dc2_res = pi2/4. - i*pi*ln2;
-
-      CHECK_CLOSE(std::real(dc2), std::real(dc2_res), eps);
-      CHECK_CLOSE(std::imag(dc2), std::imag(dc2_res), eps);
+      CHECK_CLOSE_COMPLEX(Li2({2.,0.}), pi2/4. - i*pi*ln2, eps);
    }
 
    CHECK_CLOSE(Li2(-(sqrt(5.)-1.)/2.),
@@ -243,11 +234,11 @@ TEST_CASE("test_complex_random_values")
 
 TEST_CASE("test_relations")
 {
-   for (auto v: values) {
-      check_relation(Relation_1, v);
-      check_relation(Relation_2, v);
-      check_relation(Relation_3, v);
-      check_relation(Relation_4, v);
-      check_relation(Relation_5, v);
+   for (const auto v: values) {
+      CHECK_SMALL(Relation_1(v), 1e-9);
+      CHECK_SMALL(Relation_2(v), 1e-9);
+      CHECK_SMALL(Relation_3(v), 1e-9);
+      CHECK_SMALL(Relation_4(v), 1e-9);
+      CHECK_SMALL(Relation_5(v), 1e-9);
    }
 }
