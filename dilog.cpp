@@ -44,10 +44,10 @@ std::complex<double> Li1(const std::complex<double>& z)
 }
 
 /**
- * @brief Real dilogarithm \f$\mathrm{Li}_2(z)\f$
+ * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
  * @param x real argument
  * @note Implementation translated by R.Brun from CERNLIB DILOG function C332
- * @return \f$\mathrm{Li}_2(z)\f$
+ * @return \f$\mathrm{Li}_2(x)\f$
  */
 double Li2(double x) {
    using std::log;
@@ -214,10 +214,10 @@ std::complex<double> Li2(const std::complex<double>& z) {
 
 /**
  * @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$
- * @param x complex argument
+ * @param z complex argument
  * @return \f$\mathrm{Li}_3(z)\f$
  */
-std::complex<double> Li3(const std::complex<double>& x)
+std::complex<double> Li3(const std::complex<double>& z)
 {
    const double PI = M_PI;
    const double PI2 = PI*PI;
@@ -246,19 +246,19 @@ std::complex<double> Li3(const std::complex<double>& x)
       5.7274216061372596844727445803306e-32, -6.1347132137964235825854929689777e-33
    };
 
-   if (x == 0.)
+   if (z == 0.)
       return 0.;
-   if (x == 1.)
+   if (z == 1.)
       return zeta3;
-   if (x == -1.)
+   if (z == -1.)
       return -0.75*zeta3;
-   if (x == 0.5) {
+   if (z == 0.5) {
       const double ln2 = std::log(2.);
       const double ln23 = ln2*ln2*ln2;
       return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.;
    }
 
-   const std::complex<double> u = clog(1. - x);
+   const std::complex<double> u = clog(1. - z);
    std::complex<double> f = 1.;
    std::complex<double> sum = 0.;
 

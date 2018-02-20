@@ -24,7 +24,7 @@ double Li2(double);
 /// complex dilogarithm
 std::complex<double> Li2(const std::complex<double>&);
 
-/// real trilogarithm
+/// complex trilogarithm
 std::complex<double> Li3(const std::complex<double>&);
 
 // Clausen function
