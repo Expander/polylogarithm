@@ -231,7 +231,13 @@ std::complex<double> Li3(const std::complex<double>& x)
       return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.;
    }
 
-   const std::complex<double> u = std::log(1. - x);
+   std::complex<double> z = 1. - x;
+   // convert -0.0 to 0.0
+   if (std::real(z) == 0.0)
+      z.real(0.0);
+   if (std::imag(z) == 0.0)
+      z.imag(0.0);
+   const std::complex<double> u = std::log(z);
    std::complex<double> f = 1.;
    std::complex<double> sum = 0.;
 
