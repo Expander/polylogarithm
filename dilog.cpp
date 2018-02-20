@@ -13,10 +13,10 @@ namespace dilogarithm {
 
 namespace {
    template <typename T>
-   T sqr(T x) { return x*x; }
+   T sqr(T x) noexcept { return x*x; }
 
    // converts -0.0 to 0.0
-   std::complex<double> clog(std::complex<double> z) {
+   std::complex<double> clog(std::complex<double> z) noexcept {
       if (std::real(z) == 0.0) z.real(0.0);
       if (std::imag(z) == 0.0) z.imag(0.0);
       return std::log(z);
