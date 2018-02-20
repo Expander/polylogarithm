@@ -6,17 +6,20 @@
 #include <utility>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-#define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
 #define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
       CHECK(std::real(a) == doctest::Approx(std::real(b)).epsilon(eps)); \
       CHECK(std::imag(a) == doctest::Approx(std::imag(b)).epsilon(eps)); \
    } while (0);
+#define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
 
 template <class T> T sqr(T x) { return x*x; }
 template <class T> T pow3(T x) { return x*x*x; }
 
-const std::complex<double> I(0.,1.);
-
+// Generated with Mathematica 9.0 using
+//
+// min = -5; max = 5;, step = 0.1;
+// Join @@ Table[{{x, y}, {Re[PolyLog[p, x + I y]], Im[PolyLog[p, x + I y]]}},
+//               {x, min, max, step}, {y, min, max, step}] // N[#,16]&
 const std::pair<std::complex<double>, std::complex<double>> values[] = {
  {{-5., -5.}, {-3.9614358376394803, -2.616068118832277}},
  {{-5., -4.9}, {-3.946347982804779, -2.5681471034984993}},
@@ -12025,6 +12028,41 @@ const std::pair<std::complex<double>, std::complex<double>> values[] = {
  {{5., 5.}, {1.0646803128625597, 6.100459715641239}}
 };
 
+std::complex<double> clog(std::complex<double> z) {
+   std::complex<double> zf(z);
+   // convert -0.0 to 0.0
+   if (std::real(zf) == 0.0) zf.real(0.0);
+   if (std::imag(zf) == 0.0) zf.imag(0.0);
+   return std::log(zf);
+}
+
+const auto Relation_1 = [](std::complex<double> z) {
+   using dilogarithm::Li3;
+   return Li3(z) + Li3(-z) - Li3(z*z)/4.;
+};
+
+const auto Relation_2 = [](std::complex<double> z) {
+   using dilogarithm::Li3;
+   using std::log;
+
+   if (std::real(z) <= 0.5)
+      return std::complex<double>(0.,0.);
+
+   return Li3(-z) - Li3(-1./z) - (-pow3(clog(z))/6. - M_PI*M_PI/6.*clog(z));
+};
+
+const auto Relation_3 = [](std::complex<double> z) {
+   using dilogarithm::Li3;
+   using std::log;
+   const double zeta3 = 1.202056903159594;
+
+   if (std::real(z) <= 0.5 || std::abs(std::real(1. - z)) < 1e-10)
+      return std::complex<double>(0.,0.);
+
+   return Li3(z) + Li3(1.-z) + Li3(1.-1./z)
+      - (zeta3 + pow3(log(z))/6. + M_PI*M_PI/6.*clog(z) - 0.5*sqr(clog(z))*clog(1.-z));
+};
+
 TEST_CASE("test_special_values")
 {
    using namespace dilogarithm;
@@ -12047,4 +12085,15 @@ TEST_CASE("test_values")
 
    for (const auto v: values)
       CHECK_CLOSE_COMPLEX(Li3(v.first), v.second, 1e-8);
+}
+
+TEST_CASE("test_relations")
+{
+   using namespace dilogarithm;
+
+   for (const auto v: values) {
+      CHECK_SMALL(Relation_1(v.first), 1e-6);
+      CHECK_SMALL(Relation_2(v.first), 1e-6);
+      CHECK_SMALL(Relation_3(v.first), 1e-6);
+   }
 }
