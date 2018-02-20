@@ -12,6 +12,12 @@
 
 namespace dilogarithm {
 
+/// real polylogarithm with n=1
+double Li1(double);
+
+/// complex polylogarithm with n=1
+std::complex<double> Li1(const std::complex<double>&);
+
 /// real dilogarithm
 double Li2(double);
 

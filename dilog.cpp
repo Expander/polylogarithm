@@ -24,6 +24,26 @@ namespace {
 } // anonymous namespace
 
 /**
+ * @brief Real polylogarithm \f$\mathrm{Li}_1(x) = -\log(1-x)\f$
+ * @param x complex argument
+ * @return \f$\mathrm{Li}_1(x)\f$
+ */
+double Li1(double x)
+{
+   return -std::log(1. - x);
+}
+
+/**
+ * @brief Complex polylogarithm \f$\mathrm{Li}_1(z) = -\log(1-z)\f$
+ * @param z real argument
+ * @return \f$\mathrm{Li}_1(z)\f$
+ */
+std::complex<double> Li1(const std::complex<double>& z)
+{
+   return -clog(1. - z);
+}
+
+/**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(z)\f$
  * @param x real argument
  * @note Implementation translated by R.Brun from CERNLIB DILOG function C332
