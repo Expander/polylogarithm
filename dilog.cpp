@@ -257,7 +257,7 @@ std::complex<double> Li3(const std::complex<double>& z)
       return -0.75*zeta3;
    if (z == 0.5) {
       const double ln2 = std::log(2.);
-      const double ln23 = ln2*ln2*ln2;
+      const double ln23 = pow3(ln2);
       return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.;
    }
 
