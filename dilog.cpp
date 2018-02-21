@@ -15,6 +15,9 @@ namespace {
    template <typename T>
    T sqr(T x) noexcept { return x*x; }
 
+   template <typename T>
+   T pow3(T x) noexcept { return x*x*x; }
+
    // converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept {
       if (std::real(z) == 0.0) z.real(0.0);
@@ -258,14 +261,25 @@ std::complex<double> Li3(const std::complex<double>& z)
       return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.;
    }
 
-   const std::complex<double> u = -clog(1. - z);
+   const double az = std::abs(z);
+   std::complex<double> u, r;
+
+   if (az <= 1.) {
+      u = -clog(1. - z);
+   } else { // az > 1.
+      u = -clog(1. - 1./z);
+      r = -pow3(clog(-z))/6. - M_PI*M_PI/6.*clog(-z);
+   }
+
    std::complex<double> f = 1.;
-   std::complex<double> sum = 0.;
+   std::complex<double> sum;
 
    for (int n = 0; n < N; n++) {
       f *= u;
       sum += bf[n]*f;
    }
+
+   sum += r;
 
    return sum;
 }
