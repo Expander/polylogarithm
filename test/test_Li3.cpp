@@ -12041,7 +12041,7 @@ const auto Relation_1 = [](std::complex<double> z) {
    return Li3(z) + Li3(-z) - Li3(z*z)/4.;
 };
 
-const auto Relation_2 = [](std::complex<double> z) {
+const auto Relation_2 = [](std::complex<double> z) -> std::complex<double> {
    using dilogarithm::Li3;
    using std::log;
 
@@ -12051,18 +12051,18 @@ const auto Relation_2 = [](std::complex<double> z) {
    // Relation does not seem to hold for Li[3,z], not even for
    // Mathematica's PolyLog[3,z], when 0 < Re[z] < 1.
    if (std::real(z) > 0. && std::real(z) < 1.)
-      return std::complex<double>(0.,0.);
+      return {0.,0.};
 
    return Li3(z) - Li3(1./z) - (-pow3(clog(-z))/6. - M_PI*M_PI/6.*clog(-z));
 };
 
-const auto Relation_3 = [](std::complex<double> z) {
+const auto Relation_3 = [](std::complex<double> z) -> std::complex<double> {
    using dilogarithm::Li3;
    using std::log;
    const double zeta3 = 1.202056903159594;
 
    if (std::abs(std::real(1. - z)) < 1e-10)
-      return std::complex<double>(0.,0.);
+      return {0.,0.};
 
    // Relation does not seem to hold for Li[3,z], not even for
    // Mathematica's PolyLog[3,z], when Re[z] < 0 and Im[z] = 0.
@@ -12075,7 +12075,7 @@ const auto Relation_3 = [](std::complex<double> z) {
 
 TEST_CASE("test_special_values")
 {
-   using namespace dilogarithm;
+   using dilogarithm::Li3;
 
    const double ln2 = std::log(2.);
    const double pi2 = sqr(M_PI);
@@ -12091,7 +12091,7 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_values")
 {
-   using namespace dilogarithm;
+   using dilogarithm::Li3;
 
    for (const auto v: values)
       CHECK_CLOSE_COMPLEX(Li3(v.first), v.second, 1e-14);
@@ -12099,7 +12099,7 @@ TEST_CASE("test_values")
 
 TEST_CASE("test_relations")
 {
-   using namespace dilogarithm;
+   using dilogarithm::Li3;
 
    for (const auto v: values) {
       CHECK_SMALL(Relation_1(v.first), 1e-6);
