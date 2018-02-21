@@ -12046,7 +12046,7 @@ const auto Relation_2 = [](std::complex<double> z) {
    using std::log;
 
    if (std::abs(z) == 0)
-      return std::complex<double>(0.,0.);
+      return {0.,0.};
 
    // Relation does not seem to hold for Li[3,z], not even for
    // Mathematica's PolyLog[3,z], when 0 < Re[z] < 1.
@@ -12067,7 +12067,7 @@ const auto Relation_3 = [](std::complex<double> z) {
    // Relation does not seem to hold for Li[3,z], not even for
    // Mathematica's PolyLog[3,z], when Re[z] < 0 and Im[z] = 0.
    if (std::real(z) <= 0. && std::imag(z) == 0.)
-      return std::complex<double>(0.,0.);
+      return {0.,0.};
 
    return Li3(z) + Li3(1.-z) + Li3(1.-1./z)
       - (zeta3 + pow3(log(z))/6. + M_PI*M_PI/6.*clog(z) - 0.5*sqr(clog(z))*clog(1.-z));
