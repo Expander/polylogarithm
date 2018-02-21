@@ -274,9 +274,9 @@ std::complex<double> Li3(const std::complex<double>& z)
    std::complex<double> f = 1.;
    std::complex<double> sum;
 
-   for (int n = 0; n < N; n++) {
+   for (const double b: bf) {
       f *= u;
-      sum += bf[n]*f;
+      sum += b*f;
    }
 
    sum += r;
