@@ -12045,10 +12045,10 @@ const auto Relation_2 = [](std::complex<double> z) {
    using dilogarithm::Li3;
    using std::log;
 
-   if (std::real(z) <= 0.5)
+   if (std::real(-z) <= 0.5)
       return std::complex<double>(0.,0.);
 
-   return Li3(-z) - Li3(-1./z) - (-pow3(clog(z))/6. - M_PI*M_PI/6.*clog(z));
+   return Li3(z) - Li3(1./z) - (-pow3(clog(-z))/6. - M_PI*M_PI/6.*clog(-z));
 };
 
 const auto Relation_3 = [](std::complex<double> z) {
