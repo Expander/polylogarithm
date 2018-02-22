@@ -312,7 +312,6 @@ std::complex<double> Li4(const std::complex<double>& z)
 {
    const double PI = M_PI;
    const double PI2 = PI*PI;
-   const double PI3 = PI2*PI;
    const double PI4 = PI2*PI2;
    const double zeta4 = 1.0823232337111381915160036965412;
    static const int N = 40;
