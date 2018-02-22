@@ -1,4 +1,4 @@
-find_package(GSL)
+find_package(GSL QUIET)
 
 if(GSL_FOUND)
   function(add_dilog_test name)
