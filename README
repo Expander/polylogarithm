@@ -1,8 +1,8 @@
 Dilogarithm
 ===========
 
-The package Dilogarithm provides a C++ implementation of the real and
-complex dilogarithm function.
+The Dilogarithm package provides C++ implementations of various
+polylogarithms, including the real and complex dilogarithm.
 
 The implementation of the real dilogarithm has been taken from the
 ROOT package (licensed under the GNU LGPL).
