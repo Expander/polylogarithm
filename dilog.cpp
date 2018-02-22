@@ -281,25 +281,21 @@ std::complex<double> Li3(const std::complex<double>& z)
       return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.;
    }
 
-   const double az = std::abs(z);
-   std::complex<double> u, r;
+   std::complex<double> u, sum;
 
-   if (az <= 1.) {
+   if (std::abs(z) <= 1.) {
       u = -clog(1. - z);
    } else { // az > 1.
       u = -clog(1. - 1./z);
-      r = -pow3(clog(-z))/6. - M_PI*M_PI/6.*clog(-z);
+      sum = -pow3(clog(-z))/6. - M_PI*M_PI/6.*clog(-z);
    }
 
-   std::complex<double> f = 1.;
-   std::complex<double> sum;
+   std::complex<double> p = 1.;
 
    for (const double b: bf) {
-      f *= u;
-      sum += b*f;
+      p *= u;
+      sum += b*p;
    }
-
-   sum += r;
 
    return sum;
 }
