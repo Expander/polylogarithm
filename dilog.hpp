@@ -33,6 +33,9 @@ std::complex<double> Li2(const std::complex<double>&);
 /// complex trilogarithm
 std::complex<double> Li3(const std::complex<double>&);
 
+/// complex polylogarithm with n=4
+std::complex<double> Li4(const std::complex<double>&);
+
 // Clausen function
 double Cl2(double);
 
