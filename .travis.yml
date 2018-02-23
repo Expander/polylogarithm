@@ -2,8 +2,8 @@ language: cpp
 compiler:
   - clang
   - gcc
-before_install: 
-  - sudo apt-get install libgsl-dev
+before_install:
+  - sudo apt-get install libgsl0-dev
 script:
   - cmake .
   - make
