@@ -18,25 +18,28 @@ namespace {
    const int version_patch = 0;
 }
 
+// Clausen function with n=2
+double Cl2(double);
+
 /// real polylogarithm with n=0
 double Li0(double);
-
-/// complex polylogarithm with n=0
-std::complex<double> Li0(const std::complex<double>&);
 
 /// real polylogarithm with n=1
 double Li1(double);
 
+/// real polylogarithm with n=2 (dilogarithm)
+double Li2(double);
+
+/// complex polylogarithm with n=0
+std::complex<double> Li0(const std::complex<double>&);
+
 /// complex polylogarithm with n=1
 std::complex<double> Li1(const std::complex<double>&);
 
-/// real dilogarithm
-double Li2(double);
-
-/// complex dilogarithm
+/// complex polylogarithm with n=2 (dilogarithm)
 std::complex<double> Li2(const std::complex<double>&);
 
-/// complex trilogarithm
+/// complex polylogarithm with n=3 (trilogarithm)
 std::complex<double> Li3(const std::complex<double>&);
 
 /// complex polylogarithm with n=4
@@ -47,9 +50,6 @@ std::complex<double> Li5(const std::complex<double>&);
 
 /// complex polylogarithm with n=5
 std::complex<double> Li6(const std::complex<double>&);
-
-// Clausen function
-double Cl2(double);
 
 } // namespace polylogarithm
 
