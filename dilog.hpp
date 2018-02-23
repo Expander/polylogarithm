@@ -12,6 +12,12 @@
 
 namespace dilogarithm {
 
+namespace {
+   const int version_major = 2;
+   const int version_minor = 0;
+   const int version_patch = 0;
+}
+
 /// real polylogarithm with n=0
 double Li0(double);
 
