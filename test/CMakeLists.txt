@@ -16,6 +16,7 @@ if(GSL_FOUND)
 
   add_dilog_test(test_Cl2)
   add_dilog_test(test_Li0)
+  add_dilog_test(test_Li1)
   add_dilog_test(test_Li2)
   add_dilog_test(test_Li3)
   add_dilog_test(test_Li4)
