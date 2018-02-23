@@ -1,9 +1,9 @@
-Dilogarithm
+Polylogarithm
 ===========
 
-[![Build Status](https://travis-ci.org/Expander/dilogarithm.svg?branch=master)](https://travis-ci.org/Expander/dilogarithm)
+[![Build Status](https://travis-ci.org/Expander/polylogarithm.svg?branch=master)](https://travis-ci.org/Expander/polylogarithm)
 
-The Dilogarithm package provides C++ implementations of various
+The Polylogarithm package provides C++ implementations of various
 polylogarithms, including the real and complex dilogarithm.
 
 
@@ -20,5 +20,5 @@ SPheno (spheno.hepforge.org) and has been translated to C++.
 Copying
 -------
 
-Dilogarithm is licenced under the GNU Lesser General Public License
+Polylogarithm is licenced under the GNU Lesser General Public License
 (GNU LGPL) version 3.

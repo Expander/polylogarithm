@@ -1,16 +1,16 @@
 // ====================================================================
-// This file is part of Dilogarithm.
+// This file is part of Polylogarithm.
 //
-// Dilogarithm is licenced under the GNU Lesser General Public License
-// (GNU LGPL) version 3.
+// Polylogarithm is licenced under the GNU Lesser General Public
+// License (GNU LGPL) version 3.
 // ====================================================================
 
-#ifndef DILOG_H
-#define DILOG_H
+#ifndef POLYLOGARITHM_H
+#define POLYLOGARITHM_H
 
 #include <complex>
 
-namespace dilogarithm {
+namespace polylogarithm {
 
 namespace {
    const int version_major = 2;
@@ -51,6 +51,6 @@ std::complex<double> Li6(const std::complex<double>&);
 // Clausen function
 double Cl2(double);
 
-} // namespace dilogarithm
+} // namespace polylogarithm
 
 #endif

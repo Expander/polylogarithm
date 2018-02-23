@@ -12032,7 +12032,7 @@ const std::pair<std::complex<double>, std::complex<double>> values[] = {
 
 TEST_CASE("test_special_values")
 {
-   using dilogarithm::Li4;
+   using polylogarithm::Li4;
 
    const double pi = M_PI;
    const double zeta4 = 1.082323233711138;
@@ -12045,7 +12045,7 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_values")
 {
-   using dilogarithm::Li4;
+   using polylogarithm::Li4;
 
    for (const auto v: values)
       CHECK_CLOSE_COMPLEX(Li4(v.first), v.second, 1e-14);

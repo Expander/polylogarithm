@@ -81,12 +81,12 @@ std::vector<std::complex<double>> generate_random_complexes(
 }
 
 const auto Relation_1 = [](std::complex<double> z) {
-   using dilogarithm::Li2;
+   using polylogarithm::Li2;
    return Li2(z) + Li2(-z) - Li2(z*z)/2.;
 };
 
 const auto Relation_2 = [](std::complex<double> z) {
-   using dilogarithm::Li2;
+   using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10 || std::real(z) < 0.)
       return zero;
@@ -95,7 +95,7 @@ const auto Relation_2 = [](std::complex<double> z) {
 };
 
 const auto Relation_3 = [](std::complex<double> z) {
-   using dilogarithm::Li2;
+   using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10 || std::abs(std::real(z) - 1.) < 1e-10)
       return zero;
@@ -105,7 +105,7 @@ const auto Relation_3 = [](std::complex<double> z) {
 };
 
 const auto Relation_4 = [](std::complex<double> z) {
-   using dilogarithm::Li2;
+   using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10 || std::abs(std::real(z) + 1.) < 1e-10
        || std::real(z) < 0. || std::imag(z) < 0.)
@@ -116,7 +116,7 @@ const auto Relation_4 = [](std::complex<double> z) {
 };
 
 const auto Relation_5 = [](std::complex<double> z) {
-   using dilogarithm::Li2;
+   using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10
        || (std::real(z) > 0. && std::real(z) < 1.))
@@ -130,7 +130,7 @@ TEST_CASE("test_real_fixed_values")
 {
    for (auto v: values) {
       const double x = std::real(v);
-      const double li2 = dilogarithm::Li2(x);
+      const double li2 = polylogarithm::Li2(x);
       const double li2_gsl = gsl_Li2(x);
 
       CHECK_CLOSE(li2, li2_gsl, 1e-10);
@@ -139,7 +139,7 @@ TEST_CASE("test_real_fixed_values")
 
 TEST_CASE("test_special_values")
 {
-   using dilogarithm::Li2;
+   using polylogarithm::Li2;
    using std::log;
    const double eps = 1e-10;
    const double pi  = M_PI;
@@ -201,7 +201,7 @@ TEST_CASE("test_real_random_values")
    const auto values = generate_random_doubles(10000, -10, 10);
 
    for (auto v: values) {
-      const double li2 = dilogarithm::Li2(v);
+      const double li2 = polylogarithm::Li2(v);
       const double li2_gsl = gsl_Li2(v);
 
       CHECK_CLOSE(li2, li2_gsl, 1e-10);
@@ -211,7 +211,7 @@ TEST_CASE("test_real_random_values")
 TEST_CASE("test_complex_fixed_values")
 {
    for (auto v: values) {
-      const std::complex<double> li2 = dilogarithm::Li2(v);
+      const std::complex<double> li2 = polylogarithm::Li2(v);
       const std::complex<double> li2_gsl = gsl_Li2(v);
 
       CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-8);
@@ -224,7 +224,7 @@ TEST_CASE("test_complex_random_values")
    const auto values = generate_random_complexes(10000, -10, 10);
 
    for (auto v: values) {
-      const std::complex<double> li2 = dilogarithm::Li2(v);
+      const std::complex<double> li2 = polylogarithm::Li2(v);
       const std::complex<double> li2_gsl = gsl_Li2(v);
 
       CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-8);

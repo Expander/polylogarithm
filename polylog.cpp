@@ -1,15 +1,15 @@
 // ====================================================================
-// This file is part of Dilogarithm.
+// This file is part of Polylogarithm.
 //
-// Dilogarithm is licenced under the GNU Lesser General Public License
-// (GNU LGPL) version 3.
+// Polylogarithm is licenced under the GNU Lesser General Public
+// License (GNU LGPL) version 3.
 // ====================================================================
 
 #include "polylog.hpp"
 #include <cmath>
 #include <limits>
 
-namespace dilogarithm {
+namespace polylogarithm {
 
 namespace {
    template <typename T>
@@ -519,4 +519,4 @@ double Cl2(double x)
    return std::imag(Li2(exp(i*x)));
 }
 
-} // namespace dilogarithm
+} // namespace polylogarithm

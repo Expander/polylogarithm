@@ -24,7 +24,7 @@ std::vector<double> float_range(
 
 TEST_CASE("test_special_values")
 {
-   using namespace dilogarithm;
+   using namespace polylogarithm;
    const double pi  = M_PI;
    const double catalan = 0.91596559417721901505460351493238411077414937428167;
 
@@ -33,7 +33,7 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_kummer_relation")
 {
-   using namespace dilogarithm;
+   using namespace polylogarithm;
    using std::exp;
    const double pi  = M_PI;
    const double z2  = 1.644934066848226436472415166646025189218949901206798437735558229;

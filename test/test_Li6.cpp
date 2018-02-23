@@ -12023,7 +12023,7 @@ const std::pair<std::complex<double>, std::complex<double>> values[] = {
 
 TEST_CASE("test_special_values")
 {
-   using dilogarithm::Li6;
+   using polylogarithm::Li6;
 
    const double zeta6 = 1.0173430619844491397145179297909;
 
@@ -12035,7 +12035,7 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_values")
 {
-   using dilogarithm::Li6;
+   using polylogarithm::Li6;
 
    for (const auto v: values)
       CHECK_CLOSE_COMPLEX(Li6(v.first), v.second, 1e-14);
