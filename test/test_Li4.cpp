@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
-#include "dilog.hpp"
+#include "polylog.hpp"
 #include <cmath>
 #include <utility>
 

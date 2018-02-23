@@ -5,7 +5,7 @@
 // (GNU LGPL) version 3.
 // ====================================================================
 
-#include "dilog.hpp"
+#include "polylog.hpp"
 #include <cmath>
 #include <limits>
 

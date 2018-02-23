@@ -1,25 +1,25 @@
 find_package(GSL QUIET)
 
 if(GSL_FOUND)
-  function(add_dilog_test name)
+  function(add_dilogarithm_test name)
     add_executable(
       ${name}
       ${name}.cpp
       )
     target_link_libraries(
       ${name}
-      dilog
+      polylog
       GSL::gsl
       )
     add_test(NAME ${name} COMMAND ${name})
   endfunction()
 
-  add_dilog_test(test_Cl2)
-  add_dilog_test(test_Li0)
-  add_dilog_test(test_Li1)
-  add_dilog_test(test_Li2)
-  add_dilog_test(test_Li3)
-  add_dilog_test(test_Li4)
-  add_dilog_test(test_Li5)
-  add_dilog_test(test_Li6)
+  add_dilogarithm_test(test_Cl2)
+  add_dilogarithm_test(test_Li0)
+  add_dilogarithm_test(test_Li1)
+  add_dilogarithm_test(test_Li2)
+  add_dilogarithm_test(test_Li3)
+  add_dilogarithm_test(test_Li4)
+  add_dilogarithm_test(test_Li5)
+  add_dilogarithm_test(test_Li6)
 endif()
