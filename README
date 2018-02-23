@@ -4,6 +4,10 @@ Dilogarithm
 The Dilogarithm package provides C++ implementations of various
 polylogarithms, including the real and complex dilogarithm.
 
+
+Notes
+=====
+
 The implementation of the real dilogarithm has been taken from the
 ROOT package (licensed under the GNU LGPL).
 
