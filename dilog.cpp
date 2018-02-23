@@ -78,7 +78,7 @@ std::complex<double> Li1(const std::complex<double>& z)
 double Li2(double x) {
    using std::log;
 
-   const double PI = M_PI;
+   const double PI  = 3.1415926535897932384626433832795;
    const double HF  = 0.5;
    const double PI2 = PI*PI;
    const double PI3 = PI2/3;
@@ -151,9 +151,9 @@ double Li2(double x) {
  * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
  */
-std::complex<double> Li2(const std::complex<double>& z) {
-   std::complex<double> cy, cz;
-   int jsgn, ipi12;
+std::complex<double> Li2(const std::complex<double>& z)
+{
+   const double PI = 3.1415926535897932384626433832795;
    static const int N = 20;
 
    // bf[1..N-1] are the even Bernoulli numbers / (2 n + 1)!
@@ -190,10 +190,13 @@ std::complex<double> Li2(const std::complex<double>& z) {
       if (rz <= 1.)
          return {Li2(rz), 0.};
       if (rz > 1.)
-         return {Li2(rz), -M_PI*std::log(rz)};
+         return {Li2(rz), -PI*std::log(rz)};
    } else if (az < std::numeric_limits<double>::epsilon()) {
       return z;
    }
+
+   std::complex<double> cy, cz;
+   int jsgn, ipi12;
 
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5) {
@@ -233,7 +236,7 @@ std::complex<double> Li2(const std::complex<double>& z) {
    sumC = cz + cz2 * (bf[0] + cz * (bf[1] + sumC));
 
    const std::complex<double> result
-      = double(jsgn) * sumC + cy + ipi12 * M_PI * M_PI / 12.;
+      = double(jsgn) * sumC + cy + ipi12 * PI * PI / 12.;
 
    return result;
 }
@@ -245,9 +248,9 @@ std::complex<double> Li2(const std::complex<double>& z) {
  */
 std::complex<double> Li3(const std::complex<double>& z)
 {
-   const double PI = M_PI;
-   const double PI2 = PI*PI;
-   const double zeta3 = 1.202056903159594285399738161511449990764986292340498881792271555;
+   const double PI    = 3.1415926535897932384626433832795;
+   const double PI2   = PI*PI;
+   const double zeta3 = 1.2020569031595942853997381615114;
    static const int N = 40;
 
    const double bf[N] = {
@@ -290,7 +293,7 @@ std::complex<double> Li3(const std::complex<double>& z)
       u = -clog(1. - z);
    } else { // az > 1.
       u = -clog(1. - 1./z);
-      sum = -pow3(clog(-z))/6. - M_PI*M_PI/6.*clog(-z);
+      sum = -pow3(clog(-z))/6. - PI2/6.*clog(-z);
    }
 
    std::complex<double> p = 1.;
@@ -310,9 +313,9 @@ std::complex<double> Li3(const std::complex<double>& z)
  */
 std::complex<double> Li4(const std::complex<double>& z)
 {
-   const double PI = M_PI;
-   const double PI2 = PI*PI;
-   const double PI4 = PI2*PI2;
+   const double PI    = 3.1415926535897932384626433832795;
+   const double PI2   = PI*PI;
+   const double PI4   = PI2*PI2;
    const double zeta4 = 1.0823232337111381915160036965412;
    static const int N = 40;
 
@@ -376,9 +379,9 @@ std::complex<double> Li4(const std::complex<double>& z)
  */
 std::complex<double> Li5(const std::complex<double>& z)
 {
-   const double PI = M_PI;
-   const double PI2 = PI*PI;
-   const double PI4 = PI2*PI2;
+   const double PI    = 3.1415926535897932384626433832795;
+   const double PI2   = PI*PI;
+   const double PI4   = PI2*PI2;
    const double zeta5 = 1.0369277551433699263313654864570;
    static const int N = 40;
 
@@ -441,10 +444,10 @@ std::complex<double> Li5(const std::complex<double>& z)
  */
 std::complex<double> Li6(const std::complex<double>& z)
 {
-   const double PI = M_PI;
-   const double PI2 = PI*PI;
-   const double PI4 = PI2*PI2;
-   const double PI6 = PI2*PI4;
+   const double PI    = 3.1415926535897932384626433832795;
+   const double PI2   = PI*PI;
+   const double PI4   = PI2*PI2;
+   const double PI6   = PI2*PI4;
    const double zeta6 = 1.0173430619844491397145179297909;
    static const int N = 40;
 
