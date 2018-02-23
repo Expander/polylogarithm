@@ -183,7 +183,7 @@ std::complex<double> Li2(const std::complex<double>& z)
 
    const double rz = std::real(z);
    const double iz = std::imag(z);
-   const double az = std::sqrt(sqr(rz) + sqr(iz));
+   const double az = std::abs(z);
 
    // special cases
    if (iz == 0.) {
