@@ -39,6 +39,9 @@ std::complex<double> Li4(const std::complex<double>&);
 /// complex polylogarithm with n=5
 std::complex<double> Li5(const std::complex<double>&);
 
+/// complex polylogarithm with n=5
+std::complex<double> Li6(const std::complex<double>&);
+
 // Clausen function
 double Cl2(double);
 
