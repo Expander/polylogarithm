@@ -1,14 +1,11 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
-#include "polylog.hpp"
+#include "Li2.hpp"
 #include <cmath>
 #include <complex>
 #include <gsl/gsl_sf_dilog.h>
-#include <iostream>
-#include <limits>
 #include <random>
-#include <string>
 #include <vector>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))

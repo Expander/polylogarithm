@@ -8,8 +8,6 @@ endif()
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
-add_library(polylog polylog.cpp)
-target_include_directories(polylog PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-
 enable_testing()
+add_subdirectory(src)
 add_subdirectory(test)
