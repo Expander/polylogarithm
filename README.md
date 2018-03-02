@@ -6,6 +6,12 @@ Polylogarithm
 The Polylogarithm package provides C++ implementations of various
 polylogarithms, including the real and complex dilogarithm.
 
+The package has no external dependencies, except for the C++ standard
+library.  The implementations of the individual polylogarithm
+functions are distributed among different source code files and are
+completely separate from each other, so individual source code files
+can be easily extracted and incorporated into existing projects.
+
 
 Notes
 -----
