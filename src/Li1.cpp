@@ -31,8 +31,15 @@ double Cl1(double x)
    const double PI = 3.1415926535897932384626433832795;
    const std::complex<double> i(0.,1.);
 
+   while (x > 2*PI)
+      x -= 2*PI;
+
+   while (x < 0.)
+      x += 2*PI;
+
    if (std::abs(x) < std::numeric_limits<double>::epsilon() ||
-       std::abs(x - PI) < std::numeric_limits<double>::epsilon())
+       std::abs(x - PI) < std::numeric_limits<double>::epsilon() ||
+       std::abs(x - 2*PI) < std::numeric_limits<double>::epsilon())
       return 0.;
 
    return std::real(Li1(exp(i*x)));
