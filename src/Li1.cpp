@@ -7,7 +7,6 @@
 
 #include "Li1.hpp"
 #include <cmath>
-#include <limits>
 
 namespace polylogarithm {
 
