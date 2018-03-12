@@ -7,6 +7,7 @@
 #include <vector>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
+#define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
 
 std::vector<double> float_range(
    double start, double stop, std::size_t number_of_steps)
@@ -47,5 +48,15 @@ TEST_CASE("test_kummer_relation")
 
       CHECK_CLOSE(std::real(lhs), std::real(rhs), 1e-15);
       CHECK_CLOSE(std::imag(lhs), std::imag(rhs), 1e-15);
+   }
+}
+
+TEST_CASE("test_roots")
+{
+   using namespace polylogarithm;
+   const double pi  = M_PI;
+
+   for (int k = -10; k < 10; k++) {
+      CHECK_SMALL(Cl2(k*pi), 1e-10);
    }
 }

@@ -38,3 +38,13 @@ TEST_CASE("test_duplication_formula")
       CHECK_SMALL(rel, 1e-8);
    }
 }
+
+TEST_CASE("test_roots")
+{
+   using namespace polylogarithm;
+   const double pi  = M_PI;
+
+   for (int k = -10; k < 10; k++) {
+      CHECK_SMALL(Cl4(k*pi), 1e-10);
+   }
+}
