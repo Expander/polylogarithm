@@ -26,10 +26,13 @@ std::vector<double> float_range(
 TEST_CASE("test_special_values")
 {
    using namespace polylogarithm;
-   const double pi  = M_PI;
+   const double pi = M_PI;
+   const double z5 = 1.036927755143370;
 
    // Cl_5(Pi/2) = -((15 Zeta[5])/512)
-   CHECK_CLOSE(Cl5(pi/2.), -0.03037874282646592, 1e-15);
+   CHECK_CLOSE(Cl5(pi/2.), -15*z5/512., 1e-15);
+   CHECK_CLOSE(Cl5(0.), z5, 1e-15);
+   CHECK_CLOSE(Cl5(2*pi), z5, 1e-15);
 }
 
 TEST_CASE("test_duplication_formula")
@@ -42,15 +45,5 @@ TEST_CASE("test_duplication_formula")
    for (const auto t: thetas) {
       const auto rel = Cl5(2*t) - (16*Cl5(t) + 16*Cl5(pi - t));
       CHECK_SMALL(rel, 1e-8);
-   }
-}
-
-TEST_CASE("test_roots")
-{
-   using namespace polylogarithm;
-   const double pi  = M_PI;
-
-   for (int k = -10; k < 10; k++) {
-      CHECK_SMALL(Cl5(k*pi), 1e-10);
    }
 }
