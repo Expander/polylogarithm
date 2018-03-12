@@ -10,6 +10,9 @@
 
 namespace polylogarithm {
 
+/// Clausen function with n=6
+double Cl6(double);
+
 /// complex polylogarithm with n=5
 std::complex<double> Li6(const std::complex<double>&);
 

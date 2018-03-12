@@ -26,6 +26,19 @@ namespace {
 } // anonymous namespace
 
 /**
+ * @brief Clausen function \f$\mathrm{Cl}_4(\theta) = \mathrm{Im}(\mathrm{Li}_4(e^{i\theta}))\f$
+ * @param x real angle
+ * @return \f$\mathrm{Cl}_4(\theta)\f$
+ */
+double Cl4(double x)
+{
+   using std::exp;
+   const std::complex<double> i(0.,1.);
+
+   return std::imag(Li4(exp(i*x)));
+}
+
+/**
  * @brief Complex polylogarithm \f$\mathrm{Li}_4(z)\f$
  * @param z complex argument
  * @return \f$\mathrm{Li}_4(z)\f$

@@ -26,6 +26,19 @@ namespace {
 } // anonymous namespace
 
 /**
+ * @brief Clausen function \f$\mathrm{Cl}_6(\theta) = \mathrm{Im}(\mathrm{Li}_6(e^{i\theta}))\f$
+ * @param x real angle
+ * @return \f$\mathrm{Cl}_6(\theta)\f$
+ */
+double Cl6(double x)
+{
+   using std::exp;
+   const std::complex<double> i(0.,1.);
+
+   return std::imag(Li6(exp(i*x)));
+}
+
+/**
  * @brief Complex polylogarithm \f$\mathrm{Li}_6(z)\f$
  * @param z complex argument
  * @return \f$\mathrm{Li}_6(z)\f$

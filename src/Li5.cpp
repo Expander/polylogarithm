@@ -26,6 +26,19 @@ namespace {
 } // anonymous namespace
 
 /**
+ * @brief Clausen function \f$\mathrm{Cl}_5(\theta) = \mathrm{Re}(\mathrm{Li}_5(e^{i\theta}))\f$
+ * @param x real angle
+ * @return \f$\mathrm{Cl}_5(\theta)\f$
+ */
+double Cl5(double x)
+{
+   using std::exp;
+   const std::complex<double> i(0.,1.);
+
+   return std::real(Li5(exp(i*x)));
+}
+
+/**
  * @brief Complex polylogarithm \f$\mathrm{Li}_5(z)\f$
  * @param z complex argument
  * @return \f$\mathrm{Li}_5(z)\f$
