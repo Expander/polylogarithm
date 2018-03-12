@@ -7,6 +7,7 @@
 
 #include "Li1.hpp"
 #include <cmath>
+#include <limits>
 
 namespace polylogarithm {
 
@@ -18,6 +19,24 @@ namespace {
       return std::log(z);
    }
 } // anonymous namespace
+
+/**
+ * @brief Clausen function \f$\mathrm{Cl}_1(\theta) = \mathrm{Re}(\mathrm{Li}_1(e^{i\theta}))\f$
+ * @param x real angle
+ * @return \f$\mathrm{Cl}_1(\theta)\f$
+ */
+double Cl1(double x)
+{
+   using std::exp;
+   const double PI = 3.1415926535897932384626433832795;
+   const std::complex<double> i(0.,1.);
+
+   if (std::abs(x) < std::numeric_limits<double>::epsilon() ||
+       std::abs(x - PI) < std::numeric_limits<double>::epsilon())
+      return 0.;
+
+   return std::real(Li1(exp(i*x)));
+}
 
 /**
  * @brief Real polylogarithm \f$\mathrm{Li}_1(x) = -\log(1-x)\f$

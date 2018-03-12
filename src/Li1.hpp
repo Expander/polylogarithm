@@ -10,6 +10,9 @@
 
 namespace polylogarithm {
 
+/// Clausen function with n=1
+double Cl1(double);
+
 /// real polylogarithm with n=1
 double Li1(double);
 

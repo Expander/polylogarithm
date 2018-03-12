@@ -14,6 +14,7 @@ if(GSL_FOUND)
     add_test(NAME ${name} COMMAND ${name})
   endfunction()
 
+  add_polylogarithm_test(test_Cl1)
   add_polylogarithm_test(test_Cl2)
   add_polylogarithm_test(test_Cl3)
   add_polylogarithm_test(test_Li0)
