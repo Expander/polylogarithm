@@ -26,9 +26,7 @@ std::vector<double> float_range(
 TEST_CASE("test_duplication_formula")
 {
    using namespace polylogarithm;
-   using std::exp;
    const double pi  = M_PI;
-   const std::complex<double> i(0.,1.);
 
    const auto thetas = float_range(0., pi, 100);
 
