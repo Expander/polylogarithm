@@ -1,5 +1,4 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
-#define DOCTEST_CONFIG_ASSERTION_PARAMETERS_BY_VALUE 1
 
 #include "doctest.h"
 #include "Li3.hpp"
