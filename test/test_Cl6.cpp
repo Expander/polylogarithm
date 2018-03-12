@@ -23,6 +23,15 @@ std::vector<double> float_range(
    return result;
 }
 
+TEST_CASE("test_special_values")
+{
+   using namespace polylogarithm;
+   const double pi  = M_PI;
+
+   // Cl_6(Pi/2) = DirichletBeta(6)
+   CHECK_CLOSE(Cl6(pi/2.), 0.998685222218438135441600787860206549678364546126514411, 1e-15);
+}
+
 TEST_CASE("test_duplication_formula")
 {
    using namespace polylogarithm;

@@ -23,6 +23,15 @@ std::vector<double> float_range(
    return result;
 }
 
+TEST_CASE("test_special_values")
+{
+   using namespace polylogarithm;
+   const double pi  = M_PI;
+
+   // Cl_5(Pi/2) = -((15 Zeta[5])/512)
+   CHECK_CLOSE(Cl5(pi/2.), -0.03037874282646592, 1e-15);
+}
+
 TEST_CASE("test_duplication_formula")
 {
    using namespace polylogarithm;
