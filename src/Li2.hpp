@@ -10,7 +10,7 @@
 
 namespace polylogarithm {
 
-// Clausen function with n=2
+/// Clausen function with n=2
 double Cl2(double);
 
 /// real polylogarithm with n=2 (dilogarithm)

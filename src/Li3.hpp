@@ -10,6 +10,9 @@
 
 namespace polylogarithm {
 
+/// Clausen function with n=3
+double Cl3(double);
+
 /// complex polylogarithm with n=3 (trilogarithm)
 std::complex<double> Li3(const std::complex<double>&);
 

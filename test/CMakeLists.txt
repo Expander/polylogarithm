@@ -15,6 +15,7 @@ if(GSL_FOUND)
   endfunction()
 
   add_polylogarithm_test(test_Cl2)
+  add_polylogarithm_test(test_Cl3)
   add_polylogarithm_test(test_Li0)
   add_polylogarithm_test(test_Li1)
   add_polylogarithm_test(test_Li2)
