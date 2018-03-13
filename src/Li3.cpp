@@ -7,10 +7,13 @@
 
 #include "Li3.hpp"
 #include <cmath>
+#include <limits>
 
 namespace polylogarithm {
 
 namespace {
+   const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
+
    template <typename T>
    T pow3(T x) noexcept { return x*x*x; }
 
@@ -19,6 +22,13 @@ namespace {
       if (std::real(z) == 0.0) z.real(0.0);
       if (std::imag(z) == 0.0) z.imag(0.0);
       return std::log(z);
+   }
+
+   bool is_close(const std::complex<double>& a, const std::complex<double>& b,
+                 double eps = epsilon)
+   {
+      return std::abs(std::real(a) - std::real(b)) < eps &&
+             std::abs(std::imag(a) - std::imag(b)) < eps;
    }
 } // anonymous namespace
 
@@ -76,13 +86,13 @@ std::complex<double> Li3(const std::complex<double>& z)
       -5.7274216061372596844727445803306e-32, -6.1347132137964235825854929689777e-33
    };
 
-   if (z == 0.)
+   if (is_close(z, 0.))
       return 0.;
-   if (z == 1.)
+   if (is_close(z, 1.))
       return zeta3;
-   if (z == -1.)
+   if (is_close(z, -1.))
       return -0.75*zeta3;
-   if (z == 0.5) {
+   if (is_close(z, 0.5)) {
       const double ln2 = std::log(2.);
       const double ln23 = pow3(ln2);
       return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.;

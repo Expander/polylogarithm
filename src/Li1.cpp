@@ -27,14 +27,7 @@ namespace {
 double Cl1(double x)
 {
    using std::exp;
-   const double PI = 3.1415926535897932384626433832795;
    const std::complex<double> i(0.,1.);
-
-   while (x >= 2*PI)
-      x -= 2*PI;
-
-   while (x < 0.)
-      x += 2*PI;
 
    return std::real(Li1(exp(i*x)));
 }

@@ -12,6 +12,8 @@
 namespace polylogarithm {
 
 namespace {
+   const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
+
    template <typename T>
    T sqr(T x) noexcept { return x*x; }
 
@@ -23,6 +25,13 @@ namespace {
       if (std::real(z) == 0.0) z.real(0.0);
       if (std::imag(z) == 0.0) z.imag(0.0);
       return std::log(z);
+   }
+
+   bool is_close(const std::complex<double>& a, const std::complex<double>& b,
+                 double eps = epsilon)
+   {
+      return std::abs(std::real(a) - std::real(b)) < eps &&
+             std::abs(std::imag(a) - std::imag(b)) < eps;
    }
 } // anonymous namespace
 
@@ -88,11 +97,11 @@ std::complex<double> Li6(const std::complex<double>& z)
       -5.0149583574163009207446958541576e-32, -2.1286737504392761053563380691739e-33
    };
 
-   if (z == 0.)
+   if (is_close(z, 0.))
       return 0.;
-   if (z == 1.)
+   if (is_close(z, 1.))
       return zeta6;
-   if (z == -1.)
+   if (is_close(z, -1.))
       return -31.*zeta6/32.;
 
    std::complex<double> u, r;
