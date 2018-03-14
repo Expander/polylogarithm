@@ -14,11 +14,13 @@ namespace polylogarithm {
 namespace {
    const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
 
-   template <typename T>
-   T sqr(T x) noexcept { return x*x; }
-
-   template <typename T>
-   T pow4(T x) noexcept { return x*x*x*x; }
+   template <typename T> T pow2(T x) noexcept { return x*x; }
+   template <typename T> T pow3(T x) noexcept { return x*x*x; }
+   template <typename T> T pow4(T x) noexcept { return x*x*x*x; }
+   template <typename T> T pow5(T x) noexcept { return x*x*x*x*x; }
+   template <typename T> T pow6(T x) noexcept { return x*x*x*x*x*x; }
+   template <typename T> T pow7(T x) noexcept { return x*x*x*x*x*x*x; }
+   template <typename T> T pow8(T x) noexcept { return x*x*x*x*x*x*x*x; }
 
    // converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept {
@@ -95,6 +97,25 @@ std::complex<double> Li5(const std::complex<double>& z)
       return 0.;
    if (is_close(z, 1.))
       return zeta5;
+   if (is_close(z, 1., 0.02)) {
+      const std::complex<double> I(0.,1.);
+      const std::complex<double> IPI(0.,PI);
+      const std::complex<double> zm1 = z - 1.;
+      const std::complex<double> lzm1 = clog(zm1);
+      const double zeta3 = 1.2020569031595942853997381615114;
+      const double ceil = std::arg(zm1) > 0. ? 1. : 0.;
+
+      return zeta5 + PI4*zm1/90.
+         + pow2(zm1)*(-PI4/180. + zeta3/2.)
+         + pow3(zm1)*(15.*PI2 + 2.*PI4 - 270.*zeta3)/540.
+         + pow4(zm1)*(-lzm1/24. + (125. + 60.*(-1 + 2*ceil)*IPI - 4.*PI2*(15 + PI2) + 660.*zeta3)/1440.)
+         + pow5(zm1)*(lzm1/12. + (-565. + 300.*(1 - 2*ceil)*IPI + 175.*PI2 + 8.*PI4 - 1500.*zeta3)/3600.)
+         + pow6(zm1)*(-17./144.*lzm1 + (1779. + 1020.*(-1 + 2*ceil)*IPI - 450.*PI2 - 16.*PI4 + 3288.*zeta3)/8640.)
+         + pow7(zm1)*(-0.23923611111111112 + 7./48.*(1 - 2*ceil)*IPI + 7./48.*lzm1 + 29./540.*PI2
+                      + PI4/630. - 7./20.*zeta3)
+         + pow8(zm1)*(-967./5760.*lzm1 + (1266861. + 812280.*(-1 + 2*ceil)*IPI
+                                          - 560.*PI2*(469 + 12*PI2) + 1568160.*zeta3)/4.8384e6);
+   }
    if (is_close(z, -1.))
       return -15.*zeta5/16.;
 
@@ -104,7 +125,7 @@ std::complex<double> Li5(const std::complex<double>& z)
       u = -clog(1. - z);
    } else { // az > 1.
       const std::complex<double> lnz  = clog(-z);
-      const std::complex<double> lnz2 = sqr(lnz);
+      const std::complex<double> lnz2 = pow2(lnz);
       const std::complex<double> lnz4 = pow4(lnz);
       u = -clog(1. - 1./z);
       sum = -1./360.*lnz*(7*PI4 + 10.*PI2*lnz2 + 3.*lnz4);
