@@ -14,14 +14,24 @@ namespace polylogarithm {
 namespace {
    const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
 
-   template <typename T>
-   T pow3(T x) noexcept { return x*x*x; }
+   template <typename T> T pow2(T x) noexcept { return x*x; }
+   template <typename T> T pow3(T x) noexcept { return x*x*x; }
+   template <typename T> T pow4(T x) noexcept { return x*x*x*x; }
+   template <typename T> T pow5(T x) noexcept { return x*x*x*x*x; }
+   template <typename T> T pow6(T x) noexcept { return x*x*x*x*x*x; }
+   template <typename T> T pow7(T x) noexcept { return x*x*x*x*x*x*x; }
+   template <typename T> T pow8(T x) noexcept { return x*x*x*x*x*x*x*x; }
 
    // converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept {
       if (std::real(z) == 0.0) z.real(0.0);
       if (std::imag(z) == 0.0) z.imag(0.0);
       return std::log(z);
+   }
+
+   bool is_close(double a, double b, double eps = epsilon)
+   {
+      return std::abs(a - b) < eps;
    }
 
    bool is_close(const std::complex<double>& a, const std::complex<double>& b,
@@ -90,6 +100,23 @@ std::complex<double> Li3(const std::complex<double>& z)
       return 0.;
    if (is_close(z, 1.))
       return zeta3;
+   if (is_close(std::real(z), 1., 0.02) && is_close(std::imag(z), 0., 0.01)) {
+      const std::complex<double> I(0.,1.);
+      const std::complex<double> IPI(0.,PI);
+      const std::complex<double> zm1 = z - 1.;
+      const std::complex<double> lzm1 = clog(zm1);
+      const double ceil = std::arg(zm1) > 0. ? 1. : 0.;
+
+      return zeta3
+         + PI2*zm1/6.
+         + (ceil*IPI - lzm1/2. - 1./12.*pow2(3.*I + PI))*pow2(zm1)
+         + (lzm1/2. + 1./36.*(-21. - 18.*(-1 + 2*ceil)*IPI + 2*PI2))*pow3(zm1)
+         + (-11./24.*lzm1 + 1./288.*(131. + 132.*(-1 + 2*ceil)*IPI - 12*PI2))*pow4(zm1)
+         + (5./12.*lzm1 + 1./720.*(-265. - 300.*(-1 + 2*ceil)*IPI + 24*PI2))*pow5(zm1)
+         + (-137./360.*lzm1 + 1./7200.*(2213. + 2740.*(-1 + 2*ceil)*IPI - 200*PI2))*pow6(zm1)
+         + (-947./3600. - 7./20.*(-1 + 2*ceil)*IPI + 7./20.*lzm1 + PI2/42.)*pow7(zm1)
+         + (647707./2822400. + 363.*(-1 + 2*ceil)*IPI/1120. - 363./1120.*lzm1 - PI2/48.)*pow8(zm1);
+   }
    if (is_close(z, -1.))
       return -0.75*zeta3;
    if (is_close(z, 0.5)) {
