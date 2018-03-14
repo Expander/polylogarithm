@@ -12590,7 +12590,7 @@ TEST_CASE("test_values_close_to_unity")
 
    for (const auto v: values_close_to_unity) {
       INFO(v.first);
-      CHECK_CLOSE_COMPLEX(Li3(v.first), v.second, 1e-4);
+      CHECK_CLOSE_COMPLEX(Li3(v.first), v.second, 1e-14);
    }
 }
 

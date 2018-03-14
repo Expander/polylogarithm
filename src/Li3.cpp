@@ -95,7 +95,7 @@ std::complex<double> Li3(const std::complex<double>& z)
       return 0.;
    if (is_close(z, 1.))
       return zeta3;
-   if (is_close(z, 1., 0.01)) {
+   if (is_close(z, 1., 0.02)) {
       const std::complex<double> I(0.,1.);
       const std::complex<double> IPI(0.,PI);
       const std::complex<double> zm1 = z - 1.;
