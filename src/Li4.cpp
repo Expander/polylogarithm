@@ -14,11 +14,14 @@ namespace polylogarithm {
 namespace {
    const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
 
-   template <typename T>
-   T sqr(T x) noexcept { return x*x; }
-
-   template <typename T>
-   T pow4(T x) noexcept { return x*x*x*x; }
+   template <typename T> T sqr(T x) noexcept { return x*x; }
+   template <typename T> T pow2(T x) noexcept { return x*x; }
+   template <typename T> T pow3(T x) noexcept { return x*x*x; }
+   template <typename T> T pow4(T x) noexcept { return x*x*x*x; }
+   template <typename T> T pow5(T x) noexcept { return x*x*x*x*x; }
+   template <typename T> T pow6(T x) noexcept { return x*x*x*x*x*x; }
+   template <typename T> T pow7(T x) noexcept { return x*x*x*x*x*x*x; }
+   template <typename T> T pow8(T x) noexcept { return x*x*x*x*x*x*x*x; }
 
    // converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept {
@@ -99,6 +102,25 @@ std::complex<double> Li4(const std::complex<double>& z)
       return 0.;
    if (is_close(z, 1.))
       return zeta4;
+   if (is_close(z, 1., 0.02)) {
+      const std::complex<double> I(0.,1.);
+      const std::complex<double> IPI(0.,PI);
+      const std::complex<double> zm1 = z - 1.;
+      const std::complex<double> lzm1 = clog(zm1);
+      const double zeta3 = 1.2020569031595942853997381615114;
+      const double ceil = std::arg(zm1) > 0. ? 1. : 0.;
+
+      return zeta4
+         + zm1*zeta3
+         + pow2(zm1)*(PI2 - 6*zeta3)/12.
+         + pow3(zm1)*(-lzm1/6. + (11. + 6.*(-1 + 2*ceil)*IPI - 3*PI2 + 12*zeta3)/36.)
+         + pow4(zm1)*(lzm1/4. + (-57. + (36 - 72*ceil)*IPI + 11*PI2 - 36*zeta3)/144.)
+         + pow5(zm1)*(-7.*lzm1/24. + (599. + 420.*(-1 + 2*ceil)*IPI - 100*PI2 + 288*zeta3)/1440.)
+         + pow6(zm1)*(-0.4114583333333333 + 5./16.*(1 - 2*ceil)*IPI + 5.*lzm1/16. + 137.*PI2/2160. - zeta3/6.)
+         + pow7(zm1)*(0.3979761904761905 + 29./90.*(-1 + 2*ceil)*IPI - 29.*lzm1/90. - 7.*PI2/120. + zeta3/7.)
+         + pow8(zm1)*(469.*lzm1/1440. + (-131320.*(-1 + 2*ceil)*IPI + 21780*PI2 -
+                                          7*(21977 + 7200*zeta3))/403200.);
+   }
    if (is_close(z, -1.))
       return -7.*PI4/720.;
 
