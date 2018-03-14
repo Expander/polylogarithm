@@ -14,7 +14,6 @@ namespace polylogarithm {
 namespace {
    const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
 
-   template <typename T> T sqr(T x) noexcept { return x*x; }
    template <typename T> T pow2(T x) noexcept { return x*x; }
    template <typename T> T pow3(T x) noexcept { return x*x*x; }
    template <typename T> T pow4(T x) noexcept { return x*x*x*x; }
@@ -131,7 +130,7 @@ std::complex<double> Li4(const std::complex<double>& z)
       u = -clog(1. - z);
    } else { // az > 1.
       const std::complex<double> lnz  = clog(-z);
-      const std::complex<double> lnz2 = sqr(lnz);
+      const std::complex<double> lnz2 = pow2(lnz);
       const std::complex<double> lnz4 = pow4(lnz);
       u = -clog(1. - 1./z);
       r = 1./360.*(-7*PI4 - 30.*PI2*lnz2 - 15.*lnz4);
