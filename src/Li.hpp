@@ -10,6 +10,9 @@
 
 namespace polylogarithm {
 
+/// Clausen function for arbitrary integer n
+double Cl(long, double);
+
 /// complex polylogarithm for arbitrary integer n
 std::complex<double> Li(long n, const std::complex<double>&);
 

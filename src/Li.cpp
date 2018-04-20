@@ -267,6 +267,31 @@ namespace {
 } // anonymous namespace
 
 /**
+ * @brief Clausen function \f$\mathrm{Cl}_n(\theta)\f$
+ * @param n degree of Clausen function
+ * @param x real angle
+ * @return \f$\mathrm{Cl}_n(\theta)\f$
+ */
+double Cl(long n, double x)
+{
+   using std::exp;
+   const double PI = 3.1415926535897932384626433832795;
+   const std::complex<double> i(0.,1.);
+   const std::complex<double> li = Li(n, exp(i*x));
+
+   while (x >= 2*PI)
+      x -= 2*PI;
+
+   while (x < 0.)
+      x += 2*PI;
+
+   if (is_even(n))
+      return std::imag(li);
+
+   return std::real(li);
+}
+
+/**
  * @brief Complex polylogarithm \f$\mathrm{Li}_n(z)\f$
  * @param n degree of the polylogarithm
  * @param z complex argument
