@@ -1,4 +1,5 @@
 add_library(polylog
+  Li.cpp
   Li0.cpp
   Li1.cpp
   Li2.cpp
