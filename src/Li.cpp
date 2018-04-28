@@ -88,7 +88,7 @@ namespace {
    {
       double result = 1.;
 
-      // C(n, k) = C(n, n-k)
+      // (n, k) = (n, n-k)
       if (k > n - k)
          k = n - k;
 
