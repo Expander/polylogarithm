@@ -68,8 +68,8 @@ namespace {
    bool is_close(const std::complex<double>& a, const std::complex<double>& b,
                  double eps = epsilon)
    {
-      return std::abs(std::real(a) - std::real(b)) < eps &&
-             std::abs(std::imag(a) - std::imag(b)) < eps;
+      return is_close(std::real(a), std::real(b), eps) &&
+             is_close(std::imag(a), std::imag(b), eps);
    }
 
    bool is_even(long n) { return n % 2 == 0; }
