@@ -160,7 +160,7 @@ std::complex<double> Li2(const std::complex<double>& z)
    if (iz == 0.) {
       if (rz <= 1.)
          return {Li2(rz), 0.};
-      if (rz > 1.)
+      else // (rz > 1.)
          return {Li2(rz), -PI*std::log(rz)};
    } else if (az < std::numeric_limits<double>::epsilon()) {
       return z;
