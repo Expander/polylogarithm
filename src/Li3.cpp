@@ -115,8 +115,8 @@ std::complex<double> Li3(const std::complex<double>& z)
    if (is_close(z, -1.))
       return -0.75*zeta3;
    if (is_close(z, 0.5)) {
-      const double ln2 = std::log(2.);
-      const double ln23 = pow3(ln2);
+      const double ln2  = 0.6931471805599453; // ln(2)
+      const double ln23 = 0.3330246519889295; // ln(2)^3
       return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.;
    }
 
