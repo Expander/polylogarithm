@@ -2,9 +2,11 @@
 
 #include "doctest.h"
 #include "Li2.hpp"
+#include "bench.hpp"
 #include <cmath>
 #include <complex>
 #include <gsl/gsl_sf_dilog.h>
+#include <iostream>
 #include <random>
 #include <vector>
 
@@ -12076,32 +12078,6 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
    return {li2_gsl_re.val, li2_gsl_im.val};
 }
 
-std::vector<double> generate_random_doubles(int n, double start, double stop)
-{
-   std::minstd_rand gen;
-   std::uniform_real_distribution<double> dist(start, stop);
-
-   std::vector<double> v(n);
-   std::generate(begin(v), end(v),
-                 [&dist,&gen](){ return dist(gen); });
-
-   return v;
-}
-
-std::vector<std::complex<double>> generate_random_complexes(
-   int n, double start, double stop)
-{
-   const auto reals = generate_random_doubles(n, start, stop);
-   const auto imags = generate_random_doubles(n, start, stop);
-
-   std::vector<std::complex<double>> v(n);
-
-   for (int i = 0; i < n; i++)
-      v[i] = std::complex<double>(reals[i], imags[i]);
-
-   return v;
-}
-
 const auto Relation_1 = [](std::complex<double> z) {
    using polylogarithm::Li2;
    return Li2(z) + Li2(-z) - Li2(z*z)/2.;
@@ -12236,6 +12212,8 @@ TEST_CASE("test_Mathematica_values_close_to_unity")
 
 TEST_CASE("test_real_random_values")
 {
+   using namespace polylogarithm::bench;
+
    const auto values = generate_random_doubles(10000, -10, 10);
 
    for (auto v: values) {
@@ -12259,6 +12237,8 @@ TEST_CASE("test_complex_fixed_values")
 
 TEST_CASE("test_complex_random_values")
 {
+   using namespace polylogarithm::bench;
+
    const auto values = generate_random_complexes(10000, -10, 10);
 
    for (auto v: values) {
@@ -12279,4 +12259,36 @@ TEST_CASE("test_relations")
       CHECK_SMALL(Relation_4(v), 1e-9);
       CHECK_SMALL(Relation_5(v), 1e-9);
    }
+}
+
+TEST_CASE("test_benchmark_real_Li2" * doctest::skip(true))
+{
+   using namespace polylogarithm::bench;
+
+   const std::size_t N = 1000000;
+   const auto values = generate_random_doubles(N, -10, 10);
+   double total_time = 0.;
+
+   for (const auto& v: values) {
+      total_time += time([v] { return polylogarithm::Li2(v); });
+   }
+
+   std::cout << "Evaluation of real Li2 " << N << " times took: "
+             << total_time*1000. << "ms\n";
+}
+
+TEST_CASE("test_benchmark_complex_Li2" * doctest::skip(true))
+{
+   using namespace polylogarithm::bench;
+
+   const std::size_t N = 1000000;
+   const auto values = generate_random_complexes(N, -10, 10);
+   double total_time = 0.;
+
+   for (const auto& v: values) {
+      total_time += time([v] { return polylogarithm::Li2(v); });
+   }
+
+   std::cout << "Evaluation of complex Li2 " << N << " times took: "
+             << total_time*1000. << "ms\n";
 }
