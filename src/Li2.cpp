@@ -198,18 +198,30 @@ std::complex<double> Li2(const std::complex<double>& z)
 
    // the dilogarithm
    const std::complex<double> cz2(sqr(cz));
-   std::complex<double> sumC;
+   const std::complex<double> sum =
+      cz +
+      cz2 * (bf[0] +
+      cz  * (bf[1] +
+      cz2 * (bf[2] +
+      cz2 * (bf[3] +
+      cz2 * (bf[4] +
+      cz2 * (bf[5] +
+      cz2 * (bf[6] +
+      cz2 * (bf[7] +
+      cz2 * (bf[8] +
+      cz2 * (bf[9] +
+      cz2 * (bf[10] +
+      cz2 * (bf[11] +
+      cz2 * (bf[12] +
+      cz2 * (bf[13] +
+      cz2 * (bf[14] +
+      cz2 * (bf[15] +
+      cz2 * (bf[16] +
+      cz2 * (bf[17] +
+      cz2 * (bf[18] +
+      cz2 * (bf[19]))))))))))))))))))));
 
-   for (int i1 = 2; i1 < N; i1++)
-      sumC = cz2 * (sumC + bf[N + 1 - i1]);
-
-   // lowest order terms w/ different powers
-   sumC = cz + cz2 * (bf[0] + cz * (bf[1] + sumC));
-
-   const std::complex<double> result
-      = double(jsgn) * sumC + cy + ipi12 * PI * PI / 12.;
-
-   return result;
+   return double(jsgn) * sum + cy + ipi12 * PI * PI / 12.;
 }
 
 } // namespace polylogarithm
