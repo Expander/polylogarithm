@@ -12,6 +12,15 @@
 namespace polylogarithm {
 
 class Stopwatch {
+private:
+   using microseconds_t = std::chrono::duration<int,std::micro>;
+
+   microseconds_t::rep get_ticks() const {
+      microseconds_t duration(std::chrono::duration_cast<microseconds_t>(
+                                 stop_point - start_point));
+      return duration.count();
+   }
+
 public:
    void start() {
       start_point = std::chrono::high_resolution_clock::now();
@@ -22,11 +31,11 @@ public:
    }
 
    double get_time_in_seconds() const {
-      typedef std::chrono::duration<int,std::micro> microseconds_t;
-      microseconds_t duration(std::chrono::duration_cast<microseconds_t>(
-                                 stop_point - start_point));
-      return duration.count() * 0.000001;
+      return get_ticks() * 0.000001;
+   }
 
+   double get_time_in_milliseconds() const {
+      return get_ticks() * 0.001;
    }
 
 private:

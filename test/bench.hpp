@@ -43,13 +43,13 @@ std::vector<std::complex<double>> generate_random_complexes(
 }
 
 template <class F>
-double time(F&& f)
+double time_in_milliseconds(F&& f)
 {
    polylogarithm::Stopwatch sw;
    sw.start();
    f();
    sw.stop();
-   return sw.get_time_in_seconds();
+   return sw.get_time_in_milliseconds();
 }
 
 } // namespace bench

@@ -9,14 +9,14 @@ void bench_Li3(std::size_t N, double min, double max)
 
    const auto values = generate_random_complexes(N, min, max);
 
-   const double total_time = time([&values] {
+   const double total_time = time_in_milliseconds([&values] {
          for (const auto& v: values) {
             volatile auto li = polylogarithm::Li3(v);
          }
       });
 
    std::cout << "Evaluation of complex Li3 " << N << " times took: "
-             << total_time*1000. << "ms\n";
+             << total_time << "ms\n";
 }
 
 
