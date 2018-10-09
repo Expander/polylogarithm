@@ -223,12 +223,14 @@ namespace {
    std::complex<double> Li_naive_sum(long n, const std::complex<double>& z)
    {
       std::complex<double> sum, sum_old;
+      std::complex<double> pz(1.,0.);
       long k = 0;
 
       do {
          k++;
+         pz *= z;
          sum_old = sum;
-         sum += std::pow(z,k)/std::pow(k,n);
+         sum += pz/std::pow(k,n);
       } while (!is_close(sum, sum_old) &&
                k < std::numeric_limits<long>::max() - 2);
 
