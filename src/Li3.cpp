@@ -16,11 +16,6 @@ namespace {
 
    template <typename T> T pow2(T x) noexcept { return x*x; }
    template <typename T> T pow3(T x) noexcept { return x*x*x; }
-   template <typename T> T pow4(T x) noexcept { return x*x*x*x; }
-   template <typename T> T pow5(T x) noexcept { return x*x*x*x*x; }
-   template <typename T> T pow6(T x) noexcept { return x*x*x*x*x*x; }
-   template <typename T> T pow7(T x) noexcept { return x*x*x*x*x*x*x; }
-   template <typename T> T pow8(T x) noexcept { return x*x*x*x*x*x*x*x; }
 
    // converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept {
