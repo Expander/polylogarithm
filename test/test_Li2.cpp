@@ -12130,7 +12130,7 @@ TEST_CASE("test_real_fixed_values")
       const double li2 = polylogarithm::Li2(x);
       const double li2_gsl = gsl_Li2(x);
 
-      CHECK_CLOSE(li2, li2_gsl, 1e-10);
+      CHECK_CLOSE(li2, li2_gsl, 1e-15);
    }
 }
 
@@ -12138,7 +12138,7 @@ TEST_CASE("test_special_values")
 {
    using polylogarithm::Li2;
    using std::log;
-   const double eps = 1e-10;
+   const double eps = 1e-15;
    const double pi  = M_PI;
    const double pi2 = sqr(pi);
    const double ln2 = std::log(2.);
@@ -12198,7 +12198,7 @@ TEST_CASE("test_Mathematica_values")
    using polylogarithm::Li2;
 
    for (const auto v: mma_values)
-      CHECK_CLOSE_COMPLEX(Li2(v.first), v.second, 1e-14);
+      CHECK_CLOSE_COMPLEX(Li2(v.first), v.second, 1e-15);
 }
 
 TEST_CASE("test_Mathematica_values_close_to_unity")
@@ -12206,7 +12206,7 @@ TEST_CASE("test_Mathematica_values_close_to_unity")
    using polylogarithm::Li2;
 
    for (const auto v: mma_values_close_to_unity)
-      CHECK_CLOSE_COMPLEX(Li2(v.first), v.second, 1e-14);
+      CHECK_CLOSE_COMPLEX(Li2(v.first), v.second, 1e-15);
 }
 
 TEST_CASE("test_real_random_values")
@@ -12219,7 +12219,7 @@ TEST_CASE("test_real_random_values")
       const double li2 = polylogarithm::Li2(v);
       const double li2_gsl = gsl_Li2(v);
 
-      CHECK_CLOSE(li2, li2_gsl, 1e-10);
+      CHECK_CLOSE(li2, li2_gsl, 1e-15);
    }
 }
 
@@ -12229,8 +12229,8 @@ TEST_CASE("test_complex_fixed_values")
       const std::complex<double> li2 = polylogarithm::Li2(v);
       const std::complex<double> li2_gsl = gsl_Li2(v);
 
-      CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-8);
-      CHECK_CLOSE(std::imag(li2), std::imag(li2_gsl), 1e-8);
+      CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-15);
+      CHECK_CLOSE(std::imag(li2), std::imag(li2_gsl), 1e-15);
    }
 }
 
@@ -12244,18 +12244,18 @@ TEST_CASE("test_complex_random_values")
       const std::complex<double> li2 = polylogarithm::Li2(v);
       const std::complex<double> li2_gsl = gsl_Li2(v);
 
-      CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-8);
-      CHECK_CLOSE(std::imag(li2), std::imag(li2_gsl), 1e-8);
+      CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-13);
+      CHECK_CLOSE(std::imag(li2), std::imag(li2_gsl), 1e-13);
    }
 }
 
 TEST_CASE("test_relations")
 {
    for (const auto v: values) {
-      CHECK_SMALL(Relation_1(v), 1e-9);
-      CHECK_SMALL(Relation_2(v), 1e-9);
-      CHECK_SMALL(Relation_3(v), 1e-9);
-      CHECK_SMALL(Relation_4(v), 1e-9);
-      CHECK_SMALL(Relation_5(v), 1e-9);
+      CHECK_SMALL(Relation_1(v), 1e-15);
+      CHECK_SMALL(Relation_2(v), 1e-15);
+      CHECK_SMALL(Relation_3(v), 1e-15);
+      CHECK_SMALL(Relation_4(v), 1e-15);
+      CHECK_SMALL(Relation_5(v), 1e-15);
    }
 }
