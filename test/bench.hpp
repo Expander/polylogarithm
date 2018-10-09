@@ -8,6 +8,7 @@
 #pragma once
 
 #include "stopwatch.hpp"
+#include <algorithm>
 #include <complex>
 #include <random>
 #include <vector>
