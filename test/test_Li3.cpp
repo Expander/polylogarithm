@@ -4,7 +4,6 @@
 #include "Li3.hpp"
 #include "bench.hpp"
 #include <cmath>
-#include <iostream>
 #include <utility>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
@@ -12605,20 +12604,4 @@ TEST_CASE("test_relations")
       CHECK_SMALL(Relation_2(v.first), 1e-6);
       CHECK_SMALL(Relation_3(v.first), 1e-6);
    }
-}
-
-TEST_CASE("test_benchmark_complex_Li3" * doctest::skip(true))
-{
-   using namespace polylogarithm::bench;
-
-   const std::size_t N = 1000000;
-   const auto values = generate_random_complexes(N, -10, 10);
-   double total_time = 0.;
-
-   for (const auto& v: values) {
-      total_time += time([v] { return polylogarithm::Li3(v); });
-   }
-
-   std::cout << "Evaluation of complex Li3 " << N << " times took: "
-             << total_time*1000. << "ms\n";
 }
