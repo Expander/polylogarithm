@@ -222,7 +222,6 @@ namespace {
    /// Fast convergence for large n >= 12.
    std::complex<double> Li_naive_sum(long n, const std::complex<double>& z)
    {
-      const double eps = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
       std::complex<double> sum, sum_old;
       long k = 0;
 
