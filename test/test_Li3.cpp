@@ -12600,8 +12600,8 @@ TEST_CASE("test_relations")
    using polylogarithm::Li3;
 
    for (const auto v: values) {
-      CHECK_SMALL(Relation_1(v.first), 1e-6);
-      CHECK_SMALL(Relation_2(v.first), 1e-6);
-      CHECK_SMALL(Relation_3(v.first), 1e-6);
+      CHECK_SMALL(Relation_1(v.first), 1e-14);
+      CHECK_SMALL(Relation_2(v.first), 1e-14);
+      CHECK_SMALL(Relation_3(v.first), 1e-14);
    }
 }
