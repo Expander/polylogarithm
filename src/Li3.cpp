@@ -130,8 +130,9 @@ std::complex<double> Li3(const std::complex<double>& z)
    if (std::abs(z) <= 1.) {
       u = -clog(1. - z);
    } else { // az > 1.
+      const auto lmz = clog(-z);
       u = -clog(1. - 1./z);
-      rest = -pow3(clog(-z))/6. - PI2/6.*clog(-z);
+      rest = -pow3(lmz)/6. - PI2/6.*lmz;
    }
 
    return rest +
