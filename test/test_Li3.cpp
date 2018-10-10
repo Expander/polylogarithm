@@ -12582,8 +12582,10 @@ TEST_CASE("test_values")
 {
    using polylogarithm::Li3;
 
-   for (const auto v: values)
+   for (const auto v: values) {
+      INFO(v.first);
       CHECK_CLOSE_COMPLEX(Li3(v.first), v.second, 1e-14);
+   }
 }
 
 TEST_CASE("test_values_close_to_unity")
