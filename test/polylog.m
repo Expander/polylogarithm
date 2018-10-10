@@ -17,3 +17,8 @@ Rem[p_, z_] :=
 (* Series expansion of polylogarithm Li_p(z) up to given order, n <= 0 *)
 Lineg[p_, z_] :=
     Sum[(-z/(1-z))^(k+1) Sum[(-1)^(j+1) Binomial[k, j] (j + 1)^(-p), {j, 0, k}], {k, 0, -p}];
+
+(* Series expansion of trilogarithm Li_3(z) in terms of Log[z] *)
+Trilog[z_, order_:10] := (3 Log[z]^2 - 2 Log[z]^2 Log[-Log[z]] +
+    4 Sum[(Log[z]^k Zeta[3 - k])/k!, {k, 0, 1}] +
+    4 Sum[(Log[z]^k Zeta[3 - k])/k!, {k, 3, order}])/4;

@@ -58,12 +58,13 @@ double Cl3(double x)
  */
 std::complex<double> Li3(const std::complex<double>& z)
 {
-   const double PI    = 3.1415926535897932384626433832795;
+   const double PI    = 3.141592653589793;
    const double PI2   = PI*PI;
-   const double zeta3 = 1.2020569031595942853997381615114;
-   static const int N = 40;
+   const double zeta2 = 1.644934066848226;
+   const double zeta3 = 1.202056903159594;
+   const double inv_e = 0.3678794411714423; // 1/e
 
-   const double bf[N] = {
+   const double bf[40] = {
       1., -3./8., 17./216., -5./576.,
       0.00012962962962962962962962962962963,  0.000081018518518518518518518518518519,
      -3.4193571608537594932152755282007e-6 , -1.3286564625850340136054421768707e-6,
@@ -89,32 +90,29 @@ std::complex<double> Li3(const std::complex<double>& z)
       return 0.;
    if (is_close(z, 1.))
       return zeta3;
-   if (is_close(z, 1., 0.02)) {
-      const std::complex<double> I(0.,1.);
-      const std::complex<double> IPI(0.,PI);
-      const std::complex<double> zm1 = z - 1.;
-      const std::complex<double> lzm1 = clog(zm1);
-      const double ceil = std::arg(zm1) > 0. ? 1. : 0.;
-      const std::complex<double> cs[8] = {
-         PI2/6.,
-         (ceil*IPI - lzm1/2. - 1./12.*pow2(3.*I + PI)),
-         (lzm1/2. + 1./36.*(-21. - 18.*(-1 + 2*ceil)*IPI + 2*PI2)),
-         (-11./24.*lzm1 + 1./288.*(131. + 132.*(-1 + 2*ceil)*IPI - 12*PI2)),
-         (5./12.*lzm1 + 1./720.*(-265. - 300.*(-1 + 2*ceil)*IPI + 24*PI2)),
-         (-137./360.*lzm1 + 1./7200.*(2213. + 2740.*(-1 + 2*ceil)*IPI - 200*PI2)),
-         (-947./3600. - 7./20.*(-1 + 2*ceil)*IPI + 7./20.*lzm1 + PI2/42.),
-         (647707./2822400. + 363.*(-1 + 2*ceil)*IPI/1120. - 363./1120.*lzm1 - PI2/48.)
+   if (is_close(z, 1., inv_e)) {
+      const auto u  = clog(z);
+      const auto u2 = u*u;
+      const auto u3 = u*u2;
+      const auto c0 = zeta3 + zeta2*u - u3/12.;
+      const auto c1 = 0.25 * (3.0 - 2.0*clog(-u));
+
+      const std::complex<double> cs[7] = {
+         -3.472222222222222e-03, 1.157407407407407e-05,
+         -9.841899722852104e-08, 1.148221634332745e-09,
+         -1.581572499080917e-11, 2.419500979252515e-13,
+         -3.982897776989488e-15
       };
 
-      return zeta3 +
-         zm1 * (cs[0] +
-         zm1 * (cs[1] +
-         zm1 * (cs[2] +
-         zm1 * (cs[3] +
-         zm1 * (cs[4] +
-         zm1 * (cs[5] +
-         zm1 * (cs[6] +
-         zm1 * (cs[7]))))))));
+      return c0 +
+         u2 * (c1 +
+         u2 * (cs[0] +
+         u2 * (cs[1] +
+         u2 * (cs[2] +
+         u2 * (cs[3] +
+         u2 * (cs[4] +
+         u2 * (cs[5] +
+         u2 * (cs[6]))))))));
    }
    if (is_close(z, -1.))
       return -0.75*zeta3;
