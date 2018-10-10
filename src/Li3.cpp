@@ -15,7 +15,6 @@ namespace {
    const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
 
    template <typename T> T pow2(T x) noexcept { return x*x; }
-   template <typename T> T pow3(T x) noexcept { return x*x*x; }
 
    // converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept {
@@ -132,7 +131,7 @@ std::complex<double> Li3(const std::complex<double>& z)
    } else { // az > 1.
       const auto lmz = clog(-z);
       u = -clog(1. - 1./z);
-      rest = -pow3(lmz)/6. - PI2/6.*lmz;
+      rest = -lmz*(pow2(lmz)/6. + PI2/6.);
    }
 
    return rest +
