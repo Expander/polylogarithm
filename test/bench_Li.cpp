@@ -164,16 +164,20 @@ void bench_Li6(std::size_t N, double min, double max)
 
 
 int main() {
-   bench_real_Li2(1000000, -10., 10.);
-   bench_cmpl_Li2(1000000, -10., 10.);
+   const std::size_t N = 1000000;
+   const auto min = -10.;
+   const auto max = 10.;
 
-   bench_real_Li2_GSL(1000000, -10., 10.);
-   bench_cmpl_Li2_GSL(1000000, -10., 10.);
+   bench_real_Li2(N, min, max);
+   bench_cmpl_Li2(N, min, max);
 
-   bench_Li3(1000000, -10., 10.);
-   bench_Li4(1000000, -10., 10.);
-   bench_Li5(1000000, -10., 10.);
-   bench_Li6(1000000, -10., 10.);
+   bench_real_Li2_GSL(N, min, max);
+   bench_cmpl_Li2_GSL(N, min, max);
+
+   bench_Li3(N, min, max);
+   bench_Li4(N, min, max);
+   bench_Li5(N, min, max);
+   bench_Li6(N, min, max);
 
    return 0;
 }
