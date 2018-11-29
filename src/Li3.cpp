@@ -97,7 +97,7 @@ std::complex<double> Li3(const std::complex<double>& z)
       const auto c0 = zeta3 + zeta2*u - u3/12.;
       const auto c1 = 0.25 * (3.0 - 2.0*clog(-u));
 
-      const std::complex<double> cs[7] = {
+      const double cs[7] = {
          -3.472222222222222e-03, 1.157407407407407e-05,
          -9.841899722852104e-08, 1.148221634332745e-09,
          -1.581572499080917e-11, 2.419500979252515e-13,
