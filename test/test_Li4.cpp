@@ -12543,5 +12543,5 @@ TEST_CASE("test_values_close_to_unity")
    using polylogarithm::Li4;
 
    for (const auto v: values_close_to_unity)
-      CHECK_CLOSE_COMPLEX(Li4(v.first), v.second, 1e-14);
+      CHECK_CLOSE_COMPLEX(Li4(v.first), v.second, 1e-15);
 }
