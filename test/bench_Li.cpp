@@ -1,5 +1,9 @@
 #include "bench.hpp"
 #include "Li2.hpp"
+#include "Li3.hpp"
+#include "Li4.hpp"
+#include "Li5.hpp"
+#include "Li6.hpp"
 #include <iostream>
 #include <gsl/gsl_sf_dilog.h>
 
@@ -35,8 +39,8 @@ void bench_real_Li2_GSL(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of real Li2 (via GSL) " << N << " times took: "
-             << total_time << "s\n";
+   std::cout << "Evaluation of real Li2 " << N << " times took: "
+             << total_time << "s (GSL)\n";
 }
 
 
@@ -69,8 +73,8 @@ void bench_cmpl_Li2_GSL(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li2 (via GSL) " << N << " times took: "
-             << total_time << "s\n";
+   std::cout << "Evaluation of cmpl Li2 " << N << " times took: "
+             << total_time << "s (GSL)\n";
 }
 
 
@@ -91,12 +95,85 @@ void bench_cmpl_Li2(std::size_t N, double min, double max)
 }
 
 
+void bench_Li3(std::size_t N, double min, double max)
+{
+   using namespace polylogarithm::bench;
+
+   const auto values = generate_random_complexes(N, min, max);
+
+   const double total_time = time_in_seconds([&values] {
+         for (const auto& v: values) {
+            volatile auto li = polylogarithm::Li3(v);
+         }
+      });
+
+   std::cout << "Evaluation of cmpl Li3 " << N << " times took: "
+             << total_time << "s\n";
+}
+
+
+void bench_Li4(std::size_t N, double min, double max)
+{
+   using namespace polylogarithm::bench;
+
+   const auto values = generate_random_complexes(N, min, max);
+
+   const double total_time = time_in_seconds([&values] {
+         for (const auto& v: values) {
+            volatile auto li = polylogarithm::Li4(v);
+         }
+      });
+
+   std::cout << "Evaluation of cmpl Li4 " << N << " times took: "
+             << total_time << "s\n";
+}
+
+
+void bench_Li5(std::size_t N, double min, double max)
+{
+   using namespace polylogarithm::bench;
+
+   const auto values = generate_random_complexes(N, min, max);
+
+   const double total_time = time_in_seconds([&values] {
+         for (const auto& v: values) {
+            volatile auto li = polylogarithm::Li5(v);
+         }
+      });
+
+   std::cout << "Evaluation of cmpl Li5 " << N << " times took: "
+             << total_time << "s\n";
+}
+
+
+void bench_Li6(std::size_t N, double min, double max)
+{
+   using namespace polylogarithm::bench;
+
+   const auto values = generate_random_complexes(N, min, max);
+
+   const double total_time = time_in_seconds([&values] {
+         for (const auto& v: values) {
+            volatile auto li = polylogarithm::Li6(v);
+         }
+      });
+
+   std::cout << "Evaluation of cmpl Li6 " << N << " times took: "
+             << total_time << "s\n";
+}
+
+
 int main() {
    bench_real_Li2(1000000, -10., 10.);
    bench_cmpl_Li2(1000000, -10., 10.);
 
    bench_real_Li2_GSL(1000000, -10., 10.);
    bench_cmpl_Li2_GSL(1000000, -10., 10.);
+
+   bench_Li3(1000000, -10., 10.);
+   bench_Li4(1000000, -10., 10.);
+   bench_Li5(1000000, -10., 10.);
+   bench_Li6(1000000, -10., 10.);
 
    return 0;
 }
