@@ -33,4 +33,5 @@ if(GSL_FOUND)
 
   add_polylogarithm_test(bench_Li2)
   add_polylogarithm_test(bench_Li3)
+  add_polylogarithm_test(bench_Li4)
 endif()
