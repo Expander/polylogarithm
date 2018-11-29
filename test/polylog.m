@@ -22,3 +22,9 @@ Lineg[p_, z_] :=
 Trilog[z_, order_:10] := (3 Log[z]^2 - 2 Log[z]^2 Log[-Log[z]] +
     4 Sum[(Log[z]^k Zeta[3 - k])/k!, {k, 0, 1}] +
     4 Sum[(Log[z]^k Zeta[3 - k])/k!, {k, 3, order}])/4;
+
+(* Series expansion of polylogarithm Li_p(z) around unity up to given order, n > 0 *)
+Li1[n_, z_, order_:10] := (Zeta[n] +
+    ((EulerGamma + PolyGamma[n] - Log[-Log[z]])/(n - 1)!) Log[z]^(n - 1) +
+    Sum[(Zeta[n - j]/j!) Log[z]^j, {j, 1, n - 2}] +
+    Sum[(Zeta[n - j]/j!) Log[z]^j, {j, n, order}]);
