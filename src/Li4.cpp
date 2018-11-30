@@ -67,9 +67,7 @@ std::complex<double> Li4(const std::complex<double>& z)
    const double PI2   = PI*PI;
    const double PI4   = PI2*PI2;
    const double zeta4 = 1.082323233711138;
-   static const int N = 18;
-
-   const double bf[N] = {
+   const double bf[18] = {
       1., -7./16.,
       1.165123456790123e-01, -1.982060185185185e-02,
       1.927932098765432e-03, -3.105709876543209e-05,

@@ -68,9 +68,7 @@ std::complex<double> Li6(const std::complex<double>& z)
    const double PI4   = PI2*PI2;
    const double PI6   = PI2*PI4;
    const double zeta6 = 1.017343061984449;
-   static const int N = 18;
-
-   const double bf[N] = {
+   const double bf[18] = {
       1., -31./64.,
       1.524134087791495e-01, -3.436555587705761e-02,
       5.717479723936899e-03, -6.818045374657064e-04,

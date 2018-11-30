@@ -62,7 +62,6 @@ std::complex<double> Li3(const std::complex<double>& z)
    const double PI2   = PI*PI;
    const double zeta2 = 1.644934066848226;
    const double zeta3 = 1.202056903159594;
-
    const double bf[18] = {
       1., -3./8., 17./216., -5./576.,
       1.296296296296296e-04,  8.101851851851851e-05,
