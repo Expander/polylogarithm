@@ -118,9 +118,9 @@ std::complex<double> Li5(const std::complex<double>& z)
    if (az <= 1.) {
       u = -clog(1. - z);
    } else { // az > 1.
-      const std::complex<double> lnz  = clog(-z);
-      const std::complex<double> lnz2 = pow2(lnz);
-      const std::complex<double> lnz4 = pow2(lnz2);
+      const auto lnz  = clog(-z);
+      const auto lnz2 = pow2(lnz);
+      const auto lnz4 = pow2(lnz2);
       u = -clog(1. - 1./z);
       rest = -1./360.*lnz*(7*PI4 + 10.*PI2*lnz2 + 3.*lnz4);
    }

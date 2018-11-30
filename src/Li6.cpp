@@ -122,19 +122,19 @@ std::complex<double> Li6(const std::complex<double>& z)
    std::complex<double> u, r;
    double sgn = 1;
 
-   if (std::abs(z) <= 1.) {
+   if (az <= 1.) {
       u = -clog(1. - z);
    } else { // az > 1.
-      const std::complex<double> lnz  = clog(-z);
-      const std::complex<double> lnz2 = pow2(lnz);
-      const std::complex<double> lnz4 = pow2(lnz2);
-      const std::complex<double> lnz6 = lnz2*lnz4;
+      const auto lnz  = clog(-z);
+      const auto lnz2 = pow2(lnz);
+      const auto lnz4 = pow2(lnz2);
+      const auto lnz6 = lnz2*lnz4;
       u = -clog(1. - 1./z);
       r = -31.*PI6/15120. - 7./720.*PI4*lnz2 - 1./144.*PI2*lnz4 - 1./720.*lnz6;
       sgn = -1;
    }
 
-   const std::complex<double> sum =
+   const auto sum =
       u * (bf[0] +
       u * (bf[1] +
       u * (bf[2] +
