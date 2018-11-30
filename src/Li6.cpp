@@ -68,7 +68,7 @@ std::complex<double> Li6(const std::complex<double>& z)
    const double PI4   = PI2*PI2;
    const double PI6   = PI2*PI4;
    const double zeta6 = 1.017343061984449;
-   static const int N = 40;
+   static const int N = 18;
 
    const double bf[N] = {
       1., -31./64.,
@@ -79,59 +79,47 @@ std::complex<double> Li6(const std::complex<double>& z)
       3.727243823092410e-09, -3.730086734548760e-10,
      -5.124652681608583e-11,  9.054193095663668e-12,
       6.738188261551251e-13, -2.121583115030313e-13,
-     -6.840881171901169e-15,  4.869117846200558e-15,
-     -4.843987849987250e-18, -1.102710484910749e-16,
-      3.335379691693938e-18,  2.473530748864135e-18,
-     -1.437061643423249e-19, -5.504711033509811e-20,
-      4.746771391732722e-21,  1.215838717806810e-21,
-     -1.410755240356185e-22, -2.663883125326834e-23,
-      3.966765742863100e-24,  5.782169735854361e-25,
-     -1.078777806316425e-25, -1.240739708675690e-26,
-      2.870411791789360e-27,  2.623555356302933e-28,
-     -7.522948546575412e-29, -5.440178837962469e-30,
-      1.950257953251016e-30,  1.097849428220518e-31,
-     -5.014958357416300e-32, -2.128673750439276e-33
+     -6.840881171901169e-15,  4.869117846200558e-15
    };
 
    if (is_close(z, 0.))
       return 0.;
    if (is_close(z, 1.))
       return zeta6;
-   if (is_close(z, 1., 0.02)) {
-      const std::complex<double> I(0.,1.);
-      const std::complex<double> IPI(0.,PI);
-      const std::complex<double> zm1 = z - 1.;
-      const std::complex<double> lzm1 = clog(zm1);
-      const double zeta3 = 1.202056903159594;
-      const double zeta5 = 1.036927755143369;
-      const double ceil = std::arg(zm1) > 0. ? 1. : 0.;
-      const std::complex<double> cs[8] = {
-         zeta5,
-         (PI4 - 90*zeta5)/180.,
-         (-PI4 + 30*(zeta3 + 2*zeta5))/180.,
-         (15*PI2 + 11*PI4 - 540*(zeta3 + zeta5))/2160.,
-         (-lzm1/120. + (411. + 180.*(-1 + 2*ceil)*IPI - 100*PI2*(3 + PI2)
-                        + 6300*zeta3 + 4320*zeta5)/21600.),
-         (lzm1/48. + (2700*(1 - 2*ceil)*IPI + 2550*PI2 + 548*PI4
-                      - 45*(127 + 900*zeta3 + 480*zeta5))/129600.),
-         (0.06919642857142858 + 5./144.*(-1 + 2*ceil)*IPI - 5./144.*lzm1
-          - 7./7200.*PI2*(25 + 4*PI2) + 29./90.*zeta3 + zeta5/7.),
-         (-0.0921875 + 7./144.*(1 - 2*ceil)*IPI + 7./144.*lzm1
-                      + 967./34560.*PI2 + 121./33600.*PI4 - 469./1440.*zeta3 - zeta5/8.)
-      };
-
-      return zeta6 +
-         zm1 * (cs[0] +
-         zm1 * (cs[1] +
-         zm1 * (cs[2] +
-         zm1 * (cs[3] +
-         zm1 * (cs[4] +
-         zm1 * (cs[5] +
-         zm1 * (cs[6] +
-         zm1 * (cs[7]))))))));
-   }
    if (is_close(z, -1.))
       return -31.*zeta6/32.;
+
+   const auto az  = std::abs(z);
+   const auto pz  = std::arg(z);
+   const auto lnz = std::log(az);
+
+   if (pow2(lnz) + pow2(pz) < 1.) { // |log(z)| < 1
+      const auto u  = clog(z);
+      const auto u2 = u*u;
+      const auto c0 = zeta6;
+      const auto c1 = 1.036927755143370; // zeta(5)
+      const auto c2 = 0.5411616168555691;
+      const auto c3 = 0.2003428171932657;
+      const auto c4 = 0.06853891945200943;
+      const auto c5 = (137./60. - clog(-u))/120.;
+      const auto c6 = -1./1440.;
+
+      const double cs[5] = {
+         -1.653439153439153e-05, 2.296443268665491e-08,
+         -9.941312851365761e-11, 6.691268265342339e-13,
+         -5.793305857439255e-15
+      };
+
+      return c0 + u * c1 +
+         u2 * (c2 + u * c3 +
+         u2 * (c4 + u * c5 +
+         u2 * (c6 +
+         u * (cs[0] +
+         u2 * (cs[1] +
+         u2 * (cs[2] +
+         u2 * (cs[3] +
+         u2 * (cs[4]))))))));
+   }
 
    std::complex<double> u, r;
    double sgn = 1;
@@ -166,29 +154,7 @@ std::complex<double> Li6(const std::complex<double>& z)
       u * (bf[14] +
       u * (bf[15] +
       u * (bf[16] +
-      u * (bf[17] +
-      u * (bf[18] +
-      u * (bf[19] +
-      u * (bf[20] +
-      u * (bf[21] +
-      u * (bf[22] +
-      u * (bf[23] +
-      u * (bf[24] +
-      u * (bf[25] +
-      u * (bf[26] +
-      u * (bf[27] +
-      u * (bf[28] +
-      u * (bf[29] +
-      u * (bf[30] +
-      u * (bf[31] +
-      u * (bf[32] +
-      u * (bf[33] +
-      u * (bf[34] +
-      u * (bf[35] +
-      u * (bf[36] +
-      u * (bf[37] +
-      u * (bf[38] +
-      u * (bf[39]))))))))))))))))))))))))))))))))))))))));
+      u * (bf[17]))))))))))))))))));
 
    return sgn*sum + r;
 }
