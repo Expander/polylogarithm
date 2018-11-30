@@ -62,7 +62,7 @@ std::complex<double> Li5(const std::complex<double>& z)
    const double PI2   = PI*PI;
    const double PI4   = PI2*PI2;
    const double zeta5 = 1.036927755143369;
-   static const int N = 40;
+   static const int N = 19;
 
    const double bf[N] = {
       1., -15./32.,
@@ -74,59 +74,50 @@ std::complex<double> Li5(const std::complex<double>& z)
      -8.084689817190983e-11, -7.238764858773720e-12,
       1.943976011517396e-12,  1.025697840597723e-13,
      -4.618055100988483e-14, -1.153585719647058e-15,
-      1.090354540133339e-15,  2.314813631729252e-18,
-     -2.566991704326529e-17,  4.570862060731496e-19,
-      6.036677961320570e-19, -2.167762494406241e-20,
-     -1.419409661560016e-20,  7.502000950641386e-22,
-      3.338704539507839e-22, -2.306004044262034e-23,
-     -7.858173245689481e-24,  6.668345304373880e-25,
-      1.850915654092529e-25, -1.859152944517408e-26,
-     -4.362974648034589e-27,  5.061107609952928e-28,
-      1.029191824975687e-28, -1.355139122101831e-29,
-     -2.429405961295738e-30,  3.585197396650370e-31,
-      5.737965816103972e-32, -9.400359362456873e-33
+      1.090354540133339e-15
    };
 
    if (is_close(z, 0.))
       return 0.;
    if (is_close(z, 1.))
       return zeta5;
-   if (is_close(z, 1., 0.02)) {
-      const std::complex<double> I(0.,1.);
-      const std::complex<double> IPI(0.,PI);
-      const std::complex<double> zm1 = z - 1.;
-      const std::complex<double> lzm1 = clog(zm1);
-      const double zeta3 = 1.202056903159594;
-      const double ceil = std::arg(zm1) > 0. ? 1. : 0.;
-      const std::complex<double> cs[8] = {
-         PI4/90.,
-         (-PI4/180. + zeta3/2.),
-         (15.*PI2 + 2.*PI4 - 270.*zeta3)/540.,
-         (-lzm1/24. + (125. + 60.*(-1 + 2*ceil)*IPI - 4.*PI2*(15 + PI2) + 660.*zeta3)/1440.),
-         (lzm1/12. + (-565. + 300.*(1 - 2*ceil)*IPI + 175.*PI2 + 8.*PI4 - 1500.*zeta3)/3600.),
-         (-17./144.*lzm1 + (1779. + 1020.*(-1 + 2*ceil)*IPI - 450.*PI2 - 16.*PI4 + 3288.*zeta3)/8640.),
-         (-0.23923611111111112 + 7./48.*(1 - 2*ceil)*IPI + 7./48.*lzm1 + 29./540.*PI2
-          + PI4/630. - 7./20.*zeta3),
-         (-967./5760.*lzm1 + (1266861. + 812280.*(-1 + 2*ceil)*IPI
-                              - 560.*PI2*(469 + 12*PI2) + 1568160.*zeta3)/4.8384e6)
-      };
-
-      return zeta5 +
-         zm1 * (cs[0] +
-         zm1 * (cs[1] +
-         zm1 * (cs[2] +
-         zm1 * (cs[3] +
-         zm1 * (cs[4] +
-         zm1 * (cs[5] +
-         zm1 * (cs[6] +
-         zm1 * (cs[7]))))))));
-   }
    if (is_close(z, -1.))
       return -15.*zeta5/16.;
 
+   const auto az  = std::abs(z);
+   const auto pz  = std::arg(z);
+   const auto lnz = std::log(az);
+
+   if (pow2(lnz) + pow2(pz) < 1.) { // |log(z)| < 1
+      const auto u  = clog(z);
+      const auto u2 = u*u;
+      const auto c0 = zeta5;
+      const auto c1 = 1.082323233711138; // zeta(4)
+      const auto c2 = 0.6010284515797971; // zeta(3)/2
+      const auto c3 = 0.2741556778080377;
+      const auto c4 = (25./12. - clog(-u))/24.;
+      const auto c5 = -1./240.;
+
+      const double cs[6] = {
+         -1.157407407407407e-04, 2.066798941798942e-07,
+         -1.093544413650234e-09, 8.698648744945041e-12,
+         -8.689958786158882e-14, 1.008125408021881e-15
+      };
+
+      return c0 + u * c1 +
+         u2 * (c2 + u * c3 +
+         u2 * (c4 + u * c5 +
+         u2 * (cs[0] +
+         u2 * (cs[1] +
+         u2 * (cs[2] +
+         u2 * (cs[3] +
+         u2 * (cs[4] +
+         u2 * (cs[5]))))))));
+   }
+
    std::complex<double> u, rest;
 
-   if (std::abs(z) <= 1.) {
+   if (az <= 1.) {
       u = -clog(1. - z);
    } else { // az > 1.
       const std::complex<double> lnz  = clog(-z);
@@ -155,28 +146,7 @@ std::complex<double> Li5(const std::complex<double>& z)
       u * (bf[15] +
       u * (bf[16] +
       u * (bf[17] +
-      u * (bf[18] +
-      u * (bf[19] +
-      u * (bf[20] +
-      u * (bf[21] +
-      u * (bf[22] +
-      u * (bf[23] +
-      u * (bf[24] +
-      u * (bf[25] +
-      u * (bf[26] +
-      u * (bf[27] +
-      u * (bf[28] +
-      u * (bf[29] +
-      u * (bf[30] +
-      u * (bf[31] +
-      u * (bf[32] +
-      u * (bf[33] +
-      u * (bf[34] +
-      u * (bf[35] +
-      u * (bf[36] +
-      u * (bf[37] +
-      u * (bf[38] +
-      u * (bf[39]))))))))))))))))))))))))))))))))))))))));
+      u * (bf[18])))))))))))))))))));
 }
 
 } // namespace polylogarithm
