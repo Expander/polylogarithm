@@ -4,6 +4,7 @@
 #include "Li4.hpp"
 #include "Li5.hpp"
 #include "Li6.hpp"
+#include "Li.hpp"
 #include <iostream>
 #include <gsl/gsl_sf_dilog.h>
 
@@ -163,6 +164,23 @@ void bench_Li6(std::size_t N, double min, double max)
 }
 
 
+void bench_Lin(long n, std::size_t N, double min, double max)
+{
+   using namespace polylogarithm::bench;
+
+   const auto values = generate_random_complexes(N, min, max);
+
+   const double total_time = time_in_seconds([&values,n] {
+         for (const auto& v: values) {
+            volatile auto li = polylogarithm::Li(n,v);
+         }
+      });
+
+   std::cout << "Evaluation of cmpl Li(" << n << ") " << N << " times took: "
+             << total_time << "s\n";
+}
+
+
 int main() {
    const std::size_t N = 1000000;
    const auto min = -10.;
@@ -178,6 +196,13 @@ int main() {
    bench_Li4(N, min, max);
    bench_Li5(N, min, max);
    bench_Li6(N, min, max);
+
+   bench_Lin(-100, N/10, min, max);
+   bench_Lin(-10 , N/10, min, max);
+   bench_Lin(-6  , N/10, min, max);
+   bench_Lin( 6  , N/10, min, max);
+   bench_Lin( 10 , N/10, min, max);
+   bench_Lin( 100, N   , min, max);
 
    return 0;
 }
