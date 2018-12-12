@@ -200,7 +200,8 @@ namespace {
       if (is_close(z, {1.,0.}))
          return {inf, inf};
 
-      std::complex<double> result;
+      const auto frac = -z/(1. - z);
+      std::complex<double> result, p = 1.;
 
       for (long k = 0; k <= -n; k++) {
          double sum = 0.;
@@ -209,7 +210,8 @@ namespace {
             sum += sgn*binomial(k,j)*std::pow(j+1,-n);
          }
 
-         result += std::pow(-z/(1. - z),k+1)*sum;
+         p *= frac;
+         result += p*sum;
       }
 
       if (is_close(std::imag(z), 0.))
