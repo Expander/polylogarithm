@@ -198,8 +198,8 @@ int main() {
    bench_Li6(N, min, max);
 
    bench_Lin(-100, N/10, min, max);
-   bench_Lin(-10 , N/10, min, max);
-   bench_Lin(-6  , N/10, min, max);
+   bench_Lin(-10 , N   , min, max);
+   bench_Lin(-6  , N   , min, max);
    bench_Lin( 6  , N/10, min, max);
    bench_Lin( 10 , N/10, min, max);
    bench_Lin( 100, N   , min, max);
