@@ -164,7 +164,7 @@ namespace {
    }
 
    /// calculates X(p,n) for all possible n < N, p >= 0
-   std::vector<std::array<double,N>> Xn(long p)
+   std::array<double,N> Xn(long p)
    {
       using TArray = std::array<double,N>;
       std::vector<TArray> xn(p+1);
@@ -191,7 +191,7 @@ namespace {
          xn[pi] = ar;
       }
 
-      return xn;
+      return xn[p];
    }
 
    std::vector<double> powers_to(long exponent, long n)
@@ -360,7 +360,7 @@ std::complex<double> Li(long n, const std::complex<double>& z)
 
    for (long k = 0; k < N; k++) {
       p *= u;
-      sum += xn[n-2][k]*p*fac_inv[k];
+      sum += xn[k]*p*fac_inv[k];
    }
 
    return sgn*sum + r;
