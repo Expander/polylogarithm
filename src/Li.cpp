@@ -194,6 +194,16 @@ namespace {
       return xn;
    }
 
+   std::vector<double> powers_to(long exponent, long n)
+   {
+      std::vector<double> powers(n);
+
+      for (long k = 0; k < n; k++)
+         powers[k] = std::pow(k, exponent);
+
+      return powers;
+   }
+
    /// series expansion of Li_n(z) for n <= 0
    std::complex<double> Li_negative(long n, const std::complex<double>& z)
    {
@@ -202,12 +212,13 @@ namespace {
 
       const auto frac = -z/(1. - z);
       std::complex<double> result, p = 1.;
+      const auto powers = powers_to(-n, -n + 2);
 
       for (long k = 0; k <= -n; k++) {
          double sum = 0.;
          for (long j = 0; j <= k; j++) {
             const long sgn = is_even(j) ? -1 : 1;
-            sum += sgn*binomial(k,j)*std::pow(j+1,-n);
+            sum += sgn*binomial(k,j)*powers[j+1];
          }
 
          p *= frac;
