@@ -178,13 +178,21 @@ namespace {
          xn[0] = ar;
       }
 
+      // pre-computing binomial coefficients
+      std::array<TArray,N> binomi;
+      for (long ni = 0; ni < N; ni++) {
+         for (long k = 0; k <= ni; k++) {
+            binomi[ni][k] = binomial(ni,k);
+         }
+      }
+
       for (long pi = 1; pi <= p; pi++) {
          // calculate X(pi,n) for all n < N
          TArray ar;
          for (long ni = 0; ni < N; ni++) {
             double sum = 0.;
             for (long k = 0; k <= ni; k++) {
-               sum += binomial(ni,k)*bernoulli[ni-k]/(k+1)*xn[pi-1][k];
+               sum += binomi[ni][k]*bernoulli[ni-k]/(k+1)*xn[pi-1][k];
             }
             ar[ni] = sum;
          }
