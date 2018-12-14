@@ -105,11 +105,17 @@ namespace {
    {
       std::complex<double> result;
 
+      // pre-compute powers
+      std::vector<std::complex<double>> powers(m + 1);
+      for (long k = 0; k <= m; k++) {
+         powers[k] = std::pow(z + static_cast<double>(k), m);
+      }
+
       for (long n = 0; n <= m; n++) {
          std::complex<double> sum;
          for (long k = 0; k <= n; k++) {
             const double sgn = is_even(k) ? 1. : -1.;
-            sum += sgn*binomial(n,k)*std::pow(z + static_cast<double>(k), m);
+            sum += sgn*binomial(n,k)*powers[k];
          }
          result += sum/(n + 1.);
       }
