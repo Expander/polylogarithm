@@ -354,13 +354,12 @@ std::complex<double> Li(long n, const std::complex<double>& z)
       sgn = is_even(n) ? -1. : 1.;
    }
 
-   std::complex<double> p = 1., sum;
+   std::complex<double> sum;
 
    const auto xn = Xn(n-2);
 
-   for (long k = 0; k < N; k++) {
-      p *= u;
-      sum += xn[k]*p*fac_inv[k];
+   for (long k = N - 1; k >= 0; k--) {
+      sum = u*(sum + xn[k]*fac_inv[k]);
    }
 
    return sgn*sum + r;
