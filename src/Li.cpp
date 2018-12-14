@@ -225,8 +225,8 @@ namespace {
          return {inf, inf};
 
       const auto frac = -z/(1. - z);
-      std::complex<double> result;
       const auto powers = powers_to(-n, -n + 2);
+      std::complex<double> result;
 
       for (long k = -n; k >= 0; k--) {
          double sum = 0.;
