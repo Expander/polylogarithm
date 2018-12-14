@@ -225,18 +225,17 @@ namespace {
          return {inf, inf};
 
       const auto frac = -z/(1. - z);
-      std::complex<double> result, p = 1.;
+      std::complex<double> result;
       const auto powers = powers_to(-n, -n + 2);
 
-      for (long k = 0; k <= -n; k++) {
+      for (long k = -n; k >= 0; k--) {
          double sum = 0.;
          for (long j = 0; j <= k; j++) {
             const long sgn = is_even(j) ? -1 : 1;
             sum += sgn*binomial(k,j)*powers[j+1];
          }
 
-         p *= frac;
-         result += p*sum;
+         result = frac*(result + sum);
       }
 
       if (is_close(std::imag(z), 0.))
