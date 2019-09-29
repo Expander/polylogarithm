@@ -5,6 +5,7 @@
 #include "Li5.hpp"
 #include "Li6.hpp"
 #include "Li.hpp"
+#include "tsil_cpp.h"
 #include <iostream>
 #include <gsl/gsl_sf_dilog.h>
 
@@ -23,6 +24,16 @@ std::complex<double> gsl_Li2(std::complex<double> z)
    gsl_sf_result li2_gsl_re{}, li2_gsl_im{};
    gsl_sf_complex_dilog_e(std::abs(z), std::arg(z), &li2_gsl_re, &li2_gsl_im);
    return {li2_gsl_re.val, li2_gsl_im.val};
+}
+
+std::complex<double> tsil_Li2(std::complex<double> z)
+{
+   return TSIL_Dilog_(z);
+}
+
+std::complex<double> tsil_Li3(std::complex<double> z)
+{
+   return TSIL_Trilog_(z);
 }
 
 } // anonymous namespace
@@ -79,6 +90,23 @@ void bench_cmpl_Li2_GSL(std::size_t N, double min, double max)
 }
 
 
+void bench_cmpl_Li2_TSIL(std::size_t N, double min, double max)
+{
+   using namespace polylogarithm::bench;
+
+   const auto values = generate_random_complexes(N, min, max);
+
+   const double total_time = time_in_seconds([&values] {
+         for (const auto& v: values) {
+            volatile auto li = tsil_Li2(v);
+         }
+      });
+
+   std::cout << "Evaluation of cmpl Li2 " << N << " times took: "
+             << total_time << "s (TSIL)\n";
+}
+
+
 void bench_cmpl_Li2(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
@@ -110,6 +138,23 @@ void bench_Li3(std::size_t N, double min, double max)
 
    std::cout << "Evaluation of cmpl Li3 " << N << " times took: "
              << total_time << "s\n";
+}
+
+
+void bench_Li3_TSIL(std::size_t N, double min, double max)
+{
+   using namespace polylogarithm::bench;
+
+   const auto values = generate_random_complexes(N, min, max);
+
+   const double total_time = time_in_seconds([&values] {
+         for (const auto& v: values) {
+            volatile auto li = tsil_Li3(v);
+         }
+      });
+
+   std::cout << "Evaluation of cmpl Li3 " << N << " times took: "
+             << total_time << "s (TSIL)\n";
 }
 
 
@@ -180,22 +225,45 @@ void bench_Lin(long n, std::size_t N, double min, double max)
              << total_time << "s\n";
 }
 
+void print_line()
+{
+   std::cout << "------------------------------------------------------------\n";
+}
 
 int main() {
    const std::size_t N = 1000000;
    const auto min = -10.;
    const auto max = 10.;
 
-   bench_real_Li2(N, min, max);
-   bench_cmpl_Li2(N, min, max);
+   print_line();
 
+   bench_real_Li2(N, min, max);
    bench_real_Li2_GSL(N, min, max);
+
+   print_line();
+
+   bench_cmpl_Li2(N, min, max);
    bench_cmpl_Li2_GSL(N, min, max);
+   bench_cmpl_Li2_TSIL(N, min, max);
+
+   print_line();
 
    bench_Li3(N, min, max);
+   bench_Li3_TSIL(N, min, max);
+
+   print_line();
+
    bench_Li4(N, min, max);
+
+   print_line();
+
    bench_Li5(N, min, max);
+
+   print_line();
+
    bench_Li6(N, min, max);
+
+   print_line();
 
    bench_Lin(-100, N/10, min, max);
    bench_Lin(-10 , N   , min, max);

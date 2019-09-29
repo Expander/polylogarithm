@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-project(polylogarithm CXX)
+project(polylogarithm CXX C)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)

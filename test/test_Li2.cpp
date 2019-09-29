@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "Li2.hpp"
 #include "bench.hpp"
+#include "tsil_cpp.h"
 #include <cmath>
 #include <complex>
 #include <gsl/gsl_sf_dilog.h>
@@ -12077,6 +12078,10 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
    return {li2_gsl_re.val, li2_gsl_im.val};
 }
 
+std::complex<double> tsil_Li2(std::complex<double> z) {
+   return TSIL_Dilog_(z);
+}
+
 const auto Relation_1 = [](std::complex<double> z) {
    using polylogarithm::Li2;
    return Li2(z) + Li2(-z) - Li2(z*z)/2.;
@@ -12228,9 +12233,12 @@ TEST_CASE("test_complex_fixed_values")
    for (auto v: values) {
       const std::complex<double> li2 = polylogarithm::Li2(v);
       const std::complex<double> li2_gsl = gsl_Li2(v);
+      const std::complex<double> li2_tsil = tsil_Li2(v);
 
       CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-15);
       CHECK_CLOSE(std::imag(li2), std::imag(li2_gsl), 1e-15);
+      CHECK_CLOSE(std::real(li2), std::real(li2_tsil), 1e-15);
+      CHECK_CLOSE(std::imag(li2), std::imag(li2_tsil), 1e-15);
    }
 }
 
@@ -12243,9 +12251,12 @@ TEST_CASE("test_complex_random_values")
    for (auto v: values) {
       const std::complex<double> li2 = polylogarithm::Li2(v);
       const std::complex<double> li2_gsl = gsl_Li2(v);
+      const std::complex<double> li2_tsil = tsil_Li2(v);
 
       CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-13);
       CHECK_CLOSE(std::imag(li2), std::imag(li2_gsl), 1e-13);
+      CHECK_CLOSE(std::real(li2), std::real(li2_tsil), 1e-13);
+      CHECK_CLOSE(std::imag(li2), std::imag(li2_tsil), 1e-13);
    }
 }
 

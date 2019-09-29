@@ -1,5 +1,8 @@
 find_package(GSL QUIET)
 
+add_definitions(-DTSIL_SIZE_DOUBLE)
+add_subdirectory(tsil)
+
 if(GSL_FOUND)
   function(add_polylogarithm_test name)
     add_executable(
@@ -10,6 +13,7 @@ if(GSL_FOUND)
       ${name}
       polylog
       GSL::gsl
+      tsil
       )
     add_test(NAME ${name} COMMAND ${name})
   endfunction()

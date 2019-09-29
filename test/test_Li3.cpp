@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "Li3.hpp"
 #include "bench.hpp"
+#include "tsil_cpp.h"
 #include <cmath>
 #include <utility>
 
@@ -12524,6 +12525,10 @@ std::complex<double> clog(std::complex<double> z) {
    return std::log(zf);
 }
 
+std::complex<double> tsil_Li3(std::complex<double> z) {
+   return TSIL_Trilog_(z);
+}
+
 const auto Relation_1 = [](std::complex<double> z) {
    using polylogarithm::Li3;
    return Li3(z) + Li3(-z) - Li3(z*z)/4.;
@@ -12595,6 +12600,33 @@ TEST_CASE("test_values_close_to_unity")
    for (const auto v: values_close_to_unity) {
       INFO(v.first);
       CHECK_CLOSE_COMPLEX(Li3(v.first), v.second, 1e-14);
+   }
+}
+
+TEST_CASE("test_complex_fixed_values")
+{
+   for (auto v: values) {
+      const auto z = v.first;
+      const std::complex<double> li3 = polylogarithm::Li3(z);
+      const std::complex<double> li3_tsil = tsil_Li3(z);
+
+      CHECK_CLOSE(std::real(li3), std::real(li3_tsil), 1e-14);
+      CHECK_CLOSE(std::imag(li3), std::imag(li3_tsil), 1e-14);
+   }
+}
+
+TEST_CASE("test_complex_random_values")
+{
+   using namespace polylogarithm::bench;
+
+   const auto values = generate_random_complexes(10000, -10, 10);
+
+   for (auto v: values) {
+      const std::complex<double> li3 = polylogarithm::Li3(v);
+      const std::complex<double> li3_tsil = tsil_Li3(v);
+
+      CHECK_CLOSE(std::real(li3), std::real(li3_tsil), 1e-14);
+      CHECK_CLOSE(std::imag(li3), std::imag(li3_tsil), 1e-14);
    }
 }
 
