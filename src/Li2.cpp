@@ -147,7 +147,7 @@ std::complex<double> Li2(const std::complex<double>& z)
 
    const double rz = std::real(z);
    const double iz = std::imag(z);
-   const double az = std::abs(z);
+   const double nz = sqr(rz) + sqr(iz);
 
    // special cases
    if (iz == 0.) {
@@ -155,7 +155,7 @@ std::complex<double> Li2(const std::complex<double>& z)
          return {Li2(rz), 0.};
       else // (rz > 1.)
          return {Li2(rz), -PI*std::log(rz)};
-   } else if (az < std::numeric_limits<double>::epsilon()) {
+   } else if (nz < std::numeric_limits<double>::epsilon()) {
       return z;
    }
 
@@ -164,24 +164,24 @@ std::complex<double> Li2(const std::complex<double>& z)
 
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5) {
-      if (az > 1.) {
+      if (nz > 1.) {
          cy = -0.5 * sqr(std::log(-z));
          cz = -std::log(1. - 1. / z);
          jsgn = -1;
          ipi12 = -2;
-      } else { // (az <= 1.)
+      } else { // nz <= 1.
          cy = 0;
          cz = -std::log(1. - z);
          jsgn = 1;
          ipi12 = 0;
       }
    } else { // rz > 0.5
-      if (az <= std::sqrt(2*rz)) {
+      if (nz <= 2*rz) {
          cz = -std::log(z);
          cy = cz * std::log(1. - z);
          jsgn = -1;
          ipi12 = 2;
-      } else { // (az > sqrt(2*rz))
+      } else { // nz > sqrt(2*rz)
          cy = -0.5 * sqr(std::log(-z));
          cz = -std::log(1. - 1. / z);
          jsgn = -1;
