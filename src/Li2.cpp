@@ -181,7 +181,7 @@ std::complex<double> Li2(const std::complex<double>& z)
          cy = cz * std::log(1. - z);
          jsgn = -1;
          ipi12 = 2;
-      } else { // nz > sqrt(2*rz)
+      } else { // nz > 2*rz
          cy = -0.5 * sqr(std::log(-z));
          cz = -std::log(1. - 1. / z);
          jsgn = -1;
