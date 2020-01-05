@@ -127,10 +127,8 @@ std::complex<double> Li6(const std::complex<double>& z)
    } else { // az > 1.
       const auto lnz  = clog(-z);
       const auto lnz2 = pow2(lnz);
-      const auto lnz4 = pow2(lnz2);
-      const auto lnz6 = lnz2*lnz4;
       u = -clog(1. - 1./z);
-      r = -31.*PI6/15120. - 7./720.*PI4*lnz2 - 1./144.*PI2*lnz4 - 1./720.*lnz6;
+      r = -31.*PI6/15120. + lnz2*(-7./720.*PI4 + lnz2*(-1./144.*PI2 - 1./720.*lnz2));
       sgn = -1;
    }
 

@@ -127,9 +127,8 @@ std::complex<double> Li4(const std::complex<double>& z)
    } else { // az > 1.
       const auto lnz  = clog(-z);
       const auto lnz2 = pow2(lnz);
-      const auto lnz4 = pow2(lnz2);
       u = -clog(1. - 1./z);
-      r = 1./360.*(-7*PI4 - 30.*PI2*lnz2 - 15.*lnz4);
+      r = 1./360.*(-7*PI4 + lnz2*(-30.*PI2 - 15.*lnz2));
       sgn = -1;
    }
 

@@ -120,9 +120,8 @@ std::complex<double> Li5(const std::complex<double>& z)
    } else { // az > 1.
       const auto lnz  = clog(-z);
       const auto lnz2 = pow2(lnz);
-      const auto lnz4 = pow2(lnz2);
       u = -clog(1. - 1./z);
-      rest = -1./360.*lnz*(7*PI4 + 10.*PI2*lnz2 + 3.*lnz4);
+      rest = -1./360.*lnz*(7*PI4 + lnz2*(10.*PI2 + 3.*lnz2));
    }
 
    return rest +

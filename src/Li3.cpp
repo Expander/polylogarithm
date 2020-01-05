@@ -92,8 +92,7 @@ std::complex<double> Li3(const std::complex<double>& z)
    if (pow2(lnz) + pow2(pz) < 1.) { // |log(z)| < 1
       const auto u  = clog(z);
       const auto u2 = u*u;
-      const auto u3 = u*u2;
-      const auto c0 = zeta3 + zeta2*u - u3/12.;
+      const auto c0 = zeta3 + u*(zeta2 - u2/12.);
       const auto c1 = 0.25 * (3.0 - 2.0*clog(-u));
 
       const double cs[7] = {
