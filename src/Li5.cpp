@@ -87,7 +87,7 @@ std::complex<double> Li5(const std::complex<double>& z)
    const auto lnz = std::log(az);
 
    if (pow2(lnz) + pow2(pz) < 1.) { // |log(z)| < 1
-      const auto u  = clog(z);
+      const auto u  = std::complex<double>(lnz, pz); // clog(z)
       const auto u2 = u*u;
       const auto c0 = zeta5;
       const auto c1 = 1.082323233711138; // zeta(4)
@@ -118,10 +118,12 @@ std::complex<double> Li5(const std::complex<double>& z)
    if (az <= 1.) {
       u = -clog(1. - z);
    } else { // az > 1.
-      const auto lnz  = clog(-z);
-      const auto lnz2 = pow2(lnz);
+      auto arg = PI + pz;
+      if (arg > PI) arg -= 2*PI;
+      const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
+      const auto lmz2 = pow2(lmz);
       u = -clog(1. - 1./z);
-      rest = -1./360.*lnz*(7*PI4 + lnz2*(10.*PI2 + 3.*lnz2));
+      rest = -1./360.*lmz*(7*PI4 + lmz2*(10.*PI2 + 3.*lmz2));
    }
 
    return rest +

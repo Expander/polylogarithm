@@ -91,7 +91,7 @@ std::complex<double> Li4(const std::complex<double>& z)
    const auto lnz = std::log(az);
 
    if (pow2(lnz) + pow2(pz) < 1.) { // |log(z)| < 1
-      const auto u  = clog(z);
+      const auto u  = std::complex<double>(lnz, pz); // clog(z)
       const auto u2 = u*u;
       const auto c1 = 1.202056903159594; // zeta(3)
       const auto c2 = 0.8224670334241132;
@@ -125,10 +125,12 @@ std::complex<double> Li4(const std::complex<double>& z)
    if (az <= 1.) {
       u = -clog(1. - z);
    } else { // az > 1.
-      const auto lnz  = clog(-z);
-      const auto lnz2 = pow2(lnz);
+      auto arg = PI + pz;
+      if (arg > PI) arg -= 2*PI;
+      const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
+      const auto lmz2 = pow2(lmz);
       u = -clog(1. - 1./z);
-      r = 1./360.*(-7*PI4 + lnz2*(-30.*PI2 - 15.*lnz2));
+      r = 1./360.*(-7*PI4 + lmz2*(-30.*PI2 - 15.*lmz2));
       sgn = -1;
    }
 

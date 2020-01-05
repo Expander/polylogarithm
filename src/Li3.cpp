@@ -90,7 +90,7 @@ std::complex<double> Li3(const std::complex<double>& z)
    const auto lnz = std::log(az);
 
    if (pow2(lnz) + pow2(pz) < 1.) { // |log(z)| < 1
-      const auto u  = clog(z);
+      const auto u  = std::complex<double>(lnz, pz); // clog(z)
       const auto u2 = u*u;
       const auto c0 = zeta3 + u*(zeta2 - u2/12.);
       const auto c1 = 0.25 * (3.0 - 2.0*clog(-u));
@@ -118,7 +118,9 @@ std::complex<double> Li3(const std::complex<double>& z)
    if (az <= 1.) {
       u = -clog(1. - z);
    } else { // az > 1.
-      const auto lmz = clog(-z);
+      auto arg = PI + pz;
+      if (arg > PI) arg -= 2*PI;
+      const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
       u = -clog(1. - 1./z);
       rest = -lmz*(pow2(lmz)/6. + PI2/6.);
    }
