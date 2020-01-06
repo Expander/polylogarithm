@@ -12160,7 +12160,8 @@ TEST_CASE("test_special_values")
 
    {
       const auto i = std::complex<double>(0.,1.);
-      CHECK_CLOSE_COMPLEX(Li2({2.,0.}), pi2/4. - i*pi*ln2, eps);
+      const auto two = std::complex<double>(2.,0.);
+      CHECK_CLOSE_COMPLEX(Li2(two), pi2/4. - i*pi*ln2, eps);
    }
 
    CHECK_CLOSE(Li2(-(sqrt(5.)-1.)/2.),
