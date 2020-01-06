@@ -12048,14 +12048,23 @@ const std::pair<std::complex<double>, std::complex<double>> mma_values_close_to_
 };
 
 /// special values to be checked
-const std::vector<std::complex<double>> values = {
-   0., 0.5, 1., 1.5,
-   -0., -0.5, -1., -1.5,
-   -(std::sqrt(5.) - 1)/2.,
-   -(std::sqrt(5.) + 1)/2.,
-   (std::sqrt(5.) + 1)/2.,
-   (std::sqrt(5.) + 3)/2.,
-   omega, omega*omega, 1. + omega, 1./(1. + omega)
+const std::vector<std::complex<double>> special_values = {
+   { 0.0, 0.0 },
+   { 0.5, 0.0 },
+   { 1.0, 0.0 },
+   { 1.5, 0.0 },
+   { -0.0, 0.0 },
+   { -0.5, 0.0 },
+   { -1.0, 0.0 },
+   { -1.5, 0.0 },
+   { -(std::sqrt(5.) - 1)/2.0, 0.0 },
+   { -(std::sqrt(5.) + 1)/2.0, 0.0 },
+   { (std::sqrt(5.) + 1)/2.0, 0.0 },
+   { (std::sqrt(5.) + 3)/2.0, 0.0 },
+   omega,
+   omega*omega,
+   1. + omega,
+   1./(1. + omega)
 };
 
 std::complex<double> clog(std::complex<double> z) {
@@ -12130,7 +12139,7 @@ const auto Relation_5 = [](std::complex<double> z) {
 
 TEST_CASE("test_real_fixed_values")
 {
-   for (auto v: values) {
+   for (auto v: special_values) {
       const double x = std::real(v);
       const double li2 = polylogarithm::Li2(x);
       const double li2_gsl = gsl_Li2(x);
@@ -12231,7 +12240,7 @@ TEST_CASE("test_real_random_values")
 
 TEST_CASE("test_complex_fixed_values")
 {
-   for (auto v: values) {
+   for (auto v: special_values) {
       const std::complex<double> li2 = polylogarithm::Li2(v);
       const std::complex<double> li2_gsl = gsl_Li2(v);
       const std::complex<double> li2_tsil = tsil_Li2(v);
@@ -12263,7 +12272,7 @@ TEST_CASE("test_complex_random_values")
 
 TEST_CASE("test_relations")
 {
-   for (const auto v: values) {
+   for (const auto v: special_values) {
       CHECK_SMALL(Relation_1(v), 1e-15);
       CHECK_SMALL(Relation_2(v), 1e-15);
       CHECK_SMALL(Relation_3(v), 1e-15);
