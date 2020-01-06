@@ -131,7 +131,7 @@ double Li2(double x) {
  * approximations, Academic Press Inc., New York 1975, p.67].
  */
 long double Li2(long double x) {
-   const long double PI  = 3.141592653589793238463L;
+   const long double PI  = 3.14159265358979323846264338327950288L;
    const long double HF  = 0.5L;
    const long double PI2 = PI*PI;
    const long double PI3 = PI2/3;
@@ -295,7 +295,7 @@ std::complex<double> Li2(const std::complex<double>& z)
  */
 std::complex<long double> Li2(const std::complex<long double>& z)
 {
-   const long double PI = 3.141592653589793238L;
+   const long double PI = 3.14159265358979323846264338327950288L;
    static const int N = 12;
 
    // bf[1..N-1] are the even Bernoulli numbers / (2 n + 1)!
