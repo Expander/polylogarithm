@@ -211,7 +211,7 @@ TEST_CASE("test_fixed_values")
       CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, eps128);
       CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, eps128);
 
-      if (std::imag(z128) == 0.0) {
+      if (std::imag(z128) == 0.0L) {
          INFO("Li2(64)  real = " << li64_gsl << " (GSL)");
          INFO("Li2(64)  real = " << li64_real << " (polylogarithm)");
          INFO("Li2(128) real = " << li128_real << " (polylogarithm)");
