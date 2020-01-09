@@ -7,9 +7,9 @@
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 #define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
-      CHECK(std::real(a) == doctest::Approx(std::real(b)).epsilon(eps)); \
-      CHECK(std::imag(a) == doctest::Approx(std::imag(b)).epsilon(eps)); \
-   } while (0);
+      CHECK_CLOSE(std::real(a), std::real(b), (eps));                   \
+      CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                   \
+   } while (0)
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
 
 TEST_CASE("test_special_values")

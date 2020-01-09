@@ -17,12 +17,12 @@
       if (std::isinf(std::real(a)) && std::isinf(std::real(b)))         \
          CHECK(true);                                                   \
       else                                                              \
-         CHECK(std::real(a) == doctest::Approx(std::real(b)).epsilon(eps)); \
+         CHECK_CLOSE(std::real(a), std::real(b), (eps));                \
                                                                         \
       if (std::isinf(std::imag(a)) && std::isinf(std::imag(b)))         \
          CHECK(true);                                                   \
       else                                                              \
-         CHECK(std::imag(a) == doctest::Approx(std::imag(b)).epsilon(eps)); \
+         CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                \
    } while (0);
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
 
