@@ -11,13 +11,17 @@
 
 namespace {
 
+std::complex<double> to_c64(std::complex<long double> z)
+{
+   return std::complex<double>(std::real(z), std::imag(z));
+}
+
 double gsl_Li2(double x)
 {
    gsl_sf_result li2_gsl{};
    gsl_sf_dilog_e(x, &li2_gsl);
    return li2_gsl.val;
 }
-
 
 std::complex<double> gsl_Li2(std::complex<double> z)
 {
@@ -28,12 +32,12 @@ std::complex<double> gsl_Li2(std::complex<double> z)
 
 std::complex<double> tsil_Li2(std::complex<double> z)
 {
-   return TSIL_Dilog_(z);
+   return to_c64(TSIL_Dilog_(z));
 }
 
 std::complex<double> tsil_Li3(std::complex<double> z)
 {
-   return TSIL_Trilog_(z);
+   return to_c64(TSIL_Trilog_(z));
 }
 
 } // anonymous namespace

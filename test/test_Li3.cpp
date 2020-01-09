@@ -12525,8 +12525,13 @@ std::complex<double> clog(std::complex<double> z) {
    return std::log(zf);
 }
 
+std::complex<double> to_c64(std::complex<long double> z)
+{
+   return std::complex<double>(std::real(z), std::imag(z));
+}
+
 std::complex<double> tsil_Li3(std::complex<double> z) {
-   return TSIL_Trilog_(z);
+   return to_c64(TSIL_Trilog_(z));
 }
 
 const auto Relation_1 = [](std::complex<double> z) {

@@ -1,6 +1,5 @@
 find_package(GSL QUIET)
 
-add_definitions(-DTSIL_SIZE_DOUBLE)
 add_subdirectory(tsil)
 
 if(GSL_FOUND)
