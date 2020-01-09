@@ -1,5 +1,6 @@
 find_package(GSL QUIET)
 
+add_definitions(-DTEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
 add_subdirectory(tsil)
 
 if(GSL_FOUND)
