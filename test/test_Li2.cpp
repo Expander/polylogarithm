@@ -248,10 +248,8 @@ TEST_CASE("test_complex_random_values")
       const std::complex<double> li2_gsl = gsl_Li2(v);
       const std::complex<double> li2_tsil = to_c64(tsil_Li2(v));
 
-      CHECK_CLOSE(std::real(li2), std::real(li2_gsl), 1e-13);
-      CHECK_CLOSE(std::imag(li2), std::imag(li2_gsl), 1e-13);
-      CHECK_CLOSE(std::real(li2), std::real(li2_tsil), 1e-13);
-      CHECK_CLOSE(std::imag(li2), std::imag(li2_tsil), 1e-13);
+      CHECK_CLOSE_COMPLEX(li2, li2_gsl, 1e-13);
+      CHECK_CLOSE_COMPLEX(li2, li2_tsil, 1e-13);
    }
 }
 

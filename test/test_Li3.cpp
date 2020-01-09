@@ -12615,8 +12615,7 @@ TEST_CASE("test_complex_fixed_values")
       const std::complex<double> li3 = polylogarithm::Li3(z);
       const std::complex<double> li3_tsil = tsil_Li3(z);
 
-      CHECK_CLOSE(std::real(li3), std::real(li3_tsil), 1e-14);
-      CHECK_CLOSE(std::imag(li3), std::imag(li3_tsil), 1e-14);
+      CHECK_CLOSE_COMPLEX(li3, li3_tsil, 1e-14);
    }
 }
 
@@ -12630,8 +12629,7 @@ TEST_CASE("test_complex_random_values")
       const std::complex<double> li3 = polylogarithm::Li3(v);
       const std::complex<double> li3_tsil = tsil_Li3(v);
 
-      CHECK_CLOSE(std::real(li3), std::real(li3_tsil), 1e-14);
-      CHECK_CLOSE(std::imag(li3), std::imag(li3_tsil), 1e-14);
+      CHECK_CLOSE_COMPLEX(li3, li3_tsil, 1e-14);
    }
 }
 
