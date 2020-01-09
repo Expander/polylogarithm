@@ -529,6 +529,8 @@ extern "C" __declspec(dllimport) void __stdcall DebugBreak();
 #define DOCTEST_BREAK_INTO_DEBUGGER() ((void)0)
 #endif // linux
 
+#include <complex>
+
 #if DOCTEST_CLANG
 // to detect if libc++ is being used with clang (the _LIBCPP_VERSION identifier)
 #include <ciso646>
@@ -1813,6 +1815,9 @@ namespace detail
     DOCTEST_INTERFACE void toStream(std::ostream* stream, float in);
     DOCTEST_INTERFACE void toStream(std::ostream* stream, double in);
     DOCTEST_INTERFACE void toStream(std::ostream* stream, double long in);
+    DOCTEST_INTERFACE void toStream(std::ostream* stream, std::complex<float> in);
+    DOCTEST_INTERFACE void toStream(std::ostream* stream, std::complex<double> in);
+    DOCTEST_INTERFACE void toStream(std::ostream* stream, std::complex<double long> in);
 
     DOCTEST_INTERFACE void toStream(std::ostream* stream, char in);
     DOCTEST_INTERFACE void toStream(std::ostream* stream, char signed in);
@@ -3360,14 +3365,8 @@ namespace detail
     template <typename T>
     String fpToString(T value, int precision) {
         std::ostringstream oss;
-        oss << std::setprecision(precision) << std::fixed << value;
+        oss << std::setprecision(precision) << std::scientific << value;
         std::string d = oss.str();
-        size_t      i = d.find_last_not_of('0');
-        if(i != std::string::npos && i != d.size() - 1) {
-            if(d[i] == '.')
-                i++;
-            d = d.substr(0, i + 1);
-        }
         return d.c_str();
     }
 
@@ -3621,9 +3620,9 @@ String toString(char* in) { return toString(static_cast<const char*>(in)); }
 String toString(const char* in) { return String("\"") + (in ? in : "{null string}") + "\""; }
 #endif // DOCTEST_CONFIG_TREAT_CHAR_STAR_AS_STRING
 String toString(bool in) { return in ? "true" : "false"; }
-String toString(float in) { return detail::fpToString(in, 5) + "f"; }
-String toString(double in) { return detail::fpToString(in, 10); }
-String toString(double long in) { return detail::fpToString(in, 15); }
+String toString(float in) { return detail::fpToString(in, std::ceil(std::numeric_limits<float>::digits10)) + "f"; }
+String toString(double in) { return detail::fpToString(in, std::ceil(std::numeric_limits<double>::digits10)); }
+String toString(double long in) { return detail::fpToString(in, std::ceil(std::numeric_limits<long double>::digits10)) + "L"; }
 
 String toString(char in) {
     char buf[64];
@@ -4344,9 +4343,48 @@ namespace detail
     void toStream(std::ostream* stream, bool in) {
         *stream << std::boolalpha << in << std::noboolalpha;
     }
-    void toStream(std::ostream* stream, float in) { *stream << in; }
-    void toStream(std::ostream* stream, double in) { *stream << in; }
-    void toStream(std::ostream* stream, double long in) { *stream << in; }
+    void toStream(std::ostream* stream, float in)
+    {
+       *stream << std::setprecision(
+                     std::ceil(std::numeric_limits<float>::digits10))
+               << std::scientific
+               << in;
+    }
+    void toStream(std::ostream* stream, double in)
+    {
+       *stream << std::setprecision(
+                     std::ceil(std::numeric_limits<double>::digits10))
+               << std::scientific
+               << in;
+    }
+    void toStream(std::ostream* stream, double long in)
+    {
+       *stream << std::setprecision(
+                     std::ceil(std::numeric_limits<long double>::digits10))
+               << std::scientific
+               << in;
+    }
+    void toStream(std::ostream* stream, std::complex<float> in)
+    {
+       *stream << std::setprecision(
+                     std::ceil(std::numeric_limits<float>::digits10))
+               << std::scientific
+               << in;
+    }
+    void toStream(std::ostream* stream, std::complex<double> in)
+    {
+       *stream << std::setprecision(
+                     std::ceil(std::numeric_limits<double>::digits10))
+               << std::scientific
+               << in;
+    }
+    void toStream(std::ostream* stream, std::complex<long double> in)
+    {
+       *stream << std::setprecision(
+                     std::ceil(std::numeric_limits<long double>::digits10))
+               << std::scientific
+               << in;
+    }
 
     void toStream(std::ostream* stream, char in) { *stream << in; }
     void toStream(std::ostream* stream, char signed in) { *stream << in; }
