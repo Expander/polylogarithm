@@ -181,7 +181,7 @@ TEST_CASE("test_special_values")
 TEST_CASE("test_fixed_values")
 {
    const auto eps64  = 1e-15;
-   const auto eps128 = 1e-15L; // @todo increase precision
+   const auto eps128 = 1e-18L;
    const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li2.txt");
    const auto fixed_values = polylogarithm::test::read_from_file<long double>(filename);
 
@@ -208,7 +208,7 @@ TEST_CASE("test_fixed_values")
       INFO("Li2(128) cmpl = " << li128_cmpl << " (polylogarithm)");
 
       CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , eps64);
-      CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, eps128);
+      CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-17L);
       CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, eps128);
 
       if (std::imag(z128) == 0.0L) {
