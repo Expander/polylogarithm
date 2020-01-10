@@ -1028,9 +1028,9 @@ DOCTEST_INTERFACE String toString(std::nullptr_t in);
 class DOCTEST_INTERFACE Approx
 {
 public:
-    explicit Approx(double value);
+    explicit Approx(long double value);
 
-    Approx operator()(double value) const {
+    Approx operator()(long double value) const {
         Approx approx(value);
         approx.epsilon(m_epsilon);
         approx.scale(m_scale);
@@ -1040,73 +1040,73 @@ public:
 #ifdef DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
     template <typename T>
     explicit Approx(const T& value,
-                    typename detail::enable_if<std::is_constructible<double, T>::value>::type* =
+                    typename detail::enable_if<std::is_constructible<long double, T>::value>::type* =
                             static_cast<T*>(detail::getNull())) {
-        *this = Approx(static_cast<double>(value));
+        *this = Approx(static_cast<long double>(value));
     }
 #endif // DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 
     // clang-format off
-    // overloads for double - the first one is necessary as it is in the implementation part of doctest
+    // overloads for long double - the first one is necessary as it is in the implementation part of doctest
     // as for the others - keeping them for potentially faster compile times
-    DOCTEST_INTERFACE friend bool operator==(double lhs, Approx const& rhs);
-    friend bool operator==(Approx const& lhs, double rhs) { return operator==(rhs, lhs); }
-    friend bool operator!=(double lhs, Approx const& rhs) { return !operator==(lhs, rhs); }
-    friend bool operator!=(Approx const& lhs, double rhs) { return !operator==(rhs, lhs); }
-    friend bool operator<=(double lhs, Approx const& rhs) { return lhs < rhs.m_value || lhs == rhs; }
-    friend bool operator<=(Approx const& lhs, double rhs) { return lhs.m_value < rhs || lhs == rhs; }
-    friend bool operator>=(double lhs, Approx const& rhs) { return lhs > rhs.m_value || lhs == rhs; }
-    friend bool operator>=(Approx const& lhs, double rhs) { return lhs.m_value > rhs || lhs == rhs; }
-    friend bool operator< (double lhs, Approx const& rhs) { return lhs < rhs.m_value && lhs != rhs; }
-    friend bool operator< (Approx const& lhs, double rhs) { return lhs.m_value < rhs && lhs != rhs; }
-    friend bool operator> (double lhs, Approx const& rhs) { return lhs > rhs.m_value && lhs != rhs; }
-    friend bool operator> (Approx const& lhs, double rhs) { return lhs.m_value > rhs && lhs != rhs; }
+    DOCTEST_INTERFACE friend bool operator==(long double lhs, Approx const& rhs);
+    friend bool operator==(Approx const& lhs, long double rhs) { return operator==(rhs, lhs); }
+    friend bool operator!=(long double lhs, Approx const& rhs) { return !operator==(lhs, rhs); }
+    friend bool operator!=(Approx const& lhs, long double rhs) { return !operator==(rhs, lhs); }
+    friend bool operator<=(long double lhs, Approx const& rhs) { return lhs < rhs.m_value || lhs == rhs; }
+    friend bool operator<=(Approx const& lhs, long double rhs) { return lhs.m_value < rhs || lhs == rhs; }
+    friend bool operator>=(long double lhs, Approx const& rhs) { return lhs > rhs.m_value || lhs == rhs; }
+    friend bool operator>=(Approx const& lhs, long double rhs) { return lhs.m_value > rhs || lhs == rhs; }
+    friend bool operator< (long double lhs, Approx const& rhs) { return lhs < rhs.m_value && lhs != rhs; }
+    friend bool operator< (Approx const& lhs, long double rhs) { return lhs.m_value < rhs && lhs != rhs; }
+    friend bool operator> (long double lhs, Approx const& rhs) { return lhs > rhs.m_value && lhs != rhs; }
+    friend bool operator> (Approx const& lhs, long double rhs) { return lhs.m_value > rhs && lhs != rhs; }
 
 #ifdef DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 #define DOCTEST_APPROX_PREFIX \
-    template <typename T> friend typename detail::enable_if<std::is_constructible<double, T>::value, bool>::type
+    template <typename T> friend typename detail::enable_if<std::is_constructible<long double, T>::value, bool>::type
 
-    DOCTEST_APPROX_PREFIX operator==(const T& lhs, const Approx& rhs) { return operator==(double(lhs), rhs); }
+    DOCTEST_APPROX_PREFIX operator==(const T& lhs, const Approx& rhs) { return operator==(long double(lhs), rhs); }
     DOCTEST_APPROX_PREFIX operator==(const Approx& lhs, const T& rhs) { return operator==(rhs, lhs); }
     DOCTEST_APPROX_PREFIX operator!=(const T& lhs, const Approx& rhs) { return !operator==(lhs, rhs); }
     DOCTEST_APPROX_PREFIX operator!=(const Approx& lhs, const T& rhs) { return !operator==(rhs, lhs); }
-    DOCTEST_APPROX_PREFIX operator<=(const T& lhs, const Approx& rhs) { return double(lhs) < rhs.m_value || lhs == rhs; }
-    DOCTEST_APPROX_PREFIX operator<=(const Approx& lhs, const T& rhs) { return lhs.m_value < double(rhs) || lhs == rhs; }
-    DOCTEST_APPROX_PREFIX operator>=(const T& lhs, const Approx& rhs) { return double(lhs) > rhs.m_value || lhs == rhs; }
-    DOCTEST_APPROX_PREFIX operator>=(const Approx& lhs, const T& rhs) { return lhs.m_value > double(rhs) || lhs == rhs; }
-    DOCTEST_APPROX_PREFIX operator< (const T& lhs, const Approx& rhs) { return double(lhs) < rhs.m_value && lhs != rhs; }
-    DOCTEST_APPROX_PREFIX operator< (const Approx& lhs, const T& rhs) { return lhs.m_value < double(rhs) && lhs != rhs; }
-    DOCTEST_APPROX_PREFIX operator> (const T& lhs, const Approx& rhs) { return double(lhs) > rhs.m_value && lhs != rhs; }
-    DOCTEST_APPROX_PREFIX operator> (const Approx& lhs, const T& rhs) { return lhs.m_value > double(rhs) && lhs != rhs; }
+    DOCTEST_APPROX_PREFIX operator<=(const T& lhs, const Approx& rhs) { return long double(lhs) < rhs.m_value || lhs == rhs; }
+    DOCTEST_APPROX_PREFIX operator<=(const Approx& lhs, const T& rhs) { return lhs.m_value < long double(rhs) || lhs == rhs; }
+    DOCTEST_APPROX_PREFIX operator>=(const T& lhs, const Approx& rhs) { return long double(lhs) > rhs.m_value || lhs == rhs; }
+    DOCTEST_APPROX_PREFIX operator>=(const Approx& lhs, const T& rhs) { return lhs.m_value > long double(rhs) || lhs == rhs; }
+    DOCTEST_APPROX_PREFIX operator< (const T& lhs, const Approx& rhs) { return long double(lhs) < rhs.m_value && lhs != rhs; }
+    DOCTEST_APPROX_PREFIX operator< (const Approx& lhs, const T& rhs) { return lhs.m_value < long double(rhs) && lhs != rhs; }
+    DOCTEST_APPROX_PREFIX operator> (const T& lhs, const Approx& rhs) { return long double(lhs) > rhs.m_value && lhs != rhs; }
+    DOCTEST_APPROX_PREFIX operator> (const Approx& lhs, const T& rhs) { return lhs.m_value > long double(rhs) && lhs != rhs; }
 #undef DOCTEST_APPROX_PREFIX
 #endif // DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 
     // clang-format on
 
-    Approx& epsilon(double newEpsilon) {
+    Approx& epsilon(long double newEpsilon) {
         m_epsilon = newEpsilon;
         return *this;
     }
 
 #ifdef DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
     template <typename T>
-    typename detail::enable_if<std::is_constructible<double, T>::value, Approx&>::type epsilon(
+    typename detail::enable_if<std::is_constructible<long double, T>::value, Approx&>::type epsilon(
             const T& newEpsilon) {
-        m_epsilon = static_cast<double>(newEpsilon);
+        m_epsilon = static_cast<long double>(newEpsilon);
         return *this;
     }
 #endif //  DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 
-    Approx& scale(double newScale) {
+    Approx& scale(long double newScale) {
         m_scale = newScale;
         return *this;
     }
 
 #ifdef DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
     template <typename T>
-    typename detail::enable_if<std::is_constructible<double, T>::value, Approx&>::type scale(
+    typename detail::enable_if<std::is_constructible<long double, T>::value, Approx&>::type scale(
             const T& newScale) {
-        m_scale = static_cast<double>(newScale);
+        m_scale = static_cast<long double>(newScale);
         return *this;
     }
 #endif // DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
@@ -1114,9 +1114,9 @@ public:
     String toString() const;
 
 private:
-    double m_epsilon;
-    double m_scale;
-    double m_value;
+    long double m_epsilon;
+    long double m_scale;
+    long double m_value;
 };
 
 template <>
@@ -3602,12 +3602,12 @@ std::ostream& operator<<(std::ostream& stream, const String& in) {
     return stream;
 }
 
-Approx::Approx(double value)
-        : m_epsilon(static_cast<double>(std::numeric_limits<float>::epsilon()) * 100)
+Approx::Approx(long double value)
+        : m_epsilon(static_cast<long double>(std::numeric_limits<double>::epsilon()) * 100)
         , m_scale(1.0)
         , m_value(value) {}
 
-bool operator==(double lhs, Approx const& rhs) {
+bool operator==(long double lhs, Approx const& rhs) {
     // Thanks to Richard Harris for his help refining this formula
     return std::fabs(lhs - rhs.m_value) <
            rhs.m_epsilon * (rhs.m_scale + detail::my_max(std::fabs(lhs), std::fabs(rhs.m_value)));
