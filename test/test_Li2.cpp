@@ -227,7 +227,7 @@ TEST_CASE("test_real_random_values")
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_doubles(10000, -10, 10);
+   const auto values = generate_random_scalars<double>(10000, -10, 10);
 
    for (auto v: values) {
       const double li2 = polylogarithm::Li2(v);
@@ -241,7 +241,7 @@ TEST_CASE("test_complex_random_values")
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(10000, -10, 10);
+   const auto values = generate_random_complexes<double>(10000, -10, 10);
 
    for (auto v: values) {
       const std::complex<double> li2 = polylogarithm::Li2(v);

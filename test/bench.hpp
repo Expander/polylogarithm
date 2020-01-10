@@ -16,28 +16,30 @@
 namespace polylogarithm {
 namespace bench {
 
-std::vector<double> generate_random_doubles(int n, double start, double stop)
+template <class T>
+std::vector<T> generate_random_scalars(int n, T start, T stop)
 {
    std::minstd_rand gen;
-   std::uniform_real_distribution<double> dist(start, stop);
+   std::uniform_real_distribution<T> dist(start, stop);
 
-   std::vector<double> v(n);
+   std::vector<T> v(n);
    std::generate(begin(v), end(v),
                  [&dist,&gen](){ return dist(gen); });
 
    return v;
 }
 
-std::vector<std::complex<double>> generate_random_complexes(
-   int n, double start, double stop)
+template <class T>
+std::vector<std::complex<T>> generate_random_complexes(
+   int n, T start, T stop)
 {
-   const auto reals = generate_random_doubles(n, start, stop);
-   const auto imags = generate_random_doubles(n, start, stop);
+   const auto reals = generate_random_scalars<T>(n, start, stop);
+   const auto imags = generate_random_scalars<T>(n, start, stop);
 
-   std::vector<std::complex<double>> v(n);
+   std::vector<std::complex<T>> v(n);
 
    for (int i = 0; i < n; i++)
-      v[i] = std::complex<double>(reals[i], imags[i]);
+      v[i] = std::complex<T>(reals[i], imags[i]);
 
    return v;
 }

@@ -124,7 +124,7 @@ TEST_CASE("test_complex_random_values")
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(10000, -10, 10);
+   const auto values = generate_random_complexes<double>(10000, -10, 10);
 
    for (auto v: values) {
       const std::complex<double> li3 = polylogarithm::Li3(v);

@@ -7,14 +7,10 @@
 #include "Li.hpp"
 #include "tsil_cpp.h"
 #include <iostream>
+#include <typeinfo>
 #include <gsl/gsl_sf_dilog.h>
 
 namespace {
-
-std::complex<double> to_c64(std::complex<long double> z)
-{
-   return std::complex<double>(std::real(z), std::imag(z));
-}
 
 double gsl_Li2(double x)
 {
@@ -30,14 +26,14 @@ std::complex<double> gsl_Li2(std::complex<double> z)
    return {li2_gsl_re.val, li2_gsl_im.val};
 }
 
-std::complex<double> tsil_Li2(std::complex<double> z)
+std::complex<long double> tsil_Li2(std::complex<long double> z)
 {
-   return to_c64(TSIL_Dilog_(z));
+   return TSIL_Dilog_(z);
 }
 
-std::complex<double> tsil_Li3(std::complex<double> z)
+std::complex<long double> tsil_Li3(std::complex<long double> z)
 {
-   return to_c64(TSIL_Trilog_(z));
+   return TSIL_Trilog_(z);
 }
 
 } // anonymous namespace
@@ -47,7 +43,7 @@ void bench_real_Li2_GSL(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_doubles(N, min, max);
+   const auto values = generate_random_scalars<double>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -55,16 +51,16 @@ void bench_real_Li2_GSL(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of real Li2 " << N << " times took: "
-             << total_time << "s (GSL)\n";
+   std::cout << "Evaluation of real Li2 " << N << " times took: " << total_time
+             << "s (GSL) (type: " << typeid(double).name() << ")\n";
 }
 
-
+template <class T>
 void bench_real_Li2(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_doubles(N, min, max);
+   const auto values = generate_random_scalars<T>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -72,16 +68,15 @@ void bench_real_Li2(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of real Li2 " << N << " times took: "
-             << total_time << "s\n";
+   std::cout << "Evaluation of real Li2 " << N << " times took: " << total_time
+             << "s (polylogarithm) (type: " << typeid(T).name() << ")\n";
 }
-
 
 void bench_cmpl_Li2_GSL(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(N, min, max);
+   const auto values = generate_random_complexes<double>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -89,16 +84,15 @@ void bench_cmpl_Li2_GSL(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li2 " << N << " times took: "
-             << total_time << "s (GSL)\n";
+   std::cout << "Evaluation of cmpl Li2 " << N << " times took: " << total_time
+             << "s (GSL) (type: " << typeid(double).name() << ")\n";
 }
-
 
 void bench_cmpl_Li2_TSIL(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(N, min, max);
+   const auto values = generate_random_complexes<long double>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -106,16 +100,16 @@ void bench_cmpl_Li2_TSIL(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li2 " << N << " times took: "
-             << total_time << "s (TSIL)\n";
+   std::cout << "Evaluation of cmpl Li2 " << N << " times took: " << total_time
+             << "s (TSIL) (type: " << typeid(long double).name() << ")\n";
 }
 
-
+template <class T>
 void bench_cmpl_Li2(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(N, min, max);
+   const auto values = generate_random_complexes<T>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -123,16 +117,15 @@ void bench_cmpl_Li2(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li2 " << N << " times took: "
-             << total_time << "s\n";
+   std::cout << "Evaluation of cmpl Li2 " << N << " times took: " << total_time
+             << "s (polylogarithm) (type: " << typeid(T).name() << ")\n";
 }
-
 
 void bench_Li3(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(N, min, max);
+   const auto values = generate_random_complexes<double>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -140,16 +133,15 @@ void bench_Li3(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li3 " << N << " times took: "
-             << total_time << "s\n";
+   std::cout << "Evaluation of cmpl Li3 " << N << " times took: " << total_time
+             << "s (polylogarithm) (type: " << typeid(double).name() << ")\n";
 }
-
 
 void bench_Li3_TSIL(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(N, min, max);
+   const auto values = generate_random_complexes<long double>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -157,16 +149,15 @@ void bench_Li3_TSIL(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li3 " << N << " times took: "
-             << total_time << "s (TSIL)\n";
+   std::cout << "Evaluation of cmpl Li3 " << N << " times took: " << total_time
+             << "s (TSIL) (type: " << typeid(long double).name() << ")\n";
 }
-
 
 void bench_Li4(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(N, min, max);
+   const auto values = generate_random_complexes<double>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -174,16 +165,15 @@ void bench_Li4(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li4 " << N << " times took: "
-             << total_time << "s\n";
+   std::cout << "Evaluation of cmpl Li4 " << N << " times took: " << total_time
+             << "s (polylogarithm) (type: " << typeid(double).name() << ")\n";
 }
-
 
 void bench_Li5(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(N, min, max);
+   const auto values = generate_random_complexes<double>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -191,16 +181,15 @@ void bench_Li5(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li5 " << N << " times took: "
-             << total_time << "s\n";
+   std::cout << "Evaluation of cmpl Li5 " << N << " times took: " << total_time
+             << "s (polylogarithm) (type: " << typeid(double).name() << ")\n";
 }
-
 
 void bench_Li6(std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(N, min, max);
+   const auto values = generate_random_complexes<double>(N, min, max);
 
    const double total_time = time_in_seconds([&values] {
          for (const auto& v: values) {
@@ -208,16 +197,15 @@ void bench_Li6(std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li6 " << N << " times took: "
-             << total_time << "s\n";
+   std::cout << "Evaluation of cmpl Li6 " << N << " times took: " << total_time
+             << "s (polylogarithm) (type: " << typeid(double).name() << ")\n";
 }
-
 
 void bench_Lin(long n, std::size_t N, double min, double max)
 {
    using namespace polylogarithm::bench;
 
-   const auto values = generate_random_complexes(N, min, max);
+   const auto values = generate_random_complexes<double>(N, min, max);
 
    const double total_time = time_in_seconds([&values,n] {
          for (const auto& v: values) {
@@ -225,8 +213,9 @@ void bench_Lin(long n, std::size_t N, double min, double max)
          }
       });
 
-   std::cout << "Evaluation of cmpl Li(" << n << ") " << N << " times took: "
-             << total_time << "s\n";
+   std::cout << "Evaluation of cmpl Li(" << n << ") " << N
+             << " times took: " << total_time
+             << "s (polylogarithm) (type: " << typeid(double).name() << ")\n";
 }
 
 void print_line()
@@ -241,12 +230,14 @@ int main() {
 
    print_line();
 
-   bench_real_Li2(N, min, max);
+   bench_real_Li2<double>(N, min, max);
+   bench_real_Li2<long double>(N, min, max);
    bench_real_Li2_GSL(N, min, max);
 
    print_line();
 
-   bench_cmpl_Li2(N, min, max);
+   bench_cmpl_Li2<double>(N, min, max);
+   bench_cmpl_Li2<long double>(N, min, max);
    bench_cmpl_Li2_GSL(N, min, max);
    bench_cmpl_Li2_TSIL(N, min, max);
 
