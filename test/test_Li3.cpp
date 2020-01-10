@@ -82,11 +82,20 @@ TEST_CASE("test_special_values")
    const double phi = 0.5*(std::sqrt(5.) + 1); // golden ratio
    const double eps = 1e-15;
 
-   CHECK_CLOSE_COMPLEX(Li3(0), 0, eps);
-   CHECK_CLOSE_COMPLEX(Li3(1), zeta3, eps);
-   CHECK_CLOSE_COMPLEX(Li3(-1), -3./4.*zeta3, eps);
-   CHECK_CLOSE_COMPLEX(Li3(0.5), pow3(ln2)/6. - pi2/12.*ln2 + 7./8.*zeta3, eps);
-   CHECK_CLOSE_COMPLEX(Li3(1/sqr(phi)), 4./5.*zeta3 + 2./3.*pow3(std::log(phi)) - 2./15.*pi2*std::log(phi), eps);
+   const std::complex<double> zero(0.0, 0.0);
+   CHECK_CLOSE_COMPLEX(Li3(zero), 0.0, eps);
+
+   const std::complex<double> one(1.0, 0.0);
+   CHECK_CLOSE_COMPLEX(Li3(one), zeta3, eps);
+
+   const std::complex<double> mone(-1.0, 0.0);
+   CHECK_CLOSE_COMPLEX(Li3(mone), -3./4.*zeta3, eps);
+
+   const std::complex<double> half(0.5, 0.0);
+   CHECK_CLOSE_COMPLEX(Li3(half), pow3(ln2)/6. - pi2/12.*ln2 + 7./8.*zeta3, eps);
+
+   const std::complex<double> gr(1/sqr(phi), 0.0);
+   CHECK_CLOSE_COMPLEX(Li3(gr), 4./5.*zeta3 + 2./3.*pow3(std::log(phi)) - 2./15.*pi2*std::log(phi), eps);
 }
 
 TEST_CASE("test_fixed_values")
