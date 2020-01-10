@@ -112,15 +112,18 @@ TEST_CASE("test_fixed_values")
       const auto li64_expected = to_c64(li128_expected);
 
       const auto li64_cmpl  = polylogarithm::Li3(z64);
+      const auto li128_cmpl = polylogarithm::Li3(z128);
       const auto li128_tsil = tsil_Li3(z128);
 
       INFO("z(128)        = " << z128);
       INFO("Li3(64)  cmpl = " << li64_expected << " (expected)");
       INFO("Li3(128) cmpl = " << li128_expected << " (expected)");
       INFO("Li3(128) cmpl = " << li128_tsil << " (TSIL)");
+      INFO("Li3(128) cmpl = " << li128_cmpl << " (polylogarithm)");
       INFO("Li3(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
 
       CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , eps64);
+      CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 1e-17L); // @todo increase precision
       CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, eps128);
 
       CHECK_SMALL(Relation_1(z64), eps64);

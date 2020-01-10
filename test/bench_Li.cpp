@@ -106,6 +106,9 @@ int main() {
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li3(z); },
             values_cd, "polylogarithm", "double");
 
+   bench_fn([&](std::complex<long double> z) { return polylogarithm::Li3(z); },
+            values_cl, "polylogarithm", "long double");
+
    bench_fn([&](std::complex<long double> z) { return tsil_Li3(z); },
             values_cl, "TSIL", "long double");
 
