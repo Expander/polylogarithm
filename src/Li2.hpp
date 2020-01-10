@@ -16,7 +16,7 @@ double Cl2(double);
 /// real polylogarithm with n=2 (dilogarithm)
 double Li2(double);
 
-/// real dilogarithm with n=2 (dilogarithm)
+/// real polylogarithm with n=2 (dilogarithm)
 long double Li2(long double);
 
 /// complex polylogarithm with n=2 (dilogarithm)
