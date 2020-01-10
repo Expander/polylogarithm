@@ -101,7 +101,7 @@ TEST_CASE("test_special_values")
 TEST_CASE("test_fixed_values")
 {
    const auto eps64  = 1e-14;  // @todo increase precision
-   const auto eps128 = 1e-15L; // @todo increase precision
+   const auto eps128 = 1e-18L;
    const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li3.txt");
    const auto fixed_values = polylogarithm::test::read_from_file<long double>(filename);
 
