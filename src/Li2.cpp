@@ -78,23 +78,23 @@ double Li2(double x) {
        if (T <= -2) {
            Y = -1/(1+T);
            S = 1;
-           B1= log(-T);
-           B2= log(1+1/T);
+           B1= std::log(-T);
+           B2= std::log(1+1/T);
            A = -PI3+HF*(B1*B1-B2*B2);
        } else if (T < -1) {
            Y = -1-T;
            S = -1;
-           A = log(-T);
-           A = -PI6+A*(A+log(1+1/T));
+           A = std::log(-T);
+           A = -PI6+A*(A+std::log(1+1/T));
        } else if (T <= -0.5) {
            Y = -(1+T)/T;
            S = 1;
-           A = log(-T);
-           A = -PI6+A*(-HF*A+log(1+T));
+           A = std::log(-T);
+           A = -PI6+A*(-HF*A+std::log(1+T));
        } else if (T < 0) {
            Y = -T/(1+T);
            S = -1;
-           B1= log(1+T);
+           B1= std::log(1+T);
            A = HF*B1*B1;
        } else if (T <= 1) {
            Y = T;
@@ -103,7 +103,7 @@ double Li2(double x) {
        } else {
            Y = 1/T;
            S = -1;
-           B1= log(T);
+           B1= std::log(T);
            A = PI6+HF*B1*B1;
        }
        H    = Y+Y-1;
@@ -158,23 +158,23 @@ long double Li2(long double x) {
        if (T <= -2) {
            Y = -1/(1+T);
            S = 1;
-           B1= log(-T);
-           B2= log(1+1/T);
+           B1= std::log(-T);
+           B2= std::log(1+1/T);
            A = -PI3+HF*(B1*B1-B2*B2);
        } else if (T < -1) {
            Y = -1-T;
            S = -1;
-           A = log(-T);
-           A = -PI6+A*(A+log(1+1/T));
+           A = std::log(-T);
+           A = -PI6+A*(A+std::log(1+1/T));
        } else if (T <= -0.5L) {
            Y = -(1+T)/T;
            S = 1;
-           A = log(-T);
-           A = -PI6+A*(-HF*A+log(1+T));
+           A = std::log(-T);
+           A = -PI6+A*(-HF*A+std::log(1+T));
        } else if (T < 0) {
            Y = -T/(1+T);
            S = -1;
-           B1= log(1+T);
+           B1= std::log(1+T);
            A = HF*B1*B1;
        } else if (T <= 1) {
            Y = T;
@@ -183,7 +183,7 @@ long double Li2(long double x) {
        } else {
            Y = 1/T;
            S = -1;
-           B1= log(T);
+           B1= std::log(T);
            A = PI6+HF*B1*B1;
        }
        H    = Y+Y-1;
