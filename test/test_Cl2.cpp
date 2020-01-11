@@ -35,7 +35,6 @@ TEST_CASE("test_special_values")
 TEST_CASE("test_kummer_relation")
 {
    using namespace polylogarithm;
-   using std::exp;
    const double pi  = M_PI;
    const double z2  = 1.644934066848226436472415166646025189218949901206798437735558229;
    const std::complex<double> i(0.,1.);
@@ -43,7 +42,7 @@ TEST_CASE("test_kummer_relation")
    const auto thetas = float_range(0., 2*pi, 100);
 
    for (const auto t: thetas) {
-      const auto lhs = Li2(exp(i*t));
+      const auto lhs = Li2(std::exp(i*t));
       const auto rhs = z2 - t*(2*pi - t)/4. + i*Cl2(t);
 
       CHECK_CLOSE(std::real(lhs), std::real(rhs), 1e-15);

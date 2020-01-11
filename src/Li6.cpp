@@ -18,18 +18,16 @@ namespace {
 
    // converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept {
-      if (std::real(z) == 0.0) z.real(0.0);
-      if (std::imag(z) == 0.0) z.imag(0.0);
+      if (std::real(z) == 0.0) { z.real(0.0); }
+      if (std::imag(z) == 0.0) { z.imag(0.0); }
       return std::log(z);
    }
 
-   bool is_close(const std::complex<double>& a, const std::complex<double>& b,
-                 double eps = epsilon)
+   bool is_close(const std::complex<double>& a, double b, double eps = epsilon)
    {
-      return std::abs(std::real(a) - std::real(b)) < eps &&
-             std::abs(std::imag(a) - std::imag(b)) < eps;
+      return std::abs(std::real(a) - b) < eps && std::abs(std::imag(a)) < eps;
    }
-} // anonymous namespace
+   } // anonymous namespace
 
 /**
  * @brief Clausen function \f$\mathrm{Cl}_6(\theta) = \mathrm{Im}(\mathrm{Li}_6(e^{i\theta}))\f$
@@ -38,22 +36,24 @@ namespace {
  */
 double Cl6(double x)
 {
-   using std::exp;
    const double PI = 3.141592653589793;
    const std::complex<double> i(0.,1.);
 
-   while (x >= 2*PI)
+   while (x >= 2*PI) {
       x -= 2*PI;
+   }
 
-   while (x < 0.)
+   while (x < 0.) {
       x += 2*PI;
+   }
 
    if (std::abs(x) < std::numeric_limits<double>::epsilon() ||
        std::abs(x - PI) < std::numeric_limits<double>::epsilon() ||
-       std::abs(x - 2*PI) < std::numeric_limits<double>::epsilon())
+       std::abs(x - 2*PI) < std::numeric_limits<double>::epsilon()) {
       return 0.;
+   }
 
-   return std::imag(Li6(exp(i*x)));
+   return std::imag(Li6(std::exp(i*x)));
 }
 
 /**
@@ -80,12 +80,15 @@ std::complex<double> Li6(const std::complex<double>& z)
      -6.840881171901169e-15,  4.869117846200558e-15
    };
 
-   if (is_close(z, 0.))
-      return 0.;
-   if (is_close(z, 1.))
-      return zeta6;
-   if (is_close(z, -1.))
-      return -31.*zeta6/32.;
+   if (is_close(z, 0.)) {
+      return { 0., 0. };
+   }
+   if (is_close(z, 1.)) {
+      return { zeta6, 0. };
+   }
+   if (is_close(z, -1.)) {
+      return { -31.*zeta6/32., 0. };
+   }
 
    const auto az  = std::abs(z);
    const auto pz  = std::arg(z);
@@ -119,14 +122,14 @@ std::complex<double> Li6(const std::complex<double>& z)
          u2 * (cs[4]))))))));
    }
 
-   std::complex<double> u, r;
+   std::complex<double> u(0.,0.), r(0.,0.);
    double sgn = 1;
 
    if (az <= 1.) {
       u = -clog(1. - z);
    } else { // az > 1.
       auto arg = PI + pz;
-      if (arg > PI) arg -= 2*PI;
+      if (arg > PI) { arg -= 2*PI; }
       const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
       const auto lmz2 = pow2(lmz);
       u = -clog(1. - 1./z);

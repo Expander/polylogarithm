@@ -15,13 +15,13 @@ namespace {
    const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
    const double inf = std::numeric_limits<double>::infinity();
 
-   bool is_close(double a, double b, double eps = epsilon)
+   bool is_close(double a, double b, double eps)
    {
       return std::abs(a - b) < eps;
    }
 
    bool is_close(const std::complex<double>& a, const std::complex<double>& b,
-                 double eps = epsilon)
+                 double eps)
    {
       return std::abs(std::real(a) - std::real(b)) < eps &&
              std::abs(std::imag(a) - std::imag(b)) < eps;
@@ -35,8 +35,9 @@ namespace {
  */
 double Li0(double x)
 {
-   if (is_close(x, 1.))
+   if (is_close(x, 1., epsilon)) {
       return inf;
+   }
 
    return x/(1. - x);
 }
@@ -48,8 +49,9 @@ double Li0(double x)
  */
 std::complex<double> Li0(const std::complex<double>& z)
 {
-   if (is_close(z, {1.,0.}))
+   if (is_close(z, {1.,0.}, epsilon)) {
       return {inf, inf};
+   }
 
    return z/(1. - z);
 }
