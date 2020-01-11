@@ -17,5 +17,4 @@ TEST_CASE("test_special_values")
    using polylogarithm::Li0;
 
    CHECK_SMALL(Li0(0.), 1e-15);
-   CHECK(!std::isfinite(Li0(1)));
 }

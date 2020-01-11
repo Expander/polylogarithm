@@ -14,21 +14,10 @@
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 #define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
-      if (std::isinf(std::real(a)) && std::isinf(std::real(b)))         \
-         CHECK(true);                                                   \
-      else                                                              \
-         CHECK_CLOSE(std::real(a), std::real(b), (eps));                \
-                                                                        \
-      if (std::isinf(std::imag(a)) && std::isinf(std::imag(b)))         \
-         CHECK(true);                                                   \
-      else                                                              \
-         CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                \
-   } while (0);
+      CHECK_CLOSE(std::real(a), std::real(b), (eps));                   \
+      CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                   \
+   } while (0)
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
-
-namespace {
-   const double inf = std::numeric_limits<double>::infinity();
-} // anonymous namespace
 
 // Generated with Mathematica 9.0 using
 //
@@ -18372,7 +18361,7 @@ const std::pair<std::complex<double>, std::complex<double>> values_Lim1[] = {
  {{1., -0.2999999999999998}, {-11.111111111111123, 3.3333333333333353}},
  {{1., -0.1999999999999993}, {-25.000000000000178, 5.000000000000018}},
  {{1., -0.09999999999999964}, {-100.00000000000071, 10.000000000000036}},
- {{1., 0.}, {inf, inf}}, {{1., 0.10000000000000053},
+ {{1., 0.10000000000000053},
   {-99.99999999999893, -9.999999999999947}}, {{1., 0.20000000000000018},
   {-24.999999999999957, -4.999999999999996}},
  {{1., 0.3000000000000007}, {-11.11111111111106, -3.3333333333333255}},
@@ -30447,7 +30436,7 @@ const std::pair<std::complex<double>, std::complex<double>> values_Lim2[] = {
  {{1., -0.2999999999999998}, {33.33333333333337, 70.74074074074086}},
  {{1., -0.1999999999999993}, {75.00000000000053, 245.00000000000264}},
  {{1., -0.09999999999999964}, {300.0000000000021, 1990.0000000000214}},
- {{1., 0.}, {inf, inf}}, {{1., 0.10000000000000053},
+ {{1., 0.10000000000000053},
   {299.9999999999968, -1989.9999999999682}}, {{1., 0.20000000000000018},
   {74.99999999999987, -244.99999999999935}}, {{1., 0.3000000000000007},
   {33.33333333333318, -70.74074074074024}}, {{1., 0.40000000000000036},
@@ -35835,8 +35824,11 @@ TEST_CASE("test_special_values")
    for (const auto v: special_values) {
       INFO("z = " << v);
 
-      CHECK_CLOSE_COMPLEX(Li0(v), Li(0,v), eps);
-      CHECK_CLOSE_COMPLEX(Li1(v), Li(1,v), eps);
+      if (!(std::real(v) == 1 && std::imag(v) == 0)) {
+         CHECK_CLOSE_COMPLEX(Li0(v), Li(0,v), eps);
+         CHECK_CLOSE_COMPLEX(Li1(v), Li(1,v), eps);
+      }
+
       CHECK_CLOSE_COMPLEX(Li2(v), Li(2,v), eps);
       CHECK_CLOSE_COMPLEX(Li3(v), Li(3,v), eps);
       CHECK_CLOSE_COMPLEX(Li4(v), Li(4,v), eps);
@@ -35864,8 +35856,11 @@ TEST_CASE("test_values")
 
       INFO("z = " << z);
 
-      CHECK_CLOSE_COMPLEX(Li0(z), Li(0,z), eps);
-      CHECK_CLOSE_COMPLEX(Li1(z), Li(1,z), eps);
+      if (!(std::real(z) == 1 && std::imag(z) == 0)) {
+         CHECK_CLOSE_COMPLEX(Li0(z), Li(0,z), eps);
+         CHECK_CLOSE_COMPLEX(Li1(z), Li(1,z), eps);
+      }
+
       CHECK_CLOSE_COMPLEX(Li2(z), Li(2,z), eps);
       CHECK_CLOSE_COMPLEX(Li3(z), Li(3,z), eps);
       CHECK_CLOSE_COMPLEX(Li4(z), Li(4,z), eps);
@@ -35912,8 +35907,10 @@ TEST_CASE("test_values_close_to_unity")
 
       INFO("z = " << z);
 
-      CHECK_CLOSE_COMPLEX(Li0(z), Li(0,z), eps);
-      CHECK_CLOSE_COMPLEX(Li1(z), Li(1,z), eps);
+      if (!(std::real(z) == 1 && std::imag(z) == 0)) {
+         CHECK_CLOSE_COMPLEX(Li0(z), Li(0,z), eps);
+         CHECK_CLOSE_COMPLEX(Li1(z), Li(1,z), eps);
+      }
       CHECK_CLOSE_COMPLEX(Li2(z), Li(2,z), eps);
       CHECK_CLOSE_COMPLEX(Li3(z), Li(3,z), eps);
       CHECK_CLOSE_COMPLEX(Li4(z), Li(4,z), eps);

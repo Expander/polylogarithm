@@ -12031,7 +12031,6 @@ TEST_CASE("test_special_values")
 
    CHECK_SMALL(Li1(0), 1e-15);
    CHECK_CLOSE(Li1(0.5), std::log(2.), 1e-15);
-   CHECK(!std::isfinite(Li1(1)));
 }
 
 TEST_CASE("test_values")
