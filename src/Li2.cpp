@@ -49,22 +49,24 @@ namespace {
  */
 double Cl2(double x)
 {
-   using std::exp;
    const double PI = 3.141592653589793;
    const std::complex<double> i(0.,1.);
 
-   while (x >= 2*PI)
+   while (x >= 2*PI) {
       x -= 2*PI;
+   }
 
-   while (x < 0.)
+   while (x < 0.) {
       x += 2*PI;
+   }
 
    if (std::abs(x) < std::numeric_limits<double>::epsilon() ||
        std::abs(x - PI) < std::numeric_limits<double>::epsilon() ||
-       std::abs(x - 2*PI) < std::numeric_limits<double>::epsilon())
+       std::abs(x - 2*PI) < std::numeric_limits<double>::epsilon()) {
       return 0.;
+   }
 
-   return std::imag(Li2(exp(i*x)));
+   return std::imag(Li2(std::exp(i*x)));
 }
 
 /**
@@ -258,15 +260,17 @@ std::complex<double> Li2(const std::complex<double>& z)
 
    // special cases
    if (iz == 0.) {
-      if (rz <= 1.)
+      if (rz <= 1.) {
          return {Li2(rz), 0.};
-      if (rz > 1.)
+      }
+      if (rz > 1.) {
          return {Li2(rz), -PI*std::log(rz)};
+      }
    } else if (nz < std::numeric_limits<double>::epsilon()) {
       return z;
    }
 
-   std::complex<double> cy, cz;
+   std::complex<double> cy(0.,0.), cz(0.,0.);
    int jsgn, ipi12;
 
    // transformation to |z|<1, Re(z)<=0.5
@@ -358,15 +362,17 @@ std::complex<long double> Li2(const std::complex<long double>& z)
 
    // special cases
    if (iz == 0.0L) {
-      if (rz <= 1.0L)
+      if (rz <= 1.0L) {
          return {Li2(rz), 0.0L};
-      if (rz > 1.0L)
+      }
+      if (rz > 1.0L) {
          return {Li2(rz), -PI*std::log(rz)};
+      }
    } else if (nz < std::numeric_limits<long double>::epsilon()) {
       return z;
    }
 
-   std::complex<long double> cy, cz;
+   std::complex<long double> cy(0.0L, 0.0L), cz(0.0L, 0.0L);
    int jsgn, ipi12;
 
    // transformation to |z|<1, Re(z)<=0.5

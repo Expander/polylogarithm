@@ -77,8 +77,8 @@ namespace {
    /// complex logarithm, converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept
    {
-      if (std::real(z) == 0.0) z.real(0.0);
-      if (std::imag(z) == 0.0) z.imag(0.0);
+      if (std::real(z) == 0.0) { z.real(0.0); }
+      if (std::imag(z) == 0.0) { z.imag(0.0); }
       return std::log(z);
    }
 
@@ -89,8 +89,9 @@ namespace {
       double result = 1.;
 
       // (n, k) = (n, n-k)
-      if (k > n - k)
+      if (k > n - k) {
          k = n - k;
+      }
 
       for (long i = 0; i < k; i++) {
          result *= (n - i);
@@ -127,8 +128,9 @@ namespace {
    double fac(double n)
    {
       double result = 1.;
-      for (long i = 1; i <= n; ++i)
+      for (long i = 1; i <= n; ++i) {
          result *= i;
+      }
       return result;
    }
 
@@ -138,8 +140,9 @@ namespace {
 #if __cpp_lib_math_special_functions >= 201603
       return std::riemann_zeta(s);
 #else
-      if (s == 1)
+      if (s == 1) {
          return inf;
+      }
 
       double sum = 0., sum_old = 0.;
       long n = 0;
@@ -212,8 +215,9 @@ namespace {
    {
       std::vector<double> powers(n);
 
-      for (long k = 0; k < n; k++)
+      for (long k = 0; k < n; k++) {
          powers[k] = std::pow(k, exponent);
+      }
 
       return powers;
    }
@@ -221,12 +225,13 @@ namespace {
    /// series expansion of Li_n(z) for n <= 0
    std::complex<double> Li_negative(long n, const std::complex<double>& z)
    {
-      if (is_close(z, {1.,0.}))
+      if (is_close(z, {1.,0.})) {
          return {inf, inf};
+      }
 
       const auto frac = -z/(1. - z);
       const auto powers = powers_to(-n, -n + 2);
-      std::complex<double> result;
+      std::complex<double> result(0.,0.);
 
       for (long k = -n; k >= 0; k--) {
          double sum = 0.;
@@ -238,8 +243,9 @@ namespace {
          result = frac*(result + sum);
       }
 
-      if (is_close(std::imag(z), 0.))
+      if (is_close(std::imag(z), 0.)) {
          result.imag(0.);
+      }
 
       return result;
    }
@@ -248,7 +254,7 @@ namespace {
    /// Fast convergence for large n >= 12.
    std::complex<double> Li_naive_sum(long n, const std::complex<double>& z)
    {
-      std::complex<double> sum, sum_old;
+      std::complex<double> sum(0.,0.), sum_old(0.,0.);
       std::complex<double> pz(1.,0.);
       long k = 0;
 
@@ -268,8 +274,9 @@ namespace {
    {
       double sum = 0.;
 
-      for (long h = 1; h <= n; h++)
+      for (long h = 1; h <= n; h++) {
          sum += 1./h;
+      }
 
       return sum;
    }
@@ -278,7 +285,7 @@ namespace {
    std::complex<double> Li_expand_around_unity(long n, const std::complex<double>& z)
    {
       const std::complex<double> mu = clog(z);
-      std::complex<double> sum, sum_old;
+      std::complex<double> sum(0.,0.), sum_old(0.,0.);
       long k = 0;
 
       do {
@@ -305,19 +312,21 @@ namespace {
  */
 double Cl(long n, double x)
 {
-   using std::exp;
    const double PI = 3.141592653589793;
    const std::complex<double> i(0.,1.);
-   const std::complex<double> li = Li(n, exp(i*x));
+   const std::complex<double> li = Li(n, std::exp(i*x));
 
-   while (x >= 2*PI)
+   while (x >= 2*PI) {
       x -= 2*PI;
+   }
 
-   while (x < 0.)
+   while (x < 0.) {
       x += 2*PI;
+   }
 
-   if (is_even(n))
+   if (is_even(n)) {
       return std::imag(li);
+   }
 
    return std::real(li);
 }
@@ -330,30 +339,38 @@ double Cl(long n, double x)
  */
 std::complex<double> Li(long n, const std::complex<double>& z)
 {
-   if (n < 0)
+   if (n < 0) {
       return Li_negative(n,z);
+   }
    if (n == 0) {
-      if (is_close(z, {1.,0.}))
+      if (is_close(z, {1.,0.})) {
          return {inf, inf};
+      }
       return z/(1. - z);
    }
-   if (n == 1)
+   if (n == 1) {
       return -clog(1. - z);
+   }
 
-   if (is_close(z, 0.))
+   if (is_close(z, 0.)) {
       return 0.;
-   if (is_close(z, 1.))
+   }
+   if (is_close(z, 1.)) {
       return zeta(n);
-   if (is_close(z, -1.))
+   }
+   if (is_close(z, -1.)) {
       return -eta(n);
+   }
 
-   if (n >= 12)
+   if (n >= 12) {
       return Li_naive_sum(n, z);
+   }
 
-   if (is_close(z, 1., 2e-2))
+   if (is_close(z, 1., 2e-2)) {
       return Li_expand_around_unity(n,z);
+   }
 
-   std::complex<double> u, r;
+   std::complex<double> u(0.,0.), r(0.,0.);
    double sgn = 1.;
 
    if (std::abs(z) <= 1.) {
@@ -367,7 +384,7 @@ std::complex<double> Li(long n, const std::complex<double>& z)
       sgn = is_even(n) ? -1. : 1.;
    }
 
-   std::complex<double> sum;
+   std::complex<double> sum(0.,0.);
 
    const auto xn = Xn(n-2);
 

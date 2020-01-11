@@ -13,8 +13,8 @@ namespace polylogarithm {
 namespace {
    // converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept {
-      if (std::real(z) == 0.0) z.real(0.0);
-      if (std::imag(z) == 0.0) z.imag(0.0);
+      if (std::real(z) == 0.0) { z.real(0.0); }
+      if (std::imag(z) == 0.0) { z.imag(0.0); }
       return std::log(z);
    }
 } // anonymous namespace
@@ -26,10 +26,9 @@ namespace {
  */
 double Cl1(double x)
 {
-   using std::exp;
    const std::complex<double> i(0.,1.);
 
-   return std::real(Li1(exp(i*x)));
+   return std::real(Li1(std::exp(i*x)));
 }
 
 /**
