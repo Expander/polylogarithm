@@ -233,7 +233,7 @@ std::complex<double> Li2(const std::complex<double>& z)
    if (iz == 0.) {
       if (rz <= 1.)
          return {Li2(rz), 0.};
-      else // (rz > 1.)
+      if (rz > 1.)
          return {Li2(rz), -PI*std::log(rz)};
    } else if (nz < std::numeric_limits<double>::epsilon()) {
       return z;
@@ -332,9 +332,9 @@ std::complex<long double> Li2(const std::complex<long double>& z)
    // special cases
    if (iz == 0.0L) {
       if (rz <= 1.0L)
-         return std::complex<long double>(Li2(rz), 0.0L);
+         return {Li2(rz), 0.0L};
       if (rz > 1.0L)
-         return std::complex<long double>(Li2(rz), -PI*std::log(rz));
+         return {Li2(rz), -PI*std::log(rz)};
    } else if (nz < std::numeric_limits<long double>::epsilon()) {
       return z;
    }
