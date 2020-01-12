@@ -8,17 +8,18 @@
 #include "Li.hpp"
 #include <array>
 #include <cmath>
+#include <cstdint>
 #include <limits>
 #include <vector>
 
 namespace polylogarithm {
 
 namespace {
-   const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
+   const double eps_d = 10.0*std::numeric_limits<double>::epsilon();
    const double inf = std::numeric_limits<double>::infinity();
 
    /// expansion order
-   static const long N = 50;
+   const int64_t N = 50;
 
    /// Bernoulli numbers B0, ..., B49
    /// Table[BernoulliB[n], {n,0,49}]
@@ -60,19 +61,26 @@ namespace {
       1.643974708316579e-63, 3.287949416633158e-65
    };
 
-   bool is_close(double a, double b, double eps = epsilon)
+   bool is_close(double a, double b, double eps)
    {
       return std::abs(a - b) < eps;
    }
 
+   bool is_close(const std::complex<double>& a, double b,
+                 double eps)
+   {
+      return is_close(std::real(a), b, eps) &&
+             is_close(std::imag(a), 0.0, eps);
+   }
+
    bool is_close(const std::complex<double>& a, const std::complex<double>& b,
-                 double eps = epsilon)
+                 double eps)
    {
       return is_close(std::real(a), std::real(b), eps) &&
              is_close(std::imag(a), std::imag(b), eps);
    }
 
-   bool is_even(long n) { return n % 2 == 0; }
+   bool is_even(int64_t n) { return n % 2 == 0; }
 
    /// complex logarithm, converts -0.0 to 0.0
    std::complex<double> clog(std::complex<double> z) noexcept
@@ -84,7 +92,7 @@ namespace {
 
    /// Binomial coefficients
    /// https://www.geeksforgeeks.org/space-and-time-efficient-binomial-coefficient/
-   double binomial(long n, long k)
+   double binomial(int64_t n, int64_t k)
    {
       double result = 1.;
 
@@ -93,7 +101,7 @@ namespace {
          k = n - k;
       }
 
-      for (long i = 0; i < k; i++) {
+      for (int64_t i = 0; i < k; i++) {
          result *= (n - i);
          result /= (i + 1);
       }
@@ -102,19 +110,19 @@ namespace {
    }
 
    /// Bernoulli polynomial
-   std::complex<double> bernoulli_p(long m, const std::complex<double>& z)
+   std::complex<double> bernoulli_p(int64_t m, const std::complex<double>& z)
    {
-      std::complex<double> result;
+      std::complex<double> result(0.0, 0.0);
 
       // pre-compute powers
       std::vector<std::complex<double>> powers(m + 1);
-      for (long k = 0; k <= m; k++) {
+      for (int64_t k = 0; k <= m; k++) {
          powers[k] = std::pow(z + static_cast<double>(k), m);
       }
 
-      for (long n = 0; n <= m; n++) {
-         std::complex<double> sum;
-         for (long k = 0; k <= n; k++) {
+      for (int64_t n = 0; n <= m; n++) {
+         std::complex<double> sum(0.0, 0.0);
+         for (int64_t k = 0; k <= n; k++) {
             const double sgn = is_even(k) ? 1. : -1.;
             sum += sgn*binomial(n,k)*powers[k];
          }
@@ -128,14 +136,14 @@ namespace {
    double fac(double n)
    {
       double result = 1.;
-      for (long i = 1; i <= n; ++i) {
+      for (int64_t i = 1; i <= n; ++i) {
          result *= i;
       }
       return result;
    }
 
    /// Riemann zeta function for integer s (positive or negative)
-   double zeta(long s)
+   double zeta(int64_t s)
    {
 #if __cpp_lib_math_special_functions >= 201603
       return std::riemann_zeta(s);
@@ -145,35 +153,35 @@ namespace {
       }
 
       double sum = 0., sum_old = 0.;
-      long n = 0;
+      int64_t n = 0;
 
       do {
          sum_old = sum;
 
          double sub_sum = 0.;
 
-         for (long k = 0; k <= n; k++) {
-            const long sgn = is_even(k) ? 1 : -1;
+         for (int64_t k = 0; k <= n; k++) {
+            const int64_t sgn = is_even(k) ? 1 : -1;
             sub_sum += binomial(n,k)*sgn*std::pow(k+1,-s);
          }
 
          sum += sub_sum*std::pow(2.,-(n+1));
          n++;
-      } while (!is_close(sum_old, sum) &&
-               n < std::numeric_limits<long>::max() - 2);
+      } while (!is_close(sum_old, sum, eps_d) &&
+               n < std::numeric_limits<int64_t>::max() - 2);
 
       return sum/(1. - std::pow(2.,1-s));
 #endif
    }
 
    /// Dirichlet eta function
-   double eta(long n)
+   double eta(int64_t n)
    {
       return (1. - std::pow(2.,1-n))*zeta(n);
    }
 
    /// calculates X(p,n) for all possible n < N, p >= 0
-   std::array<double,N> Xn(long p)
+   std::array<double,N> Xn(int64_t p)
    {
       using TArray = std::array<double,N>;
       std::vector<TArray> xn(p+1);
@@ -181,7 +189,7 @@ namespace {
       // calculate X(0,n) for p = 0
       {
          TArray ar;
-         for (long ni = 0; ni < N; ni++) {
+         for (int64_t ni = 0; ni < N; ni++) {
             ar[ni] = bernoulli[ni];
          }
          xn[0] = ar;
@@ -189,18 +197,18 @@ namespace {
 
       // pre-computing binomial coefficients
       std::array<TArray,N> binomi;
-      for (long ni = 0; ni < N; ni++) {
-         for (long k = 0; k <= ni; k++) {
+      for (int64_t ni = 0; ni < N; ni++) {
+         for (int64_t k = 0; k <= ni; k++) {
             binomi[ni][k] = binomial(ni,k);
          }
       }
 
-      for (long pi = 1; pi <= p; pi++) {
+      for (int64_t pi = 1; pi <= p; pi++) {
          // calculate X(pi,n) for all n < N
          TArray ar;
-         for (long ni = 0; ni < N; ni++) {
+         for (int64_t ni = 0; ni < N; ni++) {
             double sum = 0.;
-            for (long k = 0; k <= ni; k++) {
+            for (int64_t k = 0; k <= ni; k++) {
                sum += binomi[ni][k]*bernoulli[ni-k]/(k+1)*xn[pi-1][k];
             }
             ar[ni] = sum;
@@ -211,11 +219,11 @@ namespace {
       return xn[p];
    }
 
-   std::vector<double> powers_to(long exponent, long n)
+   std::vector<double> powers_to(int64_t exponent, int64_t n)
    {
       std::vector<double> powers(n);
 
-      for (long k = 0; k < n; k++) {
+      for (int64_t k = 0; k < n; k++) {
          powers[k] = std::pow(k, exponent);
       }
 
@@ -223,9 +231,9 @@ namespace {
    }
 
    /// series expansion of Li_n(z) for n <= 0
-   std::complex<double> Li_negative(long n, const std::complex<double>& z)
+   std::complex<double> Li_negative(int64_t n, const std::complex<double>& z)
    {
-      if (is_close(z, {1.,0.})) {
+      if (is_close(z, {1.,0.}, eps_d)) {
          return {inf, inf};
       }
 
@@ -233,17 +241,17 @@ namespace {
       const auto powers = powers_to(-n, -n + 2);
       std::complex<double> result(0.,0.);
 
-      for (long k = -n; k >= 0; k--) {
+      for (int64_t k = -n; k >= 0; k--) {
          double sum = 0.;
-         for (long j = 0; j <= k; j++) {
-            const long sgn = is_even(j) ? -1 : 1;
+         for (int64_t j = 0; j <= k; j++) {
+            const int64_t sgn = is_even(j) ? -1 : 1;
             sum += sgn*binomial(k,j)*powers[j+1];
          }
 
          result = frac*(result + sum);
       }
 
-      if (is_close(std::imag(z), 0.)) {
+      if (is_close(std::imag(z), 0., eps_d)) {
          result.imag(0.);
       }
 
@@ -252,29 +260,29 @@ namespace {
 
    /// Series expansion of Li_n(z) in terms of powers of z.
    /// Fast convergence for large n >= 12.
-   std::complex<double> Li_naive_sum(long n, const std::complex<double>& z)
+   std::complex<double> Li_naive_sum(int64_t n, const std::complex<double>& z)
    {
       std::complex<double> sum(0.,0.), sum_old(0.,0.);
       std::complex<double> pz(1.,0.);
-      long k = 0;
+      int64_t k = 0;
 
       do {
          k++;
          pz *= z;
          sum_old = sum;
          sum += pz/std::pow(k,n);
-      } while (!is_close(sum, sum_old) &&
-               k < std::numeric_limits<long>::max() - 2);
+      } while (!is_close(sum, sum_old, eps_d) &&
+               k < std::numeric_limits<int64_t>::max() - 2);
 
       return sum;
    }
 
    /// Harmonic number n
-   double H(long n)
+   double H(int64_t n)
    {
       double sum = 0.;
 
-      for (long h = 1; h <= n; h++) {
+      for (int64_t h = 1; h <= n; h++) {
          sum += 1./h;
       }
 
@@ -282,11 +290,11 @@ namespace {
    }
 
    /// Series expansion of Li_n(z) around z ~ 1, n > 0
-   std::complex<double> Li_expand_around_unity(long n, const std::complex<double>& z)
+   std::complex<double> Li_expand_around_unity(int64_t n, const std::complex<double>& z)
    {
       const std::complex<double> mu = clog(z);
       std::complex<double> sum(0.,0.), sum_old(0.,0.);
-      long k = 0;
+      int64_t k = 0;
 
       do {
          if (k == n-1) {
@@ -296,8 +304,8 @@ namespace {
          sum_old = sum;
          sum += zeta(n-k)/fac(k)*std::pow(mu,k);
          k++;
-      } while (!is_close(sum, sum_old) &&
-               k < std::numeric_limits<long>::max() - 2);
+      } while (!is_close(sum, sum_old, eps_d) &&
+               k < std::numeric_limits<int64_t>::max() - 2);
 
       return std::pow(mu,n-1)/fac(n-1)*(H(n-1) - clog(-mu)) + sum;
    }
@@ -310,7 +318,7 @@ namespace {
  * @param x real angle
  * @return \f$\mathrm{Cl}_n(\theta)\f$
  */
-double Cl(long n, double x)
+double Cl(int64_t n, double x)
 {
    const double PI = 3.141592653589793;
    const std::complex<double> i(0.,1.);
@@ -337,13 +345,13 @@ double Cl(long n, double x)
  * @param z complex argument
  * @return \f$\mathrm{Li}_n(z)\f$
  */
-std::complex<double> Li(long n, const std::complex<double>& z)
+std::complex<double> Li(int64_t n, const std::complex<double>& z)
 {
    if (n < 0) {
       return Li_negative(n,z);
    }
    if (n == 0) {
-      if (is_close(z, {1.,0.})) {
+      if (is_close(z, {1.,0.}, eps_d)) {
          return {inf, inf};
       }
       return z/(1. - z);
@@ -352,14 +360,14 @@ std::complex<double> Li(long n, const std::complex<double>& z)
       return -clog(1. - z);
    }
 
-   if (is_close(z, 0.)) {
-      return 0.;
+   if (is_close(z, 0., eps_d)) {
+      return {0.0, 0.0};
    }
-   if (is_close(z, 1.)) {
-      return zeta(n);
+   if (is_close(z, 1., eps_d)) {
+      return {zeta(n), 0.0};
    }
-   if (is_close(z, -1.)) {
-      return -eta(n);
+   if (is_close(z, -1., eps_d)) {
+      return {-eta(n), 0.0};
    }
 
    if (n >= 12) {
@@ -388,7 +396,7 @@ std::complex<double> Li(long n, const std::complex<double>& z)
 
    const auto xn = Xn(n-2);
 
-   for (long k = N - 1; k >= 0; k--) {
+   for (int64_t k = N - 1; k >= 0; k--) {
       sum = u*(sum + xn[k]*fac_inv[k]);
    }
 

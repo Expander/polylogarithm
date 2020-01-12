@@ -12,7 +12,7 @@
 namespace polylogarithm {
 
 namespace {
-   const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
+   const double eps_d = 10.0*std::numeric_limits<double>::epsilon();
 
    template <typename T> T pow2(T x) noexcept { return x*x; }
 
@@ -23,11 +23,11 @@ namespace {
       return std::log(z);
    }
 
-   bool is_close(const std::complex<double>& a, double b, double eps = epsilon)
+   bool is_close(const std::complex<double>& a, double b, double eps)
    {
       return std::abs(std::real(a) - b) < eps && std::abs(std::imag(a)) < eps;
    }
-   } // anonymous namespace
+} // anonymous namespace
 
 /**
  * @brief Clausen function \f$\mathrm{Cl}_4(\theta) = \mathrm{Im}(\mathrm{Li}_4(e^{i\theta}))\f$
@@ -37,20 +37,20 @@ namespace {
 double Cl4(double x)
 {
    const double PI = 3.141592653589793;
-   const std::complex<double> i(0.,1.);
+   const std::complex<double> i(0.0, 1.0);
 
    while (x >= 2*PI) {
       x -= 2*PI;
    }
 
-   while (x < 0.) {
+   while (x < 0.0) {
       x += 2*PI;
    }
 
    if (std::abs(x) < std::numeric_limits<double>::epsilon() ||
        std::abs(x - PI) < std::numeric_limits<double>::epsilon() ||
        std::abs(x - 2*PI) < std::numeric_limits<double>::epsilon()) {
-      return 0.;
+      return 0.0;
    }
 
    return std::imag(Li4(std::exp(i*x)));
@@ -68,7 +68,7 @@ std::complex<double> Li4(const std::complex<double>& z)
    const double PI4   = PI2*PI2;
    const double zeta4 = 1.082323233711138;
    const double bf[18] = {
-      1., -7./16.,
+      1.0, -7.0/16.0,
       1.165123456790123e-01, -1.982060185185185e-02,
       1.927932098765432e-03, -3.105709876543209e-05,
      -1.562400911485783e-05,  8.485123546773206e-07,
@@ -79,21 +79,21 @@ std::complex<double> Li4(const std::complex<double>& z)
       2.364757116861825e-14, -7.923135122031161e-15,
    };
 
-   if (is_close(z, 0.)) {
-      return { 0., 0. };
+   if (is_close(z, 0.0, eps_d)) {
+      return { 0.0, 0.0 };
    }
-   if (is_close(z, 1.)) {
-      return { zeta4, 0. };
+   if (is_close(z, 1.0, eps_d)) {
+      return { zeta4, 0.0 };
    }
-   if (is_close(z, -1.)) {
-      return { -7.*PI4/720., 0. };
+   if (is_close(z, -1.0, eps_d)) {
+      return { -7.0*PI4/720.0, 0.0 };
    }
 
    const auto az  = std::abs(z);
    const auto pz  = std::arg(z);
    const auto lnz = std::log(az);
 
-   if (pow2(lnz) + pow2(pz) < 1.) { // |log(z)| < 1
+   if (pow2(lnz) + pow2(pz) < 1.0) { // |log(z)| < 1
       const auto u  = std::complex<double>(lnz, pz); // clog(z)
       const auto u2 = u*u;
       const auto c1 = 1.202056903159594; // zeta(3)
@@ -122,18 +122,18 @@ std::complex<double> Li4(const std::complex<double>& z)
          );
    }
 
-   std::complex<double> u(0.,0.), r(0.,0.);
+   std::complex<double> u(0.0, 0.0), r(0.0, 0.0);
    double sgn = 1;
 
-   if (az <= 1.) {
-      u = -clog(1. - z);
-   } else { // az > 1.
+   if (az <= 1.0) {
+      u = -clog(1.0 - z);
+   } else { // az > 1
       auto arg = PI + pz;
       if (arg > PI) { arg -= 2*PI; }
       const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
       const auto lmz2 = pow2(lmz);
-      u = -clog(1. - 1./z);
-      r = 1./360.*(-7*PI4 + lmz2*(-30.*PI2 - 15.*lmz2));
+      u = -clog(1.0 - 1.0/z);
+      r = 1.0/360.0*(-7*PI4 + lmz2*(-30.0*PI2 - 15.0*lmz2));
       sgn = -1;
    }
 

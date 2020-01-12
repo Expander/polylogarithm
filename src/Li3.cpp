@@ -12,6 +12,9 @@
 namespace polylogarithm {
 
 namespace {
+   const double eps_d = 10.0*std::numeric_limits<double>::epsilon();
+   const long double eps_ld = 10.0L*std::numeric_limits<long double>::epsilon();
+
    template <typename T> T pow2(T x) noexcept { return x*x; }
 
    // converts -0.0 to 0.0
@@ -23,8 +26,7 @@ namespace {
    }
 
    template <typename T>
-   bool is_close(const std::complex<T>& a, T b,
-                 T eps = std::pow(T(10), -std::floor(std::numeric_limits<T>::digits10)))
+   bool is_close(const std::complex<T>& a, T b, T eps)
    {
       return std::abs(std::real(a) - b) < eps && std::abs(std::imag(a)) < eps;
    }
@@ -38,13 +40,13 @@ namespace {
 double Cl3(double x)
 {
    const double PI = 3.141592653589793;
-   const std::complex<double> i(0.,1.);
+   const std::complex<double> i(0.0, 1.0);
 
    while (x >= 2*PI) {
       x -= 2*PI;
    }
 
-   while (x < 0.) {
+   while (x < 0.0) {
       x += 2*PI;
    }
 
@@ -63,7 +65,8 @@ std::complex<double> Li3(const std::complex<double>& z)
    const double zeta2 = 1.644934066848226;
    const double zeta3 = 1.202056903159594;
    const double bf[18] = {
-      1., -3./8., 17./216., -5./576.,
+      1.0                  , -3.0/8.0              ,
+      17.0/216.0           , -5.0/576.0            ,
       1.296296296296296e-04,  8.101851851851851e-05,
      -3.419357160853759e-06, -1.328656462585034e-06,
       8.660871756109851e-08,  2.526087595532039e-08,
@@ -73,29 +76,29 @@ std::complex<double> Li3(const std::complex<double>& z)
       3.104357887965462e-14,  5.261758629912506e-15
    };
 
-   if (is_close(z, 0.)) {
-      return { 0., 0. };
+   if (is_close(z, 0.0, eps_d)) {
+      return { 0.0, 0.0 };
    }
-   if (is_close(z, 1.)) {
-      return { zeta3, 0. };
+   if (is_close(z, 1.0, eps_d)) {
+      return { zeta3, 0.0 };
    }
-   if (is_close(z, -1.)) {
-      return { -0.75*zeta3, 0. };
+   if (is_close(z, -1.0, eps_d)) {
+      return { -0.75*zeta3, 0.0 };
    }
-   if (is_close(z, 0.5)) {
+   if (is_close(z, 0.5, eps_d)) {
       const double ln2  = 0.6931471805599453; // ln(2)
       const double ln23 = 0.3330246519889295; // ln(2)^3
-      return { (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24., 0. };
+      return { (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.0, 0.0 };
    }
 
    const auto az  = std::abs(z);
    const auto pz  = std::arg(z);
    const auto lnz = std::log(az);
 
-   if (pow2(lnz) + pow2(pz) < 1.) { // |log(z)| < 1
+   if (pow2(lnz) + pow2(pz) < 1.0) { // |log(z)| < 1
       const auto u  = std::complex<double>(lnz, pz); // clog(z)
       const auto u2 = u*u;
-      const auto c0 = zeta3 + u*(zeta2 - u2/12.);
+      const auto c0 = zeta3 + u*(zeta2 - u2/12.0);
       const auto c1 = 0.25 * (3.0 - 2.0*clog(-u));
 
       const double cs[7] = {
@@ -116,16 +119,16 @@ std::complex<double> Li3(const std::complex<double>& z)
          u2 * (cs[6]))))))));
    }
 
-   std::complex<double> u(0.,0.), rest(0.,0.);
+   std::complex<double> u(0.0, 0.0), rest(0.0, 0.0);
 
-   if (az <= 1.) {
-      u = -clog(1. - z);
-   } else { // az > 1.
+   if (az <= 1.0) {
+      u = -clog(1.0 - z);
+   } else { // az > 1
       auto arg = PI + pz;
       if (arg > PI) { arg -= 2*PI; }
       const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
-      u = -clog(1. - 1./z);
-      rest = -lmz*(pow2(lmz)/6. + PI2/6.);
+      u = -clog(1.0 - 1.0/z);
+      rest = -lmz*(pow2(lmz)/6.0 + zeta2);
    }
 
    return rest +
@@ -208,16 +211,16 @@ std::complex<long double> Li3(const std::complex<long double>& z)
       8.55369656823692105754731289124468101e-37L
    };
 
-   if (is_close(z, 0.0L)) {
+   if (is_close(z, 0.0L, eps_ld)) {
       return { 0.0L, 0.0L };
    }
-   if (is_close(z, 1.0L)) {
+   if (is_close(z, 1.0L, eps_ld)) {
       return { zeta3, 0.0L };
    }
-   if (is_close(z, -1.0L)) {
+   if (is_close(z, -1.0L, eps_ld)) {
       return { -0.75L*zeta3, 0.0L };
    }
-   if (is_close(z, 0.5L)) {
+   if (is_close(z, 0.5L, eps_ld)) {
       const long double ln2  = 0.693147180559945309417232121458176568L; // ln(2)
       const long double ln23 = 0.333024651988929479718853582611730544L; // ln(2)^3
       return { (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.0L, 0.0L };
@@ -289,7 +292,7 @@ std::complex<long double> Li3(const std::complex<long double>& z)
       if (arg > PI) { arg -= 2*PI; }
       const auto lmz = std::complex<long double>(lnz, arg); // clog(-z)
       u = -clog(1.0L - 1.0L/z);
-      rest = -lmz*(pow2(lmz)/6.0L + PI2/6.0L);
+      rest = -lmz*(pow2(lmz)/6.0L + zeta2);
    }
 
    return rest +
