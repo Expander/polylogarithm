@@ -12,7 +12,7 @@
 namespace polylogarithm {
 
 namespace {
-   const double epsilon = std::pow(10., -std::floor(std::numeric_limits<double>::digits10));
+   const double eps_d = 10.0*std::numeric_limits<double>::epsilon();
    const double inf = std::numeric_limits<double>::infinity();
 
    bool is_close(double a, double b, double eps)
@@ -35,7 +35,7 @@ namespace {
  */
 double Li0(double x)
 {
-   if (is_close(x, 1., epsilon)) {
+   if (is_close(x, 1., eps_d)) {
       return inf;
    }
 
@@ -49,7 +49,7 @@ double Li0(double x)
  */
 std::complex<double> Li0(const std::complex<double>& z)
 {
-   if (is_close(z, {1.,0.}, epsilon)) {
+   if (is_close(z, {1.,0.}, eps_d)) {
       return {inf, inf};
    }
 
