@@ -30,6 +30,34 @@ namespace {
    {
       return std::abs(std::real(a) - b) < eps && std::abs(std::imag(a)) < eps;
    }
+
+   template <typename T>
+   std::complex<T> cadd(T a, std::complex<T> b) noexcept
+   {
+      return std::complex<T>(a + std::real(b), std::imag(b));
+   }
+
+   template <typename T>
+   std::complex<T> cadd(std::complex<T> a, std::complex<T> b) noexcept
+   {
+      return std::complex<T>(std::real(a) + std::real(b),
+                             std::imag(a) + std::imag(b));
+   }
+
+   template <typename T>
+   std::complex<T> cmul(std::complex<T> a, T b) noexcept
+   {
+      return std::complex<T>(std::real(a) * b, std::imag(a) * b);
+   }
+
+   template <typename T>
+   std::complex<T> cmul(std::complex<T> a, std::complex<T> b) noexcept
+   {
+      return std::complex<T>(
+         std::real(a) * std::real(b) - std::imag(a) * std::imag(b),
+         std::real(a) * std::imag(b) + std::imag(a) * std::real(b));
+   }
+
 } // anonymous namespace
 
 /**
@@ -108,15 +136,16 @@ std::complex<double> Li3(const std::complex<double>& z)
          -3.982897776989488e-15
       };
 
-      return c0 +
-         u2 * (c1 +
-         u2 * (cs[0] +
-         u2 * (cs[1] +
-         u2 * (cs[2] +
-         u2 * (cs[3] +
-         u2 * (cs[4] +
-         u2 * (cs[5] +
-         u2 * (cs[6]))))))));
+      return
+         cadd(c0,
+         cmul(u2, cadd(c1,
+         cmul(u2, cadd(cs[0],
+         cmul(u2, cadd(cs[1],
+         cmul(u2, cadd(cs[2],
+         cmul(u2, cadd(cs[3],
+         cmul(u2, cadd(cs[4],
+         cmul(u2, cadd(cs[5],
+         cmul(u2, cs[6]))))))))))))))));
    }
 
    std::complex<double> u(0.0, 0.0), rest(0.0, 0.0);
@@ -131,25 +160,26 @@ std::complex<double> Li3(const std::complex<double>& z)
       rest = -lmz*(pow2(lmz)/6.0 + zeta2);
    }
 
-   return rest +
-      u * (bf[0] +
-      u * (bf[1] +
-      u * (bf[2] +
-      u * (bf[3] +
-      u * (bf[4] +
-      u * (bf[5] +
-      u * (bf[6] +
-      u * (bf[7] +
-      u * (bf[8] +
-      u * (bf[9] +
-      u * (bf[10] +
-      u * (bf[11] +
-      u * (bf[12] +
-      u * (bf[13] +
-      u * (bf[14] +
-      u * (bf[15] +
-      u * (bf[16] +
-      u * (bf[17]))))))))))))))))));
+   return
+      cadd(rest,
+      cmul(u, cadd(bf[0],
+      cmul(u, cadd(bf[1],
+      cmul(u, cadd(bf[2],
+      cmul(u, cadd(bf[3],
+      cmul(u, cadd(bf[4],
+      cmul(u, cadd(bf[5],
+      cmul(u, cadd(bf[6],
+      cmul(u, cadd(bf[7],
+      cmul(u, cadd(bf[8],
+      cmul(u, cadd(bf[9],
+      cmul(u, cadd(bf[10],
+      cmul(u, cadd(bf[11],
+      cmul(u, cadd(bf[12],
+      cmul(u, cadd(bf[13],
+      cmul(u, cadd(bf[14],
+      cmul(u, cadd(bf[15],
+      cmul(u, cadd(bf[16],
+      cmul(u, bf[17]))))))))))))))))))))))))))))))))))));
 }
 
 /**
@@ -259,28 +289,29 @@ std::complex<long double> Li3(const std::complex<long double>& z)
          3.43354009248058933588797212016527038e-37L
       };
 
-      return c0 +
-         u2 * (c1 +
-         u2 * (cs[0] +
-         u2 * (cs[1] +
-         u2 * (cs[2] +
-         u2 * (cs[3] +
-         u2 * (cs[4] +
-         u2 * (cs[5] +
-         u2 * (cs[6] +
-         u2 * (cs[7] +
-         u2 * (cs[8] +
-         u2 * (cs[9] +
-         u2 * (cs[10] +
-         u2 * (cs[11] +
-         u2 * (cs[12] +
-         u2 * (cs[13] +
-         u2 * (cs[14] +
-         u2 * (cs[15] +
-         u2 * (cs[16] +
-         u2 * (cs[17] +
-         u2 * (cs[18] +
-         u2 * (cs[19])))))))))))))))))))));
+      return
+         cadd(c0,
+         cmul(u2, cadd(c1,
+         cmul(u2, cadd(cs[0],
+         cmul(u2, cadd(cs[1],
+         cmul(u2, cadd(cs[2],
+         cmul(u2, cadd(cs[3],
+         cmul(u2, cadd(cs[4],
+         cmul(u2, cadd(cs[5],
+         cmul(u2, cadd(cs[6],
+         cmul(u2, cadd(cs[7],
+         cmul(u2, cadd(cs[8],
+         cmul(u2, cadd(cs[9],
+         cmul(u2, cadd(cs[10],
+         cmul(u2, cadd(cs[11],
+         cmul(u2, cadd(cs[12],
+         cmul(u2, cadd(cs[13],
+         cmul(u2, cadd(cs[14],
+         cmul(u2, cadd(cs[15],
+         cmul(u2, cadd(cs[16],
+         cmul(u2, cadd(cs[17],
+         cmul(u2, cadd(cs[18],
+         cmul(u2, cs[19]))))))))))))))))))))))))))))))))))))))))));
    }
 
    std::complex<long double> u(0.0L, 0.0L), rest(0.0L, 0.0L);
@@ -295,52 +326,53 @@ std::complex<long double> Li3(const std::complex<long double>& z)
       rest = -lmz*(pow2(lmz)/6.0L + zeta2);
    }
 
-   return rest +
-      u * (bf[0] +
-      u * (bf[1] +
-      u * (bf[2] +
-      u * (bf[3] +
-      u * (bf[4] +
-      u * (bf[5] +
-      u * (bf[6] +
-      u * (bf[7] +
-      u * (bf[8] +
-      u * (bf[9] +
-      u * (bf[10] +
-      u * (bf[11] +
-      u * (bf[12] +
-      u * (bf[13] +
-      u * (bf[14] +
-      u * (bf[15] +
-      u * (bf[16] +
-      u * (bf[17] +
-      u * (bf[18] +
-      u * (bf[19] +
-      u * (bf[20] +
-      u * (bf[21] +
-      u * (bf[22] +
-      u * (bf[23] +
-      u * (bf[24] +
-      u * (bf[25] +
-      u * (bf[26] +
-      u * (bf[27] +
-      u * (bf[28] +
-      u * (bf[29] +
-      u * (bf[30] +
-      u * (bf[31] +
-      u * (bf[32] +
-      u * (bf[33] +
-      u * (bf[34] +
-      u * (bf[35] +
-      u * (bf[36] +
-      u * (bf[37] +
-      u * (bf[38] +
-      u * (bf[39] +
-      u * (bf[40] +
-      u * (bf[41] +
-      u * (bf[42] +
-      u * (bf[43] +
-      u * (bf[44])))))))))))))))))))))))))))))))))))))))))))));
+   return
+      cadd(rest,
+      cmul(u, cadd(bf[0],
+      cmul(u, cadd(bf[1],
+      cmul(u, cadd(bf[2],
+      cmul(u, cadd(bf[3],
+      cmul(u, cadd(bf[4],
+      cmul(u, cadd(bf[5],
+      cmul(u, cadd(bf[6],
+      cmul(u, cadd(bf[7],
+      cmul(u, cadd(bf[8],
+      cmul(u, cadd(bf[9],
+      cmul(u, cadd(bf[10],
+      cmul(u, cadd(bf[11],
+      cmul(u, cadd(bf[12],
+      cmul(u, cadd(bf[13],
+      cmul(u, cadd(bf[14],
+      cmul(u, cadd(bf[15],
+      cmul(u, cadd(bf[16],
+      cmul(u, cadd(bf[17],
+      cmul(u, cadd(bf[18],
+      cmul(u, cadd(bf[19],
+      cmul(u, cadd(bf[20],
+      cmul(u, cadd(bf[21],
+      cmul(u, cadd(bf[22],
+      cmul(u, cadd(bf[23],
+      cmul(u, cadd(bf[24],
+      cmul(u, cadd(bf[25],
+      cmul(u, cadd(bf[26],
+      cmul(u, cadd(bf[27],
+      cmul(u, cadd(bf[28],
+      cmul(u, cadd(bf[29],
+      cmul(u, cadd(bf[30],
+      cmul(u, cadd(bf[31],
+      cmul(u, cadd(bf[32],
+      cmul(u, cadd(bf[33],
+      cmul(u, cadd(bf[34],
+      cmul(u, cadd(bf[35],
+      cmul(u, cadd(bf[36],
+      cmul(u, cadd(bf[37],
+      cmul(u, cadd(bf[38],
+      cmul(u, cadd(bf[39],
+      cmul(u, cadd(bf[40],
+      cmul(u, cadd(bf[41],
+      cmul(u, cadd(bf[42],
+      cmul(u, cadd(bf[43],
+      cmul(u, bf[44]))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
 }
 
 } // namespace polylogarithm

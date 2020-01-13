@@ -27,6 +27,33 @@ namespace {
    {
       return std::abs(std::real(a) - b) < eps && std::abs(std::imag(a)) < eps;
    }
+
+   template <typename T>
+   std::complex<T> cadd(T a, std::complex<T> b) noexcept
+   {
+      return std::complex<T>(a + std::real(b), std::imag(b));
+   }
+
+   template <typename T>
+   std::complex<T> cadd(std::complex<T> a, std::complex<T> b) noexcept
+   {
+      return std::complex<T>(std::real(a) + std::real(b),
+                             std::imag(a) + std::imag(b));
+   }
+
+   template <typename T>
+   std::complex<T> cmul(std::complex<T> a, T b) noexcept
+   {
+      return std::complex<T>(std::real(a) * b, std::imag(a) * b);
+   }
+
+   template <typename T>
+   std::complex<T> cmul(std::complex<T> a, std::complex<T> b) noexcept
+   {
+      return std::complex<T>(
+         std::real(a) * std::real(b) - std::imag(a) * std::imag(b),
+         std::real(a) * std::imag(b) + std::imag(a) * std::real(b));
+   }
 } // anonymous namespace
 
 /**
@@ -111,15 +138,19 @@ std::complex<double> Li6(const std::complex<double>& z)
          -5.793305857439255e-15
       };
 
-      return c0 + u * c1 +
-         u2 * (c2 + u * c3 +
-         u2 * (c4 + u * c5 +
-         u2 * (c6 +
-         u * (cs[0] +
-         u2 * (cs[1] +
-         u2 * (cs[2] +
-         u2 * (cs[3] +
-         u2 * (cs[4]))))))));
+      return
+         cadd(c0,
+         cadd(cmul(u, c1),
+         cmul(u2, cadd(c2,
+         cadd(cmul(u, c3),
+         cmul(u2, cadd(c4,
+         cadd(cmul(u, c5),
+         cmul(u2, cadd(c6,
+         cmul(u,  cadd(cs[0],
+         cmul(u2, cadd(cs[1],
+         cmul(u2, cadd(cs[2],
+         cmul(u2, cadd(cs[3],
+         cmul(u2, cs[4])))))))))))))))))));
    }
 
    std::complex<double> u(0.0, 0.0), r(0.0, 0.0);
@@ -138,24 +169,24 @@ std::complex<double> Li6(const std::complex<double>& z)
    }
 
    const auto sum =
-      u * (bf[0] +
-      u * (bf[1] +
-      u * (bf[2] +
-      u * (bf[3] +
-      u * (bf[4] +
-      u * (bf[5] +
-      u * (bf[6] +
-      u * (bf[7] +
-      u * (bf[8] +
-      u * (bf[9] +
-      u * (bf[10] +
-      u * (bf[11] +
-      u * (bf[12] +
-      u * (bf[13] +
-      u * (bf[14] +
-      u * (bf[15] +
-      u * (bf[16] +
-      u * (bf[17]))))))))))))))))));
+      cmul(u, cadd(bf[0],
+      cmul(u, cadd(bf[1],
+      cmul(u, cadd(bf[2],
+      cmul(u, cadd(bf[3],
+      cmul(u, cadd(bf[4],
+      cmul(u, cadd(bf[5],
+      cmul(u, cadd(bf[6],
+      cmul(u, cadd(bf[7],
+      cmul(u, cadd(bf[8],
+      cmul(u, cadd(bf[9],
+      cmul(u, cadd(bf[10],
+      cmul(u, cadd(bf[11],
+      cmul(u, cadd(bf[12],
+      cmul(u, cadd(bf[13],
+      cmul(u, cadd(bf[14],
+      cmul(u, cadd(bf[15],
+      cmul(u, cadd(bf[16],
+      cmul(u, bf[17])))))))))))))))))))))))))))))))))));
 
    return sgn*sum + r;
 }

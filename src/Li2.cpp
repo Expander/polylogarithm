@@ -13,6 +13,33 @@ namespace polylogarithm {
 namespace {
    template <typename T>
    T sqr(T x) noexcept { return x*x; }
+
+   template <typename T>
+   std::complex<T> cadd(T a, std::complex<T> b) noexcept
+   {
+      return std::complex<T>(a + std::real(b), std::imag(b));
+   }
+
+   template <typename T>
+   std::complex<T> cadd(std::complex<T> a, std::complex<T> b) noexcept
+   {
+      return std::complex<T>(std::real(a) + std::real(b),
+                             std::imag(a) + std::imag(b));
+   }
+
+   template <typename T>
+   std::complex<T> cmul(std::complex<T> a, T b) noexcept
+   {
+      return std::complex<T>(std::real(a) * b, std::imag(a) * b);
+   }
+
+   template <typename T>
+   std::complex<T> cmul(std::complex<T> a, std::complex<T> b) noexcept
+   {
+      return std::complex<T>(
+         std::real(a) * std::real(b) - std::imag(a) * std::imag(b),
+         std::real(a) * std::imag(b) + std::imag(a) * std::real(b));
+   }
 } // anonymous namespace
 
 /**
@@ -276,17 +303,17 @@ std::complex<double> Li2(const std::complex<double>& z)
    // the dilogarithm
    const std::complex<double> cz2(sqr(cz));
    const std::complex<double> sum =
-      cz +
-      cz2 * (bf[0] +
-      cz  * (bf[1] +
-      cz2 * (bf[2] +
-      cz2 * (bf[3] +
-      cz2 * (bf[4] +
-      cz2 * (bf[5] +
-      cz2 * (bf[6] +
-      cz2 * (bf[7] +
-      cz2 * (bf[8] +
-      cz2 * (bf[9]))))))))));
+      cadd(cz,
+      cmul(cz2, cadd(bf[0],
+      cmul(cz , cadd(bf[1],
+      cmul(cz2, cadd(bf[2],
+      cmul(cz2, cadd(bf[3],
+      cmul(cz2, cadd(bf[4],
+      cmul(cz2, cadd(bf[5],
+      cmul(cz2, cadd(bf[6],
+      cmul(cz2, cadd(bf[7],
+      cmul(cz2, cadd(bf[8],
+      cmul(cz2, bf[9]))))))))))))))))))));
 
    return double(jsgn) * sum + cy + ipi12 * PI * PI / 12.0;
 }
@@ -378,30 +405,30 @@ std::complex<long double> Li2(const std::complex<long double>& z)
    // the dilogarithm
    const std::complex<long double> cz2(sqr(cz));
    const std::complex<long double> sum =
-      cz +
-      cz2 * (bf[0] +
-      cz  * (bf[1] +
-      cz2 * (bf[2] +
-      cz2 * (bf[3] +
-      cz2 * (bf[4] +
-      cz2 * (bf[5] +
-      cz2 * (bf[6] +
-      cz2 * (bf[7] +
-      cz2 * (bf[8] +
-      cz2 * (bf[9] +
-      cz2 * (bf[10] +
-      cz2 * (bf[11] +
-      cz2 * (bf[12] +
-      cz2 * (bf[13] +
-      cz2 * (bf[14] +
-      cz2 * (bf[15] +
-      cz2 * (bf[16] +
-      cz2 * (bf[17] +
-      cz2 * (bf[18] +
-      cz2 * (bf[19] +
-      cz2 * (bf[20] +
-      cz2 * (bf[21] +
-      cz2 * (bf[22])))))))))))))))))))))));
+      cadd(cz,
+      cmul(cz2, cadd(bf[0],
+      cmul(cz , cadd(bf[1],
+      cmul(cz2, cadd(bf[2],
+      cmul(cz2, cadd(bf[3],
+      cmul(cz2, cadd(bf[4],
+      cmul(cz2, cadd(bf[5],
+      cmul(cz2, cadd(bf[6],
+      cmul(cz2, cadd(bf[7],
+      cmul(cz2, cadd(bf[8],
+      cmul(cz2, cadd(bf[9],
+      cmul(cz2, cadd(bf[10],
+      cmul(cz2, cadd(bf[11],
+      cmul(cz2, cadd(bf[12],
+      cmul(cz2, cadd(bf[13],
+      cmul(cz2, cadd(bf[14],
+      cmul(cz2, cadd(bf[15],
+      cmul(cz2, cadd(bf[16],
+      cmul(cz2, cadd(bf[17],
+      cmul(cz2, cadd(bf[18],
+      cmul(cz2, cadd(bf[19],
+      cmul(cz2, cadd(bf[20],
+      cmul(cz2, cadd(bf[21],
+      cmul(cz2, bf[22]))))))))))))))))))))))))))))))))))))))))))))));
 
    return static_cast<long double>(jsgn)*sum + cy + ipi12*PI*PI/12.0L;
 }
