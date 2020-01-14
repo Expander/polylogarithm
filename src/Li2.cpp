@@ -15,26 +15,26 @@ namespace {
    T sqr(T x) noexcept { return x*x; }
 
    template <typename T>
-   std::complex<T> cadd(T a, std::complex<T> b) noexcept
+   std::complex<T> cadd(T a, const std::complex<T>& b) noexcept
    {
       return std::complex<T>(a + std::real(b), std::imag(b));
    }
 
    template <typename T>
-   std::complex<T> cadd(std::complex<T> a, std::complex<T> b) noexcept
+   std::complex<T> cadd(const std::complex<T>& a, const std::complex<T>& b) noexcept
    {
       return std::complex<T>(std::real(a) + std::real(b),
                              std::imag(a) + std::imag(b));
    }
 
    template <typename T>
-   std::complex<T> cmul(std::complex<T> a, T b) noexcept
+   std::complex<T> cmul(const std::complex<T>& a, T b) noexcept
    {
       return std::complex<T>(std::real(a) * b, std::imag(a) * b);
    }
 
    template <typename T>
-   std::complex<T> cmul(std::complex<T> a, std::complex<T> b) noexcept
+   std::complex<T> cmul(const std::complex<T>& a, const std::complex<T>& b) noexcept
    {
       return std::complex<T>(
          std::real(a) * std::real(b) - std::imag(a) * std::imag(b),
