@@ -32,7 +32,6 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_fixed_values")
 {
-   const auto eps64  = 1e-14;  // @todo increase precision
    const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li6.txt");
    const auto fixed_values = polylogarithm::test::read_from_file<long double>(filename);
 
@@ -49,6 +48,6 @@ TEST_CASE("test_fixed_values")
       INFO("Li3(128) cmpl = " << li128_expected << " (expected)");
       INFO("Li3(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
 
-      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , eps64);
+      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 3e-15);
    }
 }
