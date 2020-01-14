@@ -100,8 +100,6 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_fixed_values")
 {
-   const auto eps64  = 1e-14;  // @todo increase precision
-   const auto eps128 = 1e-18L;
    const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li3.txt");
    const auto fixed_values = polylogarithm::test::read_from_file<long double>(filename);
 
@@ -122,13 +120,13 @@ TEST_CASE("test_fixed_values")
       INFO("Li3(128) cmpl = " << li128_cmpl << " (polylogarithm)");
       INFO("Li3(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
 
-      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , eps64);
-      CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 1e-17L); // @todo increase precision
-      CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, eps128);
+      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 3e-15 );
+      CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 2e-18L);
+      CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-18L);
 
-      CHECK_SMALL(Relation_1(z64), eps64);
-      CHECK_SMALL(Relation_2(z64), eps64);
-      CHECK_SMALL(Relation_3(z64), eps64);
+      CHECK_SMALL(Relation_1(z64), 1e-14);
+      CHECK_SMALL(Relation_2(z64), 1e-14);
+      CHECK_SMALL(Relation_3(z64), 1e-14);
    }
 }
 
