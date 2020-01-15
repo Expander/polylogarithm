@@ -12,9 +12,10 @@ namespace polylogarithm {
 
 namespace {
    // converts -0.0 to 0.0
-   std::complex<double> clog(std::complex<double> z) noexcept {
-      if (std::real(z) == 0.0) { z.real(0.0); }
-      if (std::imag(z) == 0.0) { z.imag(0.0); }
+   template <typename T>
+   std::complex<T> clog(std::complex<T> z) noexcept {
+      if (std::real(z) == T(0)) { z.real(T(0)); }
+      if (std::imag(z) == T(0)) { z.imag(T(0)); }
       return std::log(z);
    }
 } // anonymous namespace
@@ -26,7 +27,7 @@ namespace {
  */
 double Cl1(double x)
 {
-   const std::complex<double> i(0.,1.);
+   const std::complex<double> i(0.0, 1.0);
 
    return std::real(Li1(std::exp(i*x)));
 }
@@ -38,7 +39,17 @@ double Cl1(double x)
  */
 double Li1(double x)
 {
-   return -std::log(1. - x);
+   return -std::log(1.0 - x);
+}
+
+/**
+ * @brief Real polylogarithm \f$\mathrm{Li}_1(x) = -\log(1-x)\f$ with long double precision
+ * @param x real argument
+ * @return \f$\mathrm{Li}_1(x)\f$
+ */
+long double Li1(long double x)
+{
+   return -std::log(1.0L - x);
 }
 
 /**
@@ -48,7 +59,17 @@ double Li1(double x)
  */
 std::complex<double> Li1(const std::complex<double>& z)
 {
-   return -clog(1. - z);
+   return -clog(1.0 - z);
+}
+
+/**
+ * @brief Complex polylogarithm \f$\mathrm{Li}_1(z) = -\log(1-z)\f$ with long double precision
+ * @param z complex argument
+ * @return \f$\mathrm{Li}_1(z)\f$
+ */
+std::complex<long double> Li1(const std::complex<long double>& z)
+{
+   return -clog(1.0L - z);
 }
 
 } // namespace polylogarithm

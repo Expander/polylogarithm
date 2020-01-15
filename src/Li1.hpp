@@ -16,7 +16,13 @@ double Cl1(double);
 /// real polylogarithm with n=1
 double Li1(double);
 
+/// real polylogarithm with n=1 with long double precision
+long double Li1(long double);
+
 /// complex polylogarithm with n=1
 std::complex<double> Li1(const std::complex<double>&);
+
+/// complex polylogarithm with n=1 with long double precision
+std::complex<long double> Li1(const std::complex<long double>&);
 
 } // namespace polylogarithm
