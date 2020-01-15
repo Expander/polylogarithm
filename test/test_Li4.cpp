@@ -53,10 +53,10 @@ TEST_CASE("test_fixed_values")
       const auto li128_cmpl = polylogarithm::Li4(z128);
 
       INFO("z(128)        = " << z128);
-      INFO("Li3(64)  cmpl = " << li64_expected << " (expected)");
-      INFO("Li3(128) cmpl = " << li128_expected << " (expected)");
-      INFO("Li3(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
-      INFO("Li3(128) cmpl = " << li128_cmpl << " (polylogarithm)");
+      INFO("Li4(64)  cmpl = " << li64_expected << " (expected)");
+      INFO("Li4(128) cmpl = " << li128_expected << " (expected)");
+      INFO("Li4(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
+      INFO("Li4(128) cmpl = " << li128_cmpl << " (polylogarithm)");
 
       CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 2e-14);
       CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 2e-18);
