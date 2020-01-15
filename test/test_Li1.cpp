@@ -12031,6 +12031,9 @@ TEST_CASE("test_special_values")
 
    CHECK_SMALL(Li1(0.0), 1e-15);
    CHECK_CLOSE(Li1(0.5), std::log(2.0), 1e-15);
+
+   CHECK_SMALL(Li1(0.0L), 1e-18L);
+   CHECK_CLOSE(Li1(0.5L), std::log(2.0L), 1e-18);
 }
 
 TEST_CASE("test_values")
