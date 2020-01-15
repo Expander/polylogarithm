@@ -133,6 +133,9 @@ int main() {
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li6(z); },
             values_cd, "polylogarithm", "double");
 
+   bench_fn([&](std::complex<long double> z) { return polylogarithm::Li6(z); },
+            values_cd, "polylogarithm", "long double");
+
    print_headline("Li(n,z) (complex)");
 
    const auto values_cd_small = generate_random_complexes<double>(N/10, min, max);

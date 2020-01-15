@@ -16,4 +16,7 @@ double Cl6(double);
 /// complex polylogarithm with n=5
 std::complex<double> Li6(const std::complex<double>&);
 
+/// complex polylogarithm with n=5 with long double precision
+std::complex<long double> Li6(const std::complex<long double>&);
+
 } // namespace polylogarithm
