@@ -16,5 +16,6 @@ TEST_CASE("test_special_values")
 {
    using polylogarithm::Li0;
 
-   CHECK_SMALL(Li0(0.), 1e-15);
+   CHECK_SMALL(Li0(0.0) , 1e-15);
+   CHECK_SMALL(Li0(0.0L), 1e-18);
 }
