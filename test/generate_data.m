@@ -30,8 +30,8 @@ ExportData[s_, prec_] :=
            Print["Generating data for Li" <> ToString[s]];
            data = Join[
                GenerateGridData[s, prec, {-5, 5, 1/10}],
-               GenerateUnitData[s, prec, 10, 1/10, -1],
-               GenerateUnitData[s, prec, 10, 1/10, +1],
+               GenerateUnitData[s, prec, prec, 1/10, -1],
+               GenerateUnitData[s, prec, prec, 1/10, +1],
                Join @@@ {
                    GeneratePoint[s, prec,  0  , 0],
                    GeneratePoint[s, prec,  1/2, 0],

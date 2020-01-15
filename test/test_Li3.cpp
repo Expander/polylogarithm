@@ -18,6 +18,11 @@
 template <class T> T sqr(T x) { return x*x; }
 template <class T> T pow3(T x) { return x*x*x; }
 
+bool is_unity(std::complex<long double> z, long double eps)
+{
+   return std::abs(std::real(z) - 1.0L) <= eps && std::imag(z) == 0.0L;
+}
+
 std::complex<double> clog(std::complex<double> z) {
    std::complex<double> zf(z);
    // convert -0.0 to 0.0
@@ -122,7 +127,14 @@ TEST_CASE("test_fixed_values")
 
       CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 3e-15 );
       CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 2e-18L);
-      CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-18L);
+
+      if (is_unity(z128, 1e-15L)) {
+         // low precision if z is close to (1.0, 0.0)
+         // due to log(real(z)) being not veriy precise for real(z) ~ 1
+         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-16L);
+      } else {
+         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-18L);
+      }
 
       CHECK_SMALL(Relation_1(z64), 1e-14);
       CHECK_SMALL(Relation_2(z64), 1e-14);
