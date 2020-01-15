@@ -1,4 +1,4 @@
-u[z_] := -Log[1 - z];
+(* u[z_] := -Log[1 - z]; *)
 
 X[0, n_] := BernoulliB[n];
 
