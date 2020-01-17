@@ -1,5 +1,5 @@
 Polylogarithm
-===========
+=============
 
 [![Build Status](https://travis-ci.org/Expander/polylogarithm.svg?branch=master)](https://travis-ci.org/Expander/polylogarithm)
 
