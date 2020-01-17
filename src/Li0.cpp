@@ -12,11 +12,6 @@
 namespace polylogarithm {
 
 namespace {
-   const double eps_d = 10.0*std::numeric_limits<double>::epsilon();
-   const long double eps_ld = 10.0L*std::numeric_limits<long double>::epsilon();
-   const double inf_d = std::numeric_limits<double>::infinity();
-   const long double inf_ld = std::numeric_limits<long double>::infinity();
-
    template <typename T>
    bool is_close(T a, T b, T eps)
    {
@@ -37,8 +32,11 @@ namespace {
  */
 double Li0(double x)
 {
-   if (is_close(x, 1.0, eps_d)) {
-      return inf_d;
+   const double eps = 10.0*std::numeric_limits<double>::epsilon();
+   const double inf = std::numeric_limits<double>::infinity();
+
+   if (is_close(x, 1.0, eps)) {
+      return inf;
    }
 
    return x/(1.0 - x);
@@ -51,8 +49,11 @@ double Li0(double x)
  */
 long double Li0(long double x)
 {
-   if (is_close(x, 1.0L, eps_ld)) {
-      return inf_ld;
+   const long double eps = 10.0L*std::numeric_limits<long double>::epsilon();
+   const long double inf = std::numeric_limits<long double>::infinity();
+
+   if (is_close(x, 1.0L, eps)) {
+      return inf;
    }
 
    return x/(1.0L - x);
@@ -65,8 +66,11 @@ long double Li0(long double x)
  */
 std::complex<double> Li0(const std::complex<double>& z)
 {
-   if (is_close(z, 1.0, eps_d)) {
-      return {inf_d, inf_d};
+   const double eps = 10.0*std::numeric_limits<double>::epsilon();
+   const double inf = std::numeric_limits<double>::infinity();
+
+   if (is_close(z, 1.0, eps)) {
+      return { inf, inf };
    }
 
    return z/(1.0 - z);
@@ -79,8 +83,11 @@ std::complex<double> Li0(const std::complex<double>& z)
  */
 std::complex<long double> Li0(const std::complex<long double>& z)
 {
-   if (is_close(z, 1.0L, eps_ld)) {
-      return {inf_ld, inf_ld};
+   const long double eps = 10.0L*std::numeric_limits<long double>::epsilon();
+   const long double inf = std::numeric_limits<long double>::infinity();
+
+   if (is_close(z, 1.0L, eps)) {
+      return { inf, inf };
    }
 
    return z/(1.0L - z);

@@ -12,9 +12,6 @@
 namespace polylogarithm {
 
 namespace {
-   const double eps_d = 10.0*std::numeric_limits<double>::epsilon();
-   const long double eps_ld = 10.0L*std::numeric_limits<long double>::epsilon();
-
    template <typename T> T pow2(T x) noexcept { return x*x; }
 
    // converts -0.0 to 0.0
@@ -88,6 +85,7 @@ double Cl3(double x)
  */
 std::complex<double> Li3(const std::complex<double>& z)
 {
+   const double eps   = 10.0*std::numeric_limits<double>::epsilon();
    const double PI    = 3.141592653589793;
    const double PI2   = PI*PI;
    const double zeta2 = 1.644934066848226;
@@ -104,16 +102,16 @@ std::complex<double> Li3(const std::complex<double>& z)
       3.104357887965462e-14,  5.261758629912506e-15
    };
 
-   if (is_close(z, 0.0, eps_d)) {
+   if (is_close(z, 0.0, eps)) {
       return { 0.0, 0.0 };
    }
-   if (is_close(z, 1.0, eps_d)) {
+   if (is_close(z, 1.0, eps)) {
       return { zeta3, 0.0 };
    }
-   if (is_close(z, -1.0, eps_d)) {
+   if (is_close(z, -1.0, eps)) {
       return { -0.75*zeta3, 0.0 };
    }
-   if (is_close(z, 0.5, eps_d)) {
+   if (is_close(z, 0.5, eps)) {
       const double ln2  = 0.6931471805599453; // ln(2)
       const double ln23 = 0.3330246519889295; // ln(2)^3
       return { (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.0, 0.0 };
@@ -189,6 +187,7 @@ std::complex<double> Li3(const std::complex<double>& z)
  */
 std::complex<long double> Li3(const std::complex<long double>& z)
 {
+   const long double eps   = 10.0L*std::numeric_limits<long double>::epsilon();
    const long double PI    = 3.14159265358979323846264338327950288L;
    const long double PI2   = PI*PI;
    const long double zeta2 = 1.64493406684822643647241516664602519L;
@@ -241,16 +240,16 @@ std::complex<long double> Li3(const std::complex<long double>& z)
       8.55369656823692105754731289124468101e-37L
    };
 
-   if (is_close(z, 0.0L, eps_ld)) {
+   if (is_close(z, 0.0L, eps)) {
       return { 0.0L, 0.0L };
    }
-   if (is_close(z, 1.0L, eps_ld)) {
+   if (is_close(z, 1.0L, eps)) {
       return { zeta3, 0.0L };
    }
-   if (is_close(z, -1.0L, eps_ld)) {
+   if (is_close(z, -1.0L, eps)) {
       return { -0.75L*zeta3, 0.0L };
    }
-   if (is_close(z, 0.5L, eps_ld)) {
+   if (is_close(z, 0.5L, eps)) {
       const long double ln2  = 0.693147180559945309417232121458176568L; // ln(2)
       const long double ln23 = 0.333024651988929479718853582611730544L; // ln(2)^3
       return { (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.0L, 0.0L };

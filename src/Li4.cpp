@@ -12,9 +12,6 @@
 namespace polylogarithm {
 
 namespace {
-   const double eps_d = 10.0*std::numeric_limits<double>::epsilon();
-   const long double eps_ld = 10.0L*std::numeric_limits<long double>::epsilon();
-
    template <typename T> T pow2(T x) noexcept { return x*x; }
 
    // converts -0.0 to 0.0
@@ -93,6 +90,7 @@ double Cl4(double x)
  */
 std::complex<double> Li4(const std::complex<double>& z)
 {
+   const double eps   = 10.0*std::numeric_limits<double>::epsilon();
    const double PI    = 3.141592653589793;
    const double PI2   = PI*PI;
    const double PI4   = PI2*PI2;
@@ -109,13 +107,13 @@ std::complex<double> Li4(const std::complex<double>& z)
       2.364757116861825e-14, -7.923135122031161e-15,
    };
 
-   if (is_close(z, 0.0, eps_d)) {
+   if (is_close(z, 0.0, eps)) {
       return { 0.0, 0.0 };
    }
-   if (is_close(z, 1.0, eps_d)) {
+   if (is_close(z, 1.0, eps)) {
       return { zeta4, 0.0 };
    }
-   if (is_close(z, -1.0, eps_d)) {
+   if (is_close(z, -1.0, eps)) {
       return { -7.0*PI4/720.0, 0.0 };
    }
 
@@ -202,6 +200,7 @@ std::complex<double> Li4(const std::complex<double>& z)
  */
 std::complex<long double> Li4(const std::complex<long double>& z)
 {
+   const long double eps   = 10.0L*std::numeric_limits<long double>::epsilon();
    const long double PI    = 3.14159265358979323846264338327950288L;
    const long double PI2   = PI*PI;
    const long double PI4   = PI2*PI2;
@@ -254,13 +253,13 @@ std::complex<long double> Li4(const std::complex<long double>& z)
      -3.54800202048240308911663975982519909e-37L
    };
 
-   if (is_close(z, 0.0L, eps_ld)) {
+   if (is_close(z, 0.0L, eps)) {
       return { 0.0L, 0.0L };
    }
-   if (is_close(z, 1.0L, eps_ld)) {
+   if (is_close(z, 1.0L, eps)) {
       return { zeta4, 0.0L };
    }
-   if (is_close(z, -1.0L, eps_ld)) {
+   if (is_close(z, -1.0L, eps)) {
       return { -7.0L*PI4/720.0L, 0.0L };
    }
 
