@@ -80,8 +80,6 @@ double Cl2(double x)
  * approximations, Academic Press Inc., New York 1975, p.67].
  */
 double Li2(double x) {
-   using std::log;
-
    const double PI  = 3.141592653589793;
    const double HF  = 0.5;
    const double PI2 = PI*PI;
