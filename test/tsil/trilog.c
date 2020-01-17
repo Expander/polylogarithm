@@ -154,8 +154,9 @@ TSIL_COMPLEX TSIL_TrilogCLZseries(TSIL_COMPLEX z)
       remainingterms += term;
       if (TSIL_CABS (term) < accuracygoal) 
 	break;
-      if (j == 24)
+      if (j == 24) {
         TSIL_Warn("TSIL_TrilogCLZseries", "trilog CLZ series converging too slowly.");
+      }
     }
 
   result = remainingterms + first6terms;
