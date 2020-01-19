@@ -13,6 +13,9 @@ namespace polylogarithm {
 /// Clausen function with n=1
 double Cl1(double);
 
+/// Clausen function with n=1 with long double precision
+long double Cl1(long double);
+
 /// real polylogarithm with n=1
 double Li1(double);
 
