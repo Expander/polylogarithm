@@ -11,9 +11,9 @@
 namespace polylogarithm {
 
 /// Clausen function for arbitrary integer n
-double Cl(long, double);
+double Cl(int64_t, double);
 
 /// complex polylogarithm for arbitrary integer n
-std::complex<double> Li(long n, const std::complex<double>&);
+std::complex<double> Li(int64_t n, const std::complex<double>&);
 
 } // namespace polylogarithm
