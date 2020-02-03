@@ -1,9 +1,9 @@
 (* calculate polylogarithm of order s with precision prec *)
 GeneratePoint[s_, prec_, re_, im_] :=
     Module[{val = PolyLog[s, re + I im]},
-           N[#, prec]& @ {
-               {re, im},
-               {Re[val], Im[val]}
+           {
+               N[#, prec]& @ {re, im},
+               {Re[N[val, prec]], Im[N[val, prec]]}
            }
     ]
 
