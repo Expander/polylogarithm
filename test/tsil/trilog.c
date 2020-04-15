@@ -171,9 +171,7 @@ TSIL_COMPLEX TSIL_Trilogseries (TSIL_COMPLEX z)
   TSIL_REAL absz = TSIL_CABS (z);
   TSIL_REAL logepsilon = TSIL_LOG (TSIL_TOL);
   TSIL_REAL mlogabsz;
-  TSIL_COMPLEX sum = z;
-  TSIL_COMPLEX ztothek;
-  TSIL_COMPLEX term;
+  TSIL_COMPLEX sum = 0;
   TSIL_COMPLEX kcubed;
   int k, kmax;
 
@@ -188,12 +186,10 @@ TSIL_COMPLEX TSIL_Trilogseries (TSIL_COMPLEX z)
   kmax = 5 + (int) (( 6.0 -logepsilon -3.0 * log(-logepsilon)
 		      + 3.0 * log (mlogabsz)) / mlogabsz);
 
-  for (k = kmax; k > 1; k--)
+  for (k = kmax; k >= 1; k--)
     {
-      ztothek = TSIL_CPOW (z, k);
       kcubed = k*k*k;
-      term = ztothek/kcubed;
-      sum += term;
+      sum = z*(sum + 1/kcubed);
     }
 
   return sum;
