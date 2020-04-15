@@ -10,6 +10,10 @@
 #include <iomanip>
 #include <gsl/gsl_sf_dilog.h>
 
+extern "C" {
+TSIL_REAL TSIL_dilog_real(TSIL_REAL x);
+}
+
 namespace {
 
 double gsl_Li2(double x)
@@ -24,6 +28,11 @@ std::complex<double> gsl_Li2(std::complex<double> z)
    gsl_sf_result li2_gsl_re{}, li2_gsl_im{};
    gsl_sf_complex_dilog_e(std::abs(z), std::arg(z), &li2_gsl_re, &li2_gsl_im);
    return {li2_gsl_re.val, li2_gsl_im.val};
+}
+
+long double tsil_Li2(long double x)
+{
+   return TSIL_dilog_real(x);
 }
 
 std::complex<long double> tsil_Li2(std::complex<long double> z)
@@ -86,6 +95,9 @@ int main() {
 
    bench_fn([&](long double x) { return polylogarithm::Li2(x); }, values_l,
             "polylogarithm", "long double");
+
+   bench_fn([&](long double x) { return tsil_Li2(x); }, values_l,
+            "TSIL", "long double");
 
    print_headline("Li2 (complex)");
 
