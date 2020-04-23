@@ -187,8 +187,7 @@ std::complex<double> Li6(const std::complex<double>& z)
    if (az <= 1.0) {
       u = -clog(1.0 - z);
    } else { // az > 1
-      auto arg = PI + pz;
-      if (arg > PI) { arg -= 2*PI; }
+      const auto arg = pz > 0.0 ? pz - PI : pz + PI;
       const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
       const auto lmz2 = pow2(lmz);
       u = -clog(1.0 - 1.0/z);
@@ -358,8 +357,7 @@ std::complex<long double> Li6(const std::complex<long double>& z)
    if (az <= 1.0L) {
       u = -clog(1.0L - z);
    } else { // az > 1
-      auto arg = PI + pz;
-      if (arg > PI) { arg -= 2*PI; }
+      const auto arg = pz > 0.0 ? pz - PI : pz + PI;
       const auto lmz = std::complex<long double>(lnz, arg); // clog(-z)
       const auto lmz2 = pow2(lmz);
       u = -clog(1.0L - 1.0L/z);
