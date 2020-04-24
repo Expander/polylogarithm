@@ -19,12 +19,12 @@ namespace bench {
 template <class T>
 std::vector<T> generate_random_scalars(int n, T start, T stop)
 {
-   std::minstd_rand gen;
+   static std::minstd_rand gen;
    std::uniform_real_distribution<T> dist(start, stop);
 
    std::vector<T> v(n);
    std::generate(begin(v), end(v),
-                 [&dist,&gen](){ return dist(gen); });
+                 [&dist](){ return dist(gen); });
 
    return v;
 }
@@ -38,8 +38,9 @@ std::vector<std::complex<T>> generate_random_complexes(
 
    std::vector<std::complex<T>> v(n);
 
-   for (int i = 0; i < n; i++)
+   for (int i = 0; i < n; i++) {
       v[i] = std::complex<T>(reals[i], imags[i]);
+   }
 
    return v;
 }
