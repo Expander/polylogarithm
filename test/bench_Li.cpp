@@ -77,8 +77,8 @@ int main() {
    using namespace polylogarithm::bench;
 
    const std::size_t N = 1000000;
-   const auto min = -10.;
-   const auto max = 10.;
+   const auto min = -5.0;
+   const auto max = 5.0;
 
    const auto values_d  = generate_random_scalars<double>(N, min, max);
    const auto values_l  = generate_random_scalars<long double>(N, min, max);
