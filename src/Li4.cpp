@@ -6,6 +6,7 @@
 // ====================================================================
 
 #include "Li4.hpp"
+#include <cfloat>
 #include <cmath>
 #include <limits>
 
@@ -231,7 +232,7 @@ std::complex<long double> Li4(const std::complex<long double>& z)
    const long double PI2   = PI*PI;
    const long double PI4   = PI2*PI2;
    const long double zeta4 = 1.08232323371113819151600369654116790L;
-   const long double bf[45] = {
+   const long double bf[] = {
       1.0L,
      -7.0L/16.0L,
       1.16512345679012345679012345679012346e-01L,
@@ -254,6 +255,7 @@ std::complex<long double> Li4(const std::complex<long double>& z)
       1.92362700625359201161268755267526042e-16L,
       7.81241433319595467072229389687370732e-18L,
      -4.67180384480365552031762824287222012e-18L,
+#if LDBL_DIG > 18
      -1.34353443298128478562602226758937243e-19L,
       1.13568268513473432447646983759384846e-19L,
       2.11527562024325868475059834141917946e-21L,
@@ -277,6 +279,7 @@ std::complex<long double> Li4(const std::complex<long double>& z)
       1.29761714880310295825962542732877943e-35L,
       8.79357407773938851103685229710271214e-36L,
      -3.54800202048240308911663975982519909e-37L
+#endif
    };
 
    if (is_close(z, 0.0L, eps)) {
@@ -301,7 +304,7 @@ std::complex<long double> Li4(const std::complex<long double>& z)
       const auto c3 = (11.0L/6.0L - clog(-u))/6.0L;
       const auto c4 = -1.0L/48.0L;
 
-      const long double cs[19] = {
+      const long double cs[] = {
         -6.94444444444444444444444444444444444e-04L,
          1.65343915343915343915343915343915344e-06L,
         -1.09354441365023375605386187396769407e-08L,
@@ -310,6 +313,7 @@ std::complex<long double> Li4(const std::complex<long double>& z)
          1.61300065283501012968488467709998678e-14L,
         -2.34288104528793396933245465250860001e-16L,
          3.64387716752943634635168923207929405e-18L,
+#if LDBL_DIG > 18
         -5.97748681166655845456412242441216036e-20L,
          1.02337130555150662198452683223504513e-21L,
         -1.81455956138347480737900283560680332e-23L,
@@ -321,37 +325,20 @@ std::complex<long double> Li4(const std::complex<long double>& z)
         -9.18043553394696104844086650056356358e-34L,
          1.86724930429686274238904009267803247e-35L,
         -3.84151865355610606630482668147264051e-37L
+#endif
       };
 
-      return
-         cadd(zeta4,
-         cadd(cmul(u2, cadd(c2, cmul(u2, c4))),
-            cmul(u,
-               cadd(c1,
-                  cmul(u2, cadd(c3,
-                  cmul(u2, cadd(cs[0],
-                  cmul(u2, cadd(cs[1],
-                  cmul(u2, cadd(cs[2],
-                  cmul(u2, cadd(cs[3],
-                  cmul(u2, cadd(cs[4],
-                  cmul(u2, cadd(cs[5],
-                  cmul(u2, cadd(cs[6],
-                  cmul(u2, cadd(cs[7],
-                  cmul(u2, cadd(cs[8],
-                  cmul(u2, cadd(cs[9],
-                  cmul(u2, cadd(cs[10],
-                  cmul(u2, cadd(cs[11],
-                  cmul(u2, cadd(cs[12],
-                  cmul(u2, cadd(cs[13],
-                  cmul(u2, cadd(cs[14],
-                  cmul(u2, cadd(cs[15],
-                  cmul(u2, cadd(cs[16],
-                  cmul(u2, cadd(cs[17],
-                  cmul(u2, cs[18])))))))))))))))))))))))))))))))))))))))
-                  )
-               )
-            )
-         );
+      std::complex<long double> sum(0.0L, 0.0L);
+
+      for (int i = sizeof(cs)/sizeof(cs[0]) - 1; i >= 0; i--) {
+         sum = cmul(u2, cadd(cs[i], sum));
+      }
+
+      // lowest order terms w/ different powers
+      sum = cadd(zeta4, cadd(cmul(u2, cadd(c2, cmul(u2, c4))),
+                             cmul(u, cadd(c1, cmul(u2, cadd(c3, sum))))));
+
+      return sum;
    }
 
    std::complex<long double> u(0.0L, 0.0L), r(0.0L, 0.0L);
@@ -368,52 +355,11 @@ std::complex<long double> Li4(const std::complex<long double>& z)
       sgn = -1;
    }
 
-   const auto sum =
-      cmul(u, cadd(bf[0],
-      cmul(u, cadd(bf[1],
-      cmul(u, cadd(bf[2],
-      cmul(u, cadd(bf[3],
-      cmul(u, cadd(bf[4],
-      cmul(u, cadd(bf[5],
-      cmul(u, cadd(bf[6],
-      cmul(u, cadd(bf[7],
-      cmul(u, cadd(bf[8],
-      cmul(u, cadd(bf[9],
-      cmul(u, cadd(bf[10],
-      cmul(u, cadd(bf[11],
-      cmul(u, cadd(bf[12],
-      cmul(u, cadd(bf[13],
-      cmul(u, cadd(bf[14],
-      cmul(u, cadd(bf[15],
-      cmul(u, cadd(bf[16],
-      cmul(u, cadd(bf[17],
-      cmul(u, cadd(bf[18],
-      cmul(u, cadd(bf[19],
-      cmul(u, cadd(bf[20],
-      cmul(u, cadd(bf[21],
-      cmul(u, cadd(bf[22],
-      cmul(u, cadd(bf[23],
-      cmul(u, cadd(bf[24],
-      cmul(u, cadd(bf[25],
-      cmul(u, cadd(bf[26],
-      cmul(u, cadd(bf[27],
-      cmul(u, cadd(bf[28],
-      cmul(u, cadd(bf[29],
-      cmul(u, cadd(bf[30],
-      cmul(u, cadd(bf[31],
-      cmul(u, cadd(bf[32],
-      cmul(u, cadd(bf[33],
-      cmul(u, cadd(bf[34],
-      cmul(u, cadd(bf[35],
-      cmul(u, cadd(bf[36],
-      cmul(u, cadd(bf[37],
-      cmul(u, cadd(bf[38],
-      cmul(u, cadd(bf[39],
-      cmul(u, cadd(bf[40],
-      cmul(u, cadd(bf[41],
-      cmul(u, cadd(bf[42],
-      cmul(u, cadd(bf[43],
-      cmul(u, bf[44])))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
+   std::complex<long double> sum(0.0L, 0.0L);
+
+   for (int i = sizeof(bf)/sizeof(bf[0]) - 1; i >= 0; i--) {
+      sum = cmul(u, cadd(bf[i], sum));
+   }
 
    return sgn*sum + r;
 }
