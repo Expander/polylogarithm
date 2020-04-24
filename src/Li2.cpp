@@ -410,6 +410,7 @@ std::complex<long double> Li2(const std::complex<long double>& z)
       -1.99392958607210756872364434779378971e-14L,
        4.51898002961991819165047655285559323e-16L,
       -1.03565176121812470144834115422186567e-17L,
+#if LDBL_DIG > 18
        2.39521862102618674574028374300098038e-19L,
       -5.58178587432500933628307450562541991e-21L,
        1.30915075541832128581230739918659230e-22L,
@@ -422,6 +423,7 @@ std::complex<long double> Li2(const std::complex<long double>& z)
       -5.76834735536739008429179316187765424e-34L,
        1.39317947964700797782788660391154833e-35L,
       -3.37212196548508947046847363525493096e-37L
+#endif
    };
 
    const long double rz = std::real(z);
@@ -470,33 +472,15 @@ std::complex<long double> Li2(const std::complex<long double>& z)
       }
    }
 
-   // the dilogarithm
    const std::complex<long double> cz2(sqr(cz));
-   const std::complex<long double> sum =
-      cadd(cz,
-      cmul(cz2, cadd(bf[0],
-      cmul(cz , cadd(bf[1],
-      cmul(cz2, cadd(bf[2],
-      cmul(cz2, cadd(bf[3],
-      cmul(cz2, cadd(bf[4],
-      cmul(cz2, cadd(bf[5],
-      cmul(cz2, cadd(bf[6],
-      cmul(cz2, cadd(bf[7],
-      cmul(cz2, cadd(bf[8],
-      cmul(cz2, cadd(bf[9],
-      cmul(cz2, cadd(bf[10],
-      cmul(cz2, cadd(bf[11],
-      cmul(cz2, cadd(bf[12],
-      cmul(cz2, cadd(bf[13],
-      cmul(cz2, cadd(bf[14],
-      cmul(cz2, cadd(bf[15],
-      cmul(cz2, cadd(bf[16],
-      cmul(cz2, cadd(bf[17],
-      cmul(cz2, cadd(bf[18],
-      cmul(cz2, cadd(bf[19],
-      cmul(cz2, cadd(bf[20],
-      cmul(cz2, cadd(bf[21],
-      cmul(cz2, bf[22]))))))))))))))))))))))))))))))))))))))))))))));
+   std::complex<long double> sum(0.0L, 0.0L);
+
+   for (int i = sizeof(bf)/sizeof(bf[0]) - 1; i >= 2; i--) {
+      sum = cmul(cz2, cadd(bf[i], sum));
+   }
+
+   // lowest order terms w/ different powers
+   sum = cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, cadd(bf[1], sum)))));
 
    return static_cast<long double>(jsgn)*sum + cy + ipi12*PI*PI/12.0L;
 }
