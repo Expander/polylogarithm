@@ -152,9 +152,11 @@ std::complex<double> Li6(const std::complex<double>& z)
       return { -31.0*zeta6/32.0, 0.0 };
    }
 
-   const auto az  = std::abs(z);
-   const auto pz  = std::arg(z);
-   const auto lnz = std::log(az);
+   const auto rz  = std::real(z);
+   const auto iz  = std::imag(z);
+   const auto nz  = sqr(rz) + sqr(iz);
+   const auto pz  = std::atan2(iz, rz);
+   const auto lnz = 0.5*std::log(nz);
 
    if (sqr(lnz) + sqr(pz) < 1.0) { // |log(z)| < 1
       const auto u  = std::complex<double>(lnz, pz); // clog(z)
@@ -191,9 +193,9 @@ std::complex<double> Li6(const std::complex<double>& z)
    std::complex<double> u(0.0, 0.0), r(0.0, 0.0);
    double sgn = 1;
 
-   if (az <= 1.0) {
+   if (nz <= 1.0) {
       u = -clog(1.0 - z);
-   } else { // az > 1
+   } else { // nz > 1
       const auto arg = pz > 0.0 ? pz - PI : pz + PI;
       const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
       const auto lmz2 = sqr(lmz);
@@ -298,9 +300,11 @@ std::complex<long double> Li6(const std::complex<long double>& z)
       return { -31.0L*zeta6/32.0L, 0.0L };
    }
 
-   const auto az  = std::abs(z);
-   const auto pz  = std::arg(z);
-   const auto lnz = std::log(az);
+   const auto rz  = std::real(z);
+   const auto iz  = std::imag(z);
+   const auto nz  = sqr(rz) + sqr(iz);
+   const auto pz  = std::atan2(iz, rz);
+   const auto lnz = 0.5L*std::log(nz);
 
    if (sqr(lnz) + sqr(pz) < 1.0L) { // |log(z)| < 1
       const auto u  = std::complex<long double>(lnz, pz); // clog(z)
@@ -357,9 +361,9 @@ std::complex<long double> Li6(const std::complex<long double>& z)
    std::complex<long double> u(0.0L, 0.0L), r(0.0L, 0.0L);
    long double sgn = 1;
 
-   if (az <= 1.0L) {
+   if (nz <= 1.0L) {
       u = -clog(1.0L - z);
-   } else { // az > 1
+   } else { // nz > 1
       const auto arg = pz > 0.0 ? pz - PI : pz + PI;
       const auto lmz = std::complex<long double>(lnz, arg); // clog(-z)
       const auto lmz2 = sqr(lmz);
