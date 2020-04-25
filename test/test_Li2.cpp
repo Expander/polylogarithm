@@ -7,6 +7,7 @@
 #include "read_data.hpp"
 #include <cmath>
 #include <complex>
+#include <limits>
 #include <gsl/gsl_sf_dilog.h>
 #include <random>
 #include <vector>
@@ -185,7 +186,9 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_fixed_values")
 {
-   const auto eps128 = 1e-18L;
+   const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
+   const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+
    const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li2.txt");
    const auto fixed_values = polylogarithm::test::read_from_file<long double>(filename);
 
@@ -211,7 +214,7 @@ TEST_CASE("test_fixed_values")
       INFO("Li2(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
       INFO("Li2(128) cmpl = " << li128_cmpl << " (polylogarithm)");
 
-      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 2e-15);
+      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 2*eps64);
 
       if (is_unity(z128, 1e-16L)) {
          // low precision if z is close to (1.0, 0.0)
@@ -219,7 +222,7 @@ TEST_CASE("test_fixed_values")
          CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-15L);
          CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 1e-15L);
       } else {
-         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-17L);
+         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 10*eps128);
          CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, eps128);
       }
 
@@ -228,9 +231,9 @@ TEST_CASE("test_fixed_values")
          INFO("Li2(64)  real = " << li64_real << " (polylogarithm)");
          INFO("Li2(128) real = " << li128_real << " (polylogarithm)");
 
-         CHECK_CLOSE(li64_real , std::real(li64_expected) , 1e-14);
-         CHECK_CLOSE(li64_gsl  , std::real(li64_expected) , 1e-14);
-         CHECK_CLOSE(li128_real, std::real(li128_expected), eps128);
+         CHECK_CLOSE(li64_real , std::real(li64_expected) , 10*eps64);
+         CHECK_CLOSE(li64_gsl  , std::real(li64_expected) , 10*eps64);
+         CHECK_CLOSE(li128_real, std::real(li128_expected), eps128  );
       }
    }
 }

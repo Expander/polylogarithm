@@ -4,6 +4,7 @@
 #include "Li4.hpp"
 #include "read_data.hpp"
 #include <cmath>
+#include <limits>
 #include <utility>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
@@ -40,6 +41,9 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_fixed_values")
 {
+   const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
+   const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+
    const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li4.txt");
    const auto fixed_values = polylogarithm::test::read_from_file<long double>(filename);
 
@@ -58,7 +62,7 @@ TEST_CASE("test_fixed_values")
       INFO("Li4(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
       INFO("Li4(128) cmpl = " << li128_cmpl << " (polylogarithm)");
 
-      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 2e-14);
-      CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 2e-18);
+      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 20*eps64);
+      CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 2*eps128);
    }
 }

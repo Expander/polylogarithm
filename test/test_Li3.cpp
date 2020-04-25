@@ -6,6 +6,7 @@
 #include "read_data.hpp"
 #include "tsil_cpp.h"
 #include <cmath>
+#include <limits>
 #include <utility>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
@@ -105,6 +106,9 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_fixed_values")
 {
+   const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
+   const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+
    const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li3.txt");
    const auto fixed_values = polylogarithm::test::read_from_file<long double>(filename);
 
@@ -125,20 +129,20 @@ TEST_CASE("test_fixed_values")
       INFO("Li3(128) cmpl = " << li128_cmpl << " (polylogarithm)");
       INFO("Li3(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
 
-      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 3e-15 );
-      CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 2e-18L);
+      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 3*eps64);
+      CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, eps128);
 
       if (is_unity(z128, 1e-15L)) {
          // low precision if z is close to (1.0, 0.0)
          // due to log(real(z)) being not veriy precise for real(z) ~ 1
          CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-16L);
       } else {
-         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-18L);
+         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, eps128);
       }
 
-      CHECK_SMALL(Relation_1(z64), 1e-14);
-      CHECK_SMALL(Relation_2(z64), 1e-14);
-      CHECK_SMALL(Relation_3(z64), 1e-14);
+      CHECK_SMALL(Relation_1(z64), 10*eps64);
+      CHECK_SMALL(Relation_2(z64), 10*eps64);
+      CHECK_SMALL(Relation_3(z64), 10*eps64);
    }
 }
 
