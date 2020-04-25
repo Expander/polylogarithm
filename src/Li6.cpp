@@ -13,14 +13,20 @@
 namespace polylogarithm {
 
 namespace {
-   template <typename T> T pow2(T x) noexcept { return x*x; }
+   template <typename T> T sqr(T x) noexcept { return x*x; }
 
-   // converts -0.0 to 0.0
    template <typename T>
-   std::complex<T> clog(std::complex<T> z) noexcept {
+   std::complex<T> clog(std::complex<T> z) noexcept
+   {
+      // converts -0.0 to 0.0
       if (std::real(z) == T(0)) { z.real(T(0)); }
       if (std::imag(z) == T(0)) { z.imag(T(0)); }
-      return std::log(z);
+
+      const T rz = std::real(z);
+      const T iz = std::imag(z);
+      const T nz = sqr(rz) + sqr(iz);
+
+      return std::complex<T>(0.5*std::log(nz), std::atan2(iz, rz));
    }
 
    template <typename T>
@@ -150,7 +156,7 @@ std::complex<double> Li6(const std::complex<double>& z)
    const auto pz  = std::arg(z);
    const auto lnz = std::log(az);
 
-   if (pow2(lnz) + pow2(pz) < 1.0) { // |log(z)| < 1
+   if (sqr(lnz) + sqr(pz) < 1.0) { // |log(z)| < 1
       const auto u  = std::complex<double>(lnz, pz); // clog(z)
       const auto u2 = u*u;
       const auto c0 = zeta6;
@@ -190,7 +196,7 @@ std::complex<double> Li6(const std::complex<double>& z)
    } else { // az > 1
       const auto arg = pz > 0.0 ? pz - PI : pz + PI;
       const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
-      const auto lmz2 = pow2(lmz);
+      const auto lmz2 = sqr(lmz);
       u = -clog(1.0 - 1.0/z);
       r = -31.0*PI6/15120.0 + lmz2*(-7.0/720.0*PI4 + lmz2*(-1.0/144.0*PI2 - 1.0/720.0*lmz2));
       sgn = -1;
@@ -296,7 +302,7 @@ std::complex<long double> Li6(const std::complex<long double>& z)
    const auto pz  = std::arg(z);
    const auto lnz = std::log(az);
 
-   if (pow2(lnz) + pow2(pz) < 1.0L) { // |log(z)| < 1
+   if (sqr(lnz) + sqr(pz) < 1.0L) { // |log(z)| < 1
       const auto u  = std::complex<long double>(lnz, pz); // clog(z)
       const auto u2 = u*u;
       const auto c0 = zeta6;
@@ -356,7 +362,7 @@ std::complex<long double> Li6(const std::complex<long double>& z)
    } else { // az > 1
       const auto arg = pz > 0.0 ? pz - PI : pz + PI;
       const auto lmz = std::complex<long double>(lnz, arg); // clog(-z)
-      const auto lmz2 = pow2(lmz);
+      const auto lmz2 = sqr(lmz);
       u = -clog(1.0L - 1.0L/z);
       r = -31.0L*PI6/15120.0L
           + lmz2*(-7.0L/720.0L*PI4 +

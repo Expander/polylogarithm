@@ -16,6 +16,16 @@ namespace {
    T sqr(T x) noexcept { return x*x; }
 
    template <typename T>
+   std::complex<T> clog(const std::complex<T>& z) noexcept
+   {
+      const T rz = std::real(z);
+      const T iz = std::imag(z);
+      const T nz = sqr(rz) + sqr(iz);
+
+      return std::complex<T>(0.5*std::log(nz), std::atan2(iz, rz));
+   }
+
+   template <typename T>
    std::complex<T> cadd(T a, const std::complex<T>& b) noexcept
    {
       return std::complex<T>(a + std::real(b), std::imag(b));
@@ -41,6 +51,7 @@ namespace {
          std::real(a) * std::real(b) - std::imag(a) * std::imag(b),
          std::real(a) * std::imag(b) + std::imag(a) * std::real(b));
    }
+
 } // anonymous namespace
 
 /**
@@ -344,25 +355,25 @@ std::complex<double> Li2(const std::complex<double>& z)
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5) {
       if (nz > 1.0) {
-         cy = -0.5 * sqr(std::log(-z));
-         cz = -std::log(1.0 - 1.0 / z);
+         cy = -0.5 * sqr(clog(-z));
+         cz = -clog(1.0 - 1.0 / z);
          jsgn = -1;
          ipi12 = -2;
       } else { // nz <= 1
          cy = 0;
-         cz = -std::log(1.0 - z);
+         cz = -clog(1.0 - z);
          jsgn = 1;
          ipi12 = 0;
       }
    } else { // rz > 0.5
       if (nz <= 2*rz) {
-         cz = -std::log(z);
-         cy = cz * std::log(1.0 - z);
+         cz = -clog(z);
+         cy = cz * clog(1.0 - z);
          jsgn = -1;
          ipi12 = 2;
       } else { // nz > 2*rz
-         cy = -0.5 * sqr(std::log(-z));
-         cz = -std::log(1.0 - 1.0 / z);
+         cy = -0.5 * sqr(clog(-z));
+         cz = -clog(1.0 - 1.0 / z);
          jsgn = -1;
          ipi12 = -2;
       }
@@ -448,25 +459,25 @@ std::complex<long double> Li2(const std::complex<long double>& z)
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5L) {
       if (nz > 1.0L) {
-         cy = -0.5L * sqr(std::log(-z));
-         cz = -std::log(1.0L - 1.0L/z);
+         cy = -0.5L * sqr(clog(-z));
+         cz = -clog(1.0L - 1.0L/z);
          jsgn = -1;
          ipi12 = -2;
       } else { // nz <= 1.0L
          cy = 0;
-         cz = -std::log(1.0L - z);
+         cz = -clog(1.0L - z);
          jsgn = 1;
          ipi12 = 0;
       }
    } else { // rz > 0.5L
       if (nz <= 2*rz) {
-         cz = -std::log(z);
-         cy = cz * std::log(1.0L - z);
+         cz = -clog(z);
+         cy = cz * clog(1.0L - z);
          jsgn = -1;
          ipi12 = 2;
       } else { // nz > 2*rz
-         cy = -0.5L * sqr(std::log(-z));
-         cz = -std::log(1.0L - 1.0L/z);
+         cy = -0.5L * sqr(clog(-z));
+         cz = -clog(1.0L - 1.0L/z);
          jsgn = -1;
          ipi12 = -2;
       }
