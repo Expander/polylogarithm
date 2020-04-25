@@ -35821,7 +35821,7 @@ TEST_CASE("test_special_values")
 
    const double eps = 1e-10;
 
-   for (const auto v: special_values) {
+   for (const auto& v: special_values) {
       INFO("z = " << v);
 
       if (!(std::real(v) == 1 && std::imag(v) == 0)) {
@@ -35850,7 +35850,7 @@ TEST_CASE("test_values")
 
    const double eps = 1e-8;
 
-   for (const auto v: values_Li100) {
+   for (const auto& v: values_Li100) {
       const auto z = v.first;
       const auto Li100 = v.second;
 
@@ -35869,7 +35869,7 @@ TEST_CASE("test_values")
       CHECK_CLOSE_COMPLEX(Li100, Li(100,z), eps);
    }
 
-   for (const auto v: values_Lim1) {
+   for (const auto& v: values_Lim1) {
       const auto z = v.first;
       const auto Lim1 = v.second;
 
@@ -35878,7 +35878,7 @@ TEST_CASE("test_values")
       CHECK_CLOSE_COMPLEX(Lim1, Li(-1,z), eps);
    }
 
-   for (const auto v: values_Lim2) {
+   for (const auto& v: values_Lim2) {
       const auto z = v.first;
       const auto Lim2 = v.second;
 
@@ -35901,7 +35901,7 @@ TEST_CASE("test_values_close_to_unity")
 
    const double eps = 1e-8;
 
-   for (const auto v: values_close_to_unity) {
+   for (const auto& v: values_close_to_unity) {
       const auto z = v.first;
       const auto Li100 = v.second;
 

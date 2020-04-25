@@ -12040,7 +12040,7 @@ TEST_CASE("test_values")
 {
    using polylogarithm::Li1;
 
-   for (const auto v: values)
+   for (const auto& v: values)
       CHECK_CLOSE_COMPLEX(Li1(v.first), v.second, 1e-14);
 }
 
@@ -12048,6 +12048,6 @@ TEST_CASE("test_values_close_to_unity")
 {
    using polylogarithm::Li1;
 
-   for (const auto v: values_close_to_unity)
+   for (const auto& v: values_close_to_unity)
       CHECK_CLOSE_COMPLEX(Li1(v.first), v.second, 1e-8);
 }
