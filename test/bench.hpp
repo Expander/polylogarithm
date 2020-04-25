@@ -45,6 +45,12 @@ std::vector<std::complex<T>> generate_random_complexes(
    return v;
 }
 
+template <class T>
+inline void do_not_optimize(const T& value)
+{
+   asm volatile("" : : "r,m"(value) : "memory");
+}
+
 template <class F>
 double time_in_seconds(F&& f)
 {
