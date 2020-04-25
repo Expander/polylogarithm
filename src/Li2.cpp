@@ -133,7 +133,7 @@ double Li2(double x) {
      -0.00000000000027007, 0.00000000000004042,-0.00000000000000610,
       0.00000000000000093,-0.00000000000000014, 0.00000000000000002};
 
-   double T,H,Y,S,A,ALFA,B1,B2,B0;
+   double T{}, H{}, Y{}, S{}, A{}, ALFA{}, B1{}, B2{}, B0{};
 
    if (x == 1) {
        H = PI6;
@@ -255,7 +255,7 @@ long double Li2(long double x) {
 #endif
    };
 
-   long double T,H,Y,S,A,ALFA,B1,B2,B0;
+   long double T{}, H{}, Y{}, S{}, A{}, ALFA{}, B1{}, B2{}, B0{};
 
    if (x == 1) {
        H = PI6;
@@ -350,7 +350,7 @@ std::complex<double> Li2(const std::complex<double>& z)
    }
 
    std::complex<double> cy(0.0, 0.0), cz(0.0, 0.0);
-   int jsgn, ipi12;
+   int jsgn = 0, ipi12 = 0;
 
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5) {
@@ -454,7 +454,7 @@ std::complex<long double> Li2(const std::complex<long double>& z)
    }
 
    std::complex<long double> cy(0.0L, 0.0L), cz(0.0L, 0.0L);
-   int jsgn, ipi12;
+   int jsgn = 0, ipi12 = 0;
 
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5L) {

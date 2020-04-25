@@ -196,7 +196,7 @@ namespace {
       }
 
       // pre-computing binomial coefficients
-      std::array<TArray,N> binomi;
+      std::array<TArray,N> binomi{};
       for (int64_t ni = 0; ni < N; ni++) {
          for (int64_t k = 0; k <= ni; k++) {
             binomi[ni][k] = binomial(ni,k);
