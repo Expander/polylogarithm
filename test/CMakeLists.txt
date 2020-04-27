@@ -2,6 +2,7 @@ find_package(GSL QUIET)
 
 add_definitions(-DTEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
 add_subdirectory(tsil)
+add_subdirectory(algorithm_327)
 
 if(GSL_FOUND)
   function(add_polylogarithm_test name)
@@ -14,6 +15,7 @@ if(GSL_FOUND)
       polylog
       GSL::gsl
       tsil
+      algorithm_327
       )
     add_test(NAME ${name} COMMAND ${name})
   endfunction()

@@ -4,6 +4,7 @@
 #include "Li2.hpp"
 #include "bench.hpp"
 #include "tsil_cpp.h"
+#include "algorithm_327.h"
 #include "read_data.hpp"
 #include <cmath>
 #include <complex>
@@ -205,6 +206,7 @@ TEST_CASE("test_fixed_values")
       const auto li64_cmpl  = polylogarithm::Li2(z64);
       const auto li128_cmpl = polylogarithm::Li2(z128);
       const auto li64_gsl   = gsl_Li2(x64);
+      const auto li64_327   = algorithm_327(x64);
       const auto li128_tsil = tsil_Li2(z128);
 
       INFO("z(128)        = " << z128);
@@ -229,10 +231,12 @@ TEST_CASE("test_fixed_values")
       if (std::imag(z128) == 0.0L) {
          INFO("Li2(64)  real = " << li64_gsl << " (GSL)");
          INFO("Li2(64)  real = " << li64_real << " (polylogarithm)");
+         INFO("Li2(64)  real = " << li64_327 << " (algorithm 327)");
          INFO("Li2(128) real = " << li128_real << " (polylogarithm)");
 
          CHECK_CLOSE(li64_real , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_gsl  , std::real(li64_expected) , 10*eps64);
+         CHECK_CLOSE(li64_327  , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li128_real, std::real(li128_expected), eps128  );
       }
    }
@@ -242,13 +246,21 @@ TEST_CASE("test_real_random_values")
 {
    using namespace polylogarithm::bench;
 
+   const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto values = generate_random_scalars<double>(10000, -10, 10);
 
    for (auto v: values) {
       const double li2 = polylogarithm::Li2(v);
       const double li2_gsl = gsl_Li2(v);
+      const double li2_327 = algorithm_327(v);
 
-      CHECK_CLOSE(li2, li2_gsl, 1e-15);
+      INFO("x = " << v);
+      INFO("Li2(64) real = " << li2     << " (polylogarithm)");
+      INFO("Li2(64) real = " << li2_gsl << " (GSL)");
+      INFO("Li2(64) real = " << li2_327 << " (algorithm 327)");
+
+      CHECK_CLOSE(li2, li2_gsl, eps64);
+      CHECK_CLOSE(li2, li2_327, 10*eps64);
    }
 }
 
