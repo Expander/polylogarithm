@@ -4,22 +4,22 @@ add_definitions(-DTEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
 add_subdirectory(tsil)
 add_subdirectory(algorithm_327)
 
-if(GSL_FOUND)
-  function(add_polylogarithm_test name)
-    add_executable(
-      ${name}
-      ${name}.cpp
-      )
-    target_link_libraries(
-      ${name}
-      polylog
-      GSL::gsl
-      tsil
-      algorithm_327
-      )
-    add_test(NAME ${name} COMMAND ${name})
-  endfunction()
+function(add_polylogarithm_test name)
+  add_executable(
+    ${name}
+    ${name}.cpp
+    )
+  target_link_libraries(
+    ${name}
+    polylog
+    ${ARGN}
+    )
+  add_test(NAME ${name} COMMAND ${name})
+endfunction()
 
+if(GSL_FOUND)
+  add_polylogarithm_test(bench_Li GSL::gsl tsil algorithm_327)
+endif()
   add_polylogarithm_test(test_Cl)
   add_polylogarithm_test(test_Cl1)
   add_polylogarithm_test(test_Cl2)
@@ -30,12 +30,11 @@ if(GSL_FOUND)
   add_polylogarithm_test(test_Li)
   add_polylogarithm_test(test_Li0)
   add_polylogarithm_test(test_Li1)
-  add_polylogarithm_test(test_Li2)
-  add_polylogarithm_test(test_Li3)
+if(GSL_FOUND)
+  add_polylogarithm_test(test_Li2 GSL::gsl tsil algorithm_327)
+endif()
+  add_polylogarithm_test(test_Li3 tsil)
   add_polylogarithm_test(test_Li4)
   add_polylogarithm_test(test_Li5)
   add_polylogarithm_test(test_Li6)
   add_polylogarithm_test(test_version)
-
-  add_polylogarithm_test(bench_Li)
-endif()
