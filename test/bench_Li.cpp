@@ -1,4 +1,5 @@
 #include "algorithm_327.h"
+#include "algorithm_490.h"
 #include "bench.hpp"
 #include "Li2.hpp"
 #include "Li3.hpp"
@@ -96,6 +97,9 @@ int main() {
 
    bench_fn([&](double x) { return algorithm_327(x); }, values_d,
             "algorithm 327", "double");
+
+   bench_fn([&](double x) { return algorithm_490(x); }, values_d,
+            "algorithm 490", "double");
 
    bench_fn([&](long double x) { return polylogarithm::Li2(x); }, values_l,
             "polylogarithm", "long double");

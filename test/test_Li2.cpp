@@ -1,11 +1,12 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
-#include "Li2.hpp"
-#include "bench.hpp"
-#include "tsil_cpp.h"
 #include "algorithm_327.h"
+#include "algorithm_490.h"
+#include "bench.hpp"
+#include "Li2.hpp"
 #include "read_data.hpp"
+#include "tsil_cpp.h"
 #include <cmath>
 #include <complex>
 #include <limits>
@@ -207,6 +208,7 @@ TEST_CASE("test_fixed_values")
       const auto li128_cmpl = polylogarithm::Li2(z128);
       const auto li64_gsl   = gsl_Li2(x64);
       const auto li64_327   = algorithm_327(x64);
+      const auto li64_490   = algorithm_490(x64);
       const auto li128_tsil = tsil_Li2(z128);
 
       INFO("z(128)        = " << z128);
@@ -232,11 +234,13 @@ TEST_CASE("test_fixed_values")
          INFO("Li2(64)  real = " << li64_gsl << " (GSL)");
          INFO("Li2(64)  real = " << li64_real << " (polylogarithm)");
          INFO("Li2(64)  real = " << li64_327 << " (algorithm 327)");
+         INFO("Li2(64)  real = " << li64_490 << " (algorithm 490)");
          INFO("Li2(128) real = " << li128_real << " (polylogarithm)");
 
          CHECK_CLOSE(li64_real , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_gsl  , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_327  , std::real(li64_expected) , 10*eps64);
+         CHECK_CLOSE(li64_490  , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li128_real, std::real(li128_expected), eps128  );
       }
    }
@@ -253,14 +257,17 @@ TEST_CASE("test_real_random_values")
       const double li2 = polylogarithm::Li2(v);
       const double li2_gsl = gsl_Li2(v);
       const double li2_327 = algorithm_327(v);
+      const double li2_490 = algorithm_490(v);
 
       INFO("x = " << v);
       INFO("Li2(64) real = " << li2     << " (polylogarithm)");
       INFO("Li2(64) real = " << li2_gsl << " (GSL)");
       INFO("Li2(64) real = " << li2_327 << " (algorithm 327)");
+      INFO("Li2(64) real = " << li2_490 << " (algorithm 490)");
 
       CHECK_CLOSE(li2, li2_gsl, eps64);
       CHECK_CLOSE(li2, li2_327, 10*eps64);
+      CHECK_CLOSE(li2, li2_490, eps64);
    }
 }
 
