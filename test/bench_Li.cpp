@@ -1,6 +1,7 @@
 #include "algorithm_327.h"
 #include "algorithm_490.h"
 #include "bench.hpp"
+#include "hollik.h"
 #include "Li2.hpp"
 #include "Li3.hpp"
 #include "Li4.hpp"
@@ -30,6 +31,12 @@ std::complex<double> gsl_Li2(std::complex<double> z)
    gsl_sf_result li2_gsl_re{}, li2_gsl_im{};
    gsl_sf_complex_dilog_e(std::abs(z), std::arg(z), &li2_gsl_re, &li2_gsl_im);
    return {li2_gsl_re.val, li2_gsl_im.val};
+}
+
+std::complex<double> hollik_Li2(std::complex<double> z) {
+   double li2_re{}, li2_im{};
+   hollik_dilog(std::real(z), std::imag(z), &li2_re, &li2_im);
+   return { li2_re, li2_im };
 }
 
 long double tsil_Li2(long double x)
@@ -114,6 +121,9 @@ int main() {
 
    bench_fn([&](std::complex<double> z) { return gsl_Li2(z); },
             values_cd, "GSL", "double");
+
+   bench_fn([&](std::complex<double> z) { return hollik_Li2(z); },
+            values_cd, "Hollik", "double");
 
    bench_fn([&](std::complex<long double> z) { return polylogarithm::Li2(z); },
             values_cl, "polylogarithm",  "long double");
