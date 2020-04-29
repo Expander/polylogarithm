@@ -6,14 +6,13 @@
 // ====================================================================
 
 #pragma once
-#include <complex>
 
 namespace polylogarithm {
 
-/// complex polylogarithm with n=5
-std::complex<double> Li6(const std::complex<double>&);
+/// Clausen function with n=6
+double Cl6(double);
 
-/// complex polylogarithm with n=5 with long double precision
-std::complex<long double> Li6(const std::complex<long double>&);
+/// Clausen function with n=6 with long double precision
+long double Cl6(long double);
 
 } // namespace polylogarithm

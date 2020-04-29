@@ -3,6 +3,8 @@ add_library(polylog
   Cl2.cpp
   Cl3.cpp
   Cl4.cpp
+  Cl5.cpp
+  Cl6.cpp
   Li.cpp
   Li0.cpp
   Li1.cpp

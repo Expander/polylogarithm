@@ -1,16 +1,13 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
+#include "Cl1.hpp"
 #include "Cl2.hpp"
 #include "Cl3.hpp"
 #include "Cl4.hpp"
+#include "Cl5.hpp"
+#include "Cl6.hpp"
 #include "Li.hpp"
-#include "Li1.hpp"
-#include "Li2.hpp"
-#include "Li3.hpp"
-#include "Li4.hpp"
-#include "Li5.hpp"
-#include "Li6.hpp"
 #include <cmath>
 #include <complex>
 #include <vector>
