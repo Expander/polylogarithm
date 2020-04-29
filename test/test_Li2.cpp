@@ -191,6 +191,24 @@ TEST_CASE("test_special_values")
    CHECK_CLOSE(36.*Li2(0.5) - 36.*Li2(0.25)
                - 12.*Li2(1./8.) + 6.*Li2(1./64.),
                pi2, eps);
+
+   {
+      // special point where Re[Li2[z]] == 0
+      const std::complex<double> z0(12.5951703698450184, 0.0);
+      const std::complex<double> li0(
+         -4.41928863051485104279391911740417734355378e-16,
+         -7.9586388813396972514450338597465302668858497479134219184303);
+
+      CHECK_CLOSE(Li2(std::real(z0))          , std::real(li0), eps);
+      CHECK_CLOSE(algorithm_327(std::real(z0)), std::real(li0), eps);
+      CHECK_CLOSE(algorithm_490(std::real(z0)), std::real(li0), eps);
+      CHECK_CLOSE(gsl_Li2(std::real(z0))      , std::real(li0), eps);
+
+      CHECK_CLOSE_COMPLEX(Li2(z0)       , li0, eps);
+      CHECK_CLOSE_COMPLEX(gsl_Li2(z0)   , li0, eps);
+      CHECK_CLOSE_COMPLEX(hollik_Li2(z0), li0, eps);
+      CHECK_CLOSE_COMPLEX(tsil_Li2(z0)  , li0, eps);
+   }
 }
 
 TEST_CASE("test_fixed_values")
