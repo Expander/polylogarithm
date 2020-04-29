@@ -137,7 +137,7 @@ TEST_CASE("test_special_values")
 {
    using polylogarithm::Li2;
    using std::log;
-   const double eps = 1e-15;
+   const double eps = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const double pi  = M_PI;
    const double pi2 = sqr(pi);
    const double ln2 = std::log(2.);
