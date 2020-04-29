@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
+#include "Cl3.hpp"
 #include "Li3.hpp"
 #include <cmath>
 #include <complex>

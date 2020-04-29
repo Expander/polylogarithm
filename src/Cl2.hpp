@@ -6,7 +6,6 @@
 // ====================================================================
 
 #pragma once
-#include <complex>
 
 namespace polylogarithm {
 
