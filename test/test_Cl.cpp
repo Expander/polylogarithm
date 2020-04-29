@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "Cl2.hpp"
 #include "Cl3.hpp"
+#include "Cl4.hpp"
 #include "Li.hpp"
 #include "Li1.hpp"
 #include "Li2.hpp"

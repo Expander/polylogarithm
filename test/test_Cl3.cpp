@@ -2,7 +2,6 @@
 
 #include "doctest.h"
 #include "Cl3.hpp"
-#include "Li3.hpp"
 #include <cmath>
 #include <complex>
 #include <vector>
