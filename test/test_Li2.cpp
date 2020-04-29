@@ -250,10 +250,10 @@ TEST_CASE("test_fixed_values")
          INFO("Li2(64)  real = " << li64_490   << " (algorithm 490)");
          INFO("Li2(128) real = " << li128_real << " (polylogarithm)");
 
-         CHECK_CLOSE(li64_real , std::real(li64_expected) , 10*eps64);
-         CHECK_CLOSE(li64_gsl  , std::real(li64_expected) , 10*eps64);
+         CHECK_CLOSE(li64_real , std::real(li64_expected) , 2*eps64);
+         CHECK_CLOSE(li64_gsl  , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_327  , std::real(li64_expected) , 10*eps64);
-         CHECK_CLOSE(li64_490  , std::real(li64_expected) , 10*eps64);
+         CHECK_CLOSE(li64_490  , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li128_real, std::real(li128_expected), eps128  );
       }
    }
