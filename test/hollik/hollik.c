@@ -1,6 +1,14 @@
 #include <math.h>
 #include <complex.h>
 
+/* transforms -0.0 -> 0.0 */
+static double complex cpos(double complex z)
+{
+   double re = creal(z) == 0.0 ? 0.0 : creal(z);
+   double im = cimag(z) == 0.0 ? 0.0 : cimag(z);
+   return re + I*im;
+}
+
 /*
   SPENCE-FUNKTION KOMPLEX, FREI NACH HOLLIK
   20.07.83
@@ -100,7 +108,7 @@ double complex pCSPEN(double complex Z)
       SUM = SUM + U*B[K-1];
    }
  L22:
-   return -SUM + 1.64493406684822643 - clog(Z)*clog(1-Z);
+   return -SUM + 1.64493406684822643 - clog(Z)*clog(cpos(1-Z));
 
  L30:
    W = clog(1-1/Z);
