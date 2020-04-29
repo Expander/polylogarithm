@@ -10,12 +10,6 @@
 
 namespace polylogarithm {
 
-/// Clausen function with n=2
-double Cl2(double);
-
-/// Clausen function with n=2 with long double precision
-long double Cl2(long double);
-
 /// real polylogarithm with n=2 (dilogarithm)
 double Li2(double);
 
