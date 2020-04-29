@@ -2,11 +2,11 @@
 #include <complex.h>
 
 /* transforms -0.0 -> 0.0 */
-static double complex cpos(double complex z)
+static double complex pclog(double complex z)
 {
    double re = creal(z) == 0.0 ? 0.0 : creal(z);
    double im = cimag(z) == 0.0 ? 0.0 : cimag(z);
-   return re + I*im;
+   return clog(re + I*im);
 }
 
 /*
@@ -50,7 +50,7 @@ double complex pCSPEN(double complex Z)
    A1 = cabs(1-Z);
 
    if (AZ < 1E-20)
-      return -clog(1-Z);
+      return -pclog(1-Z);
 
    if ((RZ == 1.0) && (cimag(Z) == 0.0))
       return 1.64493406684822643;
@@ -58,7 +58,7 @@ double complex pCSPEN(double complex Z)
    if (RZ > 5E-1) goto L20;
    if (AZ > 1) goto L10;
 
-   W = -clog(1-Z);
+   W = -pclog(1-Z);
    SUM = W - 0.25*W*W;
    U = W;
 
@@ -75,7 +75,7 @@ double complex pCSPEN(double complex Z)
    return SUM;
 
  L10:
-   W = -clog(1-1/Z);
+   W = -pclog(1-1/Z);
    SUM = W - 0.25*W*W;
    U = W;
 
@@ -88,14 +88,14 @@ double complex pCSPEN(double complex Z)
       SUM = SUM + U*B[K-1];
    }
  L12:
-   L = clog(-Z);
+   L = pclog(-Z);
 
    return -SUM - 1.64493406684822643 - 0.5*L*L;
 
  L20:
    if (A1 > 1) goto L30;
 
-   W = -clog(Z);
+   W = -pclog(Z);
    SUM = W - 0.25*W*W;
    U = W;
 
@@ -108,10 +108,10 @@ double complex pCSPEN(double complex Z)
       SUM = SUM + U*B[K-1];
    }
  L22:
-   return -SUM + 1.64493406684822643 - clog(Z)*clog(cpos(1-Z));
+   return -SUM + 1.64493406684822643 - pclog(Z)*pclog(1-Z);
 
  L30:
-   W = clog(1-1/Z);
+   W = pclog(1-1/Z);
    SUM = W - 0.25*W*W;
    U = W;
 
@@ -124,10 +124,10 @@ double complex pCSPEN(double complex Z)
       SUM = SUM + U*B[K-1];
    }
  L32:
-   L = clog(Z-1);
+   L = pclog(Z-1);
 
    return SUM + 3.28986813369645287
-      + 0.5*L*L - clog(Z)*clog(1-Z);
+      + 0.5*L*L - pclog(Z)*pclog(1-Z);
 }
 
 
