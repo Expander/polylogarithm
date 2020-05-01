@@ -228,16 +228,10 @@ TEST_CASE("test_fixed_values")
       const auto li128_expected = v.second;
       const auto li64_expected = to_c64(li128_expected);
 
-      const auto li64_real     = polylogarithm::Li2(x64);
-      const auto li128_real    = polylogarithm::Li2(x128);
       const auto li64_cmpl     = polylogarithm::Li2(z64);
       const auto li128_cmpl    = polylogarithm::Li2(z128);
-      const auto li64_gsl      = gsl_Li2(x64);
       const auto li64_gsl_cmpl = gsl_Li2(z64);
-      const auto li64_327      = algorithm_327(x64);
-      const auto li64_490      = algorithm_490(x64);
       const auto li64_hollik   = hollik_Li2(z64);
-      const auto li64_cephes   = cephes_dilog(x64);
       const auto li128_tsil    = tsil_Li2(z128);
 
       INFO("z(128)        = " << z128);
@@ -264,19 +258,26 @@ TEST_CASE("test_fixed_values")
       }
 
       if (std::imag(z128) == 0.0L) {
+         const auto li64_327      = algorithm_327(x64);
+         const auto li64_490      = algorithm_490(x64);
+         const auto li64_cephes   = cephes_dilog(x64);
+         const auto li64_gsl      = gsl_Li2(x64);
+         const auto li64_poly     = polylogarithm::Li2(x64);
+         const auto li128_poly    = polylogarithm::Li2(x128);
+
          INFO("Li2(64)  real = " << li64_327   << " (algorithm 327)");
          INFO("Li2(64)  real = " << li64_490   << " (algorithm 490)");
          INFO("Li2(64)  real = " << li64_cephes<< " (cephes)");
          INFO("Li2(64)  real = " << li64_gsl   << " (GSL)");
-         INFO("Li2(64)  real = " << li64_real  << " (polylogarithm)");
-         INFO("Li2(128) real = " << li128_real << " (polylogarithm)");
+         INFO("Li2(64)  real = " << li64_poly  << " (polylogarithm)");
+         INFO("Li2(128) real = " << li128_poly << " (polylogarithm)");
 
          CHECK_CLOSE(li64_327   , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_490   , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_cephes, std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_gsl   , std::real(li64_expected) , 2*eps64);
-         CHECK_CLOSE(li64_real  , std::real(li64_expected) , 2*eps64);
-         CHECK_CLOSE(li128_real , std::real(li128_expected), eps128  );
+         CHECK_CLOSE(li64_poly  , std::real(li64_expected) , 2*eps64);
+         CHECK_CLOSE(li128_poly , std::real(li128_expected), eps128  );
       }
    }
 }
