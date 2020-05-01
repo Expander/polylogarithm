@@ -289,18 +289,17 @@ TEST_CASE("test_complex_fixed_values")
       INFO("Li2(128) cmpl = " << li128_poly     << " (polylogarithm)");
       INFO("Li2(128) cmpl = " << li128_tsil     << " (TSIL)");
 
-      CHECK_CLOSE_COMPLEX(li64_poly  , li64_expected, 2*eps64);
-      CHECK_CLOSE_COMPLEX(li64_gsl   , li64_expected, 10*eps64);
-      CHECK_CLOSE_COMPLEX(li64_hollik, li64_expected, 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_poly  , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_gsl   , li64_expected , 10*eps64);
+      CHECK_CLOSE_COMPLEX(li64_hollik, li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li128_poly , li128_expected, eps128);
 
       if (is_unity(z128, 1e-16L)) {
          // low precision if z is close to (1.0, 0.0)
          // due to log(real(z)) being not veriy precise for real(z) ~ 1
          CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-15L);
-         CHECK_CLOSE_COMPLEX(li128_poly, li128_expected, 1e-15L);
       } else {
          CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 10*eps128);
-         CHECK_CLOSE_COMPLEX(li128_poly, li128_expected, eps128);
       }
    }
 }
