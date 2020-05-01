@@ -1,6 +1,7 @@
 #include "algorithm_327.h"
 #include "algorithm_490.h"
 #include "bench.hpp"
+#include "cephes.h"
 #include "hollik.h"
 #include "Li2.hpp"
 #include "Li3.hpp"
@@ -101,6 +102,9 @@ int main() {
 
    bench_fn([&](double x) { return gsl_Li2(x); }, values_d,
             "GSL", "double");
+
+   bench_fn([&](double x) { return cephes_dilog(x); }, values_d,
+            "cephes", "double");
 
    bench_fn([&](double x) { return algorithm_327(x); }, values_d,
             "algorithm 327", "double");

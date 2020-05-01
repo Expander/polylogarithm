@@ -4,6 +4,7 @@
 #include "algorithm_327.h"
 #include "algorithm_490.h"
 #include "bench.hpp"
+#include "cephes.h"
 #include "hollik.h"
 #include "Li2.hpp"
 #include "read_data.hpp"
@@ -236,6 +237,7 @@ TEST_CASE("test_fixed_values")
       const auto li64_327      = algorithm_327(x64);
       const auto li64_490      = algorithm_490(x64);
       const auto li64_hollik   = hollik_Li2(z64);
+      const auto li64_cephes   = cephes_dilog(x64);
       const auto li128_tsil    = tsil_Li2(z128);
 
       INFO("z(128)        = " << z128);
@@ -262,17 +264,19 @@ TEST_CASE("test_fixed_values")
       }
 
       if (std::imag(z128) == 0.0L) {
-         INFO("Li2(64)  real = " << li64_gsl   << " (GSL)");
-         INFO("Li2(64)  real = " << li64_real  << " (polylogarithm)");
          INFO("Li2(64)  real = " << li64_327   << " (algorithm 327)");
          INFO("Li2(64)  real = " << li64_490   << " (algorithm 490)");
+         INFO("Li2(64)  real = " << li64_cephes<< " (cephes)");
+         INFO("Li2(64)  real = " << li64_gsl   << " (GSL)");
+         INFO("Li2(64)  real = " << li64_real  << " (polylogarithm)");
          INFO("Li2(128) real = " << li128_real << " (polylogarithm)");
 
-         CHECK_CLOSE(li64_real , std::real(li64_expected) , 2*eps64);
-         CHECK_CLOSE(li64_gsl  , std::real(li64_expected) , 2*eps64);
-         CHECK_CLOSE(li64_327  , std::real(li64_expected) , 10*eps64);
-         CHECK_CLOSE(li64_490  , std::real(li64_expected) , 2*eps64);
-         CHECK_CLOSE(li128_real, std::real(li128_expected), eps128  );
+         CHECK_CLOSE(li64_327   , std::real(li64_expected) , 10*eps64);
+         CHECK_CLOSE(li64_490   , std::real(li64_expected) , 2*eps64);
+         CHECK_CLOSE(li64_cephes, std::real(li64_expected) , 2*eps64);
+         CHECK_CLOSE(li64_gsl   , std::real(li64_expected) , 2*eps64);
+         CHECK_CLOSE(li64_real  , std::real(li64_expected) , 2*eps64);
+         CHECK_CLOSE(li128_real , std::real(li128_expected), eps128  );
       }
    }
 }
@@ -289,16 +293,19 @@ TEST_CASE("test_real_random_values")
       const double li2_gsl = gsl_Li2(v);
       const double li2_327 = algorithm_327(v);
       const double li2_490 = algorithm_490(v);
+      const double li2_cephes = cephes_dilog(v);
 
       INFO("x = " << v);
       INFO("Li2(64) real = " << li2     << " (polylogarithm)");
       INFO("Li2(64) real = " << li2_gsl << " (GSL)");
       INFO("Li2(64) real = " << li2_327 << " (algorithm 327)");
       INFO("Li2(64) real = " << li2_490 << " (algorithm 490)");
+      INFO("Li2(64) real = " << li2_cephes << " (cephes)");
 
-      CHECK_CLOSE(li2, li2_gsl, eps64);
-      CHECK_CLOSE(li2, li2_327, 10*eps64);
-      CHECK_CLOSE(li2, li2_490, eps64);
+      CHECK_CLOSE(li2, li2_gsl   , eps64);
+      CHECK_CLOSE(li2, li2_327   , 10*eps64);
+      CHECK_CLOSE(li2, li2_490   , eps64);
+      CHECK_CLOSE(li2, li2_cephes, 2*eps64);
    }
 }
 
