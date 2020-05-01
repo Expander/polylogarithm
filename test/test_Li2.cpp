@@ -212,7 +212,7 @@ TEST_CASE("test_special_values")
    }
 }
 
-TEST_CASE("test_fixed_values")
+TEST_CASE("test_real_fixed_values")
 {
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
@@ -225,37 +225,8 @@ TEST_CASE("test_fixed_values")
       const auto z64 = to_c64(z128);
       const auto x64 = std::real(z64);
       const auto x128 = std::real(z128);
-      const auto li128_expected = v.second;
-      const auto li64_expected = to_c64(li128_expected);
-
-      const auto li64_cmpl     = polylogarithm::Li2(z64);
-      const auto li128_cmpl    = polylogarithm::Li2(z128);
-      const auto li64_gsl_cmpl = gsl_Li2(z64);
-      const auto li64_hollik   = hollik_Li2(z64);
-      const auto li128_tsil    = tsil_Li2(z128);
-
-      INFO("z(128)        = " << z128);
-      INFO("Li2(64)  cmpl = " << li64_expected  << " (expected)");
-      INFO("Li2(128) cmpl = " << li128_expected << " (expected)");
-      INFO("Li2(64)  cmpl = " << li64_gsl_cmpl  << " (GSL)");
-      INFO("Li2(64)  cmpl = " << li64_hollik    << " (Hollik)");
-      INFO("Li2(64)  cmpl = " << li64_cmpl      << " (polylogarithm)");
-      INFO("Li2(128) cmpl = " << li128_cmpl     << " (polylogarithm)");
-      INFO("Li2(128) cmpl = " << li128_tsil     << " (TSIL)");
-
-      CHECK_CLOSE_COMPLEX(li64_cmpl    , li64_expected, 2*eps64);
-      CHECK_CLOSE_COMPLEX(li64_gsl_cmpl, li64_expected, 10*eps64);
-      CHECK_CLOSE_COMPLEX(li64_hollik  , li64_expected, 2*eps64);
-
-      if (is_unity(z128, 1e-16L)) {
-         // low precision if z is close to (1.0, 0.0)
-         // due to log(real(z)) being not veriy precise for real(z) ~ 1
-         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-15L);
-         CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 1e-15L);
-      } else {
-         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 10*eps128);
-         CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, eps128);
-      }
+      const auto li128_expected = std::real(v.second);
+      const auto li64_expected = static_cast<double>(li128_expected);
 
       if (std::imag(z128) == 0.0L) {
          const auto li64_327      = algorithm_327(x64);
@@ -265,19 +236,71 @@ TEST_CASE("test_fixed_values")
          const auto li64_poly     = polylogarithm::Li2(x64);
          const auto li128_poly    = polylogarithm::Li2(x128);
 
-         INFO("Li2(64)  real = " << li64_327   << " (algorithm 327)");
-         INFO("Li2(64)  real = " << li64_490   << " (algorithm 490)");
-         INFO("Li2(64)  real = " << li64_cephes<< " (cephes)");
-         INFO("Li2(64)  real = " << li64_gsl   << " (GSL)");
-         INFO("Li2(64)  real = " << li64_poly  << " (polylogarithm)");
-         INFO("Li2(128) real = " << li128_poly << " (polylogarithm)");
+         INFO("x(64)         = " << x64);
+         INFO("Li2(64)  real = " << li64_expected  << " (expected)");
+         INFO("Li2(64)  real = " << li64_327       << " (algorithm 327)");
+         INFO("Li2(64)  real = " << li64_490       << " (algorithm 490)");
+         INFO("Li2(64)  real = " << li64_cephes    << " (cephes)");
+         INFO("Li2(64)  real = " << li64_gsl       << " (GSL)");
+         INFO("Li2(64)  real = " << li64_poly      << " (polylogarithm)");
+         INFO("--------------------------------------------------------");
+         INFO("x(128)        = " << x128);
+         INFO("Li2(128) real = " << li128_expected << " (expected)");
+         INFO("Li2(128) real = " << li128_poly     << " (polylogarithm)");
 
          CHECK_CLOSE(li64_327   , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_490   , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_cephes, std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_gsl   , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_poly  , std::real(li64_expected) , 2*eps64);
-         CHECK_CLOSE(li128_poly , std::real(li128_expected), eps128  );
+         CHECK_CLOSE(li128_poly , std::real(li128_expected), eps128);
+      }
+   }
+}
+
+TEST_CASE("test_complex_fixed_values")
+{
+   const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
+   const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+
+   const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li2.txt");
+   const auto fixed_values = polylogarithm::test::read_from_file<long double>(filename);
+
+   for (auto v: fixed_values) {
+      const auto z128 = v.first;
+      const auto z64 = to_c64(z128);
+      const auto li128_expected = v.second;
+      const auto li64_expected = to_c64(li128_expected);
+
+      const auto li64_poly   = polylogarithm::Li2(z64);
+      const auto li128_poly  = polylogarithm::Li2(z128);
+      const auto li64_gsl    = gsl_Li2(z64);
+      const auto li64_hollik = hollik_Li2(z64);
+      const auto li128_tsil  = tsil_Li2(z128);
+
+      INFO("z(64)         = " << z64);
+      INFO("Li2(64)  cmpl = " << li64_expected  << " (expected)");
+      INFO("Li2(64)  cmpl = " << li64_gsl       << " (GSL)");
+      INFO("Li2(64)  cmpl = " << li64_hollik    << " (Hollik)");
+      INFO("Li2(64)  cmpl = " << li64_poly      << " (polylogarithm)");
+      INFO("--------------------------------------------------------");
+      INFO("z(128)        = " << z128);
+      INFO("Li2(128) cmpl = " << li128_expected << " (expected)");
+      INFO("Li2(128) cmpl = " << li128_poly     << " (polylogarithm)");
+      INFO("Li2(128) cmpl = " << li128_tsil     << " (TSIL)");
+
+      CHECK_CLOSE_COMPLEX(li64_poly  , li64_expected, 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_gsl   , li64_expected, 10*eps64);
+      CHECK_CLOSE_COMPLEX(li64_hollik, li64_expected, 2*eps64);
+
+      if (is_unity(z128, 1e-16L)) {
+         // low precision if z is close to (1.0, 0.0)
+         // due to log(real(z)) being not veriy precise for real(z) ~ 1
+         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1e-15L);
+         CHECK_CLOSE_COMPLEX(li128_poly, li128_expected, 1e-15L);
+      } else {
+         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 10*eps128);
+         CHECK_CLOSE_COMPLEX(li128_poly, li128_expected, eps128);
       }
    }
 }
