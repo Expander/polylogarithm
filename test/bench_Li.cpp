@@ -123,6 +123,9 @@ int main() {
    bench_fn([&](double x) { return algorithm_490(x); }, values_d,
             "algorithm 490", "double");
 
+   bench_fn([&](double x) { return hassani_dilog(x); }, values_d,
+            "Hassani", "double");
+
    bench_fn([&](long double x) { return polylogarithm::Li2(x); }, values_l,
             "polylogarithm", "long double");
 
