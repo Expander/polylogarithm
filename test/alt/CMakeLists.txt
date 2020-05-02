@@ -2,6 +2,7 @@ add_subdirectory(algorithm_327)
 add_subdirectory(algorithm_490)
 add_subdirectory(cephes)
 add_subdirectory(hollik)
+add_subdirectory(sherpa)
 add_subdirectory(tsil)
 
 add_library(alt alt.c)
@@ -16,5 +17,6 @@ target_link_libraries(alt
     algorithm_490
     cephes
     hollik
+    sherpa
     tsil
 )

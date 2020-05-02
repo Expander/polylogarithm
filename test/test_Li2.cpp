@@ -85,6 +85,12 @@ std::complex<double> hollik_Li2(std::complex<double> z) {
    return { li2_re, li2_im };
 }
 
+std::complex<double> sherpa_Li2(std::complex<double> z) {
+   double re{}, im{};
+   sherpa_dilog(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<long double> tsil_Li2(std::complex<long double> z) {
    long double re, im;
    tsil_dilog_complex(std::real(z), std::imag(z), &re, &im);
@@ -216,6 +222,7 @@ TEST_CASE("test_special_values")
 #endif
       CHECK_CLOSE_COMPLEX(hollik_Li2(z0), li0, eps);
       CHECK_CLOSE_COMPLEX(tsil_Li2(z0)  , li0, eps);
+      CHECK_CLOSE_COMPLEX(sherpa_Li2(z0), li0, eps);
    }
 }
 
@@ -292,6 +299,7 @@ TEST_CASE("test_complex_fixed_values")
 #endif
       const auto li64_hollik = hollik_Li2(z64);
       const auto li128_tsil  = tsil_Li2(z128);
+      const auto li64_sherpa = sherpa_Li2(z64);
 
       INFO("z(64)         = " << z64);
       INFO("Li2(64)  cmpl = " << li64_expected  << " (expected)");
@@ -300,6 +308,7 @@ TEST_CASE("test_complex_fixed_values")
 #endif
       INFO("Li2(64)  cmpl = " << li64_hollik    << " (Hollik)");
       INFO("Li2(64)  cmpl = " << li64_poly      << " (polylogarithm)");
+      INFO("Li2(64)  cmpl = " << li64_sherpa    << " (Sherpa)");
       INFO("--------------------------------------------------------");
       INFO("z(128)        = " << z128);
       INFO("Li2(128) cmpl = " << li128_expected << " (expected)");
@@ -311,6 +320,7 @@ TEST_CASE("test_complex_fixed_values")
       CHECK_CLOSE_COMPLEX(li64_gsl   , li64_expected , 10*eps64);
 #endif
       CHECK_CLOSE_COMPLEX(li64_hollik, li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_sherpa, li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li128_poly , li128_expected, eps128);
       CHECK_CLOSE_COMPLEX(li128_tsil , li128_expected, 2*eps128);
    }
