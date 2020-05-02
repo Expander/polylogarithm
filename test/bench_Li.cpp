@@ -1,15 +1,11 @@
-#include "algorithm_327.h"
-#include "algorithm_490.h"
+#include "alt.h"
 #include "bench.hpp"
-#include "cephes.h"
-#include "hollik.h"
 #include "Li2.hpp"
 #include "Li3.hpp"
 #include "Li4.hpp"
 #include "Li5.hpp"
 #include "Li6.hpp"
 #include "Li.hpp"
-#include "tsil_cpp.h"
 #include <iostream>
 #include <iomanip>
 
@@ -35,10 +31,6 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 
 #endif
 
-extern "C" {
-TSIL_REAL TSIL_dilog_real(TSIL_REAL x);
-}
-
 namespace {
 
 std::complex<double> hollik_Li2(std::complex<double> z) {
@@ -49,17 +41,21 @@ std::complex<double> hollik_Li2(std::complex<double> z) {
 
 long double tsil_Li2(long double x)
 {
-   return TSIL_dilog_real(x);
+   return tsil_dilog_real(x);
 }
 
 std::complex<long double> tsil_Li2(std::complex<long double> z)
 {
-   return TSIL_Dilog_(z);
+   long double re, im;
+   tsil_dilog_complex(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 std::complex<long double> tsil_Li3(std::complex<long double> z)
 {
-   return TSIL_Trilog_(z);
+   long double re, im;
+   tsil_trilog_complex(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 } // anonymous namespace

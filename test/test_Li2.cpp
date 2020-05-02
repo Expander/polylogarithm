@@ -1,14 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
-#include "algorithm_327.h"
-#include "algorithm_490.h"
+#include "alt.h"
 #include "bench.hpp"
-#include "cephes.h"
-#include "hollik.h"
 #include "Li2.hpp"
 #include "read_data.hpp"
-#include "tsil_cpp.h"
 #include <cmath>
 #include <complex>
 #include <limits>
@@ -90,7 +86,9 @@ std::complex<double> hollik_Li2(std::complex<double> z) {
 }
 
 std::complex<long double> tsil_Li2(std::complex<long double> z) {
-   return TSIL_Dilog_(z);
+   long double re, im;
+   tsil_dilog_complex(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 const auto Relation_1 = [](std::complex<double> z) {

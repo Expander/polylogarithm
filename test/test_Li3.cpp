@@ -1,10 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
+#include "alt.h"
 #include "Li3.hpp"
 #include "bench.hpp"
 #include "read_data.hpp"
-#include "tsil_cpp.h"
 #include <cmath>
 #include <limits>
 #include <utility>
@@ -37,8 +37,11 @@ std::complex<double> to_c64(std::complex<long double> z)
    return std::complex<double>(std::real(z), std::imag(z));
 }
 
-std::complex<long double> tsil_Li3(std::complex<long double> z) {
-   return TSIL_Trilog_(z);
+std::complex<long double> tsil_Li3(std::complex<long double> z)
+{
+   long double re, im;
+   tsil_trilog_complex(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 const auto Relation_1 = [](std::complex<double> z) {
