@@ -12,27 +12,34 @@
 #include "tsil_cpp.h"
 #include <iostream>
 #include <iomanip>
+
+#ifdef ENABLE_GSL
+
 #include <gsl/gsl_sf_dilog.h>
+
+namespace {
+
+double gsl_Li2(double x) {
+   gsl_sf_result li2_gsl{};
+   gsl_sf_dilog_e(x, &li2_gsl);
+   return li2_gsl.val;
+}
+
+std::complex<double> gsl_Li2(std::complex<double> z) {
+   gsl_sf_result li2_gsl_re{}, li2_gsl_im{};
+   gsl_sf_complex_dilog_e(std::abs(z), std::arg(z), &li2_gsl_re, &li2_gsl_im);
+   return {li2_gsl_re.val, li2_gsl_im.val};
+}
+
+} // anonymous namespace
+
+#endif
 
 extern "C" {
 TSIL_REAL TSIL_dilog_real(TSIL_REAL x);
 }
 
 namespace {
-
-double gsl_Li2(double x)
-{
-   gsl_sf_result li2_gsl{};
-   gsl_sf_dilog_e(x, &li2_gsl);
-   return li2_gsl.val;
-}
-
-std::complex<double> gsl_Li2(std::complex<double> z)
-{
-   gsl_sf_result li2_gsl_re{}, li2_gsl_im{};
-   gsl_sf_complex_dilog_e(std::abs(z), std::arg(z), &li2_gsl_re, &li2_gsl_im);
-   return {li2_gsl_re.val, li2_gsl_im.val};
-}
 
 std::complex<double> hollik_Li2(std::complex<double> z) {
    double li2_re{}, li2_im{};
@@ -100,8 +107,10 @@ int main() {
    bench_fn([&](double x) { return polylogarithm::Li2(x); }, values_d,
             "polylogarithm", "double");
 
+#ifdef ENABLE_GSL
    bench_fn([&](double x) { return gsl_Li2(x); }, values_d,
             "GSL", "double");
+#endif
 
    bench_fn([&](double x) { return cephes_dilog(x); }, values_d,
             "cephes", "double");
@@ -123,8 +132,10 @@ int main() {
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li2(z); },
             values_cd, "polylogarithm", "double");
 
+#ifdef ENABLE_GSL
    bench_fn([&](std::complex<double> z) { return gsl_Li2(z); },
             values_cd, "GSL", "double");
+#endif
 
    bench_fn([&](std::complex<double> z) { return hollik_Li2(z); },
             values_cd, "Hollik", "double");
