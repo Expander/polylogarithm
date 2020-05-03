@@ -2,15 +2,11 @@
 
 #define PI 3.141592653589793
 
-static double polevl(double x, double* coef, int N)
+static double polevl(double x, const double* coef, int N)
 {
-   double ans;
-   int i;
-   double* p;
-
-   p = coef;
-   ans = *p++;
-   i = N;
+   const double* p = coef;
+   double ans = *p++;
+   int i = N;
 
    do
       ans = ans * x + *p++;
@@ -50,7 +46,7 @@ static double polevl(double x, double* coef, int N)
  */
 static double spence(double x)
 {
-   static double A[8] = {
+   static const double A[8] = {
      4.65128586073990045278E-5,
      7.31589045238094711071E-3,
      1.33847639578309018650E-1,
@@ -61,7 +57,7 @@ static double spence(double x)
      1.00000000000000000126E0,
    };
 
-   static double B[8] = {
+   static const double B[8] = {
      6.90990488912553276999E-4,
      2.54043763932544379113E-2,
      2.82974860602568089943E-1,
