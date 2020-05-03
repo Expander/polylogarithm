@@ -1,5 +1,4 @@
-#ifndef HASSANI
-#define HASSANI
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -9,6 +8,4 @@ double hassani_dilog(double x);
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif

@@ -1,5 +1,4 @@
-#ifndef CEPHES
-#define CEPHES
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -9,6 +8,4 @@ double cephes_dilog(double x);
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif

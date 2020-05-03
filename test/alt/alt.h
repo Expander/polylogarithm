@@ -1,5 +1,4 @@
-#ifndef ALT_H
-#define ALT_H
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,6 +24,4 @@ void tsil_trilog_complex(long double re, long double im, long double* res_re, lo
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif

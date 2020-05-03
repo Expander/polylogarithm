@@ -1,5 +1,4 @@
-#ifndef ALGORITHM_490
-#define ALGORITHM_490
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -9,6 +8,4 @@ double algorithm_490(double);
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif
