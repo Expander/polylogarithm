@@ -1,16 +1,15 @@
 #include <math.h>
 
 #define PI 3.141592653589793
+#define NTERMS 8
 
-static double polevl(double x, const double* coef, int N)
+static double polevl(double x, const double* coef)
 {
-   const double* p = coef;
-   double ans = *p++;
-   int i = N;
+   double ans = 0;
+   int i = NTERMS;
 
-   do
-      ans = ans * x + *p++;
-   while (--i);
+   while (i--)
+      ans = ans * x + *coef++;
 
    return ans;
 }
@@ -46,7 +45,7 @@ static double polevl(double x, const double* coef, int N)
  */
 static double spence(double x)
 {
-   static const double A[8] = {
+   static const double A[NTERMS] = {
      4.65128586073990045278E-5,
      7.31589045238094711071E-3,
      1.33847639578309018650E-1,
@@ -57,7 +56,7 @@ static double spence(double x)
      1.00000000000000000126E0,
    };
 
-   static const double B[8] = {
+   static const double B[NTERMS] = {
      6.90990488912553276999E-4,
      2.54043763932544379113E-2,
      2.82974860602568089943E-1,
@@ -101,7 +100,7 @@ static double spence(double x)
    else
       w = x - 1.0;
 
-   y = -w * polevl(w, A, 7) / polevl(w, B, 7);
+   y = -w * polevl(w, A) / polevl(w, B);
 
    if (flag & 1)
       y = (PI * PI) / 6.0 - log(x) * log(1.0 - x) - y;
