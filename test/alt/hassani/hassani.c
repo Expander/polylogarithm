@@ -20,7 +20,7 @@ static double hassani_spence(double x)
 
    double sum = 0.0;
    double xn = 1;
-   const int N = 50;
+   const int N = 50; // Log[1/2, 10^-15]
 
    for (int i = 1; i < N; i++) {
       xn *= x;
