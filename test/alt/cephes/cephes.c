@@ -132,8 +132,10 @@ double cephes_dilog(double x)
   Dilogarithm
 
   Implemented using the spence function from the Cephes math library.
-  Optimized version.
-  Written by Alexander Voigt
+  Cephes Math Library Release 2.8:  June, 2000
+  Copyright 1985, 1987, 1989, 2000 by Stephen L. Moshier
+
+  Optimized version written by Alexander Voigt
  */
 double cephes_dilog_2(double x)
 {
