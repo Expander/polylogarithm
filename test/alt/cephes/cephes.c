@@ -127,3 +127,83 @@ double cephes_dilog(double x)
 
    return spence(1 - x);
 }
+
+/*
+  Dilogarithm
+
+  Implemented using the spence function from the Cephes math library.
+  Optimized version.
+  Written by Alexander Voigt
+ */
+double cephes_dilog_2(double x)
+{
+   static const double A[NTERMS] = {
+     4.65128586073990045278E-5,
+     7.31589045238094711071E-3,
+     1.33847639578309018650E-1,
+     8.79691311754530315341E-1,
+     2.71149851196553469920E0,
+     4.25697156008121755724E0,
+     3.29771340985225106936E0,
+     1.00000000000000000126E0,
+   };
+
+   static const double B[NTERMS] = {
+     6.90990488912553276999E-4,
+     2.54043763932544379113E-2,
+     2.82974860602568089943E-1,
+     1.41172597751831069617E0,
+     3.63800533345137075418E0,
+     5.03278880143316990390E0,
+     3.54771340985225096217E0,
+     9.99999999999999998740E-1,
+   };
+
+   double w = 0, y = 0, lx = 0, l1mx = 0;
+   int flag = 0;
+
+   if (x == 0)
+      return 0;
+
+   if (x == 1)
+      return PI*PI/6;
+
+   if (x > 1) {
+      x = 1 - 1/x;
+      flag |= 4;
+   } else
+      x = 1 - x;
+
+   if (x > 2) {
+      x = 1/x;
+      flag |= 2;
+   }
+
+   if (x > 1.5) {
+      w = 1/x - 1;
+      flag |= 2;
+   } else if (x < 0.5) {
+      w = -x;
+      flag |= 1;
+   } else
+      w = x - 1;
+
+   y = -w * polevl(w, A) / polevl(w, B);
+
+   if ((flag & 1) || (flag & 2))
+      lx = log(x);
+
+   if ((flag & 1) || (flag & 4))
+      l1mx = log(1 - x);
+
+   if (flag & 1)
+      y = PI*PI/6 - lx*l1mx - y;
+
+   if (flag & 2)
+      y = -0.5*lx*lx - y;
+
+   if (flag & 4)
+      y = PI*PI/3 - 0.5*l1mx*l1mx - y;
+
+   return y;
+}

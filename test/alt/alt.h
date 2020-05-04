@@ -10,6 +10,8 @@ double algorithm_490(double x);
 
 double cephes_dilog(double x);
 
+double cephes_dilog_2(double x);
+
 double hassani_dilog(double x);
 
 void hollik_dilog(double re, double im, double* res_re, double* res_im);

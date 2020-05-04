@@ -117,6 +117,9 @@ int main() {
    bench_fn([&](double x) { return cephes_dilog(x); }, values_d,
             "cephes", "double");
 
+   bench_fn([&](double x) { return cephes_dilog_2(x); }, values_d,
+            "cephes 2", "double");
+
    bench_fn([&](double x) { return algorithm_327(x); }, values_d,
             "algorithm 327", "double");
 
