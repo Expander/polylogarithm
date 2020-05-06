@@ -44,6 +44,12 @@ std::complex<double> poly_Li3(std::complex<double> z) {
    return { re, im };
 }
 
+std::complex<long double> poly_Li3(std::complex<long double> z) {
+   long double re{}, im{};
+   cli3l_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<long double> tsil_Li3(std::complex<long double> z)
 {
    long double re, im;
@@ -128,10 +134,11 @@ TEST_CASE("test_fixed_values")
       const auto li128_expected = v.second;
       const auto li64_expected = to_c64(li128_expected);
 
-      const auto li64_cmpl  = polylogarithm::Li3(z64);
-      const auto li64_cmpl_c= poly_Li3(z64);
-      const auto li128_cmpl = polylogarithm::Li3(z128);
-      const auto li128_tsil = tsil_Li3(z128);
+      const auto li64_cmpl    = polylogarithm::Li3(z64);
+      const auto li64_cmpl_c  = poly_Li3(z64);
+      const auto li128_cmpl   = polylogarithm::Li3(z128);
+      const auto li128_cmpl_c = poly_Li3(z128);
+      const auto li128_tsil   = tsil_Li3(z128);
 
       INFO("z(128)        = " << z128);
       INFO("Li3(64)  cmpl = " << li64_expected  << " (expected)");
@@ -140,10 +147,12 @@ TEST_CASE("test_fixed_values")
       INFO("Li3(128) cmpl = " << li128_expected << " (expected)");
       INFO("Li3(128) cmpl = " << li128_tsil     << " (TSIL)");
       INFO("Li3(128) cmpl = " << li128_cmpl     << " (polylogarithm C++)");
+      INFO("Li3(128) cmpl = " << li128_cmpl_c   << " (polylogarithm C)");
 
-      CHECK_CLOSE_COMPLEX(li64_cmpl  , li64_expected , 3*eps64);
-      CHECK_CLOSE_COMPLEX(li64_cmpl_c, li64_expected , 3*eps64);
-      CHECK_CLOSE_COMPLEX(li128_cmpl , li128_expected, eps128);
+      CHECK_CLOSE_COMPLEX(li64_cmpl   , li64_expected , 3*eps64);
+      CHECK_CLOSE_COMPLEX(li64_cmpl_c , li64_expected , 3*eps64);
+      CHECK_CLOSE_COMPLEX(li128_cmpl  , li128_expected, eps128);
+      CHECK_CLOSE_COMPLEX(li128_cmpl_c, li128_expected, eps128);
 
       if (is_unity(z128, 1e-15L)) {
          // low precision if z is close to (1.0, 0.0)

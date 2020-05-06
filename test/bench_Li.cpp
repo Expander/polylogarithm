@@ -67,6 +67,12 @@ std::complex<double> poly_Li3(std::complex<double> z) {
    return { re, im };
 }
 
+std::complex<long double> poly_Li3(std::complex<long double> z) {
+   long double re{}, im{};
+   cli3l_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<double> sherpa_Li2(std::complex<double> z) {
    double re{}, im{};
    sherpa_dilog(std::real(z), std::imag(z), &re, &im);
@@ -216,6 +222,9 @@ int main() {
 
    bench_fn([&](std::complex<long double> z) { return polylogarithm::Li3(z); },
             values_cl, "polylogarithm C++", "long double");
+
+   bench_fn([&](std::complex<long double> z) { return poly_Li3(z); },
+            values_cl, "polylogarithm C", "long double");
 
    bench_fn([&](std::complex<long double> z) { return tsil_Li3(z); },
             values_cl, "TSIL", "long double");
