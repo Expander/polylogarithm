@@ -9,6 +9,7 @@
 #include <float.h>
 #include <math.h>
 
+
 static double _Complex fast_clog(double _Complex z)
 {
    const double rz = creal(z);
@@ -188,6 +189,7 @@ static double _Complex cli2(const double _Complex z)
 
    return (double)jsgn * sum + cy + ipi12 * PI * PI / 12.0;
 }
+
 
 /** C++ wrapper for cli2 */
 void cli2_(double re, double im, double* res_re, double* res_im)
