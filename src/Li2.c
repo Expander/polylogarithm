@@ -13,10 +13,10 @@ static double _Complex fast_clog(double _Complex z)
 {
    const double rz = creal(z);
    const double iz = cimag(z);
-   const double nz = rz*rz + iz*iz;
 
-   return 0.5*log(nz) + I*atan2(iz, rz);
+   return 0.5*log(rz*rz + iz*iz) + I*atan2(iz, rz);
 }
+
 
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
