@@ -45,6 +45,10 @@ inline double poly_Li2(double z) {
    return li2(z);
 }
 
+inline long double poly_Li2(long double z) {
+   return li2l(z);
+}
+
 std::complex<double> poly_Li2(std::complex<double> z) {
    double re{}, im{};
    cli2_(std::real(z), std::imag(z), &re, &im);
@@ -157,7 +161,10 @@ int main() {
             "Hassani", "double");
 
    bench_fn([&](long double x) { return polylogarithm::Li2(x); }, values_l,
-            "polylogarithm", "long double");
+            "polylogarithm C++", "long double");
+
+   bench_fn([&](long double x) { return poly_Li2(x); }, values_l,
+            "polylogarithm C", "long double");
 
    bench_fn([&](long double x) { return tsil_Li2(x); }, values_l,
             "TSIL", "long double");

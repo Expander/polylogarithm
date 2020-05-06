@@ -90,6 +90,10 @@ inline double poly_Li2(double z) {
    return li2(z);
 }
 
+inline long double poly_Li2(long double z) {
+   return li2l(z);
+}
+
 std::complex<double> poly_Li2(std::complex<double> z) {
    double re{}, im{};
    cli2_(std::real(z), std::imag(z), &re, &im);
@@ -272,6 +276,7 @@ TEST_CASE("test_real_fixed_values")
          const auto li64_poly     = polylogarithm::Li2(x64);
          const auto li128_poly    = polylogarithm::Li2(x128);
          const auto li64_poly_c   = poly_Li2(x64);
+         const auto li128_poly_c  = poly_Li2(x128);
 
          INFO("x(64)         = " << x64);
          INFO("Li2(64)  real = " << li64_expected  << " (expected)");
@@ -288,7 +293,8 @@ TEST_CASE("test_real_fixed_values")
          INFO("------------------------------------------------------------");
          INFO("x(128)        = " << x128);
          INFO("Li2(128) real = " << li128_expected << " (expected)");
-         INFO("Li2(128) real = " << li128_poly     << " (polylogarithm)");
+         INFO("Li2(128) real = " << li128_poly     << " (polylogarithm C++)");
+         INFO("Li2(128) real = " << li128_poly_c   << " (polylogarithm C)");
 
          CHECK_CLOSE(li64_327     , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_490     , std::real(li64_expected) , 2*eps64);
@@ -301,6 +307,7 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(li64_poly    , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_poly_c  , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li128_poly   , std::real(li128_expected), eps128);
+         CHECK_CLOSE(li128_poly_c , std::real(li128_expected), eps128);
       }
    }
 }
