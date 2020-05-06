@@ -13,14 +13,11 @@ namespace polylogarithm {
 
 namespace {
    template <typename T>
-   T sqr(T x) noexcept { return x*x; }
-
-   template <typename T>
    std::complex<T> clog(const std::complex<T>& z) noexcept
    {
       const T rz = std::real(z);
       const T iz = std::imag(z);
-      const T nz = sqr(rz) + sqr(iz);
+      const T nz = rz*rz + iz*iz;
 
       return std::complex<T>(0.5*std::log(nz), std::atan2(iz, rz));
    }
@@ -281,7 +278,7 @@ std::complex<double> Li2(const std::complex<double>& z)
 
    const double rz = std::real(z);
    const double iz = std::imag(z);
-   const double nz = sqr(rz) + sqr(iz);
+   const double nz = rz*rz + iz*iz;
 
    // special cases
    if (iz == 0.0) {
@@ -301,7 +298,8 @@ std::complex<double> Li2(const std::complex<double>& z)
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5) {
       if (nz > 1.0) {
-         cy = -0.5 * sqr(clog(-z));
+         const std::complex<double> lz = clog(-z);
+         cy = -0.5 * lz*lz;
          cz = -clog(1.0 - 1.0 / z);
          jsgn = -1;
          ipi12 = -2;
@@ -318,7 +316,8 @@ std::complex<double> Li2(const std::complex<double>& z)
          jsgn = -1;
          ipi12 = 2;
       } else { // nz > 2*rz
-         cy = -0.5 * sqr(clog(-z));
+         const std::complex<double> lz = clog(-z);
+         cy = -0.5 * lz*lz;
          cz = -clog(1.0 - 1.0 / z);
          jsgn = -1;
          ipi12 = -2;
@@ -326,7 +325,7 @@ std::complex<double> Li2(const std::complex<double>& z)
    }
 
    // the dilogarithm
-   const std::complex<double> cz2(sqr(cz));
+   const std::complex<double> cz2(cz*cz);
    const std::complex<double> sum =
       cadd(cz,
       cmul(cz2, cadd(bf[0],
@@ -385,7 +384,7 @@ std::complex<long double> Li2(const std::complex<long double>& z)
 
    const long double rz = std::real(z);
    const long double iz = std::imag(z);
-   const long double nz = sqr(rz) + sqr(iz);
+   const long double nz = rz*rz + iz*iz;
 
    // special cases
    if (iz == 0.0L) {
@@ -405,7 +404,8 @@ std::complex<long double> Li2(const std::complex<long double>& z)
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5L) {
       if (nz > 1.0L) {
-         cy = -0.5L * sqr(clog(-z));
+         const std::complex<long double> lz = clog(-z);
+         cy = -0.5L * lz*lz;
          cz = -clog(1.0L - 1.0L/z);
          jsgn = -1;
          ipi12 = -2;
@@ -422,14 +422,15 @@ std::complex<long double> Li2(const std::complex<long double>& z)
          jsgn = -1;
          ipi12 = 2;
       } else { // nz > 2*rz
-         cy = -0.5L * sqr(clog(-z));
+         const std::complex<long double> lz = clog(-z);
+         cy = -0.5L * lz*lz;
          cz = -clog(1.0L - 1.0L/z);
          jsgn = -1;
          ipi12 = -2;
       }
    }
 
-   const std::complex<long double> cz2(sqr(cz));
+   const std::complex<long double> cz2(cz*cz);
    std::complex<long double> sum(0.0L, 0.0L);
 
    for (int i = sizeof(bf)/sizeof(bf[0]) - 1; i >= 2; i--) {
