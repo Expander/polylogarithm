@@ -1,13 +1,15 @@
 #include <math.h>
 #include <complex.h>
 
+
 /* transforms -0.0 -> 0.0 */
 static double complex pclog(double complex z)
 {
-   double re = creal(z) == 0.0 ? 0.0 : creal(z);
-   double im = cimag(z) == 0.0 ? 0.0 : cimag(z);
+   double re = creal(z) == 0.0 ? fabs(creal(z)) : creal(z);
+   double im = cimag(z) == 0.0 ? fabs(cimag(z)) : cimag(z);
    return clog(re + I*im);
 }
+
 
 /*
   SPENCE-FUNKTION KOMPLEX, FREI NACH HOLLIK
