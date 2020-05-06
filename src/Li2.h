@@ -14,6 +14,9 @@ extern "C" {
 /** real polylogarithm with n=2 (dilogarithm) */
 double li2(double x);
 
+/** real polylogarithm with n=2 (dilogarithm) with long double precision */
+long double li2l(long double x);
+
 /** complex polylogarithm with n=2 (dilogarithm) */
 void cli2_(double re, double im, double* res_re, double* res_im);
 
