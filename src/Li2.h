@@ -20,6 +20,9 @@ long double li2l(long double x);
 /** complex polylogarithm with n=2 (dilogarithm) */
 void cli2_(double re, double im, double* res_re, double* res_im);
 
+/** complex polylogarithm with n=2 (dilogarithm) with long double precision */
+void cli2l_(long double re, long double im, long double* res_re, long double* res_im);
+
 #ifdef __cplusplus
 }
 #endif
