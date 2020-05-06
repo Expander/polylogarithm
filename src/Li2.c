@@ -9,6 +9,15 @@
 #include <float.h>
 #include <math.h>
 
+static double _Complex fast_clog(double _Complex z)
+{
+   const double rz = creal(z);
+   const double iz = cimag(z);
+   const double nz = rz*rz + iz*iz;
+
+   return 0.5*log(nz) + I*atan2(iz, rz);
+}
+
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
  * @param x real argument
@@ -136,27 +145,27 @@ static double _Complex cli2(const double _Complex z)
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5) {
       if (nz > 1.0) {
-         const double _Complex lz = clog(-z);
+         const double _Complex lz = fast_clog(-z);
          cy = -0.5 * lz*lz;
-         cz = -clog(1.0 - 1.0 / z);
+         cz = -fast_clog(1.0 - 1.0 / z);
          jsgn = -1;
          ipi12 = -2;
       } else { // nz <= 1
          cy = 0;
-         cz = -clog(1.0 - z);
+         cz = -fast_clog(1.0 - z);
          jsgn = 1;
          ipi12 = 0;
       }
    } else { // rz > 0.5
       if (nz <= 2*rz) {
-         cz = -clog(z);
-         cy = cz * clog(1.0 - z);
+         cz = -fast_clog(z);
+         cy = cz * fast_clog(1.0 - z);
          jsgn = -1;
          ipi12 = 2;
       } else { // nz > 2*rz
-         const double _Complex lz = clog(-z);
+         const double _Complex lz = fast_clog(-z);
          cy = -0.5 * lz*lz;
-         cz = -clog(1.0 - 1.0 / z);
+         cz = -fast_clog(1.0 - 1.0 / z);
          jsgn = -1;
          ipi12 = -2;
       }
