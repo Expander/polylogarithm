@@ -50,18 +50,18 @@ double _Complex cli3(const double _Complex z)
    };
 
    if (is_close(z, 0.0, eps)) {
-      return 0.0 + 0.0*I;
+      return 0.0;
    }
    if (is_close(z, 1.0, eps)) {
-      return zeta3 + 0.0*I;
+      return zeta3;
    }
    if (is_close(z, -1.0, eps)) {
-      return -0.75*zeta3 + 0.0*I;
+      return -0.75*zeta3;
    }
    if (is_close(z, 0.5, eps)) {
       const double ln2  = 0.6931471805599453; // ln(2)
       const double ln23 = 0.3330246519889295; // ln(2)^3
-      return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.0 + 0.0*I;
+      return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.0;
    }
 
    const double rz  = creal(z);
@@ -94,7 +94,7 @@ double _Complex cli3(const double _Complex z)
          u2 * (cs[6]))))))));
    }
 
-   double _Complex u = 0.0 + 0.0*I, rest = 0.0 + 0.0*I;
+   double _Complex u = 0.0, rest = 0.0;
 
    if (nz <= 1.0) {
       u = -fast_clog(1.0 - z);

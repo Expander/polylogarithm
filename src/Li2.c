@@ -131,7 +131,7 @@ static double _Complex cli2(const double _Complex z)
    /* special cases */
    if (iz == 0.0) {
       if (rz <= 1.0) {
-         return li2(rz) + 0.0*I;
+         return li2(rz);
       }
       if (rz > 1.0) {
          return li2(rz) - PI*log(rz)*I;
@@ -140,7 +140,7 @@ static double _Complex cli2(const double _Complex z)
       return z;
    }
 
-   double _Complex cy = 0.0 + 0.0*I, cz = 0.0 + 0.0*I;
+   double _Complex cy = 0.0, cz = 0.0;
    int jsgn = 0, ipi12 = 0;
 
    /* transformation to |z|<1, Re(z)<=0.5 */
