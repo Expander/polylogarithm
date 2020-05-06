@@ -8,6 +8,7 @@ add_library(polylog
   Li.cpp
   Li0.cpp
   Li1.cpp
+  Li2.c
   Li2.cpp
   Li3.cpp
   Li4.cpp
