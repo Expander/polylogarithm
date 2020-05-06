@@ -2,6 +2,7 @@
 #include "bench.hpp"
 #include "Li2.h"
 #include "Li2.hpp"
+#include "Li3.h"
 #include "Li3.hpp"
 #include "Li4.hpp"
 #include "Li5.hpp"
@@ -47,6 +48,12 @@ inline double poly_Li2(double z) {
 std::complex<double> poly_Li2(std::complex<double> z) {
    double re{}, im{};
    cli2_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+std::complex<double> poly_Li3(std::complex<double> z) {
+   double re{}, im{};
+   cli3_(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
@@ -186,10 +193,13 @@ int main() {
    print_headline("Li3 (complex)");
 
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li3(z); },
-            values_cd, "polylogarithm", "double");
+            values_cd, "polylogarithm C++", "double");
+
+   bench_fn([&](std::complex<double> z) { return poly_Li3(z); },
+            values_cd, "polylogarithm C", "double");
 
    bench_fn([&](std::complex<long double> z) { return polylogarithm::Li3(z); },
-            values_cl, "polylogarithm", "long double");
+            values_cl, "polylogarithm C++", "long double");
 
    bench_fn([&](std::complex<long double> z) { return tsil_Li3(z); },
             values_cl, "TSIL", "long double");
