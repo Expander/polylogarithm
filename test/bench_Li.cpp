@@ -45,6 +45,12 @@ std::complex<double> sherpa_Li2(std::complex<double> z) {
    return { re, im };
 }
 
+std::complex<double> spheno_Li2(std::complex<double> z) {
+   double re{}, im{};
+   spheno_dilog(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 long double tsil_Li2(long double x)
 {
    return tsil_dilog_real(x);
@@ -150,6 +156,9 @@ int main() {
 
    bench_fn([&](std::complex<double> z) { return sherpa_Li2(z); },
             values_cd, "Sherpa", "double");
+
+   bench_fn([&](std::complex<double> z) { return spheno_Li2(z); },
+            values_cd, "SPheno", "double");
 
    bench_fn([&](std::complex<long double> z) { return polylogarithm::Li2(z); },
             values_cl, "polylogarithm",  "long double");

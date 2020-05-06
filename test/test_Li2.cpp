@@ -91,6 +91,12 @@ std::complex<double> sherpa_Li2(std::complex<double> z) {
    return { re, im };
 }
 
+std::complex<double> spheno_Li2(std::complex<double> z) {
+   double re{}, im{};
+   spheno_dilog(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<long double> tsil_Li2(std::complex<long double> z) {
    long double re, im;
    tsil_dilog_complex(std::real(z), std::imag(z), &re, &im);
@@ -223,6 +229,7 @@ TEST_CASE("test_special_values")
       CHECK_CLOSE_COMPLEX(hollik_Li2(z0), li0, eps);
       CHECK_CLOSE_COMPLEX(tsil_Li2(z0)  , li0, eps);
       CHECK_CLOSE_COMPLEX(sherpa_Li2(z0), li0, eps);
+      CHECK_CLOSE_COMPLEX(spheno_Li2(z0), li0, eps);
    }
 }
 
@@ -306,6 +313,7 @@ TEST_CASE("test_complex_fixed_values")
       const auto li64_hollik = hollik_Li2(z64);
       const auto li128_tsil  = tsil_Li2(z128);
       const auto li64_sherpa = sherpa_Li2(z64);
+      const auto li64_spheno = spheno_Li2(z64);
 
       INFO("z(64)         = " << z64);
       INFO("Li2(64)  cmpl = " << li64_expected  << " (expected)");
@@ -315,6 +323,7 @@ TEST_CASE("test_complex_fixed_values")
       INFO("Li2(64)  cmpl = " << li64_hollik    << " (Hollik)");
       INFO("Li2(64)  cmpl = " << li64_poly      << " (polylogarithm)");
       INFO("Li2(64)  cmpl = " << li64_sherpa    << " (Sherpa)");
+      INFO("Li2(64)  cmpl = " << li64_spheno    << " (SPheno)");
       INFO("--------------------------------------------------------");
       INFO("z(128)        = " << z128);
       INFO("Li2(128) cmpl = " << li128_expected << " (expected)");
@@ -327,6 +336,7 @@ TEST_CASE("test_complex_fixed_values")
 #endif
       CHECK_CLOSE_COMPLEX(li64_hollik, li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_sherpa, li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_spheno, li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li128_poly , li128_expected, eps128);
       CHECK_CLOSE_COMPLEX(li128_tsil , li128_expected, 2*eps128);
    }
@@ -384,21 +394,27 @@ TEST_CASE("test_complex_random_values")
       const std::complex<double> li2_gsl = gsl_Li2(v);
 #endif
       const std::complex<double> li2_hollik = hollik_Li2(v);
+      const std::complex<double> li2_sherpa = sherpa_Li2(v);
+      const std::complex<double> li2_spheno = spheno_Li2(v);
       const std::complex<double> li2_tsil = to_c64(tsil_Li2(v));
 
       INFO("z = " << v);
-      INFO("Li2(64) real = " << li2        << " (polylogarithm)");
+      INFO("Li2(64) cmpl = " << li2        << " (polylogarithm)");
 #ifdef ENABLE_GSL
-      INFO("Li2(64) real = " << li2_gsl    << " (GSL)");
+      INFO("Li2(64) cmpl = " << li2_gsl    << " (GSL)");
 #endif
-      INFO("Li2(64) real = " << li2_hollik << " (Hollik)");
-      INFO("Li2(64) real = " << li2_tsil   << " (TSIL)");
+      INFO("Li2(64) cmpl = " << li2_hollik << " (Hollik)");
+      INFO("Li2(64) cmpl = " << li2_sherpa << " (Sherpa)");
+      INFO("Li2(64) cmpl = " << li2_spheno << " (SPheno)");
+      INFO("Li2(64) cmpl = " << li2_tsil   << " (TSIL)");
 
 #ifdef ENABLE_GSL
       CHECK_CLOSE_COMPLEX(li2, li2_gsl   , 1e-13);
 #endif
       CHECK_CLOSE_COMPLEX(li2, li2_tsil  , 1e-13);
       CHECK_CLOSE_COMPLEX(li2, li2_hollik, 1e-13);
+      CHECK_CLOSE_COMPLEX(li2, li2_sherpa, 1e-13);
+      CHECK_CLOSE_COMPLEX(li2, li2_spheno, 1e-13);
    }
 }
 
