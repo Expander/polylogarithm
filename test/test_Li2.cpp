@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "alt.h"
 #include "bench.hpp"
+#include "Li2.h"
 #include "Li2.hpp"
 #include "read_data.hpp"
 #include <cmath>
@@ -83,6 +84,16 @@ std::complex<double> hollik_Li2(std::complex<double> z) {
    double li2_re{}, li2_im{};
    hollik_dilog(std::real(z), std::imag(z), &li2_re, &li2_im);
    return { li2_re, li2_im };
+}
+
+inline double poly_Li2(double z) {
+   return li2(z);
+}
+
+std::complex<double> poly_Li2(std::complex<double> z) {
+   double re{}, im{};
+   cli2_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 std::complex<double> sherpa_Li2(std::complex<double> z) {
@@ -260,6 +271,7 @@ TEST_CASE("test_real_fixed_values")
 #endif
          const auto li64_poly     = polylogarithm::Li2(x64);
          const auto li128_poly    = polylogarithm::Li2(x128);
+         const auto li64_poly_c   = poly_Li2(x64);
 
          INFO("x(64)         = " << x64);
          INFO("Li2(64)  real = " << li64_expected  << " (expected)");
@@ -271,8 +283,9 @@ TEST_CASE("test_real_fixed_values")
 #ifdef ENABLE_GSL
          INFO("Li2(64)  real = " << li64_gsl       << " (GSL)");
 #endif
-         INFO("Li2(64)  real = " << li64_poly      << " (polylogarithm)");
-         INFO("--------------------------------------------------------");
+         INFO("Li2(64)  real = " << li64_poly      << " (polylogarithm C++)");
+         INFO("Li2(64)  real = " << li64_poly_c    << " (polylogarithm C)");
+         INFO("------------------------------------------------------------");
          INFO("x(128)        = " << x128);
          INFO("Li2(128) real = " << li128_expected << " (expected)");
          INFO("Li2(128) real = " << li128_poly     << " (polylogarithm)");
@@ -286,6 +299,7 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(li64_gsl     , std::real(li64_expected) , 2*eps64);
 #endif
          CHECK_CLOSE(li64_poly    , std::real(li64_expected) , 2*eps64);
+         CHECK_CLOSE(li64_poly_c  , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li128_poly   , std::real(li128_expected), eps128);
       }
    }
@@ -307,6 +321,7 @@ TEST_CASE("test_complex_fixed_values")
 
       const auto li64_poly   = polylogarithm::Li2(z64);
       const auto li128_poly  = polylogarithm::Li2(z128);
+      const auto li64_poly_c = poly_Li2(z64);
 #ifdef ENABLE_GSL
       const auto li64_gsl    = gsl_Li2(z64);
 #endif
@@ -321,7 +336,8 @@ TEST_CASE("test_complex_fixed_values")
       INFO("Li2(64)  cmpl = " << li64_gsl       << " (GSL)");
 #endif
       INFO("Li2(64)  cmpl = " << li64_hollik    << " (Hollik)");
-      INFO("Li2(64)  cmpl = " << li64_poly      << " (polylogarithm)");
+      INFO("Li2(64)  cmpl = " << li64_poly      << " (polylogarithm C++)");
+      INFO("Li2(64)  cmpl = " << li64_poly_c    << " (polylogarithm C)");
       INFO("Li2(64)  cmpl = " << li64_sherpa    << " (Sherpa)");
       INFO("Li2(64)  cmpl = " << li64_spheno    << " (SPheno)");
       INFO("--------------------------------------------------------");
@@ -331,6 +347,7 @@ TEST_CASE("test_complex_fixed_values")
       INFO("Li2(128) cmpl = " << li128_tsil     << " (TSIL)");
 
       CHECK_CLOSE_COMPLEX(li64_poly  , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_poly_c, li64_expected , 2*eps64);
 #ifdef ENABLE_GSL
       CHECK_CLOSE_COMPLEX(li64_gsl   , li64_expected , 10*eps64);
 #endif
@@ -350,7 +367,8 @@ TEST_CASE("test_real_random_values")
    const auto values = generate_random_scalars<double>(10000, -10, 10);
 
    for (auto v: values) {
-      const double li2 = polylogarithm::Li2(v);
+      const double li2   = polylogarithm::Li2(v);
+      const double li2_c = poly_Li2(v);
 #ifdef ENABLE_GSL
       const double li2_gsl = gsl_Li2(v);
 #endif
@@ -361,7 +379,8 @@ TEST_CASE("test_real_random_values")
       const double li2_hassani = hassani_dilog(v);
 
       INFO("x = " << v);
-      INFO("Li2(64) real = " << li2          << " (polylogarithm)");
+      INFO("Li2(64) real = " << li2          << " (polylogarithm C++)");
+      INFO("Li2(64) real = " << li2_c        << " (polylogarithm C)");
 #ifdef ENABLE_GSL
       INFO("Li2(64) real = " << li2_gsl      << " (GSL)");
 #endif
@@ -371,6 +390,7 @@ TEST_CASE("test_real_random_values")
       INFO("Li2(64) real = " << li2_cephes_2 << " (cephes 2)");
       INFO("Li2(64) real = " << li2_hassani  << " (Hassani)");
 
+      CHECK_CLOSE(li2, li2_c       , eps64);
 #ifdef ENABLE_GSL
       CHECK_CLOSE(li2, li2_gsl     , eps64);
 #endif
@@ -389,7 +409,8 @@ TEST_CASE("test_complex_random_values")
    const auto values = generate_random_complexes<double>(10000, -10, 10);
 
    for (auto v: values) {
-      const std::complex<double> li2 = polylogarithm::Li2(v);
+      const std::complex<double> li2   = polylogarithm::Li2(v);
+      const std::complex<double> li2_c = poly_Li2(v);
 #ifdef ENABLE_GSL
       const std::complex<double> li2_gsl = gsl_Li2(v);
 #endif
@@ -399,7 +420,8 @@ TEST_CASE("test_complex_random_values")
       const std::complex<double> li2_tsil = to_c64(tsil_Li2(v));
 
       INFO("z = " << v);
-      INFO("Li2(64) cmpl = " << li2        << " (polylogarithm)");
+      INFO("Li2(64) cmpl = " << li2        << " (polylogarithm C++)");
+      INFO("Li2(64) cmpl = " << li2_c      << " (polylogarithm C)");
 #ifdef ENABLE_GSL
       INFO("Li2(64) cmpl = " << li2_gsl    << " (GSL)");
 #endif
@@ -411,6 +433,7 @@ TEST_CASE("test_complex_random_values")
 #ifdef ENABLE_GSL
       CHECK_CLOSE_COMPLEX(li2, li2_gsl   , 1e-13);
 #endif
+      CHECK_CLOSE_COMPLEX(li2, li2_c     , 1e-13);
       CHECK_CLOSE_COMPLEX(li2, li2_tsil  , 1e-13);
       CHECK_CLOSE_COMPLEX(li2, li2_hollik, 1e-13);
       CHECK_CLOSE_COMPLEX(li2, li2_sherpa, 1e-13);

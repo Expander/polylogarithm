@@ -1,5 +1,6 @@
 #include "alt.h"
 #include "bench.hpp"
+#include "Li2.h"
 #include "Li2.hpp"
 #include "Li3.hpp"
 #include "Li4.hpp"
@@ -37,6 +38,16 @@ std::complex<double> hollik_Li2(std::complex<double> z) {
    double li2_re{}, li2_im{};
    hollik_dilog(std::real(z), std::imag(z), &li2_re, &li2_im);
    return { li2_re, li2_im };
+}
+
+inline double poly_Li2(double z) {
+   return li2(z);
+}
+
+std::complex<double> poly_Li2(std::complex<double> z) {
+   double re{}, im{};
+   cli2_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 std::complex<double> sherpa_Li2(std::complex<double> z) {
@@ -113,7 +124,10 @@ int main() {
    print_headline("Li2 (real)");
 
    bench_fn([&](double x) { return polylogarithm::Li2(x); }, values_d,
-            "polylogarithm", "double");
+            "polylogarithm C++", "double");
+
+   bench_fn([&](double x) { return poly_Li2(x); }, values_d,
+            "polylogarithm C", "double");
 
 #ifdef ENABLE_GSL
    bench_fn([&](double x) { return gsl_Li2(x); }, values_d,
@@ -144,7 +158,10 @@ int main() {
    print_headline("Li2 (complex)");
 
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li2(z); },
-            values_cd, "polylogarithm", "double");
+            values_cd, "polylogarithm C++", "double");
+
+   bench_fn([&](std::complex<double> z) { return poly_Li2(z); },
+            values_cd, "polylogarithm C", "double");
 
 #ifdef ENABLE_GSL
    bench_fn([&](std::complex<double> z) { return gsl_Li2(z); },
