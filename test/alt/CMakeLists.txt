@@ -4,6 +4,7 @@ add_subdirectory(cephes)
 add_subdirectory(hassani)
 add_subdirectory(hollik)
 add_subdirectory(sherpa)
+add_subdirectory(spheno)
 add_subdirectory(tsil)
 
 add_library(alt alt.c)
@@ -20,5 +21,6 @@ target_link_libraries(alt
     hassani
     hollik
     sherpa
+    spheno
     tsil
 )

@@ -18,6 +18,8 @@ void hollik_dilog(double re, double im, double* res_re, double* res_im);
 
 void sherpa_dilog(double re, double im, double* res_re, double* res_im);
 
+void spheno_dilog(double re, double im, double* res_re, double* res_im);
+
 long double tsil_dilog_real(long double x);
 
 void tsil_dilog_complex(long double re, long double im, long double* res_re, long double* res_im);
