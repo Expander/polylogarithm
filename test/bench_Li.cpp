@@ -55,6 +55,12 @@ std::complex<double> poly_Li2(std::complex<double> z) {
    return { re, im };
 }
 
+std::complex<long double> poly_Li2(std::complex<long double> z) {
+   long double re{}, im{};
+   cli2l_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<double> poly_Li3(std::complex<double> z) {
    double re{}, im{};
    cli3_(std::real(z), std::imag(z), &re, &im);
@@ -192,7 +198,10 @@ int main() {
             values_cd, "SPheno", "double");
 
    bench_fn([&](std::complex<long double> z) { return polylogarithm::Li2(z); },
-            values_cl, "polylogarithm",  "long double");
+            values_cl, "polylogarithm C++",  "long double");
+
+   bench_fn([&](std::complex<long double> z) { return poly_Li2(z); },
+            values_cl, "polylogarithm C",  "long double");
 
    bench_fn([&](std::complex<long double> z) { return tsil_Li2(z); },
             values_cl, "TSIL", "long double");

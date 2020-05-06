@@ -100,6 +100,12 @@ std::complex<double> poly_Li2(std::complex<double> z) {
    return { re, im };
 }
 
+std::complex<long double> poly_Li2(std::complex<long double> z) {
+   long double re{}, im{};
+   cli2l_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<double> sherpa_Li2(std::complex<double> z) {
    double re{}, im{};
    sherpa_dilog(std::real(z), std::imag(z), &re, &im);
@@ -329,6 +335,7 @@ TEST_CASE("test_complex_fixed_values")
       const auto li64_poly   = polylogarithm::Li2(z64);
       const auto li128_poly  = polylogarithm::Li2(z128);
       const auto li64_poly_c = poly_Li2(z64);
+      const auto li128_poly_c= poly_Li2(z128);
 #ifdef ENABLE_GSL
       const auto li64_gsl    = gsl_Li2(z64);
 #endif
@@ -347,22 +354,24 @@ TEST_CASE("test_complex_fixed_values")
       INFO("Li2(64)  cmpl = " << li64_poly_c    << " (polylogarithm C)");
       INFO("Li2(64)  cmpl = " << li64_sherpa    << " (Sherpa)");
       INFO("Li2(64)  cmpl = " << li64_spheno    << " (SPheno)");
-      INFO("--------------------------------------------------------");
+      INFO("------------------------------------------------------------");
       INFO("z(128)        = " << z128);
       INFO("Li2(128) cmpl = " << li128_expected << " (expected)");
-      INFO("Li2(128) cmpl = " << li128_poly     << " (polylogarithm)");
+      INFO("Li2(128) cmpl = " << li128_poly     << " (polylogarithm C++)");
+      INFO("Li2(128) cmpl = " << li128_poly_c   << " (polylogarithm C)");
       INFO("Li2(128) cmpl = " << li128_tsil     << " (TSIL)");
 
-      CHECK_CLOSE_COMPLEX(li64_poly  , li64_expected , 2*eps64);
-      CHECK_CLOSE_COMPLEX(li64_poly_c, li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_poly   , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_poly_c , li64_expected , 2*eps64);
 #ifdef ENABLE_GSL
-      CHECK_CLOSE_COMPLEX(li64_gsl   , li64_expected , 10*eps64);
+      CHECK_CLOSE_COMPLEX(li64_gsl    , li64_expected , 10*eps64);
 #endif
-      CHECK_CLOSE_COMPLEX(li64_hollik, li64_expected , 2*eps64);
-      CHECK_CLOSE_COMPLEX(li64_sherpa, li64_expected , 2*eps64);
-      CHECK_CLOSE_COMPLEX(li64_spheno, li64_expected , 2*eps64);
-      CHECK_CLOSE_COMPLEX(li128_poly , li128_expected, eps128);
-      CHECK_CLOSE_COMPLEX(li128_tsil , li128_expected, 2*eps128);
+      CHECK_CLOSE_COMPLEX(li64_hollik , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_sherpa , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_spheno , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li128_poly  , li128_expected, eps128);
+      CHECK_CLOSE_COMPLEX(li128_poly_c, li128_expected, eps128);
+      CHECK_CLOSE_COMPLEX(li128_tsil  , li128_expected, 2*eps128);
    }
 }
 
