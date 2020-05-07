@@ -12,6 +12,8 @@ addons:
     packages: gsl
     update: true
 script:
-  - cmake .
+  - mkdir build
+  - cd build
+  - cmake ..
   - cmake --build .
   - ctest --output-on-failure
