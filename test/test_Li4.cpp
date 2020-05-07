@@ -79,8 +79,8 @@ TEST_CASE("test_fixed_values")
       INFO("Li4(128) cmpl = " << li128_cmpl     << " (polylogarithm C++)");
       INFO("Li4(128) cmpl = " << li128_cmpl_c   << " (polylogarithm C)");
 
-      CHECK_CLOSE_COMPLEX(li64_cmpl   , li64_expected , 20*eps64);
-      CHECK_CLOSE_COMPLEX(li64_cmpl_c , li64_expected , 20*eps64);
+      CHECK_CLOSE_COMPLEX(li64_cmpl   , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_cmpl_c , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li128_cmpl  , li128_expected, 2*eps128);
       CHECK_CLOSE_COMPLEX(li128_cmpl_c, li128_expected, 2*eps128);
    }
