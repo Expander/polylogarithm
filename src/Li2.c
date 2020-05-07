@@ -238,7 +238,7 @@ long double li2l(long double x)
  * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
  */
-static double _Complex cli2(const double _Complex z)
+static double _Complex cli2(double _Complex z)
 {
    const double PI = 3.141592653589793;
 
@@ -330,7 +330,7 @@ static double _Complex cli2(const double _Complex z)
  * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
  */
-static long double _Complex cli2l(const long double _Complex z)
+static long double _Complex cli2l(long double _Complex z)
 {
    const long double PI = 3.14159265358979323846264338327950288L;
 

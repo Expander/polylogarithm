@@ -45,7 +45,7 @@ static _Bool is_closel(long double _Complex a, long double b, long double eps)
  * @param z complex argument
  * @return \f$\mathrm{Li}_3(z)\f$
  */
-double _Complex cli3(const double _Complex z)
+double _Complex cli3(double _Complex z)
 {
    const double eps   = 10.0*DBL_EPSILON;
    const double PI    = 3.141592653589793;
@@ -147,7 +147,7 @@ double _Complex cli3(const double _Complex z)
  * @param z complex argument
  * @return \f$\mathrm{Li}_3(z)\f$
  */
-long double _Complex cli3l(const long double _Complex z)
+long double _Complex cli3l(long double _Complex z)
 {
    const long double eps   = 10.0L*LDBL_EPSILON;
    const long double PI    = 3.14159265358979323846264338327950288L;
@@ -289,7 +289,7 @@ long double _Complex cli3l(const long double _Complex z)
 }
 
 
-/** C++ wrapper for cli2 */
+/** C++ wrapper for cli3 */
 void cli3_(double re, double im, double* res_re, double* res_im)
 {
    const double _Complex result = cli3(re + I*im);
@@ -298,7 +298,7 @@ void cli3_(double re, double im, double* res_re, double* res_im)
 }
 
 
-/** C++ wrapper for cli2 */
+/** C++ wrapper for cli3 */
 void cli3l_(long double re, long double im, long double* res_re, long double* res_im)
 {
    const long double _Complex result = cli3l(re + I*im);
