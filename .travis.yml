@@ -8,9 +8,6 @@ compiler:
 addons:
   apt:
     packages: libgsl0-dev
-  homebrew:
-    packages: gsl
-    update: true
 script:
   - mkdir build
   - cd build
