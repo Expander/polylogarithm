@@ -4,6 +4,7 @@
 #include "Li2.hpp"
 #include "Li3.h"
 #include "Li3.hpp"
+#include "Li4.h"
 #include "Li4.hpp"
 #include "Li5.hpp"
 #include "Li6.hpp"
@@ -70,6 +71,18 @@ std::complex<double> poly_Li3(std::complex<double> z) {
 std::complex<long double> poly_Li3(std::complex<long double> z) {
    long double re{}, im{};
    cli3l_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+std::complex<double> poly_Li4(std::complex<double> z) {
+   double re{}, im{};
+   cli4_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+std::complex<long double> poly_Li4(std::complex<long double> z) {
+   long double re{}, im{};
+   cli4l_(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
@@ -232,10 +245,16 @@ int main() {
    print_headline("Li4 (complex)");
 
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li4(z); },
-            values_cd, "polylogarithm", "double");
+            values_cd, "polylogarithm C++", "double");
+
+   bench_fn([&](std::complex<double> z) { return poly_Li4(z); },
+            values_cd, "polylogarithm C", "double");
 
    bench_fn([&](std::complex<long double> z) { return polylogarithm::Li4(z); },
-            values_cd, "polylogarithm", "long double");
+            values_cd, "polylogarithm C++", "long double");
+
+   bench_fn([&](std::complex<long double> z) { return poly_Li4(z); },
+            values_cd, "polylogarithm C", "long double");
 
    print_headline("Li5 (complex)");
 

@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
+#include "Li4.h"
 #include "Li4.hpp"
 #include "read_data.hpp"
 #include <cmath>
@@ -20,6 +21,18 @@ template <class T> T pow4(T x) { return x*x*x*x; }
 std::complex<double> to_c64(std::complex<long double> z)
 {
    return std::complex<double>(std::real(z), std::imag(z));
+}
+
+std::complex<double> poly_Li4(std::complex<double> z) {
+   double re{}, im{};
+   cli4_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+std::complex<long double> poly_Li4(std::complex<long double> z) {
+   long double re{}, im{};
+   cli4l_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 TEST_CASE("test_special_values")
@@ -53,16 +66,22 @@ TEST_CASE("test_fixed_values")
       const auto li128_expected = v.second;
       const auto li64_expected = to_c64(li128_expected);
 
-      const auto li64_cmpl  = polylogarithm::Li4(z64);
-      const auto li128_cmpl = polylogarithm::Li4(z128);
+      const auto li64_cmpl    = polylogarithm::Li4(z64);
+      const auto li128_cmpl   = polylogarithm::Li4(z128);
+      const auto li64_cmpl_c  = poly_Li4(z64);
+      const auto li128_cmpl_c = poly_Li4(z128);
 
       INFO("z(128)        = " << z128);
-      INFO("Li4(64)  cmpl = " << li64_expected << " (expected)");
+      INFO("Li4(64)  cmpl = " << li64_expected  << " (expected)");
+      INFO("Li4(64)  cmpl = " << li64_cmpl      << " (polylogarithm C++)");
+      INFO("Li4(64)  cmpl = " << li64_cmpl_c    << " (polylogarithm C)");
       INFO("Li4(128) cmpl = " << li128_expected << " (expected)");
-      INFO("Li4(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
-      INFO("Li4(128) cmpl = " << li128_cmpl << " (polylogarithm)");
+      INFO("Li4(128) cmpl = " << li128_cmpl     << " (polylogarithm C++)");
+      INFO("Li4(128) cmpl = " << li128_cmpl_c   << " (polylogarithm C)");
 
-      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 20*eps64);
-      CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 2*eps128);
+      CHECK_CLOSE_COMPLEX(li64_cmpl   , li64_expected , 20*eps64);
+      CHECK_CLOSE_COMPLEX(li64_cmpl_c , li64_expected , 20*eps64);
+      CHECK_CLOSE_COMPLEX(li128_cmpl  , li128_expected, 2*eps128);
+      CHECK_CLOSE_COMPLEX(li128_cmpl_c, li128_expected, 2*eps128);
    }
 }
