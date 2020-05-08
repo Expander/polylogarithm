@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
+#include "alt.h"
 #include "Li6.hpp"
 #include "read_data.hpp"
 #include <cmath>
@@ -17,6 +18,18 @@
 std::complex<double> to_c64(std::complex<long double> z)
 {
    return std::complex<double>(std::real(z), std::imag(z));
+}
+
+std::complex<double> poly_Li6(std::complex<double> z) {
+   double re{}, im{};
+   cli6_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+std::complex<long double> poly_Li6(std::complex<long double> z) {
+   long double re{}, im{};
+   cli6l_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 TEST_CASE("test_special_values")
@@ -52,14 +65,20 @@ TEST_CASE("test_fixed_values")
 
       const auto li64_cmpl  = polylogarithm::Li6(z64);
       const auto li128_cmpl = polylogarithm::Li6(z128);
+      const auto li64_cmpl_c  = poly_Li6(z64);
+      const auto li128_cmpl_c = poly_Li6(z128);
 
       INFO("z(128)        = " << z128);
-      INFO("Li6(64)  cmpl = " << li64_expected << " (expected)");
-      INFO("Li6(128) cmpl = " << li128_expected << " (expected)");
-      INFO("Li6(64)  cmpl = " << li64_cmpl << " (polylogarithm)");
-      INFO("Li6(128) cmpl = " << li128_cmpl << " (polylogarithm)");
+      INFO("Li4(64)  cmpl = " << li64_expected  << " (expected)");
+      INFO("Li4(64)  cmpl = " << li64_cmpl      << " (polylogarithm C++)");
+      INFO("Li4(64)  cmpl = " << li64_cmpl_c    << " (polylogarithm C)");
+      INFO("Li4(128) cmpl = " << li128_expected << " (expected)");
+      INFO("Li4(128) cmpl = " << li128_cmpl     << " (polylogarithm C++)");
+      INFO("Li4(128) cmpl = " << li128_cmpl_c   << " (polylogarithm C)");
 
-      CHECK_CLOSE_COMPLEX(li64_cmpl , li64_expected , 3*eps64 );
-      CHECK_CLOSE_COMPLEX(li128_cmpl, li128_expected, 2*eps128);
+      CHECK_CLOSE_COMPLEX(li64_cmpl   , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_cmpl_c , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li128_cmpl  , li128_expected, 2*eps128);
+      CHECK_CLOSE_COMPLEX(li128_cmpl_c, li128_expected, 2*eps128);
    }
 }
