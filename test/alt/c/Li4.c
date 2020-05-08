@@ -300,7 +300,7 @@ void cli4_(double re, double im, double* res_re, double* res_im)
 }
 
 
-/** C++ wrapper for cli4 */
+/** C++ wrapper for cli4l */
 void cli4l_(long double re, long double im, long double* res_re, long double* res_im)
 {
    const long double _Complex result = cli4l(re + I*im);

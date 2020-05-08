@@ -298,7 +298,7 @@ void cli3_(double re, double im, double* res_re, double* res_im)
 }
 
 
-/** C++ wrapper for cli3 */
+/** C++ wrapper for cli3l */
 void cli3l_(long double re, long double im, long double* res_re, long double* res_im)
 {
    const long double _Complex result = cli3l(re + I*im);
