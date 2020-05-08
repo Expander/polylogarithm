@@ -101,7 +101,7 @@ TEST_CASE("test_special_values")
    const double pi2 = sqr(M_PI);
    const double zeta3 = 1.2020569031595942853997381615114;
    const double phi = 0.5*(std::sqrt(5.) + 1); // golden ratio
-   const double eps = 1e-15;
+   const double eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
 
    const std::complex<double> zero(0.0, 0.0);
    CHECK_CLOSE_COMPLEX(Li3(zero), 0.0, eps);
@@ -171,6 +171,7 @@ TEST_CASE("test_complex_random_values")
 {
    using namespace polylogarithm::bench;
 
+   const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
    const auto values = generate_random_complexes<double>(10000, -10, 10);
 
    for (auto v: values) {
@@ -178,7 +179,7 @@ TEST_CASE("test_complex_random_values")
       const std::complex<double> li3_c = poly_Li3(v);
       const std::complex<double> li3_tsil = to_c64(tsil_Li3(v));
 
-      CHECK_CLOSE_COMPLEX(li3, li3_tsil, 1e-14);
-      CHECK_CLOSE_COMPLEX(li3, li3_c   , 1e-14);
+      CHECK_CLOSE_COMPLEX(li3, li3_tsil, 10*eps);
+      CHECK_CLOSE_COMPLEX(li3, li3_c   , 10*eps);
    }
 }

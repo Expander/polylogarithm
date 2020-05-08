@@ -23,16 +23,17 @@ TEST_CASE("test_special_values")
 {
    using polylogarithm::Li5;
 
+   const double eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
    const double zeta5 = 1.0369277551433699;
    const std::complex<double> zero(0.0, 0.0);
    const std::complex<double> one(1.0, 0.0);
    const std::complex<double> mone(-1.0, 0.0);
    const std::complex<double> half(0.5, 0.0);
 
-   CHECK_CLOSE_COMPLEX(Li5(zero), 0, 1e-15);
-   CHECK_CLOSE_COMPLEX(Li5(one), zeta5, 1e-15);
-   CHECK_CLOSE_COMPLEX(Li5(mone), -15.*zeta5/16., 1e-15);
-   CHECK_CLOSE_COMPLEX(Li5(half), 0.5084005792422687, 1e-15);
+   CHECK_CLOSE_COMPLEX(Li5(zero), 0, eps);
+   CHECK_CLOSE_COMPLEX(Li5(one), zeta5, eps);
+   CHECK_CLOSE_COMPLEX(Li5(mone), -15.*zeta5/16., eps);
+   CHECK_CLOSE_COMPLEX(Li5(half), 0.5084005792422687, eps);
 }
 
 TEST_CASE("test_fixed_values")

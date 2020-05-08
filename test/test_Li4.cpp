@@ -39,6 +39,7 @@ TEST_CASE("test_special_values")
 {
    using polylogarithm::Li4;
 
+   const double eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
    const double pi = M_PI;
    const double zeta4 = 1.082323233711138;
    const std::complex<double> zero(0.0, 0.0);
@@ -46,10 +47,10 @@ TEST_CASE("test_special_values")
    const std::complex<double> mone(-1.0, 0.0);
    const std::complex<double> half(0.5, 0.0);
 
-   CHECK_CLOSE_COMPLEX(Li4(zero), 0, 1e-15);
-   CHECK_CLOSE_COMPLEX(Li4(one), zeta4, 1e-15);
-   CHECK_CLOSE_COMPLEX(Li4(mone), -7.*pow4(pi)/720, 1e-15);
-   CHECK_CLOSE_COMPLEX(Li4(half), 0.5174790616738994, 1e-15);
+   CHECK_CLOSE_COMPLEX(Li4(zero), 0, eps);
+   CHECK_CLOSE_COMPLEX(Li4(one), zeta4, eps);
+   CHECK_CLOSE_COMPLEX(Li4(mone), -7.*pow4(pi)/720, eps);
+   CHECK_CLOSE_COMPLEX(Li4(half), 0.5174790616738994, eps);
 }
 
 TEST_CASE("test_fixed_values")

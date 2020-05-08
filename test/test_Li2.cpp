@@ -421,6 +421,7 @@ TEST_CASE("test_complex_random_values")
 {
    using namespace polylogarithm::bench;
 
+   const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
    const auto values = generate_random_complexes<double>(10000, -10, 10);
 
    for (auto v: values) {
@@ -446,23 +447,25 @@ TEST_CASE("test_complex_random_values")
       INFO("Li2(64) cmpl = " << li2_tsil   << " (TSIL)");
 
 #ifdef ENABLE_GSL
-      CHECK_CLOSE_COMPLEX(li2, li2_gsl   , 1e-13);
+      CHECK_CLOSE_COMPLEX(li2, li2_gsl   , 10*eps);
 #endif
-      CHECK_CLOSE_COMPLEX(li2, li2_c     , 1e-13);
-      CHECK_CLOSE_COMPLEX(li2, li2_tsil  , 1e-13);
-      CHECK_CLOSE_COMPLEX(li2, li2_hollik, 1e-13);
-      CHECK_CLOSE_COMPLEX(li2, li2_sherpa, 1e-13);
-      CHECK_CLOSE_COMPLEX(li2, li2_spheno, 1e-13);
+      CHECK_CLOSE_COMPLEX(li2, li2_c     , 10*eps);
+      CHECK_CLOSE_COMPLEX(li2, li2_tsil  , 10*eps);
+      CHECK_CLOSE_COMPLEX(li2, li2_hollik, 10*eps);
+      CHECK_CLOSE_COMPLEX(li2, li2_sherpa, 10*eps);
+      CHECK_CLOSE_COMPLEX(li2, li2_spheno, 10*eps);
    }
 }
 
 TEST_CASE("test_relations")
 {
+   const double eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
+
    for (const auto v: special_values) {
-      CHECK_SMALL(Relation_1(v), 1e-15);
-      CHECK_SMALL(Relation_2(v), 1e-15);
-      CHECK_SMALL(Relation_3(v), 1e-15);
-      CHECK_SMALL(Relation_4(v), 1e-15);
-      CHECK_SMALL(Relation_5(v), 1e-15);
+      CHECK_SMALL(Relation_1(v), eps);
+      CHECK_SMALL(Relation_2(v), eps);
+      CHECK_SMALL(Relation_3(v), eps);
+      CHECK_SMALL(Relation_4(v), eps);
+      CHECK_SMALL(Relation_5(v), eps);
    }
 }
