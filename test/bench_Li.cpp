@@ -83,6 +83,18 @@ std::complex<long double> poly_Li4(std::complex<long double> z) {
    return { re, im };
 }
 
+std::complex<double> poly_Li5(std::complex<double> z) {
+   double re{}, im{};
+   cli5_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+std::complex<long double> poly_Li5(std::complex<long double> z) {
+   long double re{}, im{};
+   cli5l_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<double> sherpa_Li2(std::complex<double> z) {
    double re{}, im{};
    sherpa_dilog(std::real(z), std::imag(z), &re, &im);
@@ -256,10 +268,16 @@ int main() {
    print_headline("Li5 (complex)");
 
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li5(z); },
-            values_cd, "polylogarithm", "double");
+            values_cd, "polylogarithm C++", "double");
+
+   bench_fn([&](std::complex<double> z) { return poly_Li5(z); },
+            values_cd, "polylogarithm C", "double");
 
    bench_fn([&](std::complex<long double> z) { return polylogarithm::Li5(z); },
-            values_cd, "polylogarithm", "long double");
+            values_cd, "polylogarithm C++", "long double");
+
+   bench_fn([&](std::complex<long double> z) { return poly_Li5(z); },
+            values_cd, "polylogarithm C", "long double");
 
    print_headline("Li6 (complex)");
 

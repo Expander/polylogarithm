@@ -28,6 +28,12 @@ void cli4_(double re, double im, double* res_re, double* res_im);
 /** complex polylogarithm with n=4 with long double precision */
 void cli4l_(long double re, long double im, long double* res_re, long double* res_im);
 
+/** complex polylogarithm with n=5 */
+void cli5_(double re, double im, double* res_re, double* res_im);
+
+/** complex polylogarithm with n=5 with long double precision */
+void cli5l_(long double re, long double im, long double* res_re, long double* res_im);
+
 double algorithm_327(double x);
 
 double algorithm_490(double x);
