@@ -16,13 +16,14 @@ function(add_polylogarithm_test name)
     )
   target_link_libraries(
     ${name}
+    alt
     polylog
     ${ARGN}
     )
   add_test(NAME ${name} COMMAND ${name})
 endfunction()
 
-add_polylogarithm_test(bench_Li ${LIBGSL} alt)
+add_polylogarithm_test(bench_Li ${LIBGSL})
 add_polylogarithm_test(test_Cl)
 add_polylogarithm_test(test_Cl1)
 add_polylogarithm_test(test_Cl2)
@@ -33,8 +34,8 @@ add_polylogarithm_test(test_Cl6)
 add_polylogarithm_test(test_Li)
 add_polylogarithm_test(test_Li0)
 add_polylogarithm_test(test_Li1)
-add_polylogarithm_test(test_Li2 ${LIBGSL} alt)
-add_polylogarithm_test(test_Li3 alt)
+add_polylogarithm_test(test_Li2 ${LIBGSL})
+add_polylogarithm_test(test_Li3)
 add_polylogarithm_test(test_Li4)
 add_polylogarithm_test(test_Li5)
 add_polylogarithm_test(test_Li6)

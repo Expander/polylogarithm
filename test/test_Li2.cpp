@@ -3,7 +3,6 @@
 #include "doctest.h"
 #include "alt.h"
 #include "bench.hpp"
-#include "Li2.h"
 #include "Li2.hpp"
 #include "read_data.hpp"
 #include <cmath>

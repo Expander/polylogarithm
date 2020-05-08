@@ -2,7 +2,6 @@
 
 #include "doctest.h"
 #include "alt.h"
-#include "Li3.h"
 #include "Li3.hpp"
 #include "bench.hpp"
 #include "read_data.hpp"

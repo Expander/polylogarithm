@@ -4,6 +4,30 @@
 extern "C" {
 #endif
 
+/** real polylogarithm with n=2 (dilogarithm) */
+double li2(double x);
+
+/** real polylogarithm with n=2 (dilogarithm) with long double precision */
+long double li2l(long double x);
+
+/** complex polylogarithm with n=2 (dilogarithm) */
+void cli2_(double re, double im, double* res_re, double* res_im);
+
+/** complex polylogarithm with n=2 (dilogarithm) with long double precision */
+void cli2l_(long double re, long double im, long double* res_re, long double* res_im);
+
+/** complex polylogarithm with n=3 (trilogarithm) */
+void cli3_(double re, double im, double* res_re, double* res_im);
+
+/** complex polylogarithm with n=3 (trilogarithm) with long double precision */
+void cli3l_(long double re, long double im, long double* res_re, long double* res_im);
+
+/** complex polylogarithm with n=4 */
+void cli4_(double re, double im, double* res_re, double* res_im);
+
+/** complex polylogarithm with n=4 with long double precision */
+void cli4l_(long double re, long double im, long double* res_re, long double* res_im);
+
 double algorithm_327(double x);
 
 double algorithm_490(double x);

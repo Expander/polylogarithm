@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
-#include "Li4.h"
+#include "alt.h"
 #include "Li4.hpp"
 #include "read_data.hpp"
 #include <cmath>
