@@ -5,6 +5,8 @@ os:
 compiler:
   - clang
   - gcc
+env:
+  - CMAKE_BUILD_PARALLEL_LEVEL=2
 addons:
   apt:
     packages: libgsl0-dev
