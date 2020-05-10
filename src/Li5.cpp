@@ -8,7 +8,6 @@
 #include "Li5.hpp"
 #include <cfloat>
 #include <cmath>
-#include <limits>
 
 namespace polylogarithm {
 
@@ -25,12 +24,6 @@ namespace {
       const T nz = rz*rz + iz*iz;
 
       return std::complex<T>(0.5*std::log(nz), std::atan2(iz, rz));
-   }
-
-   template <typename T>
-   bool is_close(const std::complex<T>& a, T b, T eps)
-   {
-      return std::abs(std::real(a) - b) < eps && std::abs(std::imag(a)) < eps;
    }
 
    template <typename T>
@@ -68,7 +61,6 @@ namespace {
  */
 std::complex<double> Li5(const std::complex<double>& z)
 {
-   const double eps   = 10.0*std::numeric_limits<double>::epsilon();
    const double PI    = 3.141592653589793;
    const double PI2   = PI*PI;
    const double PI4   = PI2*PI2;
@@ -86,18 +78,21 @@ std::complex<double> Li5(const std::complex<double>& z)
       1.090354540133339e-15
    };
 
-   if (is_close(z, 0.0, eps)) {
-      return { 0.0, 0.0 };
-   }
-   if (is_close(z, 1.0, eps)) {
-      return { zeta5, 0.0 };
-   }
-   if (is_close(z, -1.0, eps)) {
-      return { -15.0*zeta5/16.0, 0.0 };
-   }
-
    const auto rz  = std::real(z);
    const auto iz  = std::imag(z);
+
+   if (iz == 0) {
+      if (rz == 0) {
+         return 0.0;
+      }
+      if (rz == 1) {
+         return zeta5;
+      }
+      if (rz == -1) {
+         return -15.0*zeta5/16.0;
+      }
+   }
+
    const auto nz  = rz*rz + iz*iz;
    const auto pz  = std::atan2(iz, rz);
    const auto lnz = 0.5*std::log(nz);
@@ -175,7 +170,6 @@ std::complex<double> Li5(const std::complex<double>& z)
  */
 std::complex<long double> Li5(const std::complex<long double>& z)
 {
-   const long double eps   = 10.0L*std::numeric_limits<long double>::epsilon();
    const long double PI    = 3.14159265358979323846264338327950288L;
    const long double PI2   = PI*PI;
    const long double PI4   = PI2*PI2;
@@ -230,18 +224,21 @@ std::complex<long double> Li5(const std::complex<long double>& z)
 #endif
    };
 
-   if (is_close(z, 0.0L, eps)) {
-      return { 0.0L, 0.0L };
-   }
-   if (is_close(z, 1.0L, eps)) {
-      return { zeta5, 0.0L };
-   }
-   if (is_close(z, -1.0L, eps)) {
-      return { -15.0L*zeta5/16.0L, 0.0L };
-   }
-
    const auto rz  = std::real(z);
    const auto iz  = std::imag(z);
+
+   if (iz == 0) {
+      if (rz == 0) {
+         return 0.0L;
+      }
+      if (rz == 1) {
+         return zeta5;
+      }
+      if (rz == -1) {
+         return -15.0L*zeta5/16.0L;
+      }
+   }
+
    const auto nz  = rz*rz + iz*iz;
    const auto pz  = std::atan2(iz, rz);
    const auto lnz = 0.5L*std::log(nz);

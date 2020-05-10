@@ -25,6 +25,23 @@ GenerateUnitData[s_, prec_, n_, frac_, dir_] :=
         {im, 0, 0, 1}
     ]
 
+(* data arount {re, im} from given direction {reDir, imDir} *)
+GenerateLimitData[s_, prec_, n_, frac_, {re_, im_}, {reDir_, imDir_}] :=
+    Flatten /@ Join @@ Table[
+        GeneratePoint[s, prec, re + reDir frac^k, im + imDir frac^m],
+        {k, 1, n, 1},
+        {m, 1, n, 1}
+    ]
+
+(* data arount {re, im} from all directions *)
+GenerateLimitData[s_, prec_, n_, frac_, {re_, im_}] :=
+    Join[
+        GenerateLimitData[s, prec, n, frac, {re, im}, {+1, +1}],
+        GenerateLimitData[s, prec, n, frac, {re, im}, {+1, -1}],
+        GenerateLimitData[s, prec, n, frac, {re, im}, {-1, +1}],
+        GenerateLimitData[s, prec, n, frac, {re, im}, {-1, -1}]
+    ]
+
 ExportData[s_, prec_] :=
     Module[{data, omega = 1/2 + Sqrt[3]/2, filename},
            Print["Generating data for Li" <> ToString[s]];
@@ -32,6 +49,9 @@ ExportData[s_, prec_] :=
                GenerateGridData[s, prec, {-5, 5, 1/10}],
                GenerateUnitData[s, prec, prec, 1/10, -1],
                GenerateUnitData[s, prec, prec, 1/10, +1],
+               GenerateLimitData[s, prec, prec, 1/10, {+1, 0}],
+               GenerateLimitData[s, prec, prec, 1/10, { 0, 0}],
+               GenerateLimitData[s, prec, prec, 1/10, {-1, 0}],
                Join @@@ {
                    GeneratePoint[s, prec,  0  , 0],
                    GeneratePoint[s, prec,  1/2, 0],

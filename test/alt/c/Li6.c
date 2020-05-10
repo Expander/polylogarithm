@@ -28,18 +28,6 @@ static long double _Complex fast_clogl(long double _Complex z)
 }
 
 
-static _Bool is_close(double _Complex a, double b, double eps)
-{
-   return fabs(creal(a) - b) < eps && fabs(cimag(a)) < eps;
-}
-
-
-static _Bool is_closel(long double _Complex a, long double b, long double eps)
-{
-   return fabsl(creall(a) - b) < eps && fabsl(cimagl(a)) < eps;
-}
-
-
 
 /**
  * @brief Complex polylogarithm \f$\mathrm{Li}_6(z)\f$
@@ -48,7 +36,6 @@ static _Bool is_closel(long double _Complex a, long double b, long double eps)
  */
 double _Complex cli6(double _Complex z)
 {
-   const double eps   = 10.0*DBL_EPSILON;
    const double PI    = 3.141592653589793;
    const double PI2   = PI*PI;
    const double PI4   = PI2*PI2;
@@ -66,18 +53,21 @@ double _Complex cli6(double _Complex z)
      -6.840881171901169e-15,  4.869117846200558e-15
    };
 
-   if (is_close(z, 0.0, eps)) {
-      return 0.0;
-   }
-   if (is_close(z, 1.0, eps)) {
-      return zeta6;
-   }
-   if (is_close(z, -1.0, eps)) {
-      return -31.0*zeta6/32.0;
-   }
-
    const double rz  = creal(z);
    const double iz  = cimag(z);
+
+   if (iz == 0) {
+      if (rz == 0) {
+         return 0.0;
+      }
+      if (rz == 1) {
+         return zeta6;
+      }
+      if (rz == -1) {
+         return -31.0*zeta6/32.0;
+      }
+   }
+
    const double nz  = rz*rz + iz*iz;
    const double pz  = atan2(iz, rz);
    const double lnz = 0.5*log(nz);
@@ -155,7 +145,6 @@ double _Complex cli6(double _Complex z)
  */
 long double _Complex cli6l(long double _Complex z)
 {
-   const long double eps   = 10.0L*LDBL_EPSILON;
    const long double PI    = 3.14159265358979323846264338327950288L;
    const long double PI2   = PI*PI;
    const long double PI4   = PI2*PI2;
@@ -211,18 +200,21 @@ long double _Complex cli6l(long double _Complex z)
 #endif
    };
 
-   if (is_closel(z, 0.0L, eps)) {
-      return 0.0L;
-   }
-   if (is_closel(z, 1.0L, eps)) {
-      return zeta6;
-   }
-   if (is_closel(z, -1.0L, eps)) {
-      return -31.0L*zeta6/32.0L;
-   }
-
    const long double rz  = creall(z);
    const long double iz  = cimagl(z);
+
+   if (iz == 0) {
+      if (rz == 0) {
+         return 0.0L;
+      }
+      if (rz == 1) {
+         return zeta6;
+      }
+      if (rz == -1) {
+         return -31.0L*zeta6/32.0L;
+      }
+   }
+
    const long double nz  = rz*rz + iz*iz;
    const long double pz  = atan2l(iz, rz);
    const long double lnz = 0.5L*logl(nz);
