@@ -153,9 +153,9 @@ TEST_CASE("test_fixed_values")
          // low precision if z is close to (1.0, 0.0)
          // due to log(real(z)) being not veriy precise for real(z) ~ 1
          CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1000*eps128);
-      } else if (std::abs(std::real(z128)) < 1000*eps128 &&
-                 std::abs(std::imag(z128)) < 1000*eps128) {
-         CHECK_CLOSE_COMPLEX(li128_tsil, std::complex<long double>(0.0L, 0.0L), 1e-16L);
+      } else if (std::abs(std::real(z128)) < 2000*eps128 &&
+                 std::abs(std::imag(z128)) < 2000*eps128) {
+         CHECK_CLOSE_COMPLEX(li128_tsil, std::complex<long double>(0.0L, 0.0L), 1e-14L);
       } else {
          CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, eps128);
       }
