@@ -17,9 +17,8 @@ namespace {
    {
       const T rz = std::real(z);
       const T iz = std::imag(z);
-      const T nz = rz*rz + iz*iz;
 
-      return std::complex<T>(0.5*std::log(nz), std::atan2(iz, rz));
+      return std::complex<T>(0.5*std::log(rz*rz + iz*iz), std::atan2(iz, rz));
    }
 
    template <typename T>
