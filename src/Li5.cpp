@@ -16,11 +16,8 @@ namespace {
    std::complex<T> clog(std::complex<T> z) noexcept
    {
       // converts -0.0 to 0.0
-      if (std::real(z) == T(0)) { z.real(T(0)); }
-      if (std::imag(z) == T(0)) { z.imag(T(0)); }
-
-      const T rz = std::real(z);
-      const T iz = std::imag(z);
+      const T rz = std::real(z) == T(0) ? std::abs(std::real(z)) : std::real(z);
+      const T iz = std::imag(z) == T(0) ? std::abs(std::imag(z)) : std::imag(z);
 
       return std::complex<T>(0.5*std::log(rz*rz + iz*iz), std::atan2(iz, rz));
    }
