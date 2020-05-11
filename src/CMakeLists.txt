@@ -1,13 +1,10 @@
 add_library(polylog
-  Cl1.cpp
   Cl2.cpp
   Cl3.cpp
   Cl4.cpp
   Cl5.cpp
   Cl6.cpp
   Li.cpp
-  Li0.cpp
-  Li1.cpp
   Li2.cpp
   Li3.cpp
   Li4.cpp

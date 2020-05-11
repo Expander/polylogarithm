@@ -1,8 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
-#include "Li0.hpp"
-#include "Li1.hpp"
 #include "Li2.hpp"
 #include "Li3.hpp"
 #include "Li4.hpp"
@@ -35810,8 +35808,6 @@ const std::complex<double> special_values[] = {
 
 TEST_CASE("test_special_values")
 {
-   using polylogarithm::Li0;
-   using polylogarithm::Li1;
    using polylogarithm::Li2;
    using polylogarithm::Li3;
    using polylogarithm::Li4;
@@ -35823,12 +35819,6 @@ TEST_CASE("test_special_values")
 
    for (const auto& v: special_values) {
       INFO("z = " << v);
-
-      if (!(std::real(v) == 1 && std::imag(v) == 0)) {
-         CHECK_CLOSE_COMPLEX(Li0(v), Li(0,v), eps);
-         CHECK_CLOSE_COMPLEX(Li1(v), Li(1,v), eps);
-      }
-
       CHECK_CLOSE_COMPLEX(Li2(v), Li(2,v), eps);
       CHECK_CLOSE_COMPLEX(Li3(v), Li(3,v), eps);
       CHECK_CLOSE_COMPLEX(Li4(v), Li(4,v), eps);
@@ -35839,8 +35829,6 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_values")
 {
-   using polylogarithm::Li0;
-   using polylogarithm::Li1;
    using polylogarithm::Li2;
    using polylogarithm::Li3;
    using polylogarithm::Li4;
@@ -35855,12 +35843,6 @@ TEST_CASE("test_values")
       const auto Li100 = v.second;
 
       INFO("z = " << z);
-
-      if (!(std::real(z) == 1 && std::imag(z) == 0)) {
-         CHECK_CLOSE_COMPLEX(Li0(z), Li(0,z), eps);
-         CHECK_CLOSE_COMPLEX(Li1(z), Li(1,z), eps);
-      }
-
       CHECK_CLOSE_COMPLEX(Li2(z), Li(2,z), eps);
       CHECK_CLOSE_COMPLEX(Li3(z), Li(3,z), eps);
       CHECK_CLOSE_COMPLEX(Li4(z), Li(4,z), eps);
@@ -35874,7 +35856,6 @@ TEST_CASE("test_values")
       const auto Lim1 = v.second;
 
       INFO("z = " << z);
-
       CHECK_CLOSE_COMPLEX(Lim1, Li(-1,z), eps);
    }
 
@@ -35883,15 +35864,12 @@ TEST_CASE("test_values")
       const auto Lim2 = v.second;
 
       INFO("z = " << z);
-
       CHECK_CLOSE_COMPLEX(Lim2, Li(-2,z), eps);
    }
 }
 
 TEST_CASE("test_values_close_to_unity")
 {
-   using polylogarithm::Li0;
-   using polylogarithm::Li1;
    using polylogarithm::Li2;
    using polylogarithm::Li3;
    using polylogarithm::Li4;
@@ -35906,11 +35884,6 @@ TEST_CASE("test_values_close_to_unity")
       const auto Li100 = v.second;
 
       INFO("z = " << z);
-
-      if (!(std::real(z) == 1 && std::imag(z) == 0)) {
-         CHECK_CLOSE_COMPLEX(Li0(z), Li(0,z), eps);
-         CHECK_CLOSE_COMPLEX(Li1(z), Li(1,z), eps);
-      }
       CHECK_CLOSE_COMPLEX(Li2(z), Li(2,z), eps);
       CHECK_CLOSE_COMPLEX(Li3(z), Li(3,z), eps);
       CHECK_CLOSE_COMPLEX(Li4(z), Li(4,z), eps);
