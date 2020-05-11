@@ -70,7 +70,7 @@ std::complex<double> Li0(const std::complex<double>& z)
    const double inf = std::numeric_limits<double>::infinity();
 
    if (is_close(z, 1.0, eps)) {
-      return { inf, inf };
+      return std::complex<double>(inf, inf);
    }
 
    return z/(1.0 - z);
@@ -87,7 +87,7 @@ std::complex<long double> Li0(const std::complex<long double>& z)
    const long double inf = std::numeric_limits<long double>::infinity();
 
    if (is_close(z, 1.0L, eps)) {
-      return { inf, inf };
+      return std::complex<double>(inf, inf);
    }
 
    return z/(1.0L - z);
