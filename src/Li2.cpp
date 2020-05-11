@@ -75,7 +75,7 @@ double Li2(double x) {
      -0.00000000000027007, 0.00000000000004042,-0.00000000000000610,
       0.00000000000000093,-0.00000000000000014, 0.00000000000000002};
 
-   double T{}, H{}, Y{}, S{}, A{}, ALFA{}, B1{}, B2{}, B0{};
+   double T = 0, H = 0, Y = 0, S = 0, A = 0, ALFA = 0, B1 = 0, B2 = 0, B0 = 0;
 
    if (x == 1) {
        H = PI6;
@@ -197,7 +197,7 @@ long double Li2(long double x) {
 #endif
    };
 
-   long double T{}, H{}, Y{}, S{}, A{}, ALFA{}, B1{}, B2{}, B0{};
+   long double T = 0, H = 0, Y = 0, S = 0, A = 0, ALFA = 0, B1 = 0, B2 = 0, B0 = 0;
 
    if (x == 1) {
        H = PI6;
@@ -282,10 +282,10 @@ std::complex<double> Li2(const std::complex<double>& z)
    // special cases
    if (iz == 0.0) {
       if (rz <= 1.0) {
-         return {Li2(rz), 0.0};
+         return Li2(rz);
       }
       if (rz > 1.0) {
-         return {Li2(rz), -PI*std::log(rz)};
+         return std::complex<double>(Li2(rz), -PI*std::log(rz));
       }
    } else if (nz < std::numeric_limits<double>::epsilon()) {
       return z;
@@ -388,10 +388,10 @@ std::complex<long double> Li2(const std::complex<long double>& z)
    // special cases
    if (iz == 0.0L) {
       if (rz <= 1.0L) {
-         return {Li2(rz), 0.0L};
+         return Li2(rz);
       }
       if (rz > 1.0L) {
-         return {Li2(rz), -PI*std::log(rz)};
+         return std::complex<long double>(Li2(rz), -PI*std::log(rz));
       }
    } else if (nz < std::numeric_limits<long double>::epsilon()) {
       return z;
