@@ -74,8 +74,8 @@ std::complex<double> Li6(const std::complex<double>& z)
      -6.840881171901169e-15,  4.869117846200558e-15
    };
 
-   const auto rz  = std::real(z);
-   const auto iz  = std::imag(z);
+   const double rz  = std::real(z);
+   const double iz  = std::imag(z);
 
    if (iz == 0) {
       if (rz == 0) {
@@ -89,20 +89,20 @@ std::complex<double> Li6(const std::complex<double>& z)
       }
    }
 
-   const auto nz  = rz*rz + iz*iz;
-   const auto pz  = std::atan2(iz, rz);
-   const auto lnz = 0.5*std::log(nz);
+   const double nz  = rz*rz + iz*iz;
+   const double pz  = std::atan2(iz, rz);
+   const double lnz = 0.5*std::log(nz);
 
    if (lnz*lnz + pz*pz < 1.0) { // |log(z)| < 1
-      const auto u  = std::complex<double>(lnz, pz); // clog(z)
-      const auto u2 = u*u;
-      const auto c0 = zeta6;
-      const auto c1 = 1.036927755143370; // zeta(5)
-      const auto c2 = 0.5411616168555691;
-      const auto c3 = 0.2003428171932657;
-      const auto c4 = 0.06853891945200943;
-      const auto c5 = (137.0/60.0 - clog(-u))/120.0;
-      const auto c6 = -1.0/1440.0;
+      const std::complex<double> u(lnz, pz); // clog(z)
+      const std::complex<double> u2 = u*u;
+      const double c0 = zeta6;
+      const double c1 = 1.036927755143370; // zeta(5)
+      const double c2 = 0.5411616168555691;
+      const double c3 = 0.2003428171932657;
+      const double c4 = 0.06853891945200943;
+      const std::complex<double> c5 = (137.0/60.0 - clog(-u))/120.0;
+      const double c6 = -1.0/1440.0;
 
       const double cs[5] = {
          -1.653439153439153e-05, 2.296443268665491e-08,
@@ -131,15 +131,15 @@ std::complex<double> Li6(const std::complex<double>& z)
    if (nz <= 1.0) {
       u = -clog(1.0 - z);
    } else { // nz > 1
-      const auto arg = pz > 0.0 ? pz - PI : pz + PI;
-      const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
-      const auto lmz2 = lmz*lmz;
+      const double arg = pz > 0.0 ? pz - PI : pz + PI;
+      const std::complex<double> lmz(lnz, arg); // clog(-z)
+      const std::complex<double> lmz2 = lmz*lmz;
       u = -clog(1.0 - 1.0/z);
       r = -31.0*PI6/15120.0 + lmz2*(-7.0/720.0*PI4 + lmz2*(-1.0/144.0*PI2 - 1.0/720.0*lmz2));
       sgn = -1;
    }
 
-   const auto sum =
+   const std::complex<double> sum =
       cmul(u, cadd(bf[0],
       cmul(u, cadd(bf[1],
       cmul(u, cadd(bf[2],
@@ -224,8 +224,8 @@ std::complex<long double> Li6(const std::complex<long double>& z)
 #endif
    };
 
-   const auto rz  = std::real(z);
-   const auto iz  = std::imag(z);
+   const long double rz  = std::real(z);
+   const long double iz  = std::imag(z);
 
    if (iz == 0) {
       if (rz == 0) {
@@ -239,20 +239,20 @@ std::complex<long double> Li6(const std::complex<long double>& z)
       }
    }
 
-   const auto nz  = rz*rz + iz*iz;
-   const auto pz  = std::atan2(iz, rz);
-   const auto lnz = 0.5L*std::log(nz);
+   const long double nz  = rz*rz + iz*iz;
+   const long double pz  = std::atan2(iz, rz);
+   const long double lnz = 0.5L*std::log(nz);
 
    if (lnz*lnz + pz*pz < 1.0L) { // |log(z)| < 1
-      const auto u  = std::complex<long double>(lnz, pz); // clog(z)
-      const auto u2 = u*u;
-      const auto c0 = zeta6;
-      const auto c1 = 1.03692775514336992633136548645703417L; // zeta(5)
-      const auto c2 = 0.541161616855569095758001848270583951L;
-      const auto c3 = 0.200342817193265714233289693585241665L;
-      const auto c4 = 0.0685389194520094348530172986102510496L;
-      const auto c5 = (137.0L/60.0L - clog(-u))/120.0L;
-      const auto c6 = -1.0L/1440.0L;
+      const std::complex<long double> u(lnz, pz); // clog(z)
+      const std::complex<long double> u2 = u*u;
+      const long double c0 = zeta6;
+      const long double c1 = 1.03692775514336992633136548645703417L; // zeta(5)
+      const long double c2 = 0.541161616855569095758001848270583951L;
+      const long double c3 = 0.200342817193265714233289693585241665L;
+      const long double c4 = 0.0685389194520094348530172986102510496L;
+      const std::complex<long double> c5 = (137.0L/60.0L - clog(-u))/120.0L;
+      const long double c6 = -1.0L/1440.0L;
 
       const long double cs[] = {
         -1.65343915343915343915343915343915344e-05L,
@@ -301,9 +301,9 @@ std::complex<long double> Li6(const std::complex<long double>& z)
    if (nz <= 1.0L) {
       u = -clog(1.0L - z);
    } else { // nz > 1
-      const auto arg = pz > 0.0 ? pz - PI : pz + PI;
-      const auto lmz = std::complex<long double>(lnz, arg); // clog(-z)
-      const auto lmz2 = lmz*lmz;
+      const long double arg = pz > 0.0 ? pz - PI : pz + PI;
+      const std::complex<long double> lmz(lnz, arg); // clog(-z)
+      const std::complex<long double> lmz2 = lmz*lmz;
       u = -clog(1.0L - 1.0L/z);
       r = -31.0L*PI6/15120.0L
           + lmz2*(-7.0L/720.0L*PI4 +

@@ -73,8 +73,8 @@ std::complex<double> Li4(const std::complex<double>& z)
       2.364757116861825e-14, -7.923135122031161e-15,
    };
 
-   const auto rz  = std::real(z);
-   const auto iz  = std::imag(z);
+   const double rz  = std::real(z);
+   const double iz  = std::imag(z);
 
    if (iz == 0) {
       if (rz == 0) {
@@ -88,17 +88,17 @@ std::complex<double> Li4(const std::complex<double>& z)
       }
    }
 
-   const auto nz  = rz*rz + iz*iz;
-   const auto pz  = std::atan2(iz, rz);
-   const auto lnz = 0.5*std::log(nz);
+   const double nz  = rz*rz + iz*iz;
+   const double pz  = std::atan2(iz, rz);
+   const double lnz = 0.5*std::log(nz);
 
    if (lnz*lnz + pz*pz < 1.0) { // |log(z)| < 1
-      const auto u  = std::complex<double>(lnz, pz); // clog(z)
-      const auto u2 = u*u;
-      const auto c1 = 1.202056903159594; // zeta(3)
-      const auto c2 = 0.8224670334241132;
-      const auto c3 = (11.0/6.0 - clog(-u))/6.0;
-      const auto c4 = -1.0/48.0;
+      const std::complex<double> u(lnz, pz); // clog(z)
+      const std::complex<double> u2 = u*u;
+      const double c1 = 1.202056903159594; // zeta(3)
+      const double c2 = 0.8224670334241132;
+      const std::complex<double> c3 = (11.0/6.0 - clog(-u))/6.0;
+      const double c4 = -1.0/48.0;
 
       const double cs[7] = {
          -6.944444444444444e-04, 1.653439153439153e-06,
@@ -132,15 +132,15 @@ std::complex<double> Li4(const std::complex<double>& z)
    if (nz <= 1.0) {
       u = -clog(1.0 - z);
    } else { // nz > 1
-      const auto arg = pz > 0.0 ? pz - PI : pz + PI;
-      const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
-      const auto lmz2 = lmz*lmz;
+      const double arg = pz > 0.0 ? pz - PI : pz + PI;
+      const std::complex<double> lmz(lnz, arg); // clog(-z)
+      const std::complex<double> lmz2 = lmz*lmz;
       u = -clog(1.0 - 1.0/z);
       r = 1.0/360.0*(-7*PI4 + lmz2*(-30.0*PI2 - 15.0*lmz2));
       sgn = -1;
    }
 
-   const auto sum =
+   const std::complex<double> sum =
       cmul(u, cadd(bf[0],
       cmul(u, cadd(bf[1],
       cmul(u, cadd(bf[2],
@@ -224,8 +224,8 @@ std::complex<long double> Li4(const std::complex<long double>& z)
 #endif
    };
 
-   const auto rz  = std::real(z);
-   const auto iz  = std::imag(z);
+   const long double rz  = std::real(z);
+   const long double iz  = std::imag(z);
 
    if (iz == 0) {
       if (rz == 0) {
@@ -239,17 +239,17 @@ std::complex<long double> Li4(const std::complex<long double>& z)
       }
    }
 
-   const auto nz  = rz*rz + iz*iz;
-   const auto pz  = std::atan2(iz, rz);
-   const auto lnz = 0.5L*std::log(nz);
+   const long double nz  = rz*rz + iz*iz;
+   const long double pz  = std::atan2(iz, rz);
+   const long double lnz = 0.5L*std::log(nz);
 
    if (lnz*lnz + pz*pz < 1.0L) { // |log(z)| < 1
-      const auto u  = std::complex<long double>(lnz, pz); // clog(z)
-      const auto u2 = u*u;
-      const auto c1 = 1.20205690315959428539973816151144999L; // zeta(3)
-      const auto c2 = 0.822467033424113218236207583323012595L;
-      const auto c3 = (11.0L/6.0L - clog(-u))/6.0L;
-      const auto c4 = -1.0L/48.0L;
+      const std::complex<long double> u(lnz, pz); // clog(z)
+      const std::complex<long double> u2 = u*u;
+      const long double c1 = 1.20205690315959428539973816151144999L; // zeta(3)
+      const long double c2 = 0.822467033424113218236207583323012595L;
+      const std::complex<long double> c3 = (11.0L/6.0L - clog(-u))/6.0L;
+      const long double c4 = -1.0L/48.0L;
 
       const long double cs[] = {
         -6.94444444444444444444444444444444444e-04L,
@@ -294,9 +294,9 @@ std::complex<long double> Li4(const std::complex<long double>& z)
    if (nz <= 1.0L) {
       u = -clog(1.0L - z);
    } else { // nz > 1
-      const auto arg = pz > 0.0 ? pz - PI : pz + PI;
-      const auto lmz = std::complex<long double>(lnz, arg); // clog(-z)
-      const auto lmz2 = lmz*lmz;
+      const long double arg = pz > 0.0 ? pz - PI : pz + PI;
+      const std::complex<long double> lmz(lnz, arg); // clog(-z)
+      const std::complex<long double> lmz2 = lmz*lmz;
       u = -clog(1.0L - 1.0L/z);
       r = 1.0L/360.0L*(-7*PI4 + lmz2*(-30.0L*PI2 - 15.0L*lmz2));
       sgn = -1;

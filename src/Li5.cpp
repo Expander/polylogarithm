@@ -74,8 +74,8 @@ std::complex<double> Li5(const std::complex<double>& z)
       1.090354540133339e-15
    };
 
-   const auto rz  = std::real(z);
-   const auto iz  = std::imag(z);
+   const double rz  = std::real(z);
+   const double iz  = std::imag(z);
 
    if (iz == 0) {
       if (rz == 0) {
@@ -89,19 +89,19 @@ std::complex<double> Li5(const std::complex<double>& z)
       }
    }
 
-   const auto nz  = rz*rz + iz*iz;
-   const auto pz  = std::atan2(iz, rz);
-   const auto lnz = 0.5*std::log(nz);
+   const double nz  = rz*rz + iz*iz;
+   const double pz  = std::atan2(iz, rz);
+   const double lnz = 0.5*std::log(nz);
 
    if (lnz*lnz + pz*pz < 1.0) { // |log(z)| < 1
-      const auto u  = std::complex<double>(lnz, pz); // clog(z)
-      const auto u2 = u*u;
-      const auto c0 = zeta5;
-      const auto c1 = 1.082323233711138; // zeta(4)
-      const auto c2 = 0.6010284515797971; // zeta(3)/2
-      const auto c3 = 0.2741556778080377;
-      const auto c4 = (25.0/12.0 - clog(-u))/24.0;
-      const auto c5 = -1.0/240.0;
+      const std::complex<double> u(lnz, pz); // clog(z)
+      const std::complex<double> u2 = u*u;
+      const double c0 = zeta5;
+      const double c1 = 1.082323233711138; // zeta(4)
+      const double c2 = 0.6010284515797971; // zeta(3)/2
+      const double c3 = 0.2741556778080377;
+      const std::complex<double> c4 = (25.0/12.0 - clog(-u))/24.0;
+      const double c5 = -1.0/240.0;
 
       const double cs[6] = {
          -1.157407407407407e-04, 2.066798941798942e-07,
@@ -129,9 +129,9 @@ std::complex<double> Li5(const std::complex<double>& z)
    if (nz <= 1.0) {
       u = -clog(1.0 - z);
    } else { // nz > 1
-      const auto arg = pz > 0.0 ? pz - PI : pz + PI;
-      const auto lmz = std::complex<double>(lnz, arg); // clog(-z)
-      const auto lmz2 = lmz*lmz;
+      const double arg = pz > 0.0 ? pz - PI : pz + PI;
+      const std::complex<double> lmz(lnz, arg); // clog(-z)
+      const std::complex<double> lmz2 = lmz*lmz;
       u = -clog(1.0 - 1.0/z);
       rest = -1.0/360.0*lmz*(7*PI4 + lmz2*(10.0*PI2 + 3.0*lmz2));
    }
@@ -220,8 +220,8 @@ std::complex<long double> Li5(const std::complex<long double>& z)
 #endif
    };
 
-   const auto rz  = std::real(z);
-   const auto iz  = std::imag(z);
+   const long double rz  = std::real(z);
+   const long double iz  = std::imag(z);
 
    if (iz == 0) {
       if (rz == 0) {
@@ -235,19 +235,19 @@ std::complex<long double> Li5(const std::complex<long double>& z)
       }
    }
 
-   const auto nz  = rz*rz + iz*iz;
-   const auto pz  = std::atan2(iz, rz);
-   const auto lnz = 0.5L*std::log(nz);
+   const long double nz  = rz*rz + iz*iz;
+   const long double pz  = std::atan2(iz, rz);
+   const long double lnz = 0.5L*std::log(nz);
 
    if (lnz*lnz + pz*pz < 1.0L) { // |log(z)| < 1
-      const auto u  = std::complex<long double>(lnz, pz); // clog(z)
-      const auto u2 = u*u;
-      const auto c0 = zeta5;
-      const auto c1 = 1.08232323371113819151600369654116790L; // zeta(4)
-      const auto c2 = 0.601028451579797142699869080755724995L; // zeta(3)/2
-      const auto c3 = 0.274155677808037739412069194441004198L;
-      const auto c4 = (25.0L/12.0L - clog(-u))/24.0L;
-      const auto c5 = -1.0L/240.0L;
+      const std::complex<long double> u(lnz, pz); // clog(z)
+      const std::complex<long double> u2 = u*u;
+      const long double c0 = zeta5;
+      const long double c1 = 1.08232323371113819151600369654116790L; // zeta(4)
+      const long double c2 = 0.601028451579797142699869080755724995L; // zeta(3)/2
+      const long double c3 = 0.274155677808037739412069194441004198L;
+      const std::complex<long double> c4 = (25.0L/12.0L - clog(-u))/24.0L;
+      const long double c5 = -1.0L/240.0L;
 
       const long double cs[] = {
         -1.15740740740740740740740740740740741e-04L,
@@ -294,9 +294,9 @@ std::complex<long double> Li5(const std::complex<long double>& z)
    if (nz <= 1.0L) {
       u = -clog(1.0L - z);
    } else { // nz > 1
-      const auto arg = pz > 0.0 ? pz - PI : pz + PI;
-      const auto lmz = std::complex<long double>(lnz, arg); // clog(-z)
-      const auto lmz2 = lmz*lmz;
+      const long double arg = pz > 0.0 ? pz - PI : pz + PI;
+      const std::complex<long double> lmz(lnz, arg); // clog(-z)
+      const std::complex<long double> lmz2 = lmz*lmz;
       u = -clog(1.0L - 1.0L/z);
       rest = -1.0L/360.0L*lmz*(7*PI4 + lmz2*(10.0L*PI2 + 3.0L*lmz2));
    }

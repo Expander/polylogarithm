@@ -237,8 +237,8 @@ namespace {
          return {inf, inf};
       }
 
-      const auto frac = -z/(1. - z);
-      const auto powers = powers_to(-n, -n + 2);
+      const std::complex<double> frac = -z/(1. - z);
+      const std::vector<double> powers = powers_to(-n, -n + 2);
       std::complex<double> result(0.,0.);
 
       for (int64_t k = -n; k >= 0; k--) {
@@ -394,7 +394,7 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
 
    std::complex<double> sum(0.,0.);
 
-   const auto xn = Xn(n-2);
+   const std::array<double,N> xn = Xn(n-2);
 
    for (int64_t k = N - 1; k >= 0; k--) {
       sum = u*(sum + xn[k]*fac_inv[k]);
