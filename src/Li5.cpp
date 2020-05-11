@@ -55,7 +55,7 @@ namespace {
  * @param z complex argument
  * @return \f$\mathrm{Li}_5(z)\f$
  */
-std::complex<double> Li5(const std::complex<double>& z)
+std::complex<double> Li5(const std::complex<double>& z) noexcept
 {
    const double PI    = 3.141592653589793;
    const double PI2   = PI*PI;
@@ -164,7 +164,7 @@ std::complex<double> Li5(const std::complex<double>& z)
  * @param z complex argument
  * @return \f$\mathrm{Li}_5(z)\f$
  */
-std::complex<long double> Li5(const std::complex<long double>& z)
+std::complex<long double> Li5(const std::complex<long double>& z) noexcept
 {
    const long double PI    = 3.14159265358979323846264338327950288L;
    const long double PI2   = PI*PI;

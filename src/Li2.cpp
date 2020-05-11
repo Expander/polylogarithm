@@ -60,7 +60,8 @@ namespace {
  * polynomials, see [Yudell L. Luke: Mathematical functions and their
  * approximations, Academic Press Inc., New York 1975, p.67].
  */
-double Li2(double x) {
+double Li2(double x) noexcept
+{
    const double PI  = 3.141592653589793;
    const double HF  = 0.5;
    const double PI2 = PI*PI;
@@ -140,7 +141,8 @@ double Li2(double x) {
  * polynomials, see [Yudell L. Luke: Mathematical functions and their
  * approximations, Academic Press Inc., New York 1975, p.67].
  */
-long double Li2(long double x) {
+long double Li2(long double x) noexcept
+{
    const long double PI  = 3.14159265358979323846264338327950288L;
    const long double HF  = 0.5L;
    const long double PI2 = PI*PI;
@@ -256,7 +258,7 @@ long double Li2(long double x) {
  * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
  */
-std::complex<double> Li2(const std::complex<double>& z)
+std::complex<double> Li2(const std::complex<double>& z) noexcept
 {
    const double PI = 3.141592653589793;
 
@@ -347,7 +349,7 @@ std::complex<double> Li2(const std::complex<double>& z)
  * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
  */
-std::complex<long double> Li2(const std::complex<long double>& z)
+std::complex<long double> Li2(const std::complex<long double>& z) noexcept
 {
    const long double PI = 3.14159265358979323846264338327950288L;
 

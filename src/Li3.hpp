@@ -11,9 +11,9 @@
 namespace polylogarithm {
 
 /// complex polylogarithm with n=3 (trilogarithm)
-std::complex<double> Li3(const std::complex<double>&);
+std::complex<double> Li3(const std::complex<double>&) noexcept;
 
 /// complex polylogarithm with n=3 (trilogarithm) with long double precision
-std::complex<long double> Li3(const std::complex<long double>&);
+std::complex<long double> Li3(const std::complex<long double>&) noexcept;
 
 } // namespace polylogarithm

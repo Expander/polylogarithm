@@ -10,9 +10,9 @@
 namespace polylogarithm {
 
 /// Clausen function with n=6
-double Cl6(double);
+double Cl6(double) noexcept;
 
 /// Clausen function with n=6 with long double precision
-long double Cl6(long double);
+long double Cl6(long double) noexcept;
 
 } // namespace polylogarithm

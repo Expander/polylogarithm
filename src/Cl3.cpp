@@ -17,7 +17,7 @@ namespace polylogarithm {
  * @param x real angle
  * @return \f$\mathrm{Cl}_3(\theta)\f$
  */
-double Cl3(double x)
+double Cl3(double x) noexcept
 {
    const double PI = 3.141592653589793;
    const std::complex<double> i(0.0, 1.0);
@@ -38,7 +38,7 @@ double Cl3(double x)
  * @param x real angle
  * @return \f$\mathrm{Cl}_3(\theta)\f$
  */
-long double Cl3(long double x)
+long double Cl3(long double x) noexcept
 {
    const long double PI = 3.14159265358979323846264338327950288L;
    const std::complex<long double> i(0.0L, 1.0L);
