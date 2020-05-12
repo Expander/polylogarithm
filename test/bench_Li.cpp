@@ -191,6 +191,9 @@ int main() {
             "GSL", "double");
 #endif
 
+   bench_fn([&](double x) { return babar_dilog(x); }, values_d,
+            "babar", "double");
+
    bench_fn([&](double x) { return cephes_dilog(x); }, values_d,
             "cephes", "double");
 
