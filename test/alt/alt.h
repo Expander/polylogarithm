@@ -44,6 +44,8 @@ double algorithm_327(double x);
 
 double algorithm_490(double x);
 
+double babar_dilog(double x);
+
 double cephes_dilog(double x);
 
 double cephes_dilog_2(double x);

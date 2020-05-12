@@ -1,5 +1,6 @@
 add_subdirectory(algorithm_327)
 add_subdirectory(algorithm_490)
+add_subdirectory(babar)
 add_subdirectory(c)
 add_subdirectory(cephes)
 add_subdirectory(hassani)
@@ -18,6 +19,7 @@ target_link_libraries(alt
   PRIVATE
     algorithm_327
     algorithm_490
+    babar
     c
     cephes
     hassani
