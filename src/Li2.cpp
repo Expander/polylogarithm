@@ -53,8 +53,9 @@ namespace {
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
  * @param x real argument
- * @note Implementation translated by R.Brun from CERNLIB DILOG function C332
  * @return \f$\mathrm{Li}_2(x)\f$
+ * @note Implementation translated by R.Brun from CERNLIB DILOG function C332
+ * @author K.S. Kölbig
  *
  * Implemented as a truncated series expansion in terms of Chebyshev
  * polynomials, see [Yudell L. Luke: Mathematical functions and their
@@ -132,10 +133,11 @@ double Li2(double x) noexcept
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(z)\f$ with long double precision
  * @param x real argument
- * @note Implementation based on translation by R.Brun from CERNLIB
- *    DILOG function C332, extended by Alexander Voigt to quadruple
- *    precision
  * @return \f$\mathrm{Li}_2(z)\f$
+ * @author K.S. Kölbig
+ * @note Implementation based on translation by R.Brun from CERNLIB
+ *    DILOG function C332, extended by Alexander Voigt to long double
+ *    precision
  *
  * Implemented as a truncated series expansion in terms of Chebyshev
  * polynomials, see [Yudell L. Luke: Mathematical functions and their
@@ -255,8 +257,10 @@ long double Li2(long double x) noexcept
 /**
  * @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$
  * @param z complex argument
- * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
+ * @note Implementation translated from SPheno to C++
+ * @author Werner Porod
+ * @note translated to C++ by Alexander Voigt
  */
 std::complex<double> Li2(const std::complex<double>& z) noexcept
 {
@@ -346,8 +350,10 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
 /**
  * @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$ with long double precision
  * @param z complex argument
- * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
+ * @note Implementation translated from SPheno to C++
+ * @author Werner Porod
+ * @note translated to C++ and extended to long double precision by Alexander Voigt
  */
 std::complex<long double> Li2(const std::complex<long double>& z) noexcept
 {

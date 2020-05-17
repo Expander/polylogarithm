@@ -54,6 +54,7 @@ namespace {
  * @brief Complex polylogarithm \f$\mathrm{Li}_4(z)\f$
  * @param z complex argument
  * @return \f$\mathrm{Li}_4(z)\f$
+ * @author Alexander Voigt
  */
 std::complex<double> Li4(const std::complex<double>& z) noexcept
 {
@@ -167,6 +168,7 @@ std::complex<double> Li4(const std::complex<double>& z) noexcept
  * @brief Complex polylogarithm \f$\mathrm{Li}_4(z)\f$ with long double precision
  * @param z complex argument
  * @return \f$\mathrm{Li}_4(z)\f$
+ * @author Alexander Voigt
  */
 std::complex<long double> Li4(const std::complex<long double>& z) noexcept
 {
