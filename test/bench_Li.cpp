@@ -308,27 +308,27 @@ int main() {
    bench_fn([&](std::complex<long double> z) { return poly_Li6(z); },
             values_cd, "polylogarithm C", "long double");
 
-   // print_headline("Li(n,z) (complex)");
+   print_headline("Li(n,z) (complex)");
 
-   // const auto values_cd_small = generate_random_complexes<double>(N/10, min, max);
+   const auto values_cd_small = generate_random_complexes<double>(N/10, min, max);
 
-   // bench_fn([&](std::complex<double> z) { return polylogarithm::Li(-100,z); },
-   //          values_cd_small, "n=-100 polylogarithm", "double");
+   bench_fn([&](std::complex<double> z) { return polylogarithm::Li(-100,z); },
+            values_cd_small, "n=-100 polylogarithm", "double");
 
-   // bench_fn([&](std::complex<double> z) { return polylogarithm::Li(-10,z); },
-   //          values_cd_small, "n=-10  polylogarithm", "double");
+   bench_fn([&](std::complex<double> z) { return polylogarithm::Li(-10,z); },
+            values_cd_small, "n=-10  polylogarithm", "double");
 
-   // bench_fn([&](std::complex<double> z) { return polylogarithm::Li(-6,z); },
-   //          values_cd_small, "n=-6   polylogarithm", "double");
+   bench_fn([&](std::complex<double> z) { return polylogarithm::Li(-6,z); },
+            values_cd_small, "n=-6   polylogarithm", "double");
 
-   // bench_fn([&](std::complex<double> z) { return polylogarithm::Li(6,z); },
-   //          values_cd_small, "n=6    polylogarithm", "double");
+   bench_fn([&](std::complex<double> z) { return polylogarithm::Li(6,z); },
+            values_cd_small, "n=6    polylogarithm", "double");
 
-   // bench_fn([&](std::complex<double> z) { return polylogarithm::Li(10,z); },
-   //          values_cd_small, "n=10   polylogarithm", "double");
+   bench_fn([&](std::complex<double> z) { return polylogarithm::Li(10,z); },
+            values_cd_small, "n=10   polylogarithm", "double");
 
-   // bench_fn([&](std::complex<double> z) { return polylogarithm::Li(100,z); },
-   //          values_cd_small, "n=100  polylogarithm", "double");
+   bench_fn([&](std::complex<double> z) { return polylogarithm::Li(100,z); },
+            values_cd_small, "n=100  polylogarithm", "double");
 
    return 0;
 }
