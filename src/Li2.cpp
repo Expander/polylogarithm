@@ -48,19 +48,19 @@ namespace {
          std::real(a) * std::imag(b) + std::imag(a) * std::real(b));
    }
 
-   template <typename T, int N, int Nend>
+   template <int Nstart, int Nend, int N, typename T>
    std::complex<T> horner(const std::complex<T>& z, const T (&coeffs)[N]) noexcept
    {
       const T x = std::real(z);
       const T y = std::imag(z);
       const T r = x + x;
       const T s = x * x + y * y;
-      T a = coeffs[N - 1], b = coeffs[N - 2];
+      T a = coeffs[Nend - 1], b = coeffs[Nend - 2];
 
-      for (int i = 0; i < Nend; ++i) {
+      for (int i = Nend - 3; i >= Nstart; --i) {
          const T t = a;
          a = b + r * t;
-         b = coeffs[N - 3 - i] - s * t;
+         b = coeffs[i] - s * t;
       }
 
       return cadd(b, cmul(z, a));
@@ -350,7 +350,7 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
    // the dilogarithm
    const std::complex<double> cz2(cz*cz);
 
-   std::complex<double> sum = horner<double, 10, 7>(cz2, bf);
+   std::complex<double> sum = horner<1, 10>(cz2, bf);
 
    // lowest order terms w/ different powers
    sum = cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, sum))));
@@ -452,7 +452,7 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
 
    const std::complex<long double> cz2(cz*cz);
 
-   std::complex<long double> sum = horner<long double, N, N-3>(cz2, bf);
+   std::complex<long double> sum = horner<1, N>(cz2, bf);
 
    // lowest order terms w/ different powers
    sum = cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, sum))));
