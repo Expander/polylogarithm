@@ -48,6 +48,24 @@ namespace {
          std::real(a) * std::imag(b) + std::imag(a) * std::real(b));
    }
 
+   template <typename T, int N, int Nend>
+   std::complex<T> horner(const std::complex<T>& z, const T (&coeffs)[N]) noexcept
+   {
+      const T x = std::real(z);
+      const T y = std::imag(z);
+      const T r = x + x;
+      const T s = x * x + y * y;
+      T a = coeffs[N - 1], b = coeffs[N - 2];
+
+      for (int i = 0; i < Nend; ++i) {
+         const T t = a;
+         a = b + r * t;
+         b = coeffs[N - 3 - i] - s * t;
+      }
+
+      return cadd(b, cmul(z, a));
+   }
+
 } // anonymous namespace
 
 /**
@@ -331,18 +349,11 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
 
    // the dilogarithm
    const std::complex<double> cz2(cz*cz);
-   const std::complex<double> sum =
-      cadd(cz,
-      cmul(cz2, cadd(bf[0],
-      cmul(cz , cadd(bf[1],
-      cmul(cz2, cadd(bf[2],
-      cmul(cz2, cadd(bf[3],
-      cmul(cz2, cadd(bf[4],
-      cmul(cz2, cadd(bf[5],
-      cmul(cz2, cadd(bf[6],
-      cmul(cz2, cadd(bf[7],
-      cmul(cz2, cadd(bf[8],
-      cmul(cz2, bf[9]))))))))))))))))))));
+
+   std::complex<double> sum = horner<double, 10, 7>(cz2, bf);
+
+   // lowest order terms w/ different powers
+   sum = cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, sum))));
 
    return double(jsgn) * sum + cy + ipi12 * PI * PI / 12.0;
 }
@@ -388,6 +399,8 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
       -3.37212196548508947046847363525493096e-37L
 #endif
    };
+
+   constexpr int N = sizeof(bf)/sizeof(bf[0]);
 
    const long double rz = std::real(z);
    const long double iz = std::imag(z);
@@ -438,14 +451,11 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
    }
 
    const std::complex<long double> cz2(cz*cz);
-   std::complex<long double> sum(0.0L, 0.0L);
 
-   for (int i = sizeof(bf)/sizeof(bf[0]) - 1; i >= 2; i--) {
-      sum = cmul(cz2, cadd(bf[i], sum));
-   }
+   std::complex<long double> sum = horner<long double, N, N-3>(cz2, bf);
 
    // lowest order terms w/ different powers
-   sum = cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, cadd(bf[1], sum)))));
+   sum = cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, sum))));
 
    return static_cast<long double>(jsgn)*sum + cy + ipi12*PI*PI/12.0L;
 }
