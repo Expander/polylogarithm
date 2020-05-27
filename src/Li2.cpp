@@ -59,7 +59,7 @@ namespace {
 
       for (int i = Nend - 3; i >= Nstart; --i) {
          const T t = a;
-         a = b + r * t;
+         a = b + r * a;
          b = coeffs[i] - s * t;
       }
 
