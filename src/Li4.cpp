@@ -170,15 +170,15 @@ std::complex<double> Li4(const std::complex<double>& z) noexcept
    return
       cadd(r, sgn*cmul(u,
       cadd(bf[0],
-           cmul(u, bf[1]),
-           cmul(u2, cadd(bf[2], cmul(u, bf[3]))),
-           cmul(u4, cadd(bf[4], cmul(u, bf[5]),
-                         cmul(u2, cadd(bf[6], cmul(u, bf[7]))))),
-           cmul(u8, cadd(bf[8], cmul(u, bf[9]),
-                         cmul(u2, cadd(bf[10], cmul(u, bf[11]))),
-                         cmul(u4, cadd(bf[12], cmul(u, bf[13]),
-                                       cmul(u2, cadd(bf[14], cmul(u, bf[15]))))))),
-           cmul(u16, cadd(bf[16], cmul(u, bf[17]))))));
+      cmul(u, bf[1]),
+      cmul(u2, cadd(bf[2], cmul(u, bf[3]))),
+      cmul(u4, cadd(bf[4], cmul(u, bf[5]),
+                    cmul(u2, cadd(bf[6], cmul(u, bf[7]))))),
+      cmul(u8, cadd(bf[8], cmul(u, bf[9]),
+                    cmul(u2, cadd(bf[10], cmul(u, bf[11]))),
+                    cmul(u4, cadd(bf[12], cmul(u, bf[13]),
+                                  cmul(u2, cadd(bf[14], cmul(u, bf[15]))))))),
+      cmul(u16, cadd(bf[16], cmul(u, bf[17]))))));
 }
 
 /**
