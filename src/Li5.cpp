@@ -29,6 +29,27 @@ namespace {
    }
 
    template <typename T>
+   std::complex<T> cadd(T a, const std::complex<T>& b, const std::complex<T>& c) noexcept
+   {
+      return std::complex<T>(a + std::real(b) + std::real(c),
+                             std::imag(b) + std::imag(c));
+   }
+
+   template <typename T>
+   std::complex<T> cadd(T a, const std::complex<T>& b, const std::complex<T>& c, const std::complex<T>& d) noexcept
+   {
+      return std::complex<T>(a + std::real(b) + std::real(c) + std::real(d),
+                             std::imag(b) + std::imag(c) + std::imag(d));
+   }
+
+   template <typename T>
+   std::complex<T> cadd(T a, const std::complex<T>& b, const std::complex<T>& c, const std::complex<T>& d, const std::complex<T>& e, const std::complex<T>& f) noexcept
+   {
+      return std::complex<T>(a + std::real(b) + std::real(c) + std::real(d) + std::real(e) + std::real(f),
+                             std::imag(b) + std::imag(c) + std::imag(d) + std::imag(e) + std::imag(f));
+   }
+
+   template <typename T>
    std::complex<T> cadd(const std::complex<T>& a, const std::complex<T>& b) noexcept
    {
       return std::complex<T>(std::real(a) + std::real(b),
@@ -136,6 +157,23 @@ std::complex<double> Li5(const std::complex<double>& z) noexcept
       u = -clog(1.0 - 1.0/z);
       rest = -1.0/360.0*lmz*(7*PI4 + lmz2*(10.0*PI2 + 3.0*lmz2));
    }
+
+   const std::complex<double> u2 = cmul(u, u);
+   const std::complex<double> u4 = cmul(u2, u2);
+   const std::complex<double> u8 = cmul(u4, u4);
+   const std::complex<double> u16 = cmul(u8, u8);
+
+   return
+      cadd(rest,
+      cmul(u,
+      cadd(bf[0], cmul(u, bf[1]), cmul(u2, cadd(bf[2], cmul(u, bf[3]))),
+      cmul(u4, cadd(bf[4], cmul(u, bf[5]),
+                     cmul(u2, cadd(bf[6], cmul(u, bf[7]))))),
+      cmul(u8, cadd(bf[8], cmul(u, bf[9]),
+                     cmul(u2, cadd(bf[10], cmul(u, bf[11]))),
+                     cmul(u4, cadd(bf[12], cmul(u, bf[13]),
+                                    cmul(u2, cadd(bf[14], cmul(u, bf[15]))))))),
+      cmul(u16, cadd(bf[16], cmul(u, bf[17]), cmul(u2, bf[18]))))));
 
    return
       cadd(rest,
