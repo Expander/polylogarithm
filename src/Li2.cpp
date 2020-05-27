@@ -63,7 +63,7 @@ namespace {
          b = coeffs[i] - s * t;
       }
 
-      return cadd(b, cmul(z, a));
+      return std::complex<T>(x*a + b, y*a);
    }
 
 } // anonymous namespace
