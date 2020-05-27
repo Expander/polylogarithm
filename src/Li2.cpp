@@ -48,9 +48,11 @@ namespace {
          std::real(a) * std::imag(b) + std::imag(a) * std::real(b));
    }
 
-   template <int Nstart, int Nend, int N, typename T>
+   template <int Nstart, int Nend, typename T, int N>
    std::complex<T> horner(const std::complex<T>& z, const T (&coeffs)[N]) noexcept
    {
+      static_assert(Nstart <= Nend && Nend <= N && N >= 2, "invalid array bounds");
+
       const T x = std::real(z);
       const T y = std::imag(z);
       const T r = x + x;
