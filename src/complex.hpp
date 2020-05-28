@@ -33,7 +33,7 @@ constexpr Complex<T> conj(const Complex<T>& z) noexcept
 }
 
 template <typename T>
-constexpr Complex<T> log(const Complex<T>& z) noexcept
+Complex<T> log(const Complex<T>& z) noexcept
 {
    // converts -0.0 to 0.0
    const T rz = z.re == T(0) ? std::abs(z.re) : z.re;
