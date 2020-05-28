@@ -339,7 +339,6 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
       }
    }
 
-   // the dilogarithm
    const std::complex<double> cz2(cz*cz);
 
    // lowest order terms w/ different powers
