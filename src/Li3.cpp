@@ -98,14 +98,12 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
          -3.982897776989488e-15
       };
 
-      const Complex<double> result =
+      return
          c0 +
          c1*u2 +
          u4*(cs[0] + u2*cs[1]) +
          u8*(cs[2] + u2*cs[3] + u4*(cs[4] + u2*cs[5])) +
          u8*u8*cs[6];
-
-      return std::complex<double>(result.re, result.im);
    }
 
    Complex<double> u(0.0, 0.0), rest(0.0, 0.0);
@@ -123,7 +121,7 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
    const Complex<double> u4 = u2*u2;
    const Complex<double> u8 = u4*u4;
 
-   const Complex<double> result =
+   return
       rest +
       u*bf[0] +
       u2*(bf[1] + u*bf[2]) +
@@ -131,8 +129,6 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
       u8*(bf[7] + u*bf[8] + u2*(bf[9] + u*bf[10]) +
           u4*(bf[11] + u*bf[12] + u2*(bf[13] + u*bf[14]))) +
       u8*u8*(bf[15] + u*bf[16] + u2*bf[17]);
-
-   return std::complex<double>(result.re, result.im);
 }
 
 /**
@@ -251,10 +247,7 @@ std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
 #endif
       };
 
-      const Complex<long double> result =
-         c0 + u2*(c1 + u2*horner(u2, cs));
-
-      return std::complex<long double>(result.re, result.im);
+      return c0 + u2*(c1 + u2*horner(u2, cs));
    }
 
    Complex<long double> u(0.0L, 0.0L), rest(0.0L, 0.0L);
@@ -268,9 +261,7 @@ std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
       rest = -lmz*(lmz*lmz/6.0L + zeta2);
    }
 
-   const Complex<long double> result = rest + u*horner(u, bf);
-
-   return std::complex<long double>(result.re, result.im);
+   return rest + u*horner(u, bf);
 }
 
 } // namespace polylogarithm

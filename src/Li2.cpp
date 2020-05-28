@@ -312,10 +312,7 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
 
    const Complex<double> cz2(cz*cz);
 
-   const Complex<double> result =
-      sgn*(cz + cz2*(bf[0] + cz*horner<1, 9>(cz2, bf))) + cy;
-
-   return std::complex<double>(result.re, result.im);
+   return sgn*(cz + cz2*(bf[0] + cz*horner<1, 9>(cz2, bf))) + cy;
 }
 
 /**
@@ -407,10 +404,7 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
 
    const Complex<long double> cz2(cz*cz);
 
-   const Complex<long double> result =
-      sgn*(cz + cz2*(bf[0] + cz*horner<1, N-1>(cz2, bf))) + cy;
-
-   return std::complex<long double>(result.re, result.im);
+   return sgn*(cz + cz2*(bf[0] + cz*horner<1, N-1>(cz2, bf))) + cy;
 }
 
 } // namespace polylogarithm

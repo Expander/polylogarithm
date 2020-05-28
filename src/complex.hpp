@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <complex>
 #include <cmath>
 
 namespace polylogarithm {
@@ -14,6 +15,7 @@ namespace polylogarithm {
 template <typename T>
 struct Complex {
    constexpr Complex(T re_ = T{}, T im_ = T{}) : re(re_), im(im_) {}
+   operator std::complex<T>() const noexcept { return std::complex<T>(re, im); }
    T re{};
    T im{};
 };
