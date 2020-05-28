@@ -7,6 +7,10 @@ compiler:
   - gcc
 env:
   - CMAKE_BUILD_PARALLEL_LEVEL=2
+  ->
+    CMAKE_BUILD_PARALLEL_LEVEL=2
+    CMAKE_CXX_FLAGS="-Ofast -ffast-math"
+    CMAKE_C_FLAGS="-Ofast -ffast-math"
 addons:
   apt:
     packages: libgsl0-dev
