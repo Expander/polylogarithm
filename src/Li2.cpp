@@ -35,12 +35,6 @@ namespace {
    }
 
    template <typename T>
-   std::complex<T> cmul(const std::complex<T>& a, T b) noexcept
-   {
-      return std::complex<T>(std::real(a) * b, std::imag(a) * b);
-   }
-
-   template <typename T>
    std::complex<T> cmul(const std::complex<T>& a, const std::complex<T>& b) noexcept
    {
       return std::complex<T>(
