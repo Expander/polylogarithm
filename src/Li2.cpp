@@ -276,9 +276,8 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
       if (z.re <= 1.0) {
          return Li2(z.re);
       }
-      if (z.re > 1.0) {
-         return { Li2(z.re), -PI*std::log(z.re) };
-      }
+      // z.re > 1.0
+      return { Li2(z.re), -PI*std::log(z.re) };
    } else if (nz < std::numeric_limits<double>::epsilon()) {
       return z_;
    }
