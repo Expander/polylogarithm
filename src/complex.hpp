@@ -19,6 +19,12 @@ struct Complex {
 };
 
 template <typename T>
+constexpr T arg(const Complex<T>& z) noexcept
+{
+   return std::atan2(z.im, z.re);
+}
+
+template <typename T>
 constexpr Complex<T> conj(const Complex<T>& z) noexcept
 {
    return { z.re, -z.im };
@@ -27,7 +33,11 @@ constexpr Complex<T> conj(const Complex<T>& z) noexcept
 template <typename T>
 constexpr Complex<T> log(const Complex<T>& z) noexcept
 {
-   return { 0.5*std::log(z.re*z.re + z.im*z.im), std::atan2(z.im, z.re) };
+   // converts -0.0 to 0.0
+   const T rz = z.re == T(0) ? std::abs(z.re) : z.re;
+   const T iz = z.im == T(0) ? std::abs(z.im) : z.im;
+
+   return { 0.5*std::log(rz*rz + iz*iz), std::atan2(iz, rz) };
 }
 
 template <typename T>
@@ -88,6 +98,12 @@ template <typename T>
 constexpr Complex<T> operator*(T x, const Complex<T>& z) noexcept
 {
    return { x*z.re, x*z.im };
+}
+
+template <typename T>
+constexpr Complex<T> operator*(const Complex<T>& z, T x) noexcept
+{
+   return x*z;
 }
 
 template <typename T>
