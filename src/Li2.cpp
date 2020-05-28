@@ -346,10 +346,9 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
    // the dilogarithm
    const std::complex<double> cz2(cz*cz);
 
-   std::complex<double> sum = horner<1, 9>(cz2, bf);
-
    // lowest order terms w/ different powers
-   sum = cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, sum))));
+   const std::complex<double> sum =
+      cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, horner<1, 9>(cz2, bf)))));
 
    return double(jsgn) * sum + cy + ipi12 * PI * PI / 12.0;
 }
@@ -448,10 +447,9 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
 
    const std::complex<long double> cz2(cz*cz);
 
-   std::complex<long double> sum = horner<1, N-1>(cz2, bf);
-
    // lowest order terms w/ different powers
-   sum = cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, sum))));
+   const std::complex<long double> sum =
+      cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, horner<1, N-1>(cz2, bf)))));
 
    return static_cast<long double>(jsgn)*sum + cy + ipi12*PI*PI/12.0L;
 }
