@@ -345,7 +345,7 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
    const std::complex<double> sum =
       cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, horner<1, 9>(cz2, bf)))));
 
-   return double(sgn) * sum + cy;
+   return static_cast<double>(sgn) * sum + cy;
 }
 
 /**
