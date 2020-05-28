@@ -312,7 +312,7 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
    }
 
    std::complex<double> cy(0.0, 0.0), cz(0.0, 0.0);
-   int sgn = 0;
+   double sgn = 1;
 
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5) {
@@ -345,7 +345,7 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
    const std::complex<double> sum =
       cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, horner<1, 9>(cz2, bf)))));
 
-   return static_cast<double>(sgn) * sum + cy;
+   return sgn*sum + cy;
 }
 
 /**
@@ -409,7 +409,7 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
    }
 
    std::complex<long double> cy(0.0L, 0.0L), cz(0.0L, 0.0L);
-   int sgn = 0;
+   long double sgn = 1;
 
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5L) {
@@ -442,7 +442,7 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
    const std::complex<long double> sum =
       cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, horner<1, N-1>(cz2, bf)))));
 
-   return static_cast<long double>(sgn)*sum + cy;
+   return sgn*sum + cy;
 }
 
 } // namespace polylogarithm
