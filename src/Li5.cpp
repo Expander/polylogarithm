@@ -138,7 +138,7 @@ std::complex<double> Li5(const std::complex<double>& z) noexcept
 
    if (lnz*lnz + pz*pz < 1.0) { // |log(z)| < 1
       const std::complex<double> u(lnz, pz); // clog(z)
-      const std::complex<double> u2 = u*u;
+      const std::complex<double> u2 = cmul(u, u);
       const double c0 = zeta5;
       const double c1 = 1.082323233711138; // zeta(4)
       const double c2 = 0.6010284515797971; // zeta(3)/2
