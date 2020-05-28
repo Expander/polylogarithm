@@ -7,6 +7,7 @@
 
 #include "Li2.hpp"
 #include "complex.hpp"
+#include <cmath>
 #include <cfloat>
 #include <limits>
 
