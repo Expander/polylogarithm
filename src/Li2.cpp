@@ -312,34 +312,30 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
    }
 
    std::complex<double> cy(0.0, 0.0), cz(0.0, 0.0);
-   int jsgn = 0, ipi12 = 0;
+   int sgn = 0;
 
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5) {
       if (nz > 1.0) {
          const std::complex<double> lz = clog(-z);
-         cy = -0.5 * lz*lz;
+         cy = -0.5 * lz*lz - PI * PI / 6.0;
          cz = -clog(1.0 - 1.0 / z);
-         jsgn = -1;
-         ipi12 = -2;
+         sgn = -1;
       } else { // nz <= 1
          cy = 0;
          cz = -clog(1.0 - z);
-         jsgn = 1;
-         ipi12 = 0;
+         sgn = 1;
       }
    } else { // rz > 0.5
       if (nz <= 2*rz) {
          cz = -clog(z);
-         cy = cz * clog(1.0 - z);
-         jsgn = -1;
-         ipi12 = 2;
+         cy = cz * clog(1.0 - z) + PI * PI / 6.0;
+         sgn = -1;
       } else { // nz > 2*rz
          const std::complex<double> lz = clog(-z);
-         cy = -0.5 * lz*lz;
+         cy = -0.5 * lz*lz - PI * PI / 6.0;
          cz = -clog(1.0 - 1.0 / z);
-         jsgn = -1;
-         ipi12 = -2;
+         sgn = -1;
       }
    }
 
@@ -350,7 +346,7 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
    const std::complex<double> sum =
       cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, horner<1, 9>(cz2, bf)))));
 
-   return double(jsgn) * sum + cy + ipi12 * PI * PI / 12.0;
+   return double(sgn) * sum + cy;
 }
 
 /**
@@ -414,34 +410,30 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
    }
 
    std::complex<long double> cy(0.0L, 0.0L), cz(0.0L, 0.0L);
-   int jsgn = 0, ipi12 = 0;
+   int sgn = 0;
 
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5L) {
       if (nz > 1.0L) {
          const std::complex<long double> lz = clog(-z);
-         cy = -0.5L * lz*lz;
+         cy = -0.5L * lz*lz - PI * PI / 6.0L;
          cz = -clog(1.0L - 1.0L/z);
-         jsgn = -1;
-         ipi12 = -2;
+         sgn = -1;
       } else { // nz <= 1.0L
          cy = 0;
          cz = -clog(1.0L - z);
-         jsgn = 1;
-         ipi12 = 0;
+         sgn = 1;
       }
    } else { // rz > 0.5L
       if (nz <= 2*rz) {
          cz = -clog(z);
-         cy = cz * clog(1.0L - z);
-         jsgn = -1;
-         ipi12 = 2;
+         cy = cz * clog(1.0L - z) + PI * PI / 6.0L;
+         sgn = -1;
       } else { // nz > 2*rz
          const std::complex<long double> lz = clog(-z);
-         cy = -0.5L * lz*lz;
+         cy = -0.5L * lz*lz - PI * PI / 6.0L;
          cz = -clog(1.0L - 1.0L/z);
-         jsgn = -1;
-         ipi12 = -2;
+         sgn = -1;
       }
    }
 
@@ -451,7 +443,7 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
    const std::complex<long double> sum =
       cadd(cz, cmul(cz2, cadd(bf[0], cmul(cz, horner<1, N-1>(cz2, bf)))));
 
-   return static_cast<long double>(jsgn)*sum + cy + ipi12*PI*PI/12.0L;
+   return static_cast<long double>(sgn)*sum + cy;
 }
 
 } // namespace polylogarithm
