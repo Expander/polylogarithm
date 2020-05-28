@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <complex>
 #include <cmath>
+#include <complex>
 
 namespace polylogarithm {
 
