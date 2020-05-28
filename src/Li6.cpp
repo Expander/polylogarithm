@@ -69,6 +69,27 @@ namespace {
          std::real(a) * std::real(b) - std::imag(a) * std::imag(b),
          std::real(a) * std::imag(b) + std::imag(a) * std::real(b));
    }
+
+   template <typename T, int N>
+   std::complex<T> horner(const std::complex<T>& z, const T (&coeffs)[N]) noexcept
+   {
+      static_assert(N >= 2, "more than two coefficients required");
+
+      const T x = std::real(z);
+      const T y = std::imag(z);
+      const T r = x + x;
+      const T s = x * x + y * y;
+      T a = coeffs[N - 1], b = coeffs[N - 2];
+
+      for (int i = N - 3; i >= 0; --i) {
+         const T t = a;
+         a = b + r * a;
+         b = coeffs[i] - s * t;
+      }
+
+      return std::complex<T>(x*a + b, y*a);
+   }
+
 } // anonymous namespace
 
 /**
@@ -295,23 +316,14 @@ std::complex<long double> Li6(const std::complex<long double>& z) noexcept
 #endif
       };
 
-      std::complex<long double> sum(0.0L, 0.0L);
-
-      for (int i = sizeof(cs)/sizeof(cs[0]) - 1; i >= 1; i--) {
-         sum = cmul(u2, cadd(cs[i], sum));
-      }
-
-      // lowest order terms w/ different powers
-      sum = cadd(c0,
+      return cadd(c0,
          cadd(cmul(u, c1),
          cmul(u2, cadd(c2,
          cadd(cmul(u, c3),
          cmul(u2, cadd(c4,
          cadd(cmul(u, c5),
          cmul(u2, cadd(c6,
-         cmul(u,  cadd(cs[0], sum))))))))))));
-
-      return sum;
+         cmul(u,  horner(u2, cs))))))))))));
    }
 
    std::complex<long double> u(0.0L, 0.0L), r(0.0L, 0.0L);
@@ -330,13 +342,7 @@ std::complex<long double> Li6(const std::complex<long double>& z) noexcept
       sgn = -1;
    }
 
-   std::complex<long double> sum(0.0L, 0.0L);
-
-   for (int i = sizeof(bf)/sizeof(bf[0]) - 1; i >= 0; i--) {
-      sum = cmul(u, cadd(bf[i], sum));
-   }
-
-   return sgn*sum + r;
+   return cadd(r, sgn*cmul(u, horner(u, bf)));
 }
 
 } // namespace polylogarithm
