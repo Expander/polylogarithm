@@ -50,6 +50,13 @@ namespace {
    }
 
    template <typename T>
+   std::complex<T> cadd(T a, const std::complex<T>& b, const std::complex<T>& c, const std::complex<T>& d, const std::complex<T>& e) noexcept
+   {
+      return std::complex<T>(a + std::real(b) + std::real(c) + std::real(d) + std::real(e),
+                             std::imag(b) + std::imag(c) + std::imag(d) + std::imag(e));
+   }
+
+   template <typename T>
    std::complex<T> cadd(const std::complex<T>& a, const std::complex<T>& b) noexcept
    {
       return std::complex<T>(std::real(a) + std::real(b),
@@ -137,7 +144,9 @@ std::complex<double> Li4(const std::complex<double>& z) noexcept
 
    if (lnz*lnz + pz*pz < 1.0) { // |log(z)| < 1
       const std::complex<double> u(lnz, pz); // clog(z)
-      const std::complex<double> u2 = u*u;
+      const std::complex<double> u2 = cmul(u, u);
+      const std::complex<double> u4 = cmul(u2, u2);
+      const std::complex<double> u8 = cmul(u4, u4);
       const double c1 = 1.202056903159594; // zeta(3)
       const double c2 = 0.8224670334241132;
       const std::complex<double> c3 = (11.0/6.0 - clog(-u))/6.0;
@@ -149,6 +158,20 @@ std::complex<double> Li4(const std::complex<double>& z) noexcept
          -1.216594230062244e-12, 1.613000652835010e-14,
          -2.342881045287934e-16
       };
+
+      return
+         cadd(zeta4,
+         cadd(cmul(u2, cadd(c2, cmul(u2, c4))),
+            cmul(u,
+               cadd(c1,
+                  cmul(c3, u2),
+                  cmul(u4, cadd(cs[0], cmul(u2, cs[1]))),
+                  cmul(u8, cadd(cs[2], cmul(u2, cs[3]), cmul(u4, cadd(cs[4], cmul(u2, cs[5]))))),
+                  cmul(cmul(u8, u8), cs[6])
+                  )
+               )
+            )
+         );
 
       return
          cadd(zeta4,
