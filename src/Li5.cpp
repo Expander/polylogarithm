@@ -174,28 +174,6 @@ std::complex<double> Li5(const std::complex<double>& z) noexcept
                      cmul(u4, cadd(bf[12], cmul(u, bf[13]),
                                     cmul(u2, cadd(bf[14], cmul(u, bf[15]))))))),
       cmul(u16, cadd(bf[16], cmul(u, bf[17]), cmul(u2, bf[18]))))));
-
-   return
-      cadd(rest,
-      cmul(u, cadd(bf[0],
-      cmul(u, cadd(bf[1],
-      cmul(u, cadd(bf[2],
-      cmul(u, cadd(bf[3],
-      cmul(u, cadd(bf[4],
-      cmul(u, cadd(bf[5],
-      cmul(u, cadd(bf[6],
-      cmul(u, cadd(bf[7],
-      cmul(u, cadd(bf[8],
-      cmul(u, cadd(bf[9],
-      cmul(u, cadd(bf[10],
-      cmul(u, cadd(bf[11],
-      cmul(u, cadd(bf[12],
-      cmul(u, cadd(bf[13],
-      cmul(u, cadd(bf[14],
-      cmul(u, cadd(bf[15],
-      cmul(u, cadd(bf[16],
-      cmul(u, cadd(bf[17],
-      cmul(u, bf[18]))))))))))))))))))))))))))))))))))))));
 }
 
 /**
