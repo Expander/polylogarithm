@@ -105,7 +105,7 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
          );
    }
 
-   Complex<double> u(0.0, 0.0), r(0.0, 0.0);
+   Complex<double> u(0.0, 0.0), rest(0.0, 0.0);
    double sgn = 1;
 
    if (nz <= 1.0) {
@@ -115,7 +115,7 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
       const Complex<double> lmz(lnz, arg); // log(-z)
       const Complex<double> lmz2 = lmz*lmz;
       u = -log(1.0 - 1.0/z);
-      r = 1.0/360.0*(-7*PI4 + lmz2*(-30.0*PI2 - 15.0*lmz2));
+      rest = 1.0/360.0*(-7*PI4 + lmz2*(-30.0*PI2 - 15.0*lmz2));
       sgn = -1;
    }
 
@@ -124,7 +124,7 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
    const Complex<double> u8 = u4*u4;
 
    return
-      r + sgn * (
+      rest + sgn * (
          u*bf[0] +
          u2*(bf[1] + u*bf[2]) +
          u4*(bf[3] + u*bf[4] + u2*(bf[5] + u*bf[6])) +
@@ -250,7 +250,7 @@ std::complex<long double> Li4(const std::complex<long double>& z_) noexcept
          u*(c1 + u2*(c3 + u2*horner(u2, cs)));
    }
 
-   Complex<long double> u(0.0L, 0.0L), r(0.0L, 0.0L);
+   Complex<long double> u(0.0L, 0.0L), rest(0.0L, 0.0L);
    long double sgn = 1;
 
    if (nz <= 1.0L) {
@@ -260,11 +260,11 @@ std::complex<long double> Li4(const std::complex<long double>& z_) noexcept
       const Complex<long double> lmz(lnz, arg); // log(-z)
       const Complex<long double> lmz2 = lmz*lmz;
       u = -log(1.0L - 1.0L/z);
-      r = 1.0L/360.0L*(-7*PI4 + lmz2*(-30.0L*PI2 - 15.0L*lmz2));
+      rest = 1.0L/360.0L*(-7*PI4 + lmz2*(-30.0L*PI2 - 15.0L*lmz2));
       sgn = -1;
    }
 
-   return r + sgn*u*horner(u, bf);
+   return rest + sgn*u*horner(u, bf);
 }
 
 } // namespace polylogarithm
