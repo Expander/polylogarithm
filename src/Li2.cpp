@@ -20,10 +20,8 @@ namespace {
    {
       static_assert(Nstart <= Nend && Nend < N && Nend >= 1, "invalid array bounds");
 
-      const T x = z.re;
-      const T y = z.im;
-      const T r = x + x;
-      const T s = x * x + y * y;
+      const T r = z.re + z.re;
+      const T s = z.re * z.re + z.im * z.im;
       T a = coeffs[Nend], b = coeffs[Nend - 1];
 
       for (int i = Nend - 2; i >= Nstart; --i) {
@@ -32,7 +30,7 @@ namespace {
          b = coeffs[i] - s * t;
       }
 
-      return Complex<T>(x*a + b, y*a);
+      return Complex<T>(z.re*a + b, z.im*a);
    }
 
 } // anonymous namespace

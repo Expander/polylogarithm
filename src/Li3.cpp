@@ -19,10 +19,8 @@ namespace {
    {
       static_assert(N >= 2, "more than two coefficients required");
 
-      const T x = z.re;
-      const T y = z.im;
-      const T r = x + x;
-      const T s = x * x + y * y;
+      const T r = z.re + z.re;
+      const T s = z.re * z.re + z.im * z.im;
       T a = coeffs[N - 1], b = coeffs[N - 2];
 
       for (int i = N - 3; i >= 0; --i) {
@@ -31,7 +29,7 @@ namespace {
          b = coeffs[i] - s * t;
       }
 
-      return Complex<T>(x*a + b, y*a);
+      return Complex<T>(z.re*a + b, z.im*a);
    }
 
 } // anonymous namespace
