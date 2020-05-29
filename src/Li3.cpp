@@ -83,7 +83,7 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
    const double pz  = arg(z);
    const double lnz = 0.5*std::log(nz);
 
-   if (lnz*lnz + pz*pz < 1.0) { // |log(z)| < 1
+   if (lnz*lnz + pz*pz < 1) { // |log(z)| < 1
       const Complex<double> u(lnz, pz); // log(z)
       const Complex<double> u2 = u*u;
       const Complex<double> u4 = u2*u2;
@@ -216,7 +216,7 @@ std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
    const long double pz  = arg(z);
    const long double lnz = 0.5L*std::log(nz);
 
-   if (lnz*lnz + pz*pz < 1.0L) { // |log(z)| < 1
+   if (lnz*lnz + pz*pz < 1) { // |log(z)| < 1
       const Complex<long double> u(lnz, pz); // log(z)
       const Complex<long double> u2 = u*u;
       const Complex<long double> c0 = zeta3 + u*(zeta2 - u2/12.0L);
@@ -254,7 +254,7 @@ std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
 
    if (nz <= 1) {
       u = -log(1.0L - z);
-   } else { // nz > 1.0L
+   } else { // nz > 1
       const long double arg = pz > 0.0 ? pz - PI : pz + PI;
       const Complex<long double> lmz(lnz, arg); // log(-z)
       u = -log(1.0L - 1.0L/z);

@@ -79,7 +79,7 @@ std::complex<double> Li6(const std::complex<double>& z_) noexcept
    const double pz  = arg(z);
    const double lnz = 0.5*std::log(nz);
 
-   if (lnz*lnz + pz*pz < 1.0) { // |log(z)| < 1
+   if (lnz*lnz + pz*pz < 1) { // |log(z)| < 1
       const Complex<double> u(lnz, pz); // log(z)
       const Complex<double> u2 = u*u;
       const double c0 = zeta6;
@@ -217,7 +217,7 @@ std::complex<long double> Li6(const std::complex<long double>& z_) noexcept
    const long double pz  = arg(z);
    const long double lnz = 0.5L*std::log(nz);
 
-   if (lnz*lnz + pz*pz < 1.0L) { // |log(z)| < 1
+   if (lnz*lnz + pz*pz < 1) { // |log(z)| < 1
       const Complex<long double> u(lnz, pz); // log(z)
       const Complex<long double> u2 = u*u;
       const long double c0 = zeta6;

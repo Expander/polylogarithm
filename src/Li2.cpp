@@ -276,7 +276,7 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
       if (z.re <= 1) {
          return Li2(z.re);
       }
-      // z.re > 1.0
+      // z.re > 1
       return { Li2(z.re), -PI*std::log(z.re) };
    } else if (nz < std::numeric_limits<double>::epsilon()) {
       return z_;
@@ -384,7 +384,7 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
          cy = -0.5L * lz*lz - PI * PI / 6.0L;
          cz = -log(1.0L - 1.0L/z);
          sgn = -1;
-      } else { // nz <= 1.0L
+      } else { // nz <= 1
          cy = 0;
          cz = -log(1.0L - z);
          sgn = 1;
