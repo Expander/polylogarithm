@@ -272,8 +272,8 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
    const double nz = norm_sqr(z);
 
    // special cases
-   if (z.im == 0.0) {
-      if (z.re <= 1.0) {
+   if (z.im == 0) {
+      if (z.re <= 1) {
          return Li2(z.re);
       }
       // z.re > 1.0
@@ -287,7 +287,7 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
 
    // transformation to |z|<1, Re(z)<=0.5
    if (z.re <= 0.5) {
-      if (nz > 1.0) {
+      if (nz > 1) {
          const Complex<double> lz = log(-z);
          cy = -0.5 * lz*lz - PI * PI / 6.0;
          cz = -log(1.0 - 1.0 / z);
@@ -363,11 +363,11 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
    const long double nz = norm_sqr(z);
 
    // special cases
-   if (z.im == 0.0L) {
-      if (z.re <= 1.0L) {
+   if (z.im == 0) {
+      if (z.re <= 1) {
          return Li2(z.re);
       }
-      if (z.re > 1.0L) {
+      if (z.re > 1) {
          return { Li2(z.re), -PI*std::log(z.re) };
       }
    } else if (nz < std::numeric_limits<long double>::epsilon()) {
@@ -379,7 +379,7 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
 
    // transformation to |z|<1, Re(z)<=0.5
    if (z.re <= 0.5L) {
-      if (nz > 1.0L) {
+      if (nz > 1) {
          const Complex<long double> lz = log(-z);
          cy = -0.5L * lz*lz - PI * PI / 6.0L;
          cz = -log(1.0L - 1.0L/z);
