@@ -10,8 +10,8 @@
 namespace polylogarithm {
 
 namespace {
-   const int version_major = 3;
-   const int version_minor = 4;
+   const int version_major = 4;
+   const int version_minor = 0;
    const int version_patch = 0;
 } // anonymous namespace
 
