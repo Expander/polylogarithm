@@ -209,6 +209,9 @@ int main() {
    bench_fn([&](double x) { return hassani_dilog(x); }, values_d,
             "Hassani", "double");
 
+   bench_fn([&](double x) { return morris_dilog(x); }, values_d,
+            "Morris", "double");
+
    bench_fn([&](long double x) { return polylogarithm::Li2(x); }, values_l,
             "polylogarithm C++", "long double");
 
