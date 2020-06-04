@@ -230,7 +230,7 @@ TEST_CASE("test_special_values")
 
    {
       // special point where Re[Li2[z]] == 0
-      const std::complex<double> z0(12.5951703698450184, 0.0);
+      const std::complex<double> z0(12.5951703698450161286398965, 0.0);
       const std::complex<double> li0(
          -4.41928863051485104279391911740417734355378e-16,
          -7.9586388813396972514450338597465302668858497479134219184303);
