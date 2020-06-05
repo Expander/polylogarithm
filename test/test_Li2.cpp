@@ -276,6 +276,7 @@ TEST_CASE("test_real_fixed_values")
          const auto li64_cephes   = cephes_dilog(x64);
          const auto li64_cephes_2 = cephes_dilog_2(x64);
          const auto li64_hassani  = hassani_dilog(x64);
+         const auto li64_morris   = morris_dilog(x64);
 #ifdef ENABLE_GSL
          const auto li64_gsl      = gsl_Li2(x64);
 #endif
@@ -292,6 +293,7 @@ TEST_CASE("test_real_fixed_values")
          INFO("Li2(64)  real = " << li64_cephes    << " (cephes)");
          INFO("Li2(64)  real = " << li64_cephes_2  << " (cephes 2)");
          INFO("Li2(64)  real = " << li64_hassani   << " (hassani)");
+         INFO("Li2(64)  real = " << li64_morris    << " (morris)");
 #ifdef ENABLE_GSL
          INFO("Li2(64)  real = " << li64_gsl       << " (GSL)");
 #endif
@@ -309,6 +311,7 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(li64_cephes  , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_cephes_2, std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_hassani , std::real(li64_expected) , 100*eps64);
+         CHECK_CLOSE(li64_morris  , std::real(li64_expected) , 2*eps64);
 #ifdef ENABLE_GSL
          CHECK_CLOSE(li64_gsl     , std::real(li64_expected) , 2*eps64);
 #endif
@@ -396,6 +399,7 @@ TEST_CASE("test_real_random_values")
       const double li2_cephes = cephes_dilog(v);
       const double li2_cephes_2 = cephes_dilog_2(v);
       const double li2_hassani = hassani_dilog(v);
+      const double li2_morris = morris_dilog(v);
 
       INFO("x = " << v);
       INFO("Li2(64) real = " << li2          << " (polylogarithm C++)");
@@ -409,6 +413,7 @@ TEST_CASE("test_real_random_values")
       INFO("Li2(64) real = " << li2_cephes   << " (cephes)");
       INFO("Li2(64) real = " << li2_cephes_2 << " (cephes 2)");
       INFO("Li2(64) real = " << li2_hassani  << " (Hassani)");
+      INFO("Li2(64) real = " << li2_morris   << " (Morris)");
 
       CHECK_CLOSE(li2, li2_c       , eps64);
 #ifdef ENABLE_GSL
@@ -420,6 +425,7 @@ TEST_CASE("test_real_random_values")
       CHECK_CLOSE(li2, li2_cephes  , 2*eps64);
       CHECK_CLOSE(li2, li2_cephes_2, 2*eps64);
       CHECK_CLOSE(li2, li2_hassani , 100*eps64);
+      CHECK_CLOSE(li2, li2_morris  , 2*eps64);
    }
 }
 
