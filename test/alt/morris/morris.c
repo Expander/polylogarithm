@@ -57,7 +57,7 @@ double morris_dilog(double x)
       r = -PI*PI/6 + l*(0.5*l - log(-x));
       s = 1;
    } else if (x < 0) {
-      const double l = log(1 - x);
+      const double l = log1p(-x);
       y = x/(x - 1);
       r = -0.5*l*l;
       s = -1;
