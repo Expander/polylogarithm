@@ -417,7 +417,7 @@ TEST_CASE("test_real_random_values")
 
       CHECK_CLOSE(li2, li2_c       , eps64);
 #ifdef ENABLE_GSL
-      CHECK_CLOSE(li2, li2_gsl     , eps64);
+      CHECK_CLOSE(li2, li2_gsl     , 2*eps64);
 #endif
       CHECK_CLOSE(li2, li2_327     , 10*eps64);
       CHECK_CLOSE(li2, li2_490     , eps64);
