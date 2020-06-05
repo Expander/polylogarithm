@@ -471,7 +471,7 @@ TEST_CASE("test_complex_random_values")
 
 TEST_CASE("test_relations")
 {
-   const double eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
+   const double eps = 2*std::pow(10.0, -std::numeric_limits<double>::digits10);
 
    for (const auto v: special_values) {
       CHECK_SMALL(Relation_1(v), eps);
