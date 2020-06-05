@@ -11,12 +11,13 @@ static double horner(double x, const double* c, int len)
 
 
 /*
-  Dilogarithm function by Robert Morris
+  Real dilogarithm function
 
-  Robert Morris,
+  Based on Robert Morris,
   "The Dilogarithm Function of a Real Argument"
   MATHEMATICS OF COMPUTATION, VOLUME 33, NUMBER 146
-  APRIL 1979, PAGES 778-787
+  APRIL 1979, PAGES 778-787,
+  DILOG 0011
 
   Translated to C by Alexander Voigt
 */
