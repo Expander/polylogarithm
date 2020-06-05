@@ -4,18 +4,23 @@ Needs["FunctionApproximations`"];
   so that [0,0.5]^nMax << machine precision *)
 nMax = 200;
 
+prec = 20;
+
 (* series for PolyLog[2,x]/x *)
 Li2x[x_, n_:nMax] := Sum[x^(i-1)/i^2, {i,1,n}];
 
 {abscissa, {appox, maxErr}} =
 MiniMaxApproximation[Li2x[x], {x, {0,1/2}, 6, 6},
-                     WorkingPrecision -> 20,
+                     WorkingPrecision -> prec,
                      MaxIterations -> 1000];
 
+FormatCoeffs[expr_, x_, prec_] :=
+    NumberForm[#, prec]& /@ CoefficientList[expr, x]
+
 Print["Numerator coefficients: ",
-      CForm @ CoefficientList[#,x]& @ Numerator[appox]];
+      FormatCoeffs[#,x,prec]& @ Numerator[appox]];
 
 Print["Denominator coefficients: ",
-      CForm @ CoefficientList[#,x]& @ Denominator[appox]];
+      FormatCoeffs[#,x,prec]& @ Denominator[appox]];
 
 Print["max error: ", InputForm @ maxErr];
