@@ -47,36 +47,37 @@ double morris_dilog(double x)
       return 0;
    if (x == 1)
       return PI*PI/6;
+   if (x == -1)
+      return -PI*PI/12;
 
    /* transform to [0, 1/2] */
    if (x < -1) {
-      // 8, Li2[x] /. r2 /. r1
+      const double l = log(1 - x);
       y = 1/(1 - x);
-      r = -PI*PI/6 + log(1 - x)*(0.5*log(1 - x) - log(-x));
+      r = -PI*PI/6 + l*(0.5*l - log(-x));
       s = 1;
    } else if (x < 0) {
-      // 7
+      const double l = log(1 - x);
       y = x/(x - 1);
-      r = -0.5*log(1 - x)*log(1 - x);
+      r = -0.5*l*l;
       s = -1;
    } else if (x < 0.5) {
       y = x;
       r = 0;
       s = 1;
    } else if (x < 1) {
-      // 4
       y = 1 - x;
       r = PI*PI/6 - log(x)*log(1 - x);
       s = -1;
    } else if (x < 2) {
-      // 5
+      const double l = log(x);
       y = 1 - 1/x;
-      r = PI*PI/6 - log(x)*log(1 - 1/x) - 0.5*log(x)*log(x);
+      r = PI*PI/6 - l*(log(1 - 1/x) + 0.5*l);
       s = 1;
    } else {
-      // 6
+      const double l = log(x);
       y = 1/x;
-      r = PI*PI/3 - 0.5*log(x)*log(x);
+      r = PI*PI/3 - 0.5*l*l;
       s = -1;
    }
 
