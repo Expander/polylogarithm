@@ -18,9 +18,9 @@ Notes
 -----
 
 The implementation of the real dilogarithm (with long double
-precision) has been inspired by the implementation from the ROOT
-package (root.cern.ch), licensed under the GNU LGPL, which is based on
-a FORTRAN implementation by K.S. Kölbig (CERNLIB DILOG function C332).
+precision) is inspired by the implementation from the ROOT package
+(root.cern.ch), licensed under the GNU LGPL, which is based on a
+FORTRAN implementation by K.S. Kölbig (CERNLIB DILOG function C332).
 
 The implementation of the complex dilogarithm is inspired by the
 implementation in SPheno (spheno.hepforge.org).
