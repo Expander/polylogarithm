@@ -4,7 +4,11 @@ Needs["FunctionApproximations`"];
   so that [0,0.5]^nMax << machine precision *)
 nMax = 200;
 
-prec = 20;
+(* claculation precision *)
+prec = 100;
+
+(* output precision *)
+outPrec = 20;
 
 (* series for PolyLog[2,x]/x *)
 Li2x[x_, n_:nMax] := Sum[x^(i-1)/i^2, {i,1,n}];
@@ -18,9 +22,9 @@ FormatCoeffs[expr_, x_, prec_] :=
     NumberForm[#, prec]& /@ CoefficientList[expr, x]
 
 Print["Numerator coefficients: ",
-      FormatCoeffs[#,x,prec]& @ Numerator[appox]];
+      FormatCoeffs[#,x,outPrec]& @ Numerator[appox]];
 
 Print["Denominator coefficients: ",
-      FormatCoeffs[#,x,prec]& @ Denominator[appox]];
+      FormatCoeffs[#,x,outPrec]& @ Denominator[appox]];
 
 Print["max error: ", InputForm @ maxErr];
