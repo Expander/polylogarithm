@@ -16,7 +16,7 @@ namespace polylogarithm {
 namespace {
 
    template <typename T>
-   T horner(T x, const T* c, int len)
+   T horner(T x, const T* c, int len) noexcept
    {
       T p = 0;
       while (len--)
