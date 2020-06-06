@@ -14,7 +14,7 @@ outPrec = 20;
 Li2x[x_, n_:nMax] := Sum[x^(i-1)/i^2, {i,1,n}];
 
 {abscissa, {appox, maxErr}} =
-MiniMaxApproximation[Li2x[x], {x, {0,1/2}, 6, 6},
+MiniMaxApproximation[Li2x[x], {x, {0,1/2}, 7, 7},
                      WorkingPrecision -> prec,
                      MaxIterations -> 1000];
 

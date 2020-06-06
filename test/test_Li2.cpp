@@ -226,7 +226,7 @@ TEST_CASE("test_special_values")
 
    CHECK_CLOSE(36.*Li2(0.5) - 36.*Li2(0.25)
                - 12.*Li2(1./8.) + 6.*Li2(1./64.),
-               pi2, 2*eps);
+               pi2, eps);
 
    {
       // special point where Re[Li2[z]] == 0
@@ -425,7 +425,7 @@ TEST_CASE("test_real_random_values")
       CHECK_CLOSE(li2, li2_cephes  , 2*eps64);
       CHECK_CLOSE(li2, li2_cephes_2, 2*eps64);
       CHECK_CLOSE(li2, li2_hassani , 100*eps64);
-      CHECK_CLOSE(li2, li2_morris  , 2*eps64);
+      CHECK_CLOSE(li2, li2_morris  , eps64);
    }
 }
 
