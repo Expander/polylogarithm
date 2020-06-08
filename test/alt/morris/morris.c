@@ -24,7 +24,7 @@ static double horner(double x, const double* c, int len)
 double morris_dilog(double x)
 {
    const double PI = 3.141592653589793;
-   const double cp[] = {
+   const double P[] = {
       +0.12050991261341671705797e4,
       -0.32407609254539474989552e4,
       +0.31928976938241289723624e4,
@@ -32,7 +32,7 @@ double morris_dilog(double x)
       +0.25212662919363406616773e3,
       -0.13120034432716341584577e2,
    };
-   const double cq[] = {
+   const double Q[] = {
       +0.12050991261341672354682e4,
       -0.35420357069875166000880e4,
       +0.39445067176691511608434e4,
@@ -51,7 +51,7 @@ double morris_dilog(double x)
 
    double y = 0, r = 0, s = 1;
 
-   /* transform to [0, 1/2] */
+   /* transform to [0, 1/2) */
    if (x < -1) {
       const double l = log(1 - x);
       y = 1/(1 - x);
@@ -82,8 +82,8 @@ double morris_dilog(double x)
       s = -1;
    }
 
-   const double p = horner(y, cp, sizeof(cp)/sizeof(cp[0]));
-   const double q = horner(y, cq, sizeof(cq)/sizeof(cq[0]));
+   const double p = horner(y, P, sizeof(P)/sizeof(P[0]));
+   const double q = horner(y, Q, sizeof(Q)/sizeof(Q[0]));
 
    return r + s*y*p/q;
 }
