@@ -1,3 +1,8 @@
+(*
+  Approximation of PolyLog[2,x]/x by a rational function using Remez
+  algorithm on the interval [0, 1/2).
+ *)
+
 Needs["FunctionApproximations`"];
 
 (* maximum number of terms in Li2 series,
