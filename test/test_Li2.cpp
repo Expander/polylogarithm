@@ -425,7 +425,7 @@ TEST_CASE("test_real_random_values")
       CHECK_CLOSE(li2, li2_cephes  , 2*eps64);
       CHECK_CLOSE(li2, li2_cephes_2, 2*eps64);
       CHECK_CLOSE(li2, li2_hassani , 100*eps64);
-      CHECK_CLOSE(li2, li2_morris  , 2*eps64);
+      CHECK_CLOSE(li2, li2_morris  , eps64);
    }
 }
 

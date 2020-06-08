@@ -31,8 +31,9 @@ static long double _Complex fast_clogl(long double _Complex z)
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
  * @param x real argument
- * @note Implementation translated by R.Brun from CERNLIB DILOG function C332
  * @return \f$\mathrm{Li}_2(x)\f$
+ * @author K.S. Kölbig
+ * @note Implementation translated by R.Brun from CERNLIB DILOG function C332
  *
  * Implemented as a truncated series expansion in terms of Chebyshev
  * polynomials, see [Yudell L. Luke: Mathematical functions and their
@@ -111,10 +112,11 @@ double li2(double x)
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(z)\f$ with long double precision
  * @param x real argument
+ * @return \f$\mathrm{Li}_2(z)\f$
+ * @author K.S. Kölbig
  * @note Implementation based on translation by R.Brun from CERNLIB
  *    DILOG function C332, extended by Alexander Voigt to quadruple
  *    precision
- * @return \f$\mathrm{Li}_2(z)\f$
  *
  * Implemented as a truncated series expansion in terms of Chebyshev
  * polynomials, see [Yudell L. Luke: Mathematical functions and their

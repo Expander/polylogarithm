@@ -17,11 +17,8 @@ can be easily extracted and incorporated into existing projects.
 Notes
 -----
 
-The implementation of the real dilogarithm has been taken from the
-ROOT package (root.cern.ch), licensed under the GNU LGPL.
-
-The implementation of the complex dilogarithm has been taken from
-SPheno (spheno.hepforge.org) and has been translated to C++.
+The implementation of the complex dilogarithm is inspired by the
+implementation in [SPheno](https://spheno.hepforge.org/).
 
 
 Copying
