@@ -50,8 +50,8 @@ namespace {
  * @return \f$\mathrm{Li}_2(x)\f$
  * @author Alexander Voigt
  *
- * Implemented as a rational function approximation with a
- * maximum relative error of 4.16e-18.
+ * Implemented as an economized Pade approximation with a
+ * maximum error of 4.16e-18.
  */
 double Li2(double x) noexcept
 {
