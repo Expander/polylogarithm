@@ -77,12 +77,15 @@ double Li2(double x) noexcept
      -3.2116618742475189569e-3
    };
 
-   if (x == 0)
+   if (x == 0) {
       return 0;
-   if (x == 1)
+   }
+   if (x == 1) {
       return PI*PI/6;
-   if (x == -1)
+   }
+   if (x == -1) {
       return -PI*PI/12;
+   }
 
    double y = 0, r = 0, s = 1;
 
@@ -203,12 +206,15 @@ long double Li2(long double x) noexcept
    };
 #endif
 
-   if (x == 0)
+   if (x == 0) {
       return 0;
-   if (x == 1)
+   }
+   if (x == 1) {
       return PI*PI/6;
-   if (x == -1)
+   }
+   if (x == -1) {
       return -PI*PI/12;
+   }
 
    long double y = 0, r = 0, s = 1;
 
