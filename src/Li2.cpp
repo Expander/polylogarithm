@@ -77,16 +77,6 @@ double Li2(double x) noexcept
      -3.2116618742475189569e-3
    };
 
-   if (x == 0) {
-      return 0;
-   }
-   if (x == 1) {
-      return PI*PI/6;
-   }
-   if (x == -1) {
-      return -PI*PI/12;
-   }
-
    double y = 0, r = 0, s = 1;
 
    // transform to [0, 1/2)
@@ -95,11 +85,15 @@ double Li2(double x) noexcept
       y = 1/(1 - x);
       r = -PI*PI/6 + l*(0.5*l - std::log(-x));
       s = 1;
+   } else if (x == -1) {
+      return -PI*PI/12;
    } else if (x < 0) {
       const double l = std::log1p(-x);
       y = x/(x - 1);
       r = -0.5*l*l;
       s = -1;
+   } else if (x == 0) {
+      return 0;
    } else if (x < 0.5) {
       y = x;
       r = 0;
@@ -108,6 +102,8 @@ double Li2(double x) noexcept
       y = 1 - x;
       r = PI*PI/6 - std::log(x)*std::log(1 - x);
       s = -1;
+   } else if (x == 1) {
+      return PI*PI/6;
    } else if (x < 2) {
       const double l = std::log(x);
       y = 1 - 1/x;
