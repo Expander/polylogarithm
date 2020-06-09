@@ -202,16 +202,6 @@ long double Li2(long double x) noexcept
    };
 #endif
 
-   if (x == 0) {
-      return 0;
-   }
-   if (x == 1) {
-      return PI*PI/6;
-   }
-   if (x == -1) {
-      return -PI*PI/12;
-   }
-
    long double y = 0, r = 0, s = 1;
 
    // transform to [0, 1/2)
@@ -220,11 +210,15 @@ long double Li2(long double x) noexcept
       y = 1/(1 - x);
       r = -PI*PI/6 + l*(0.5L*l - std::log(-x));
       s = 1;
+   } else if (x == -1) {
+      return -PI*PI/12;
    } else if (x < 0) {
       const long double l = std::log1p(-x);
       y = x/(x - 1);
       r = -0.5L*l*l;
       s = -1;
+   } else if (x == 0) {
+      return 0;
    } else if (x < 0.5L) {
       y = x;
       r = 0;
@@ -233,6 +227,8 @@ long double Li2(long double x) noexcept
       y = 1 - x;
       r = PI*PI/6 - std::log(x)*std::log(1 - x);
       s = -1;
+   } else if (x == 1) {
+      return PI*PI/6;
    } else if (x < 2) {
       const long double l = std::log(x);
       y = 1 - 1/x;
