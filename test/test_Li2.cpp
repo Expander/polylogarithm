@@ -317,8 +317,8 @@ TEST_CASE("test_real_fixed_values")
 #endif
          CHECK_CLOSE(li64_poly    , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_poly_c  , std::real(li64_expected) , 2*eps64);
-         CHECK_CLOSE(li128_poly   , std::real(li128_expected), eps128);
-         CHECK_CLOSE(li128_poly_c , std::real(li128_expected), eps128);
+         CHECK_CLOSE(li128_poly   , std::real(li128_expected), 2*eps128);
+         CHECK_CLOSE(li128_poly_c , std::real(li128_expected), 2*eps128);
       }
    }
 }
@@ -374,9 +374,9 @@ TEST_CASE("test_complex_fixed_values")
       CHECK_CLOSE_COMPLEX(li64_hollik , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_sherpa , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_spheno , li64_expected , 2*eps64);
-      CHECK_CLOSE_COMPLEX(li128_poly  , li128_expected, eps128);
-      CHECK_CLOSE_COMPLEX(li128_poly_c, li128_expected, eps128);
-      CHECK_CLOSE_COMPLEX(li128_tsil  , li128_expected, 2*eps128);
+      CHECK_CLOSE_COMPLEX(li128_poly  , li128_expected, 2*eps128);
+      CHECK_CLOSE_COMPLEX(li128_poly_c, li128_expected, 2*eps128);
+      CHECK_CLOSE_COMPLEX(li128_tsil  , li128_expected, 4*eps128);
    }
 }
 

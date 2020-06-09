@@ -145,8 +145,8 @@ TEST_CASE("test_fixed_values")
 
       CHECK_CLOSE_COMPLEX(li64_cmpl   , li64_expected , 3*eps64);
       CHECK_CLOSE_COMPLEX(li64_cmpl_c , li64_expected , 3*eps64);
-      CHECK_CLOSE_COMPLEX(li128_cmpl  , li128_expected, eps128);
-      CHECK_CLOSE_COMPLEX(li128_cmpl_c, li128_expected, eps128);
+      CHECK_CLOSE_COMPLEX(li128_cmpl  , li128_expected, 2*eps128);
+      CHECK_CLOSE_COMPLEX(li128_cmpl_c, li128_expected, 2*eps128);
 
       if (std::abs(std::real(z128) - 1.0L) < 1e-5L &&
           std::abs(std::imag(z128)       ) < 1e-5L) {
@@ -155,9 +155,9 @@ TEST_CASE("test_fixed_values")
          CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 1000*eps128);
       } else if (std::abs(std::real(z128)) < 2000*eps128 &&
                  std::abs(std::imag(z128)) < 2000*eps128) {
-         CHECK_CLOSE_COMPLEX(li128_tsil, std::complex<long double>(0.0L, 0.0L), 1e-14L);
+         CHECK_CLOSE_COMPLEX(li128_tsil, std::complex<long double>(0.0L, 0.0L), 1e-12L);
       } else {
-         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, eps128);
+         CHECK_CLOSE_COMPLEX(li128_tsil, li128_expected, 2*eps128);
       }
 
       CHECK_SMALL(Relation_1(z64), 1e5*eps64);
