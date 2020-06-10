@@ -96,12 +96,7 @@ std::complex<double> Li5(const std::complex<double>& z_) noexcept
       return c0 + u * c1 +
          u2 * (c2 + u * c3 +
          u2 * (c4 + u * c5 +
-         u2 * (cs[0] +
-         u2 * (cs[1] +
-         u2 * (cs[2] +
-         u2 * (cs[3] +
-         u2 * (cs[4] +
-         u2 * (cs[5]))))))));
+         u2 * horner(u2, cs)));
    }
 
    Complex<double> u(0.0, 0.0), rest(0.0, 0.0);

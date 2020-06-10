@@ -79,8 +79,6 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
    if (lnz*lnz + pz*pz < 1) { // |log(z)| < 1
       const Complex<double> u(lnz, pz); // log(z)
       const Complex<double> u2 = u*u;
-      const Complex<double> u4 = u2*u2;
-      const Complex<double> u8 = u4*u4;
       const double c1 = 1.202056903159594; // zeta(3)
       const double c2 = 0.8224670334241132;
       const Complex<double> c3 = (11.0/6.0 - log(-u))/6.0;
@@ -93,14 +91,8 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
          -2.342881045287934e-16
       };
 
-      return zeta4 + u2 * (c2 + u2 * c4) +
-         u * (
-             c1 +
-             c3*u2 +
-             u4*(cs[0] + u2*cs[1]) +
-             u8*(cs[2] + u2*cs[3] + u4*(cs[4] + u2*cs[5])) +
-             u8*u8*cs[6]
-         );
+      return zeta4 + u2*(c2 + u2*c4) +
+         u*(c1 + u2*(c3 + u2*horner(u2, cs)));
    }
 
    Complex<double> u(0.0, 0.0), rest(0.0, 0.0);

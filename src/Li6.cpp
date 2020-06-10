@@ -98,11 +98,7 @@ std::complex<double> Li6(const std::complex<double>& z_) noexcept
          u2 * (c2 + u * c3 +
          u2 * (c4 + u * c5 +
          u2 * (c6 +
-         u * (cs[0] +
-         u2 * (cs[1] +
-         u2 * (cs[2] +
-         u2 * (cs[3] +
-         u2 * (cs[4]))))))));
+         u * horner(u2, cs))));
    }
 
    Complex<double> u(0.0, 0.0), rest(0.0, 0.0);
@@ -247,6 +243,7 @@ std::complex<long double> Li6(const std::complex<long double>& z_) noexcept
         -6.19462586636097236736900573587284992e-37L
 #endif
       };
+
       return c0 + u * c1 +
          u2 * (c2 + u * c3 +
          u2 * (c4 + u * c5 +
