@@ -1,3 +1,8 @@
+# google benchmark
+set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "Suppressing benchmark's tests" FORCE)
+add_subdirectory(benchmark)
+
+# GNU Scientific Library
 find_package(GSL QUIET)
 
 if(GSL_FOUND)
