@@ -1,3 +1,4 @@
+#include "alt.h"
 #include "Li2.hpp"
 #include <benchmark/benchmark.h>
 
@@ -13,6 +14,14 @@ static void BM_Li2_poly_cpp(benchmark::State& state)
   }
 }
 
+static void BM_Li2_poly_c(benchmark::State& state)
+{
+  for (auto _ : state) {
+     benchmark::DoNotOptimize(li2(points[state.range(0)]));
+  }
+}
+
 BENCHMARK(BM_Li2_poly_cpp)->DenseRange(0, (sizeof(points)/sizeof(points[0])), 1);
+BENCHMARK(BM_Li2_poly_c)  ->DenseRange(0, (sizeof(points)/sizeof(points[0])), 1);
 
 BENCHMARK_MAIN();
