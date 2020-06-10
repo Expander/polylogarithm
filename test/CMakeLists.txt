@@ -24,10 +24,12 @@ function(add_polylogarithm_test name)
     alt
     polylog
     ${ARGN}
+    benchmark::benchmark
     )
   add_test(NAME ${name} COMMAND ${name})
 endfunction()
 
+add_polylogarithm_test(bench)
 add_polylogarithm_test(bench_Li ${LIBGSL})
 add_polylogarithm_test(test_Cl)
 add_polylogarithm_test(test_Cl2)
