@@ -4,7 +4,7 @@
 static void BM_Li2_real_poly_cpp(benchmark::State& state)
 {
   for (auto _ : state) {
-     polylogarithm::Li2(1.1);
+     benchmark::DoNotOptimize(polylogarithm::Li2(1.1));
   }
 }
 
