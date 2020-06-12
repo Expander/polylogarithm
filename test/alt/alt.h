@@ -52,6 +52,10 @@ double cephes_dilog_2(double x);
 
 double hassani_dilog(double x);
 
+double koelbig_dilog(double x);
+
+long double koelbig_dilogl(long double x);
+
 double morris_dilog(double x);
 
 void hollik_dilog(double re, double im, double* res_re, double* res_im);
