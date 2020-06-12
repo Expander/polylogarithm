@@ -209,6 +209,9 @@ int main() {
    bench_fn([&](double x) { return hassani_dilog(x); }, values_d,
             "Hassani", "double");
 
+   bench_fn([&](double x) { return koelbig_dilog(x); }, values_d,
+            "Koelbig", "double");
+
    bench_fn([&](double x) { return morris_dilog(x); }, values_d,
             "Morris", "double");
 
@@ -217,6 +220,9 @@ int main() {
 
    bench_fn([&](long double x) { return poly_Li2(x); }, values_l,
             "polylogarithm C", "long double");
+
+   bench_fn([&](long double x) { return koelbig_dilogl(x); }, values_l,
+            "Koelbig", "long double");
 
    bench_fn([&](long double x) { return tsil_Li2(x); }, values_l,
             "TSIL", "long double");
