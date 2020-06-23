@@ -295,34 +295,30 @@ static double _Complex cli2(double _Complex z)
    }
 
    double _Complex cy = 0.0, cz = 0.0;
-   int jsgn = 0, ipi12 = 0;
+   int sgn = 1;
 
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5) {
       if (nz > 1.0) {
          const double _Complex lz = fast_clog(-z);
-         cy = -0.5 * lz*lz;
+         cy = -0.5*lz*lz - PI*PI/6;
          cz = -fast_clog(1.0 - 1.0 / z);
-         jsgn = -1;
-         ipi12 = -2;
+         sgn = -1;
       } else { /* nz <= 1 */
          cy = 0;
          cz = -fast_clog(1.0 - z);
-         jsgn = 1;
-         ipi12 = 0;
+         sgn = 1;
       }
    } else { /* rz > 0.5 */
       if (nz <= 2*rz) {
          cz = -fast_clog(z);
-         cy = cz * fast_clog(1.0 - z);
-         jsgn = -1;
-         ipi12 = 2;
+         cy = cz*fast_clog(1.0 - z) + PI*PI/6;
+         sgn = -1;
       } else { /* nz > 2*rz */
          const double _Complex lz = fast_clog(-z);
-         cy = -0.5 * lz*lz;
+         cy = -0.5*lz*lz - PI*PI/6;
          cz = -fast_clog(1.0 - 1.0 / z);
-         jsgn = -1;
-         ipi12 = -2;
+         sgn = -1;
       }
    }
 
@@ -341,7 +337,7 @@ static double _Complex cli2(double _Complex z)
       cz2 * (bf[8] +
       cz2 * (bf[9]))))))))));
 
-   return (double)jsgn * sum + cy + ipi12 * PI * PI / 12.0;
+   return (double)sgn * sum + cy;
 }
 
 
@@ -402,34 +398,30 @@ static long double _Complex cli2l(long double _Complex z)
    }
 
    long double _Complex cy = 0.0, cz = 0.0;
-   int jsgn = 0, ipi12 = 0;
+   int sgn = 1;
 
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5L) {
       if (nz > 1.0L) {
          const long double _Complex lz = fast_clogl(-z);
-         cy = -0.5L * lz*lz;
-         cz = -fast_clogl(1.0L - 1.0L / z);
-         jsgn = -1;
-         ipi12 = -2;
+         cy = -0.5L*lz*lz - PI*PI/6;
+         cz = -fast_clogl(1.0L - 1.0L/z);
+         sgn = -1;
       } else { /* nz <= 1 */
          cy = 0;
          cz = -fast_clogl(1.0L - z);
-         jsgn = 1;
-         ipi12 = 0;
+         sgn = 1;
       }
    } else { /* rz > 0.5L */
       if (nz <= 2*rz) {
          cz = -fast_clogl(z);
-         cy = cz * fast_clogl(1.0L - z);
-         jsgn = -1;
-         ipi12 = 2;
+         cy = cz * fast_clogl(1.0L - z) + PI*PI/6;
+         sgn = -1;
       } else { /* nz > 2*rz */
          const long double _Complex lz = fast_clogl(-z);
-         cy = -0.5L * lz*lz;
-         cz = -fast_clogl(1.0L - 1.0L / z);
-         jsgn = -1;
-         ipi12 = -2;
+         cy = -0.5L*lz*lz - PI*PI/6;
+         cz = -fast_clogl(1.0L - 1.0L/z);
+         sgn = -1;
       }
    }
 
@@ -444,7 +436,7 @@ static long double _Complex cli2l(long double _Complex z)
    /* lowest order terms w/ different powers */
    sum = cz + cz2 * (bf[0] + cz * (bf[1] + sum));
 
-   return (long double)jsgn * sum + cy + ipi12 * PI * PI / 12.0;
+   return (long double)sgn * sum + cy;
 }
 
 
