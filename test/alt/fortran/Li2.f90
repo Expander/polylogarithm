@@ -8,9 +8,9 @@
 
 double precision function dhorner(x, c, len)
   implicit none
+  integer :: len, i
   double precision :: x
   double precision, dimension(len) :: c
-  integer :: len, i
 
   dhorner = 0
 
