@@ -82,9 +82,8 @@ double precision function dli2(x)
       dli2 = -PI*PI/12
       return
    elseif (x .lt. 0) then
-      l = log(1 - x)
       y = x/(x - 1)
-      r = -0.5D0*l*l
+      r = -0.5D0*log(1 - x)**2
       s = -1
    elseif (x .eq. 0) then
       dli2 = 0
@@ -106,9 +105,8 @@ double precision function dli2(x)
       r = PI*PI/6 - l*(log(1 - 1/x) + 0.5D0*l)
       s = 1
    else
-      l = log(x)
       y = 1/x
-      r = PI*PI/3 - 0.5D0*l*l
+      r = PI*PI/3 - 0.5D0*log(x)**2
       s = -1
    endif
 
