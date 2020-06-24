@@ -324,18 +324,17 @@ static double _Complex cli2(double _Complex z)
 
    /* the dilogarithm */
    const double _Complex cz2 = cz*cz;
+   const double _Complex cz4 = cz2*cz2;
    const double _Complex sum =
       cz +
       cz2 * (bf[0] +
       cz  * (bf[1] +
-      cz2 * (bf[2] +
-      cz2 * (bf[3] +
-      cz2 * (bf[4] +
-      cz2 * (bf[5] +
-      cz2 * (bf[6] +
-      cz2 * (bf[7] +
-      cz2 * (bf[8] +
-      cz2 * (bf[9]))))))))));
+      cz2 * (
+          bf[2] +
+          cz2*bf[3] +
+          cz4*(bf[4] + cz2*bf[5]) +
+          cz4*cz4*(bf[6] + cz2*bf[7] + cz4*(bf[8] + cz2*bf[9]))
+      )));
 
    return (double)sgn * sum + cy;
 }
