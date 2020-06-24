@@ -287,9 +287,8 @@ static double _Complex cli2(double _Complex z)
       if (rz <= 1.0) {
          return li2(rz);
       }
-      if (rz > 1.0) {
-         return li2(rz) - PI*log(rz)*I;
-      }
+      // rz > 1.0
+      return li2(rz) - PI*log(rz)*I;
    } else if (nz < DBL_EPSILON) {
       return z;
    }
@@ -389,9 +388,8 @@ static long double _Complex cli2l(long double _Complex z)
       if (rz <= 1.0) {
          return li2l(rz);
       }
-      if (rz > 1.0) {
-         return li2l(rz) - PI*logl(rz)*I;
-      }
+      // rz > 1.0
+      return li2l(rz) - PI*logl(rz)*I;
    } else if (nz < LDBL_EPSILON) {
       return z;
    }
