@@ -323,7 +323,6 @@ static double _Complex cli2(double _Complex z)
       }
    }
 
-   /* the dilogarithm */
    const double _Complex cz2 = cz*cz;
    const double _Complex cz4 = cz2*cz2;
    const double _Complex sum =
