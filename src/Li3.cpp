@@ -42,20 +42,19 @@ namespace {
  */
 std::complex<double> Li3(const std::complex<double>& z_) noexcept
 {
-   const double PI    = 3.141592653589793;
-   const double PI2   = PI*PI;
-   const double zeta2 = 1.644934066848226;
-   const double zeta3 = 1.202056903159594;
+   const double PI    = 3.1415926535897932;
+   const double zeta2 = 1.6449340668482264;
+   const double zeta3 = 1.2020569031595943;
    const double bf[18] = {
-      1.0                  , -3.0/8.0              ,
-      17.0/216.0           , -5.0/576.0            ,
-      1.296296296296296e-04,  8.101851851851851e-05,
-     -3.419357160853759e-06, -1.328656462585034e-06,
-      8.660871756109851e-08,  2.526087595532039e-08,
-     -2.144694468364064e-09, -5.140110622012978e-10,
-      5.249582114600829e-11,  1.088775440663631e-11,
-     -1.277939609449369e-12, -2.369824177308745e-13,
-      3.104357887965462e-14,  5.261758629912506e-15
+      1.0                   , -3.0/8.0               ,
+      17.0/216.0            , -5.0/576.0             ,
+      1.2962962962962963e-04,  8.1018518518518519e-05,
+     -3.4193571608537595e-06, -1.3286564625850340e-06,
+      8.6608717561098513e-08,  2.5260875955320400e-08,
+     -2.1446944683640648e-09, -5.1401106220129789e-10,
+      5.2495821146008294e-11,  1.0887754406636318e-11,
+     -1.2779396094493695e-12, -2.3698241773087452e-13,
+      3.1043578879654623e-14,  5.2617586299125061e-15
    };
 
    const Complex<double> z = { std::real(z_), std::imag(z_) };
@@ -71,9 +70,7 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
          return -0.75*zeta3;
       }
       if (z.re == 0.5) {
-         const double ln2  = 0.6931471805599453; // ln(2)
-         const double ln23 = 0.3330246519889295; // ln(2)^3
-         return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.0;
+         return 0.53721319360804020;
       }
    }
 
@@ -90,10 +87,10 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
       const Complex<double> c1 = 0.25 * (3.0 - 2.0*log(-u));
 
       const double cs[7] = {
-         -3.472222222222222e-03, 1.157407407407407e-05,
-         -9.841899722852104e-08, 1.148221634332745e-09,
-         -1.581572499080917e-11, 2.419500979252515e-13,
-         -3.982897776989488e-15
+         -3.4722222222222222e-03, 1.1574074074074074e-05,
+         -9.8418997228521038e-08, 1.1482216343327454e-09,
+         -1.5815724990809166e-11, 2.4195009792525152e-13,
+         -3.9828977769894877e-15
       };
 
       return
@@ -138,7 +135,6 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
 std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
 {
    const long double PI    = 3.14159265358979323846264338327950288L;
-   const long double PI2   = PI*PI;
    const long double zeta2 = 1.64493406684822643647241516664602519L;
    const long double zeta3 = 1.20205690315959428539973816151144999L;
    const long double bf[] = {
@@ -204,9 +200,7 @@ std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
          return -0.75L*zeta3;
       }
       if (z.re == 0.5L) {
-         const long double ln2  = 0.693147180559945309417232121458176568L; // ln(2)
-         const long double ln23 = 0.333024651988929479718853582611730544L; // ln(2)^3
-         return (-2*PI2*ln2 + 4*ln23 + 21*zeta3)/24.0L;
+         return 0.537213193608040200940623225594965827L;
       }
    }
 
