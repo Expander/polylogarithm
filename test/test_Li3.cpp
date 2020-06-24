@@ -38,6 +38,16 @@ std::complex<double> poly_Li3(std::complex<double> z) {
    return { re, im };
 }
 
+#ifdef ENABLE_FORTRAN
+
+std::complex<double> poly_Li3_fortran(std::complex<double> z) {
+   double re{}, im{};
+   cli3_fortran(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+#endif
+
 std::complex<long double> poly_Li3(std::complex<long double> z) {
    long double re{}, im{};
    cli3l_(std::real(z), std::imag(z), &re, &im);
@@ -130,6 +140,9 @@ TEST_CASE("test_fixed_values")
 
       const auto li64_cmpl    = polylogarithm::Li3(z64);
       const auto li64_cmpl_c  = poly_Li3(z64);
+#ifdef ENABLE_FORTRAN
+      const auto li64_cmpl_f  = poly_Li3_fortran(z64);
+#endif
       const auto li128_cmpl   = polylogarithm::Li3(z128);
       const auto li128_cmpl_c = poly_Li3(z128);
       const auto li128_tsil   = tsil_Li3(z128);
@@ -138,6 +151,9 @@ TEST_CASE("test_fixed_values")
       INFO("Li3(64)  cmpl = " << li64_expected  << " (expected)");
       INFO("Li3(64)  cmpl = " << li64_cmpl      << " (polylogarithm C++)");
       INFO("Li3(64)  cmpl = " << li64_cmpl_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+      INFO("Li3(64)  cmpl = " << li64_cmpl_f    << " (polylogarithm Fortran)");
+#endif
       INFO("Li3(128) cmpl = " << li128_expected << " (expected)");
       INFO("Li3(128) cmpl = " << li128_tsil     << " (TSIL)");
       INFO("Li3(128) cmpl = " << li128_cmpl     << " (polylogarithm C++)");
@@ -145,6 +161,9 @@ TEST_CASE("test_fixed_values")
 
       CHECK_CLOSE_COMPLEX(li64_cmpl   , li64_expected , 3*eps64);
       CHECK_CLOSE_COMPLEX(li64_cmpl_c , li64_expected , 3*eps64);
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE_COMPLEX(li64_cmpl_f , li64_expected , 3*eps64);
+#endif
       CHECK_CLOSE_COMPLEX(li128_cmpl  , li128_expected, 2*eps128);
       CHECK_CLOSE_COMPLEX(li128_cmpl_c, li128_expected, 2*eps128);
 
@@ -176,9 +195,15 @@ TEST_CASE("test_complex_random_values")
    for (auto v: values) {
       const std::complex<double> li3 = polylogarithm::Li3(v);
       const std::complex<double> li3_c = poly_Li3(v);
+#ifdef ENABLE_FORTRAN
+      const std::complex<double> li3_f = poly_Li3_fortran(v);
+#endif
       const std::complex<double> li3_tsil = to_c64(tsil_Li3(v));
 
       CHECK_CLOSE_COMPLEX(li3, li3_tsil, 10*eps);
       CHECK_CLOSE_COMPLEX(li3, li3_c   , 10*eps);
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE_COMPLEX(li3, li3_f   , 10*eps);
+#endif
    }
 }

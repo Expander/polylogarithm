@@ -67,6 +67,12 @@ std::complex<double> poly_Li2_fortran(std::complex<double> z) {
    return { re, im };
 }
 
+std::complex<double> poly_Li3_fortran(std::complex<double> z) {
+   double re{}, im{};
+   cli3_fortran(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 #endif
 
 std::complex<double> poly_Li3(std::complex<double> z) {
@@ -285,6 +291,11 @@ int main() {
 
    bench_fn([&](std::complex<double> z) { return poly_Li3(z); },
             values_cd, "polylogarithm C", "double");
+
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](std::complex<double> z) { return poly_Li3_fortran(z); },
+            values_cd, "polylogarithm Fortran", "double");
+#endif
 
    bench_fn([&](std::complex<long double> z) { return polylogarithm::Li3(z); },
             values_cl, "polylogarithm C++", "long double");

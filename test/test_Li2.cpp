@@ -99,12 +99,6 @@ std::complex<double> poly_Li2(std::complex<double> z) {
    return { re, im };
 }
 
-std::complex<long double> poly_Li2(std::complex<long double> z) {
-   long double re{}, im{};
-   cli2l_(std::real(z), std::imag(z), &re, &im);
-   return { re, im };
-}
-
 #ifdef ENABLE_FORTRAN
 
 std::complex<double> poly_Li2_fortran(std::complex<double> z) {
@@ -114,6 +108,12 @@ std::complex<double> poly_Li2_fortran(std::complex<double> z) {
 }
 
 #endif
+
+std::complex<long double> poly_Li2(std::complex<long double> z) {
+   long double re{}, im{};
+   cli2l_(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
 
 std::complex<double> sherpa_Li2(std::complex<double> z) {
    double re{}, im{};
