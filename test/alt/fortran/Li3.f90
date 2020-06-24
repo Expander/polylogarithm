@@ -8,7 +8,7 @@
 
 !*********************************************************************
 !> @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$
-!> @param z_ complex argument
+!> @param z complex argument
 !> @return \f$\mathrm{Li}_3(z)\f$
 !> @author Alexander Voigt
 !*********************************************************************
