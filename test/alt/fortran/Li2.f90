@@ -132,7 +132,7 @@ double complex function cdli2(z)
   implicit none
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision :: rz, iz, nz, sgn, dli2
-  double complex :: z, cy, cz, cz2, sum
+  double complex :: z, cy, cz, cz2, sum, fast_cdlog
   double precision, dimension(10) :: bf
 
   bf( 1) = - 1.0D0/4.0D0
@@ -163,22 +163,22 @@ double complex function cdli2(z)
   ! transformation to |z| < 1, Re(z) <= 0.5
   if (rz .le. 0.5D0) then
      if (nz .gt. 1) then
-        cy = -0.5D0*log(-z)**2 - PI*PI/6
-        cz = -log(1 - 1/z)
+        cy = -0.5D0*fast_cdlog(-z)**2 - PI*PI/6
+        cz = -fast_cdlog(1 - 1/z)
         sgn = -1
      else ! nz <= 1
         cy = 0
-        cz = -log(1 - z)
+        cz = -fast_cdlog(1 - z)
         sgn = 1
      endif
   else ! rz > 0.5D0
      if (nz .le. 2*rz) then
-        cz = -log(z)
-        cy = cz*log(1 - z) + PI*PI/6
+        cz = -fast_cdlog(z)
+        cy = cz*fast_cdlog(1 - z) + PI*PI/6
         sgn = -1
      else ! nz > 2*rz
-        cy = -0.5D0*log(-z)**2 - PI*PI/6
-        cz = -log(1 - 1/z)
+        cy = -0.5D0*fast_cdlog(-z)**2 - PI*PI/6
+        cz = -fast_cdlog(1 - 1/z)
         sgn = -1
      endif
   endif
