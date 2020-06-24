@@ -127,7 +127,7 @@ end function dli2
 
 double complex function cdli2(z)
   implicit none
-  double complex :: z, cy, cz, cz2, sum, fast_cdlog
+  double complex :: z, cy, cz, cz2, cz4, sum, fast_cdlog
   double precision :: rz, iz, nz, sgn, dli2
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision, parameter :: bf(10) = (/ &
@@ -180,18 +180,17 @@ double complex function cdli2(z)
   endif
 
   cz2 = cz**2
-  sum =                       &
-      cz +                    &
-      cz2 * (bf( 1) +         &
-      cz  * (bf( 2) +         &
-      cz2 * (bf( 3) +         &
-      cz2 * (bf( 4) +         &
-      cz2 * (bf( 5) +         &
-      cz2 * (bf( 6) +         &
-      cz2 * (bf( 7) +         &
-      cz2 * (bf( 8) +         &
-      cz2 * (bf( 9) +         &
-      cz2 * (bf(10)))))))))))
+  cz4 = cz2**2
+  sum =                                                         &
+     cz +                                                       &
+     cz2 * (bf(1) +                                             &
+     cz  * (bf(2) +                                             &
+     cz2 * (                                                    &
+         bf(3) +                                                &
+         cz2*bf(4) +                                            &
+         cz4*(bf(5) + cz2*bf(6)) +                              &
+         cz4*cz4*(bf(7) + cz2*bf(8) + cz4*(bf(9) + cz2*bf(10))) &
+     )));
 
   cdli2 = sgn*sum + cy
 
