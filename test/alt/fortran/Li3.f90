@@ -19,8 +19,8 @@ double complex function cdli3(z)
   double precision, parameter :: PI    = 3.1415926535897932D0
   double precision, parameter :: zeta2 = 1.6449340668482264D0
   double precision, parameter :: zeta3 = 1.2020569031595943D0
-  double precision, parameter :: ln2   = 0.69314718055994531D0 ! ln(2)
-  double precision, parameter :: ln23  = 0.33302465198892948D0 ! ln(2)^3
+  double precision, parameter :: ln2   = 6.9314718055994531D-1 ! ln(2)
+  double precision, parameter :: ln23  = 3.3302465198892948D-1 ! ln(2)^3
   double precision, parameter :: bf(18) = (/         &
       1.0D0                , -3.0D0/8.0D0          , &
       17.0D0/216.0D0       , -5.0D0/576.0D0        , &
