@@ -79,6 +79,8 @@ double _Complex cli3(double _Complex z)
    if (lnz*lnz + pz*pz < 1.0) { // |log(z)| < 1
       const double _Complex u  = lnz + pz*I; // clog(z)
       const double _Complex u2 = u*u;
+      const double _Complex u4 = u2*u2;
+      const double _Complex u8 = u4*u4;
       const double _Complex c0 = zeta3 + u*(zeta2 - u2/12.0);
       const double _Complex c1 = 0.25 * (3.0 - 2.0*fast_clog(-u));
 
@@ -89,15 +91,12 @@ double _Complex cli3(double _Complex z)
          -3.982897776989488e-15
       };
 
-      return c0 +
-         u2 * (c1 +
-         u2 * (cs[0] +
-         u2 * (cs[1] +
-         u2 * (cs[2] +
-         u2 * (cs[3] +
-         u2 * (cs[4] +
-         u2 * (cs[5] +
-         u2 * (cs[6]))))))));
+      return
+         c0 +
+         c1*u2 +
+         u4*(cs[0] + u2*cs[1]) +
+         u8*(cs[2] + u2*cs[3] + u4*(cs[4] + u2*cs[5])) +
+         u8*u8*cs[6];
    }
 
    double _Complex u = 0.0, rest = 0.0;
@@ -111,25 +110,18 @@ double _Complex cli3(double _Complex z)
       rest = -lmz*(lmz*lmz/6.0 + zeta2);
    }
 
-   return rest +
-      u * (bf[0] +
-      u * (bf[1] +
-      u * (bf[2] +
-      u * (bf[3] +
-      u * (bf[4] +
-      u * (bf[5] +
-      u * (bf[6] +
-      u * (bf[7] +
-      u * (bf[8] +
-      u * (bf[9] +
-      u * (bf[10] +
-      u * (bf[11] +
-      u * (bf[12] +
-      u * (bf[13] +
-      u * (bf[14] +
-      u * (bf[15] +
-      u * (bf[16] +
-      u * (bf[17]))))))))))))))))));
+   const double _Complex u2 = u*u;
+   const double _Complex u4 = u2*u2;
+   const double _Complex u8 = u4*u4;
+
+   return
+      rest +
+      u*bf[0] +
+      u2*(bf[1] + u*bf[2]) +
+      u4*(bf[3] + u*bf[4] + u2*(bf[5] + u*bf[6])) +
+      u8*(bf[7] + u*bf[8] + u2*(bf[9] + u*bf[10]) +
+          u4*(bf[11] + u*bf[12] + u2*(bf[13] + u*bf[14]))) +
+      u8*u8*(bf[15] + u*bf[16] + u2*bf[17]);
 }
 
 
