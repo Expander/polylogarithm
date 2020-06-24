@@ -256,8 +256,10 @@ long double li2l(long double x)
 /**
  * @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$
  * @param z complex argument
- * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
+ * @note Implementation translated from SPheno to C++
+ * @author Werner Porod
+ * @note translated to C++ by Alexander Voigt
  */
 static double _Complex cli2(double _Complex z)
 {
@@ -342,8 +344,10 @@ static double _Complex cli2(double _Complex z)
 /**
  * @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$ with long double precision
  * @param z complex argument
- * @note Implementation translated from SPheno to C++
  * @return \f$\mathrm{Li}_2(z)\f$
+ * @note Implementation translated from SPheno to C++
+ * @author Werner Porod
+ * @note translated to C++ and extended to long double precision by Alexander Voigt
  */
 static long double _Complex cli2l(long double _Complex z)
 {

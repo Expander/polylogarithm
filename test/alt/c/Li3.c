@@ -32,6 +32,7 @@ static long double _Complex fast_clogl(long double _Complex z)
  * @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$
  * @param z complex argument
  * @return \f$\mathrm{Li}_3(z)\f$
+ * @author Alexander Voigt
  */
 double _Complex cli3(double _Complex z)
 {
@@ -136,6 +137,7 @@ double _Complex cli3(double _Complex z)
  * @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$
  * @param z complex argument
  * @return \f$\mathrm{Li}_3(z)\f$
+ * @author Alexander Voigt
  */
 long double _Complex cli3l(long double _Complex z)
 {
