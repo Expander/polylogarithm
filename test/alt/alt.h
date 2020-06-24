@@ -40,6 +40,16 @@ void cli6_(double re, double im, double* res_re, double* res_im);
 /** complex polylogarithm with n=6 with long double precision */
 void cli6l_(long double re, long double im, long double* res_re, long double* res_im);
 
+#ifdef ENABLE_FORTRAN
+
+/** real polylogarithm with n=2 (dilogarithm), Fortran implementation */
+double li2_fortran(double x);
+
+/** complex polylogarithm with n=2 (dilogarithm), Fortran implementation */
+void cli2_fortran(double re, double im, double* res_re, double* res_im);
+
+#endif
+
 double algorithm_327(double x);
 
 double algorithm_490(double x);

@@ -1,5 +1,24 @@
 #include <tsil.h>
 
+#ifdef ENABLE_FORTRAN
+
+void dli2_wrapper(const double*, double*);
+void cdli2_wrapper(const double*, const double*, double*, double*);
+
+double li2_fortran(double x)
+{
+   double res = 0;
+   dli2_wrapper(&x, &res);
+   return res;
+}
+
+void cli2_fortran(double re, double im, double* res_re, double* res_im)
+{
+   cdli2_wrapper(&re, &im, res_re, res_im);
+}
+
+#endif
+
 TSIL_REAL TSIL_dilog_real(TSIL_REAL x);
 
 long double tsil_dilog_real(long double x)

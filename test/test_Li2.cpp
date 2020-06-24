@@ -105,6 +105,16 @@ std::complex<long double> poly_Li2(std::complex<long double> z) {
    return { re, im };
 }
 
+#ifdef ENABLE_FORTRAN
+
+std::complex<double> poly_Li2_fortran(std::complex<double> z) {
+   double re{}, im{};
+   cli2_fortran(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+#endif
+
 std::complex<double> sherpa_Li2(std::complex<double> z) {
    double re{}, im{};
    sherpa_dilog(std::real(z), std::imag(z), &re, &im);
@@ -286,6 +296,9 @@ TEST_CASE("test_real_fixed_values")
          const auto li128_poly    = polylogarithm::Li2(x128);
          const auto li64_poly_c   = poly_Li2(x64);
          const auto li128_poly_c  = poly_Li2(x128);
+#ifdef ENABLE_FORTRAN
+         const auto li64_poly_f   = li2_fortran(x64);
+#endif
 
          INFO("x(64)         = " << x64);
          INFO("Li2(64)  real = " << li64_expected  << " (expected)");
@@ -302,6 +315,9 @@ TEST_CASE("test_real_fixed_values")
 #endif
          INFO("Li2(64)  real = " << li64_poly      << " (polylogarithm C++)");
          INFO("Li2(64)  real = " << li64_poly_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+         INFO("Li2(64)  real = " << li64_poly_f    << " (polylogarithm Fortran)");
+#endif
          INFO("------------------------------------------------------------");
          INFO("x(128)        = " << x128);
          INFO("Li2(128) real = " << li128_expected << " (expected)");
@@ -322,6 +338,9 @@ TEST_CASE("test_real_fixed_values")
 #endif
          CHECK_CLOSE(li64_poly    , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_poly_c  , std::real(li64_expected) , 2*eps64);
+#ifdef ENABLE_FORTRAN
+         CHECK_CLOSE(li64_poly_f  , std::real(li64_expected) , 2*eps64);
+#endif
          CHECK_CLOSE(li128_poly   , std::real(li128_expected), 2*eps128);
          CHECK_CLOSE(li128_poly_c , std::real(li128_expected), 2*eps128);
          CHECK_CLOSE(li128_koelbig, std::real(li128_expected), 2*eps128);
@@ -347,6 +366,9 @@ TEST_CASE("test_complex_fixed_values")
       const auto li128_poly  = polylogarithm::Li2(z128);
       const auto li64_poly_c = poly_Li2(z64);
       const auto li128_poly_c= poly_Li2(z128);
+#ifdef ENABLE_FORTRAN
+      const auto li64_poly_f = poly_Li2_fortran(z64);
+#endif
 #ifdef ENABLE_GSL
       const auto li64_gsl    = gsl_Li2(z64);
 #endif
@@ -363,6 +385,9 @@ TEST_CASE("test_complex_fixed_values")
       INFO("Li2(64)  cmpl = " << li64_hollik    << " (Hollik)");
       INFO("Li2(64)  cmpl = " << li64_poly      << " (polylogarithm C++)");
       INFO("Li2(64)  cmpl = " << li64_poly_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+      INFO("Li2(64)  cmpl = " << li64_poly_f    << " (polylogarithm Fortran)");
+#endif
       INFO("Li2(64)  cmpl = " << li64_sherpa    << " (Sherpa)");
       INFO("Li2(64)  cmpl = " << li64_spheno    << " (SPheno)");
       INFO("------------------------------------------------------------");
@@ -374,6 +399,9 @@ TEST_CASE("test_complex_fixed_values")
 
       CHECK_CLOSE_COMPLEX(li64_poly   , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_poly_c , li64_expected , 2*eps64);
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE_COMPLEX(li64_poly_f , li64_expected , 2*eps64);
+#endif
 #ifdef ENABLE_GSL
       CHECK_CLOSE_COMPLEX(li64_gsl    , li64_expected , 10*eps64);
 #endif
@@ -396,6 +424,9 @@ TEST_CASE("test_real_random_values")
    for (auto v: values) {
       const double li2   = polylogarithm::Li2(v);
       const double li2_c = poly_Li2(v);
+#ifdef ENABLE_FORTRAN
+      const double li2_f = poly_Li2(v);
+#endif
 #ifdef ENABLE_GSL
       const double li2_gsl = gsl_Li2(v);
 #endif
@@ -411,6 +442,9 @@ TEST_CASE("test_real_random_values")
       INFO("x = " << v);
       INFO("Li2(64) real = " << li2          << " (polylogarithm C++)");
       INFO("Li2(64) real = " << li2_c        << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+      INFO("Li2(64) real = " << li2_f        << " (polylogarithm Fortran)");
+#endif
 #ifdef ENABLE_GSL
       INFO("Li2(64) real = " << li2_gsl      << " (GSL)");
 #endif
@@ -424,6 +458,9 @@ TEST_CASE("test_real_random_values")
       INFO("Li2(64) real = " << li2_morris   << " (Morris)");
 
       CHECK_CLOSE(li2, li2_c       , eps64);
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE(li2, li2_f       , eps64);
+#endif
 #ifdef ENABLE_GSL
       CHECK_CLOSE(li2, li2_gsl     , 2*eps64);
 #endif
@@ -448,6 +485,9 @@ TEST_CASE("test_complex_random_values")
    for (auto v: values) {
       const std::complex<double> li2   = polylogarithm::Li2(v);
       const std::complex<double> li2_c = poly_Li2(v);
+#ifdef ENABLE_FORTRAN
+      const std::complex<double> li2_f = poly_Li2_fortran(v);
+#endif
 #ifdef ENABLE_GSL
       const std::complex<double> li2_gsl = gsl_Li2(v);
 #endif
@@ -459,6 +499,9 @@ TEST_CASE("test_complex_random_values")
       INFO("z = " << v);
       INFO("Li2(64) cmpl = " << li2        << " (polylogarithm C++)");
       INFO("Li2(64) cmpl = " << li2_c      << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+      INFO("Li2(64) cmpl = " << li2_f      << " (polylogarithm Fortran)");
+#endif
 #ifdef ENABLE_GSL
       INFO("Li2(64) cmpl = " << li2_gsl    << " (GSL)");
 #endif
@@ -471,6 +514,9 @@ TEST_CASE("test_complex_random_values")
       CHECK_CLOSE_COMPLEX(li2, li2_gsl   , 10*eps);
 #endif
       CHECK_CLOSE_COMPLEX(li2, li2_c     , 10*eps);
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE_COMPLEX(li2, li2_f     , 10*eps);
+#endif
       CHECK_CLOSE_COMPLEX(li2, li2_tsil  , 10*eps);
       CHECK_CLOSE_COMPLEX(li2, li2_hollik, 10*eps);
       CHECK_CLOSE_COMPLEX(li2, li2_sherpa, 10*eps);

@@ -13,6 +13,13 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED YES)
 set(CMAKE_C_EXTENSIONS OFF)
 
+if (ENABLE_FORTRAN)
+  enable_language(Fortran)
+  set(CMAKE_Fortran_STANDARD 90)
+  set(CMAKE_Fortran_STANDARD_REQUIRED YES)
+  set(CMAKE_Fortran_EXTENSIONS OFF)
+endif()
+
 enable_testing()
 add_subdirectory(src)
 add_subdirectory(test)

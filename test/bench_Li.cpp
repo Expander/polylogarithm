@@ -59,6 +59,16 @@ std::complex<long double> poly_Li2(std::complex<long double> z) {
    return { re, im };
 }
 
+#ifdef ENABLE_FORTRAN
+
+std::complex<double> poly_Li2_fortran(std::complex<double> z) {
+   double re{}, im{};
+   cli2_fortran(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+#endif
+
 std::complex<double> poly_Li3(std::complex<double> z) {
    double re{}, im{};
    cli3_(std::real(z), std::imag(z), &re, &im);
@@ -186,6 +196,11 @@ int main() {
    bench_fn([&](double x) { return poly_Li2(x); }, values_d,
             "polylogarithm C", "double");
 
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](double x) { return li2_fortran(x); }, values_d,
+            "polylogarithm Fortran", "double");
+#endif
+
 #ifdef ENABLE_GSL
    bench_fn([&](double x) { return gsl_Li2(x); }, values_d,
             "GSL", "double");
@@ -234,6 +249,11 @@ int main() {
 
    bench_fn([&](std::complex<double> z) { return poly_Li2(z); },
             values_cd, "polylogarithm C", "double");
+
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](std::complex<double> z) { return poly_Li2_fortran(z); },
+            values_cd, "polylogarithm Fortran", "double");
+#endif
 
 #ifdef ENABLE_GSL
    bench_fn([&](std::complex<double> z) { return gsl_Li2(z); },
