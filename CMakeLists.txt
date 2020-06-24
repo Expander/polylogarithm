@@ -18,6 +18,7 @@ if (ENABLE_FORTRAN)
   set(CMAKE_Fortran_STANDARD 90)
   set(CMAKE_Fortran_STANDARD_REQUIRED YES)
   set(CMAKE_Fortran_EXTENSIONS OFF)
+  add_compile_definitions(ENABLE_FORTRAN=1)
 endif()
 
 enable_testing()
