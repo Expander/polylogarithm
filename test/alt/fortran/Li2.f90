@@ -9,8 +9,7 @@
 double precision function dhorner(x, c, len)
   implicit none
   integer :: len, i
-  double precision :: x
-  double precision, dimension(len) :: c
+  double precision :: x, c(len)
 
   dhorner = 0
 
@@ -52,7 +51,7 @@ double precision function dli2(x)
   implicit none
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision :: x, y, r, s, z, p, q, l, dhorner
-  double precision, dimension(8) :: cp, cq
+  double precision :: cp(8), cq(8)
 
   cp(1) =  1.0706105563309304277D+0
   cp(2) = -4.5353562730201404017D+0
@@ -131,7 +130,7 @@ double complex function cdli2(z)
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision :: rz, iz, nz, sgn, dli2
   double complex :: z, cy, cz, cz2, sum, fast_cdlog
-  double precision, dimension(10) :: bf
+  double precision :: bf(10)
 
   bf( 1) = - 1.0D0/4.0D0
   bf( 2) = + 1.0D0/36.0D0
