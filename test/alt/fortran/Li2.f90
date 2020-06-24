@@ -1,10 +1,18 @@
-!******************************************************************************
+!*********************************************************************
+! This file is part of Polylogarithm.
+!
+! Polylogarithm is licenced under the GNU Lesser General Public
+! License (GNU LGPL) version 3.
+!*********************************************************************
+
+
+!*********************************************************************
 !> @brief Evaluation of polynomial P(x) with len coefficients c
 !> @param x real argument of P
 !> @param c coefficients of P(x)
 !> @param len number of coefficients
 !> @return P(x)
-!******************************************************************************
+!*********************************************************************
 
 double precision function dhorner(x, c, len)
   implicit none
@@ -20,11 +28,11 @@ double precision function dhorner(x, c, len)
 end function dhorner
 
 
-!******************************************************************************
+!*********************************************************************
 !> @brief Fast implementation of complex logarithm
 !> @param z complex argument
 !> @return log(z)
-!******************************************************************************
+!*********************************************************************
 double complex function fast_cdlog(z)
   implicit none
   double complex :: z
@@ -37,7 +45,7 @@ double complex function fast_cdlog(z)
 end function fast_cdlog
 
 
-!******************************************************************************
+!*********************************************************************
 !> @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
 !> @param x real argument
 !> @return \f$\mathrm{Li}_2(x)\f$
@@ -45,7 +53,7 @@ end function fast_cdlog
 !>
 !> Implemented as an economized Pade approximation with a
 !> maximum error of 4.16e-18.
-!******************************************************************************
+!*********************************************************************
 
 double precision function dli2(x)
   implicit none
@@ -118,12 +126,12 @@ double precision function dli2(x)
 end function dli2
 
 
-!******************************************************************************
+!*********************************************************************
 !> @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$
 !> @param z complex argument
 !> @return \f$\mathrm{Li}_2(z)\f$
 !> @note Implementation translated from SPheno by Alexander Voigt
-!******************************************************************************
+!*********************************************************************
 
 double complex function cdli2(z)
   implicit none
