@@ -3,7 +3,7 @@
 !> @param x real argument of P
 !> @param c coefficients of P(x)
 !> @param len number of coefficients
-!> @return \f$\mathrm{Li}_2(x)\f$
+!> @return P(x)
 !******************************************************************************
 
 double precision function dhorner(x, c, len)
@@ -121,9 +121,10 @@ end function dli2
 !******************************************************************************
 !> @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$
 !> @param z complex argument
-!> @note Implementation translated from SPheno by Alexander Voigt
 !> @return \f$\mathrm{Li}_2(z)\f$
+!> @note Implementation translated from SPheno by Alexander Voigt
 !******************************************************************************
+
 double complex function cdli2(z)
   implicit none
   double complex :: z, cy, cz, cz2, sum, fast_cdlog
