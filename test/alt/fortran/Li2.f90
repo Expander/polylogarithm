@@ -22,6 +22,23 @@ end function dhorner
 
 
 !******************************************************************************
+!> @brief Fast implementation of complex logarithm
+!> @param z complex argument
+!> @return log(z)
+!******************************************************************************
+double complex function fast_cdlog(z)
+  implicit none
+  double complex :: z
+  double precision :: re, im
+
+  re = real(z)
+  im = aimag(z)
+  fast_cdlog = dcmplx(0.5D0*log(re*re + im*im), datan2(im, re))
+
+end function fast_cdlog
+
+
+!******************************************************************************
 !> @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
 !> @param x real argument
 !> @return \f$\mathrm{Li}_2(x)\f$
@@ -101,4 +118,85 @@ double precision function dli2(x)
   q = dhorner(z, cq, 8)
 
   dli2 = r + s*y*p/q
+
 end function dli2
+
+
+!******************************************************************************
+!> @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$
+!> @param z complex argument
+!> @note Implementation translated from SPheno by Alexander Voigt
+!> @return \f$\mathrm{Li}_2(z)\f$
+!******************************************************************************
+double complex function cdli2(z)
+  implicit none
+  double precision, parameter :: PI = 3.14159265358979324D0
+  double precision :: rz, iz, nz, sgn, dli2
+  double complex :: z, cy, cz, cz2, sum
+  double precision, dimension(10) :: bf
+
+  bf( 1) = - 1.0D0/4.0D0
+  bf( 2) = + 1.0D0/36.0D0
+  bf( 3) = - 1.0D0/3600.0D0
+  bf( 4) = + 1.0D0/211680.0D0
+  bf( 5) = - 1.0D0/10886400.0D0
+  bf( 6) = + 1.0D0/526901760.0D0
+  bf( 7) = - 4.064761645144226D-11
+  bf( 8) = + 8.921691020456453D-13
+  bf( 9) = - 1.993929586072108D-14
+  bf(10) = + 4.518980029619918D-16
+
+  rz = real(z)
+  iz = aimag(z)
+  nz = rz**2 + iz**2
+
+  ! special cases
+  if (iz .eq. 0) then
+     if (rz .le. 1) cdli2 = dcmplx(dli2(rz), 0)
+     if (rz .gt. 1) cdli2 = dcmplx(dli2(rz), -PI*log(rz))
+     return
+  elseif (nz .lt. EPSILON(1D0)) then
+     cdli2 = z
+     return
+  endif
+
+  ! transformation to |z| < 1, Re(z) <= 0.5
+  if (rz .le. 0.5D0) then
+     if (nz .gt. 1) then
+        cy = -0.5D0*log(-z)**2 - PI*PI/6
+        cz = -log(1 - 1/z)
+        sgn = -1
+     else ! nz <= 1
+        cy = 0
+        cz = -log(1 - z)
+        sgn = 1
+     endif
+  else ! rz > 0.5D0
+     if (nz .le. 2*rz) then
+        cz = -log(z)
+        cy = cz*log(1 - z) + PI*PI/6
+        sgn = -1
+     else ! nz > 2*rz
+        cy = -0.5D0*log(-z)**2 - PI*PI/6
+        cz = -log(1 - 1/z)
+        sgn = -1
+     endif
+  endif
+
+  cz2 = cz**2
+  sum =                       &
+      cz +                    &
+      cz2 * (bf( 1) +         &
+      cz  * (bf( 2) +         &
+      cz2 * (bf( 3) +         &
+      cz2 * (bf( 4) +         &
+      cz2 * (bf( 5) +         &
+      cz2 * (bf( 6) +         &
+      cz2 * (bf( 7) +         &
+      cz2 * (bf( 8) +         &
+      cz2 * (bf( 9) +         &
+      cz2 * (bf(10)))))))))))
+
+  cdli2 = sgn*sum + cy
+
+end function cdli2
