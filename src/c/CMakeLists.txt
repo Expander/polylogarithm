@@ -1,5 +1,5 @@
 add_library(polylog_c
-  cwrappers.c
+  c_wrappers.c
   Li2.c
   Li3.c
   Li4.c

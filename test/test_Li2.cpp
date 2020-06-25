@@ -3,7 +3,7 @@
 #include "doctest.h"
 #include "alt.h"
 #include "bench.hpp"
-#include "cwrappers.h"
+#include "c_wrappers.h"
 #include "fortran_wrappers.h"
 #include "Li2.hpp"
 #include "read_data.hpp"
