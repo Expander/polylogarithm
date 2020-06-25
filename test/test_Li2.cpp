@@ -4,6 +4,7 @@
 #include "alt.h"
 #include "bench.hpp"
 #include "cwrappers.h"
+#include "fortran_wrappers.h"
 #include "Li2.hpp"
 #include "read_data.hpp"
 #include <cmath>
@@ -102,10 +103,18 @@ std::complex<double> poly_Li2(std::complex<double> z) {
 
 #ifdef ENABLE_FORTRAN
 
+double poly_Li2_fortran(double x) {
+   double res{};
+   dli2_fortran(&x, &res);
+   return res;
+}
+
 std::complex<double> poly_Li2_fortran(std::complex<double> z) {
-   double re{}, im{};
-   cli2_fortran(std::real(z), std::imag(z), &re, &im);
-   return { re, im };
+   const double re = std::real(z);
+   const double im = std::imag(z);
+   double res_re{}, res_im{};
+   cdli2_fortran(&re, &im, &res_re, &res_im);
+   return { res_re, res_im };
 }
 
 #endif
@@ -298,7 +307,7 @@ TEST_CASE("test_real_fixed_values")
          const auto li64_poly_c   = poly_Li2(x64);
          const auto li128_poly_c  = poly_Li2(x128);
 #ifdef ENABLE_FORTRAN
-         const auto li64_poly_f   = li2_fortran(x64);
+         const auto li64_poly_f   = poly_Li2_fortran(x64);
 #endif
 
          INFO("x(64)         = " << x64);

@@ -1,6 +1,7 @@
 #include "alt.h"
 #include "bench.hpp"
 #include "cwrappers.h"
+#include "fortran_wrappers.h"
 #include "Li2.hpp"
 #include "Li3.hpp"
 #include "Li4.hpp"
@@ -62,22 +63,34 @@ std::complex<long double> poly_Li2(std::complex<long double> z) {
 
 #ifdef ENABLE_FORTRAN
 
+double poly_Li2_fortran(double x) {
+   double res{};
+   dli2_fortran(&x, &res);
+   return res;
+}
+
 std::complex<double> poly_Li2_fortran(std::complex<double> z) {
-   double re{}, im{};
-   cli2_fortran(std::real(z), std::imag(z), &re, &im);
-   return { re, im };
+   const double re = std::real(z);
+   const double im = std::imag(z);
+   double res_re{}, res_im{};
+   cdli2_fortran(&re, &im, &res_re, &res_im);
+   return { res_re, res_im };
 }
 
 std::complex<double> poly_Li3_fortran(std::complex<double> z) {
-   double re{}, im{};
-   cli3_fortran(std::real(z), std::imag(z), &re, &im);
-   return { re, im };
+   const double re = std::real(z);
+   const double im = std::imag(z);
+   double res_re{}, res_im{};
+   cdli3_fortran(&re, &im, &res_re, &res_im);
+   return { res_re, res_im };
 }
 
 std::complex<double> poly_Li4_fortran(std::complex<double> z) {
-   double re{}, im{};
-   cli4_fortran(std::real(z), std::imag(z), &re, &im);
-   return { re, im };
+   const double re = std::real(z);
+   const double im = std::imag(z);
+   double res_re{}, res_im{};
+   cdli4_fortran(&re, &im, &res_re, &res_im);
+   return { res_re, res_im };
 }
 
 #endif
@@ -210,7 +223,7 @@ int main() {
             "polylogarithm C", "double");
 
 #ifdef ENABLE_FORTRAN
-   bench_fn([&](double x) { return li2_fortran(x); }, values_d,
+   bench_fn([&](double x) { return poly_Li2_fortran(x); }, values_d,
             "polylogarithm Fortran", "double");
 #endif
 

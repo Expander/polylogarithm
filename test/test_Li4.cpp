@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "alt.h"
 #include "cwrappers.h"
+#include "fortran_wrappers.h"
 #include "Li4.hpp"
 #include "read_data.hpp"
 #include <cmath>
@@ -33,9 +34,11 @@ std::complex<double> poly_Li4(std::complex<double> z) {
 #ifdef ENABLE_FORTRAN
 
 std::complex<double> poly_Li4_fortran(std::complex<double> z) {
-   double re{}, im{};
-   cli4_fortran(std::real(z), std::imag(z), &re, &im);
-   return { re, im };
+   const double re = std::real(z);
+   const double im = std::imag(z);
+   double res_re{}, res_im{};
+   cdli4_fortran(&re, &im, &res_re, &res_im);
+   return { res_re, res_im };
 }
 
 #endif
