@@ -6,6 +6,7 @@
 #include "Li5.hpp"
 #include "Li6.hpp"
 #include "Li.hpp"
+#include "polylogarithm.h"
 #include <iostream>
 #include <iomanip>
 

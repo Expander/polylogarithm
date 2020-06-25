@@ -271,21 +271,3 @@ long double _Complex cli5l(long double _Complex z)
 
    return rest + sum;
 }
-
-
-/** C++ wrapper for cli5 */
-void cli5_(double re, double im, double* res_re, double* res_im)
-{
-   const double _Complex result = cli5(re + I*im);
-   *res_re = creal(result);
-   *res_im = cimag(result);
-}
-
-
-/** C++ wrapper for cli5l */
-void cli5l_(long double re, long double im, long double* res_re, long double* res_im)
-{
-   const long double _Complex result = cli5l(re + I*im);
-   *res_re = creall(result);
-   *res_im = cimagl(result);
-}

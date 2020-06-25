@@ -4,6 +4,7 @@
 #include "alt.h"
 #include "bench.hpp"
 #include "Li2.hpp"
+#include "polylogarithm.h"
 #include "read_data.hpp"
 #include <cmath>
 #include <complex>

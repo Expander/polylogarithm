@@ -261,7 +261,7 @@ long double li2l(long double x)
  * @author Werner Porod
  * @note translated to C++ by Alexander Voigt
  */
-static double _Complex cli2(double _Complex z)
+double _Complex cli2(double _Complex z)
 {
    const double PI = 3.1415926535897932;
 
@@ -348,7 +348,7 @@ static double _Complex cli2(double _Complex z)
  * @author Werner Porod
  * @note translated to C++ and extended to long double precision by Alexander Voigt
  */
-static long double _Complex cli2l(long double _Complex z)
+long double _Complex cli2l(long double _Complex z)
 {
    const long double PI = 3.14159265358979323846264338327950288L;
 
@@ -437,22 +437,4 @@ static long double _Complex cli2l(long double _Complex z)
    sum = cz + cz2 * (bf[0] + cz * (bf[1] + sum));
 
    return (long double)sgn * sum + cy;
-}
-
-
-/** C++ wrapper for cli2 */
-void cli2_(double re, double im, double* res_re, double* res_im)
-{
-   const double _Complex result = cli2(re + I*im);
-   *res_re = creal(result);
-   *res_im = cimag(result);
-}
-
-
-/** C++ wrapper for cli2l */
-void cli2l_(long double re, long double im, long double* res_re, long double* res_im)
-{
-   const long double _Complex result = cli2l(re + I*im);
-   *res_re = creall(result);
-   *res_im = cimagl(result);
 }

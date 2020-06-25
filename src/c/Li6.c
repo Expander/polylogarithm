@@ -286,21 +286,3 @@ long double _Complex cli6l(long double _Complex z)
 
    return sgn*sum + r;
 }
-
-
-/** C++ wrapper for cli6 */
-void cli6_(double re, double im, double* res_re, double* res_im)
-{
-   const double _Complex result = cli6(re + I*im);
-   *res_re = creal(result);
-   *res_im = cimag(result);
-}
-
-
-/** C++ wrapper for cli6l */
-void cli6l_(long double re, long double im, long double* res_re, long double* res_im)
-{
-   const long double _Complex result = cli6l(re + I*im);
-   *res_re = creall(result);
-   *res_im = cimagl(result);
-}

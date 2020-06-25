@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "alt.h"
 #include "Li5.hpp"
+#include "polylogarithm.h"
 #include "read_data.hpp"
 #include <cmath>
 #include <limits>

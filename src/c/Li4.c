@@ -273,21 +273,3 @@ long double _Complex cli4l(long double _Complex z)
 
    return sgn*sum + r;
 }
-
-
-/** C++ wrapper for cli4 */
-void cli4_(double re, double im, double* res_re, double* res_im)
-{
-   const double _Complex result = cli4(re + I*im);
-   *res_re = creal(result);
-   *res_im = cimag(result);
-}
-
-
-/** C++ wrapper for cli4l */
-void cli4l_(long double re, long double im, long double* res_re, long double* res_im)
-{
-   const long double _Complex result = cli4l(re + I*im);
-   *res_re = creall(result);
-   *res_im = cimagl(result);
-}
