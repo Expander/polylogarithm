@@ -2,7 +2,6 @@ add_subdirectory(algorithm_327)
 add_subdirectory(algorithm_490)
 add_subdirectory(babar)
 add_subdirectory(cephes)
-add_subdirectory(fortran)
 add_subdirectory(hassani)
 add_subdirectory(hollik)
 add_subdirectory(koelbig)
@@ -23,7 +22,6 @@ target_link_libraries(alt
     algorithm_490
     babar
     cephes
-    fortran
     hassani
     hollik
     koelbig
