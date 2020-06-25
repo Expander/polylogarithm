@@ -46,7 +46,7 @@ std::complex<double> poly_Li3_fortran(std::complex<double> z) {
    const double re = std::real(z);
    const double im = std::imag(z);
    double res_re{}, res_im{};
-   cdli3_fortran(&re, &im, &res_re, &res_im);
+   cli3_fortran(&re, &im, &res_re, &res_im);
    return { res_re, res_im };
 }
 

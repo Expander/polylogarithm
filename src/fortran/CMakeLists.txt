@@ -1,6 +1,6 @@
 if (ENABLE_FORTRAN)
   add_library(polylog_fortran
-    cwrappers.f90
+    fortran_wrappers.f90
     fast_cdlog.f90
     horner.f90
     Li2.f90

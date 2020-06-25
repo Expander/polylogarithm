@@ -105,7 +105,7 @@ std::complex<double> poly_Li2(std::complex<double> z) {
 
 double poly_Li2_fortran(double x) {
    double res{};
-   dli2_fortran(&x, &res);
+   li2_fortran(&x, &res);
    return res;
 }
 
@@ -113,7 +113,7 @@ std::complex<double> poly_Li2_fortran(std::complex<double> z) {
    const double re = std::real(z);
    const double im = std::imag(z);
    double res_re{}, res_im{};
-   cdli2_fortran(&re, &im, &res_re, &res_im);
+   cli2_fortran(&re, &im, &res_re, &res_im);
    return { res_re, res_im };
 }
 

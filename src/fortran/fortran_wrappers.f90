@@ -6,17 +6,17 @@
 !*********************************************************************
 
 
-subroutine dli2_fortran(x, res) bind(C)
+subroutine li2_fortran(x, res) bind(C)
   use, intrinsic :: iso_c_binding
   implicit none
   real(c_double), intent(in)  :: x
   real(c_double), intent(out) :: res
   double precision dli2
   res = dli2(x)
-end subroutine dli2_fortran
+end subroutine li2_fortran
 
 
-subroutine cdli2_fortran(re, im, res_re, res_im) bind(C)
+subroutine cli2_fortran(re, im, res_re, res_im) bind(C)
   use, intrinsic :: iso_c_binding
   implicit none
   real(c_double), intent(in)  :: im, re
@@ -25,10 +25,10 @@ subroutine cdli2_fortran(re, im, res_re, res_im) bind(C)
   res = cdli2(dcmplx(re, im))
   res_re = real(res)
   res_im = aimag(res)
-end subroutine cdli2_fortran
+end subroutine cli2_fortran
 
 
-subroutine cdli3_fortran(re, im, res_re, res_im) bind(C)
+subroutine cli3_fortran(re, im, res_re, res_im) bind(C)
   use, intrinsic :: iso_c_binding
   implicit none
   real(c_double), intent(in)  :: im, re
@@ -37,10 +37,10 @@ subroutine cdli3_fortran(re, im, res_re, res_im) bind(C)
   res = cdli3(dcmplx(re, im))
   res_re = real(res)
   res_im = aimag(res)
-end subroutine cdli3_fortran
+end subroutine cli3_fortran
 
 
-subroutine cdli4_fortran(re, im, res_re, res_im) bind(C)
+subroutine cli4_fortran(re, im, res_re, res_im) bind(C)
   use, intrinsic :: iso_c_binding
   implicit none
   real(c_double), intent(in)  :: im, re
@@ -49,4 +49,4 @@ subroutine cdli4_fortran(re, im, res_re, res_im) bind(C)
   res = cdli4(dcmplx(re, im))
   res_re = real(res)
   res_im = aimag(res)
-end subroutine cdli4_fortran
+end subroutine cli4_fortran
