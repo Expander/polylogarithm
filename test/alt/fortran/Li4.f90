@@ -61,7 +61,7 @@ double complex function cdli4(z)
    pz  = datan2(iz, rz)
    lnz = 0.5D0*log(nz)
 
-   if (lnz*lnz + pz*pz .lt. 1) then ! |log(z)| < 1
+   if (lnz**2 + pz**2 .lt. 1) then ! |log(z)| < 1
       u = dcmplx(lnz, pz) ! log(z)
       u2 = u**2
       u4 = u2**2

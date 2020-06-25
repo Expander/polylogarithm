@@ -43,10 +43,10 @@ double precision function dli2(x)
    if (x .lt. -1) then
       l = log(1 - x)
       y = 1/(1 - x)
-      r = -PI*PI/6 + l*(0.5D0*l - log(-x))
+      r = -PI**2/6 + l*(0.5D0*l - log(-x))
       s = 1
    elseif (x .eq. -1) then
-      dli2 = -PI*PI/12
+      dli2 = -PI**2/12
       return
    elseif (x .lt. 0) then
       y = x/(x - 1)
@@ -61,19 +61,19 @@ double precision function dli2(x)
       s = 1
    elseif (x .lt. 1) then
       y = 1 - x
-      r = PI*PI/6 - log(x)*log(1 - x)
+      r = PI**2/6 - log(x)*log(1 - x)
       s = -1
    elseif (x .eq. 1) then
-      dli2 = PI*PI/6
+      dli2 = PI**2/6
       return
    elseif (x .lt. 2) then
       l = log(x)
       y = 1 - 1/x
-      r = PI*PI/6 - l*(log(1 - 1/x) + 0.5D0*l)
+      r = PI**2/6 - l*(log(1 - 1/x) + 0.5D0*l)
       s = 1
    else
       y = 1/x
-      r = PI*PI/3 - 0.5D0*log(x)**2
+      r = PI**2/3 - 0.5D0*log(x)**2
       s = -1
    endif
 
@@ -128,7 +128,7 @@ double complex function cdli2(z)
   ! transformation to |z| < 1, Re(z) <= 0.5
   if (rz .le. 0.5D0) then
      if (nz .gt. 1) then
-        cy = -0.5D0*fast_cdlog(-z)**2 - PI*PI/6
+        cy = -0.5D0*fast_cdlog(-z)**2 - PI**2/6
         cz = -fast_cdlog(1 - 1/z)
         sgn = -1
      else ! nz <= 1
@@ -139,10 +139,10 @@ double complex function cdli2(z)
   else ! rz > 0.5D0
      if (nz .le. 2*rz) then
         cz = -fast_cdlog(z)
-        cy = cz*fast_cdlog(1 - z) + PI*PI/6
+        cy = cz*fast_cdlog(1 - z) + PI**2/6
         sgn = -1
      else ! nz > 2*rz
-        cy = -0.5D0*fast_cdlog(-z)**2 - PI*PI/6
+        cy = -0.5D0*fast_cdlog(-z)**2 - PI**2/6
         cz = -fast_cdlog(1 - 1/z)
         sgn = -1
      endif
