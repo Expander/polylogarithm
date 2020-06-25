@@ -6,14 +6,24 @@ compiler:
   - clang
   - gcc
 env:
-  - CMAKE_BUILD_PARALLEL_LEVEL=2
   - >
+    ENABLE_FORTRAN=1
+    CMAKE_BUILD_PARALLEL_LEVEL=2
+  - >
+    ENABLE_FORTRAN=1
     CMAKE_BUILD_PARALLEL_LEVEL=2
     CMAKE_CXX_FLAGS="-Ofast -ffast-math"
     CMAKE_C_FLAGS="-Ofast -ffast-math"
 addons:
   apt:
-    packages: libgsl0-dev
+    packages:
+      - gfortran
+      - libgsl0-dev
+  homebrew:
+    packages:
+      - gcc
+      - gsl
+    update: true
 script:
   - mkdir build
   - cd build
