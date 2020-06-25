@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "alt.h"
 #include "c_wrappers.h"
+#include "fortran_wrappers.h"
 #include "Li5.hpp"
 #include "read_data.hpp"
 #include <cmath>
@@ -26,6 +27,18 @@ std::complex<double> poly_Li5(std::complex<double> z) {
    cli5_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
+
+#ifdef ENABLE_FORTRAN
+
+std::complex<double> poly_Li5_fortran(std::complex<double> z) {
+   const double re = std::real(z);
+   const double im = std::imag(z);
+   double res_re{}, res_im{};
+   cli5_fortran(&re, &im, &res_re, &res_im);
+   return { res_re, res_im };
+}
+
+#endif
 
 std::complex<long double> poly_Li5(std::complex<long double> z) {
    long double re{}, im{};
@@ -67,18 +80,27 @@ TEST_CASE("test_fixed_values")
       const auto li64_cmpl  = polylogarithm::Li5(z64);
       const auto li128_cmpl = polylogarithm::Li5(z128);
       const auto li64_cmpl_c  = poly_Li5(z64);
+#ifdef ENABLE_FORTRAN
+      const auto li64_cmpl_f  = poly_Li5_fortran(z64);
+#endif
       const auto li128_cmpl_c = poly_Li5(z128);
 
       INFO("z(128)        = " << z128);
       INFO("Li4(64)  cmpl = " << li64_expected  << " (expected)");
       INFO("Li4(64)  cmpl = " << li64_cmpl      << " (polylogarithm C++)");
       INFO("Li4(64)  cmpl = " << li64_cmpl_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+      INFO("Li4(64)  cmpl = " << li64_cmpl_f    << " (polylogarithm Fortran)");
+#endif
       INFO("Li4(128) cmpl = " << li128_expected << " (expected)");
       INFO("Li4(128) cmpl = " << li128_cmpl     << " (polylogarithm C++)");
       INFO("Li4(128) cmpl = " << li128_cmpl_c   << " (polylogarithm C)");
 
       CHECK_CLOSE_COMPLEX(li64_cmpl   , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_cmpl_c , li64_expected , 2*eps64);
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE_COMPLEX(li64_cmpl_f , li64_expected , 2*eps64);
+#endif
       CHECK_CLOSE_COMPLEX(li128_cmpl  , li128_expected, 2*eps128);
       CHECK_CLOSE_COMPLEX(li128_cmpl_c, li128_expected, 2*eps128);
    }

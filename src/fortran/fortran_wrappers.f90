@@ -50,3 +50,15 @@ subroutine cli4_fortran(re, im, res_re, res_im) bind(C)
   res_re = real(res)
   res_im = aimag(res)
 end subroutine cli4_fortran
+
+
+subroutine cli5_fortran(re, im, res_re, res_im) bind(C)
+  use, intrinsic :: iso_c_binding
+  implicit none
+  real(c_double), intent(in)  :: im, re
+  real(c_double), intent(out) :: res_re, res_im
+  double complex res, cdli5
+  res = cdli5(dcmplx(re, im))
+  res_re = real(res)
+  res_im = aimag(res)
+end subroutine cli5_fortran
