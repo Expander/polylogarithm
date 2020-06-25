@@ -1,12 +1,12 @@
 #include "alt.h"
 #include "bench.hpp"
+#include "cwrappers.h"
 #include "Li2.hpp"
 #include "Li3.hpp"
 #include "Li4.hpp"
 #include "Li5.hpp"
 #include "Li6.hpp"
 #include "Li.hpp"
-#include "polylogarithm.h"
 #include <iostream>
 #include <iomanip>
 

@@ -5,7 +5,7 @@
  * License (GNU LGPL) version 3.
  * ==================================================================== */
 
-#include "polylogarithm.h"
+#include "cwrappers.h"
 #include <complex.h>
 
 double _Complex cli2(double _Complex);

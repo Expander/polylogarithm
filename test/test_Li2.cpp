@@ -3,8 +3,8 @@
 #include "doctest.h"
 #include "alt.h"
 #include "bench.hpp"
+#include "cwrappers.h"
 #include "Li2.hpp"
-#include "polylogarithm.h"
 #include "read_data.hpp"
 #include <cmath>
 #include <complex>

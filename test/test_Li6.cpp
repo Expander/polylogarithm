@@ -2,8 +2,8 @@
 
 #include "doctest.h"
 #include "alt.h"
+#include "cwrappers.h"
 #include "Li6.hpp"
-#include "polylogarithm.h"
 #include "read_data.hpp"
 #include <cmath>
 #include <limits>

@@ -2,10 +2,10 @@
 
 #include "doctest.h"
 #include "alt.h"
+#include "cwrappers.h"
 #include "Li3.hpp"
 #include "bench.hpp"
 #include "read_data.hpp"
-#include "polylogarithm.h"
 #include <cmath>
 #include <limits>
 #include <utility>
