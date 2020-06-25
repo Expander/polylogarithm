@@ -18,34 +18,34 @@ double li2(double x);
 long double li2l(long double x);
 
 /** complex polylogarithm with n=2 (dilogarithm) */
-void cli2_(double re, double im, double* res_re, double* res_im);
+void cli2_c(double re, double im, double* res_re, double* res_im);
 
 /** complex polylogarithm with n=2 (dilogarithm) with long double precision */
-void cli2l_(long double re, long double im, long double* res_re, long double* res_im);
+void cli2l_c(long double re, long double im, long double* res_re, long double* res_im);
 
 /** complex polylogarithm with n=3 (trilogarithm) */
-void cli3_(double re, double im, double* res_re, double* res_im);
+void cli3_c(double re, double im, double* res_re, double* res_im);
 
 /** complex polylogarithm with n=3 (trilogarithm) with long double precision */
-void cli3l_(long double re, long double im, long double* res_re, long double* res_im);
+void cli3l_c(long double re, long double im, long double* res_re, long double* res_im);
 
 /** complex polylogarithm with n=4 */
-void cli4_(double re, double im, double* res_re, double* res_im);
+void cli4_c(double re, double im, double* res_re, double* res_im);
 
 /** complex polylogarithm with n=4 with long double precision */
-void cli4l_(long double re, long double im, long double* res_re, long double* res_im);
+void cli4l_c(long double re, long double im, long double* res_re, long double* res_im);
 
 /** complex polylogarithm with n=5 */
-void cli5_(double re, double im, double* res_re, double* res_im);
+void cli5_c(double re, double im, double* res_re, double* res_im);
 
 /** complex polylogarithm with n=5 with long double precision */
-void cli5l_(long double re, long double im, long double* res_re, long double* res_im);
+void cli5l_c(long double re, long double im, long double* res_re, long double* res_im);
 
 /** complex polylogarithm with n=6 */
-void cli6_(double re, double im, double* res_re, double* res_im);
+void cli6_c(double re, double im, double* res_re, double* res_im);
 
 /** complex polylogarithm with n=6 with long double precision */
-void cli6l_(long double re, long double im, long double* res_re, long double* res_im);
+void cli6l_c(long double re, long double im, long double* res_re, long double* res_im);
 
 #ifdef __cplusplus
 }

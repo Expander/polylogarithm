@@ -50,13 +50,13 @@ inline long double poly_Li2(long double z) {
 
 std::complex<double> poly_Li2(std::complex<double> z) {
    double re{}, im{};
-   cli2_(std::real(z), std::imag(z), &re, &im);
+   cli2_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
 std::complex<long double> poly_Li2(std::complex<long double> z) {
    long double re{}, im{};
-   cli2l_(std::real(z), std::imag(z), &re, &im);
+   cli2l_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
@@ -84,49 +84,49 @@ std::complex<double> poly_Li4_fortran(std::complex<double> z) {
 
 std::complex<double> poly_Li3(std::complex<double> z) {
    double re{}, im{};
-   cli3_(std::real(z), std::imag(z), &re, &im);
+   cli3_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
 std::complex<long double> poly_Li3(std::complex<long double> z) {
    long double re{}, im{};
-   cli3l_(std::real(z), std::imag(z), &re, &im);
+   cli3l_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
 std::complex<double> poly_Li4(std::complex<double> z) {
    double re{}, im{};
-   cli4_(std::real(z), std::imag(z), &re, &im);
+   cli4_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
 std::complex<long double> poly_Li4(std::complex<long double> z) {
    long double re{}, im{};
-   cli4l_(std::real(z), std::imag(z), &re, &im);
+   cli4l_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
 std::complex<double> poly_Li5(std::complex<double> z) {
    double re{}, im{};
-   cli5_(std::real(z), std::imag(z), &re, &im);
+   cli5_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
 std::complex<long double> poly_Li5(std::complex<long double> z) {
    long double re{}, im{};
-   cli5l_(std::real(z), std::imag(z), &re, &im);
+   cli5l_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
 std::complex<double> poly_Li6(std::complex<double> z) {
    double re{}, im{};
-   cli6_(std::real(z), std::imag(z), &re, &im);
+   cli6_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
 std::complex<long double> poly_Li6(std::complex<long double> z) {
    long double re{}, im{};
-   cli6l_(std::real(z), std::imag(z), &re, &im);
+   cli6l_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 

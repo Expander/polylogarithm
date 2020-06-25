@@ -96,7 +96,7 @@ inline long double poly_Li2(long double z) {
 
 std::complex<double> poly_Li2(std::complex<double> z) {
    double re{}, im{};
-   cli2_(std::real(z), std::imag(z), &re, &im);
+   cli2_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
@@ -112,7 +112,7 @@ std::complex<double> poly_Li2_fortran(std::complex<double> z) {
 
 std::complex<long double> poly_Li2(std::complex<long double> z) {
    long double re{}, im{};
-   cli2l_(std::real(z), std::imag(z), &re, &im);
+   cli2l_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 

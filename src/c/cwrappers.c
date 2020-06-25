@@ -21,7 +21,7 @@ long double _Complex cli5l(long double _Complex);
 long double _Complex cli6l(long double _Complex);
 
 /** C++ wrapper for cli2 */
-void cli2_(double re, double im, double* res_re, double* res_im)
+void cli2_c(double re, double im, double* res_re, double* res_im)
 {
    const double _Complex result = cli2(re + I*im);
    *res_re = creal(result);
@@ -29,7 +29,7 @@ void cli2_(double re, double im, double* res_re, double* res_im)
 }
 
 /** C++ wrapper for cli2l */
-void cli2l_(long double re, long double im, long double* res_re, long double* res_im)
+void cli2l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
    const long double _Complex result = cli2l(re + I*im);
    *res_re = creall(result);
@@ -37,7 +37,7 @@ void cli2l_(long double re, long double im, long double* res_re, long double* re
 }
 
 /** C++ wrapper for cli3 */
-void cli3_(double re, double im, double* res_re, double* res_im)
+void cli3_c(double re, double im, double* res_re, double* res_im)
 {
    const double _Complex result = cli3(re + I*im);
    *res_re = creal(result);
@@ -45,7 +45,7 @@ void cli3_(double re, double im, double* res_re, double* res_im)
 }
 
 /** C++ wrapper for cli3l */
-void cli3l_(long double re, long double im, long double* res_re, long double* res_im)
+void cli3l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
    const long double _Complex result = cli3l(re + I*im);
    *res_re = creall(result);
@@ -53,7 +53,7 @@ void cli3l_(long double re, long double im, long double* res_re, long double* re
 }
 
 /** C++ wrapper for cli4 */
-void cli4_(double re, double im, double* res_re, double* res_im)
+void cli4_c(double re, double im, double* res_re, double* res_im)
 {
    const double _Complex result = cli4(re + I*im);
    *res_re = creal(result);
@@ -61,7 +61,7 @@ void cli4_(double re, double im, double* res_re, double* res_im)
 }
 
 /** C++ wrapper for cli4l */
-void cli4l_(long double re, long double im, long double* res_re, long double* res_im)
+void cli4l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
    const long double _Complex result = cli4l(re + I*im);
    *res_re = creall(result);
@@ -69,7 +69,7 @@ void cli4l_(long double re, long double im, long double* res_re, long double* re
 }
 
 /** C++ wrapper for cli5 */
-void cli5_(double re, double im, double* res_re, double* res_im)
+void cli5_c(double re, double im, double* res_re, double* res_im)
 {
    const double _Complex result = cli5(re + I*im);
    *res_re = creal(result);
@@ -77,7 +77,7 @@ void cli5_(double re, double im, double* res_re, double* res_im)
 }
 
 /** C++ wrapper for cli5l */
-void cli5l_(long double re, long double im, long double* res_re, long double* res_im)
+void cli5l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
    const long double _Complex result = cli5l(re + I*im);
    *res_re = creall(result);
@@ -85,7 +85,7 @@ void cli5l_(long double re, long double im, long double* res_re, long double* re
 }
 
 /** C++ wrapper for cli6 */
-void cli6_(double re, double im, double* res_re, double* res_im)
+void cli6_c(double re, double im, double* res_re, double* res_im)
 {
    const double _Complex result = cli6(re + I*im);
    *res_re = creal(result);
@@ -93,7 +93,7 @@ void cli6_(double re, double im, double* res_re, double* res_im)
 }
 
 /** C++ wrapper for cli6l */
-void cli6l_(long double re, long double im, long double* res_re, long double* res_im)
+void cli6l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
    const long double _Complex result = cli6l(re + I*im);
    *res_re = creall(result);

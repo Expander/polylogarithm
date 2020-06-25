@@ -23,13 +23,13 @@ std::complex<double> to_c64(std::complex<long double> z)
 
 std::complex<double> poly_Li5(std::complex<double> z) {
    double re{}, im{};
-   cli5_(std::real(z), std::imag(z), &re, &im);
+   cli5_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
 std::complex<long double> poly_Li5(std::complex<long double> z) {
    long double re{}, im{};
-   cli5l_(std::real(z), std::imag(z), &re, &im);
+   cli5l_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 

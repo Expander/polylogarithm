@@ -26,7 +26,7 @@ std::complex<double> to_c64(std::complex<long double> z)
 
 std::complex<double> poly_Li4(std::complex<double> z) {
    double re{}, im{};
-   cli4_(std::real(z), std::imag(z), &re, &im);
+   cli4_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
@@ -42,7 +42,7 @@ std::complex<double> poly_Li4_fortran(std::complex<double> z) {
 
 std::complex<long double> poly_Li4(std::complex<long double> z) {
    long double re{}, im{};
-   cli4l_(std::real(z), std::imag(z), &re, &im);
+   cli4l_c(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 
