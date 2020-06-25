@@ -5,6 +5,7 @@ if (ENABLE_FORTRAN)
     horner.f90
     Li2.f90
     Li3.f90
+    Li4.f90
     )
 
   target_include_directories(fortran PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

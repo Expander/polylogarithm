@@ -38,3 +38,15 @@ subroutine cdli3_wrapper(re, im, res_re, res_im) bind(C)
   res_re = real(res)
   res_im = aimag(res)
 end subroutine cdli3_wrapper
+
+
+subroutine cdli4_wrapper(re, im, res_re, res_im) bind(C)
+  use, intrinsic :: iso_c_binding
+  implicit none
+  real(c_double), intent(in)  :: im, re
+  real(c_double), intent(out) :: res_re, res_im
+  double complex res, cdli4
+  res = cdli4(dcmplx(re, im))
+  res_re = real(res)
+  res_im = aimag(res)
+end subroutine cdli4_wrapper

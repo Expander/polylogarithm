@@ -5,6 +5,7 @@
 void dli2_wrapper(const double*, double*);
 void cdli2_wrapper(const double*, const double*, double*, double*);
 void cdli3_wrapper(const double*, const double*, double*, double*);
+void cdli4_wrapper(const double*, const double*, double*, double*);
 
 double li2_fortran(double x)
 {
@@ -21,6 +22,11 @@ void cli2_fortran(double re, double im, double* res_re, double* res_im)
 void cli3_fortran(double re, double im, double* res_re, double* res_im)
 {
    cdli3_wrapper(&re, &im, res_re, res_im);
+}
+
+void cli4_fortran(double re, double im, double* res_re, double* res_im)
+{
+   cdli4_wrapper(&re, &im, res_re, res_im);
 }
 
 #endif

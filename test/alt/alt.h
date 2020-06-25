@@ -51,6 +51,9 @@ void cli2_fortran(double re, double im, double* res_re, double* res_im);
 /** complex polylogarithm with n=3 (trilogarithm), Fortran implementation */
 void cli3_fortran(double re, double im, double* res_re, double* res_im);
 
+/** complex polylogarithm with n=4, Fortran implementation */
+void cli4_fortran(double re, double im, double* res_re, double* res_im);
+
 #endif
 
 double algorithm_327(double x);

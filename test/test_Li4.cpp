@@ -29,6 +29,16 @@ std::complex<double> poly_Li4(std::complex<double> z) {
    return { re, im };
 }
 
+#ifdef ENABLE_FORTRAN
+
+std::complex<double> poly_Li4_fortran(std::complex<double> z) {
+   double re{}, im{};
+   cli4_fortran(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
+#endif
+
 std::complex<long double> poly_Li4(std::complex<long double> z) {
    long double re{}, im{};
    cli4l_(std::real(z), std::imag(z), &re, &im);
@@ -70,18 +80,21 @@ TEST_CASE("test_fixed_values")
       const auto li64_cmpl    = polylogarithm::Li4(z64);
       const auto li128_cmpl   = polylogarithm::Li4(z128);
       const auto li64_cmpl_c  = poly_Li4(z64);
+      const auto li64_cmpl_f  = poly_Li4_fortran(z64);
       const auto li128_cmpl_c = poly_Li4(z128);
 
       INFO("z(128)        = " << z128);
       INFO("Li4(64)  cmpl = " << li64_expected  << " (expected)");
       INFO("Li4(64)  cmpl = " << li64_cmpl      << " (polylogarithm C++)");
       INFO("Li4(64)  cmpl = " << li64_cmpl_c    << " (polylogarithm C)");
+      INFO("Li4(64)  cmpl = " << li64_cmpl_f    << " (polylogarithm Fortran)");
       INFO("Li4(128) cmpl = " << li128_expected << " (expected)");
       INFO("Li4(128) cmpl = " << li128_cmpl     << " (polylogarithm C++)");
       INFO("Li4(128) cmpl = " << li128_cmpl_c   << " (polylogarithm C)");
 
       CHECK_CLOSE_COMPLEX(li64_cmpl   , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_cmpl_c , li64_expected , 2*eps64);
+      CHECK_CLOSE_COMPLEX(li64_cmpl_f , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li128_cmpl  , li128_expected, 2*eps128);
       CHECK_CLOSE_COMPLEX(li128_cmpl_c, li128_expected, 2*eps128);
    }
