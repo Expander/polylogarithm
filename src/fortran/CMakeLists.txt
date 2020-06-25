@@ -7,6 +7,7 @@ if (ENABLE_FORTRAN)
     Li3.f90
     Li4.f90
     Li5.f90
+    Li6.f90
     )
 
   target_include_directories(polylog_fortran PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

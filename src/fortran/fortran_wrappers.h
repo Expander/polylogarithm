@@ -21,6 +21,9 @@ void cli4_fortran(const double* re, const double* im, double* res_re, double* re
 /** complex polylogarithm with n=5, Fortran implementation */
 void cli5_fortran(const double* re, const double* im, double* res_re, double* res_im);
 
+/** complex polylogarithm with n=6, Fortran implementation */
+void cli6_fortran(const double* re, const double* im, double* res_re, double* res_im);
+
 #endif
 
 #ifdef __cplusplus
