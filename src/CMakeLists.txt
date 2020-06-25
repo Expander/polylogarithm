@@ -1,14 +1,5 @@
-add_library(polylog
-  Cl2.cpp
-  Cl3.cpp
-  Cl4.cpp
-  Cl5.cpp
-  Cl6.cpp
-  Li.cpp
-  Li2.cpp
-  Li3.cpp
-  Li4.cpp
-  Li5.cpp
-  Li6.cpp
-  )
-target_include_directories(polylog PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+add_subdirectory(cpp)
+
+add_library(polylog INTERFACE)
+target_include_directories(polylog INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/cpp)
+target_link_libraries(polylog INTERFACE polylog_cpp)
