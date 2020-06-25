@@ -3,12 +3,12 @@ Polylogarithm
 
 [![Build Status](https://travis-ci.org/Expander/polylogarithm.svg?branch=master)](https://travis-ci.org/Expander/polylogarithm)
 
-The Polylogarithm package provides C++ implementations of various
-polylogarithms, including the real and complex dilogarithm,
+The Polylogarithm package provides C, C++ and Fortran implementations
+of various polylogarithms, including the real and complex dilogarithm,
 trilogarithm, and standard Clausen functions.
 
-The package has no external dependencies, except for the C++ standard
-library.  The implementations of the individual polylogarithm
+The package has no external dependencies, except for the C/C++/Fortran
+standard libraries.  The implementations of the individual polylogarithm
 functions are distributed among different source code files, so
 individual source code files can be easily extracted and incorporated
 into existing projects.
