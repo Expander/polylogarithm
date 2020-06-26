@@ -1,5 +1,14 @@
 #include <tsil.h>
 
+void li2sub_(double*, const double*);
+
+double looptools_dilog(double x)
+{
+   double res = 0;
+   li2sub_(&res, &x);
+   return res;
+}
+
 TSIL_REAL TSIL_dilog_real(TSIL_REAL x);
 
 long double tsil_dilog_real(long double x)
