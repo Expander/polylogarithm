@@ -5,6 +5,7 @@ add_subdirectory(fortran)
 add_library(polylog INTERFACE)
 target_include_directories(polylog
   INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/c
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/fortran
