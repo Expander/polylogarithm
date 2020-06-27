@@ -1,4 +1,4 @@
-if (ENABLE_FORTRAN)
+if(CMAKE_Fortran_COMPILER)
   add_library(polylog_fortran
     fortran_wrappers.f90
     fast_clog.f90
@@ -9,7 +9,6 @@ if (ENABLE_FORTRAN)
     Li5.f90
     Li6.f90
     )
-
   target_include_directories(polylog_fortran PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 else()
   add_library(polylog_fortran INTERFACE)
