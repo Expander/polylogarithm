@@ -1,6 +1,12 @@
 #include <tsil.h>
 
 void li2sub_(double*, const double*);
+void ltini_(void);
+
+void init_looptools()
+{
+   ltini_();
+}
 
 double looptools_dilog(double x)
 {

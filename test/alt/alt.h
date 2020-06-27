@@ -20,6 +20,7 @@ double koelbig_dilog(double x);
 
 long double koelbig_dilogl(long double x);
 
+void init_looptools();
 double looptools_dilog(double x);
 
 double morris_dilog(double x);

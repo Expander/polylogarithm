@@ -221,6 +221,8 @@ void print_headline(const std::string& text)
 int main() {
    using namespace polylogarithm::bench;
 
+   init_looptools();
+
    const std::size_t N = 1000000;
    const auto min = -5.0;
    const auto max = 5.0;
@@ -268,6 +270,9 @@ int main() {
 
    bench_fn([&](double x) { return koelbig_dilog(x); }, values_d,
             "Koelbig", "double");
+
+   bench_fn([&](double x) { return looptools_dilog(x); }, values_d,
+            "LoopTools", "double");
 
    bench_fn([&](double x) { return morris_dilog(x); }, values_d,
             "Morris", "double");
