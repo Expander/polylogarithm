@@ -53,4 +53,3 @@ static inline long double _Complex fast_pos_clogl(long double _Complex z)
 
    return 0.5L*logl(rz*rz + iz*iz) + I*arg;
 }
-
