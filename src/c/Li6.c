@@ -63,7 +63,7 @@ double _Complex cli6(double _Complex z)
       const double c2 = 0.54116161685556910;
       const double c3 = 0.20034281719326571;
       const double c4 = 0.068538919452009435;
-      const double _Complex c5 = (137.0/60.0 - fast_clog(-u))/120.0;
+      const double _Complex c5 = (137.0/60.0 - fast_pos_clog(-u))/120.0;
       const double c6 = -1.0/1440.0;
 
       const double cs[5] = {
@@ -87,12 +87,12 @@ double _Complex cli6(double _Complex z)
    double sgn = 1;
 
    if (nz <= 1.0) {
-      u = -fast_clog(1.0 - z);
+      u = -fast_pos_clog(1.0 - z);
    } else { // nz > 1
       const double arg = pz > 0.0 ? pz - PI : pz + PI;
       const double _Complex lmz = lnz + arg*I; // clog(-z)
       const double _Complex lmz2 = lmz*lmz;
-      u = -fast_clog(1.0 - 1.0/z);
+      u = -fast_pos_clog(1.0 - 1.0/z);
       r = -31.0*PI6/15120.0 + lmz2*(-7.0/720.0*PI4 + lmz2*(-1.0/144.0*PI2 - 1.0/720.0*lmz2));
       sgn = -1;
    }
@@ -203,7 +203,7 @@ long double _Complex cli6l(long double _Complex z)
       const long double c2 = 0.541161616855569095758001848270583951L;
       const long double c3 = 0.200342817193265714233289693585241665L;
       const long double c4 = 0.0685389194520094348530172986102510496L;
-      const long double _Complex c5 = (137.0L/60.0L - fast_clogl(-u))/120.0L;
+      const long double _Complex c5 = (137.0L/60.0L - fast_pos_clogl(-u))/120.0L;
       const long double c6 = -1.0L/1440.0L;
 
       const long double cs[] = {
@@ -248,12 +248,12 @@ long double _Complex cli6l(long double _Complex z)
    long double sgn = 1;
 
    if (nz <= 1.0L) {
-      u = -fast_clogl(1.0L - z);
+      u = -fast_pos_clogl(1.0L - z);
    } else { // nz > 1
       const long double arg = pz > 0.0 ? pz - PI : pz + PI;
       const long double _Complex lmz = lnz + arg*I; // clog(-z)
       const long double _Complex lmz2 = lmz*lmz;
-      u = -fast_clogl(1.0L - 1.0L/z);
+      u = -fast_pos_clogl(1.0L - 1.0L/z);
       r = -31.0L*PI6/15120.0L
           + lmz2*(-7.0L/720.0L*PI4 +
                   lmz2*(-1.0L/144.0L*PI2 - 1.0L/720.0L*lmz2));

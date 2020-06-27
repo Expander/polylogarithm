@@ -62,7 +62,7 @@ double _Complex cli5(double _Complex z)
       const double c1 = 1.0823232337111382; // zeta(4)
       const double c2 = 0.60102845157979714; // zeta(3)/2
       const double c3 = 0.27415567780803774;
-      const double _Complex c4 = (25.0/12.0 - fast_clog(-u))/24.0;
+      const double _Complex c4 = (25.0/12.0 - fast_pos_clog(-u))/24.0;
       const double c5 = -1.0/240.0;
 
       const double cs[6] = {
@@ -85,12 +85,12 @@ double _Complex cli5(double _Complex z)
    double _Complex u = 0.0, rest = 0.0;
 
    if (nz <= 1.0) {
-      u = -fast_clog(1.0 - z);
+      u = -fast_pos_clog(1.0 - z);
    } else { // nz > 1
       const double arg = pz > 0.0 ? pz - PI : pz + PI;
       const double _Complex lmz = lnz + arg*I; // clog(-z)
       const double _Complex lmz2 = lmz*lmz;
-      u = -fast_clog(1.0 - 1.0/z);
+      u = -fast_pos_clog(1.0 - 1.0/z);
       rest = -1.0/360.0*lmz*(7*PI4 + lmz2*(10.0*PI2 + 3.0*lmz2));
    }
 
@@ -197,7 +197,7 @@ long double _Complex cli5l(long double _Complex z)
       const long double c1 = 1.08232323371113819151600369654116790L; // zeta(4)
       const long double c2 = 0.601028451579797142699869080755724995L; // zeta(3)/2
       const long double c3 = 0.274155677808037739412069194441004198L;
-      const long double _Complex c4 = (25.0L/12.0L - fast_clogl(-u))/24.0L;
+      const long double _Complex c4 = (25.0L/12.0L - fast_pos_clogl(-u))/24.0L;
       const long double c5 = -1.0L/240.0L;
 
       const long double cs[] = {
@@ -237,12 +237,12 @@ long double _Complex cli5l(long double _Complex z)
    long double _Complex u = 0.0L, rest = 0.0L;
 
    if (nz <= 1.0L) {
-      u = -fast_clogl(1.0L - z);
+      u = -fast_pos_clogl(1.0L - z);
    } else { // nz > 1
       const long double arg = pz > 0.0 ? pz - PI : pz + PI;
       const long double _Complex lmz = lnz + arg*I; // clog(-z)
       const long double _Complex lmz2 = lmz*lmz;
-      u = -fast_clogl(1.0L - 1.0L/z);
+      u = -fast_pos_clogl(1.0L - 1.0L/z);
       rest = -1.0L/360.0L*lmz*(7*PI4 + lmz2*(10.0L*PI2 + 3.0L*lmz2));
    }
 

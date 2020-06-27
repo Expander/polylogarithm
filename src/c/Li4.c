@@ -61,7 +61,7 @@ double _Complex cli4(double _Complex z)
       const double _Complex u8 = u4*u4;
       const double c1 = 1.2020569031595943; // zeta(3)
       const double c2 = 0.82246703342411322;
-      const double _Complex c3 = (11.0/6.0 - fast_clog(-u))/6.0;
+      const double _Complex c3 = (11.0/6.0 - fast_pos_clog(-u))/6.0;
       const double c4 = -1.0/48.0;
 
       const double cs[7] = {
@@ -85,12 +85,12 @@ double _Complex cli4(double _Complex z)
    double sgn = 1;
 
    if (nz <= 1.0) {
-      u = -fast_clog(1.0 - z);
+      u = -fast_pos_clog(1.0 - z);
    } else { // nz > 1
       const double arg = pz > 0.0 ? pz - PI : pz + PI;
       const double _Complex lmz = lnz + arg*I; // clog(-z)
       const double _Complex lmz2 = lmz*lmz;
-      u = -fast_clog(1.0 - 1.0/z);
+      u = -fast_pos_clog(1.0 - 1.0/z);
       r = 1.0/360.0*(-7*PI4 + lmz2*(-30.0*PI2 - 15.0*lmz2));
       sgn = -1;
    }
@@ -197,7 +197,7 @@ long double _Complex cli4l(long double _Complex z)
       const long double _Complex u2 = u*u;
       const long double c1 = 1.20205690315959428539973816151144999L; // zeta(3)
       const long double c2 = 0.822467033424113218236207583323012595L;
-      const long double _Complex c3 = (11.0L/6.0L - fast_clogl(-u))/6.0L;
+      const long double _Complex c3 = (11.0L/6.0L - fast_pos_clogl(-u))/6.0L;
       const long double c4 = -1.0L/48.0L;
 
       const long double cs[] = {
@@ -238,12 +238,12 @@ long double _Complex cli4l(long double _Complex z)
    long double sgn = 1;
 
    if (nz <= 1.0L) {
-      u = -fast_clogl(1.0L - z);
+      u = -fast_pos_clogl(1.0L - z);
    } else { // nz > 1
       const long double arg = pz > 0.0 ? pz - PI : pz + PI;
       const long double _Complex lmz = lnz + arg*I; // clog(-z)
       const long double _Complex lmz2 = lmz*lmz;
-      u = -fast_clogl(1.0L - 1.0L/z);
+      u = -fast_pos_clogl(1.0L - 1.0L/z);
       r = 1.0L/360.0L*(-7*PI4 + lmz2*(-30.0L*PI2 - 15.0L*lmz2));
       sgn = -1;
    }
