@@ -8,24 +8,7 @@
 #include <complex.h>
 #include <float.h>
 #include <math.h>
-
-
-static double _Complex fast_clog(double _Complex z)
-{
-   const double rz = creal(z);
-   const double iz = cimag(z);
-
-   return 0.5*log(rz*rz + iz*iz) + I*atan2(iz, rz);
-}
-
-
-static long double _Complex fast_clogl(long double _Complex z)
-{
-   const long double rz = creall(z);
-   const long double iz = cimagl(z);
-
-   return 0.5*logl(rz*rz + iz*iz) + I*atan2l(iz, rz);
-}
+#include "fast_clog.h"
 
 
 static double horner(double x, const double* c, int len)

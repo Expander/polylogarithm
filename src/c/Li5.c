@@ -8,24 +8,7 @@
 #include <complex.h>
 #include <float.h>
 #include <math.h>
-
-
-static double _Complex fast_clog(double _Complex z)
-{
-   const double rz = creal(z) == 0.0 ? fabs(creal(z)) : creal(z);
-   const double iz = cimag(z) == 0.0 ? fabs(cimag(z)) : cimag(z);
-
-   return 0.5*log(rz*rz + iz*iz) + I*atan2(iz, rz);
-}
-
-
-static long double _Complex fast_clogl(long double _Complex z)
-{
-   const long double rz = creall(z) == 0.0L ? fabsl(creall(z)) : creall(z);
-   const long double iz = cimagl(z) == 0.0L ? fabsl(cimagl(z)) : cimagl(z);
-
-   return 0.5L*logl(rz*rz + iz*iz) + I*atan2l(iz, rz);
-}
+#include "fast_clog.h"
 
 
 /**
