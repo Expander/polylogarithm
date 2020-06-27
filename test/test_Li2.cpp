@@ -268,7 +268,7 @@ TEST_CASE("test_special_values")
 #endif
       CHECK_CLOSE_COMPLEX(hollik_Li2(z0), li0, eps);
       CHECK_CLOSE_COMPLEX(tsil_Li2(z0)  , li0, eps);
-      CHECK_CLOSE_COMPLEX(sherpa_Li2(z0), li0, eps);
+      CHECK_CLOSE_COMPLEX(sherpa_Li2(z0), li0, 2*eps);
       CHECK_CLOSE_COMPLEX(spheno_Li2(z0), li0, eps);
    }
 }
