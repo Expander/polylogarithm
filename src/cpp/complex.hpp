@@ -24,9 +24,8 @@ struct Complex {
 template <typename T>
 Complex<T> pos(const Complex<T>& z) noexcept
 {
-   const T rz = z.re == T(0) ? std::abs(z.re) : z.re;
    const T iz = z.im == T(0) ? std::abs(z.im) : z.im;
-   return { rz, iz };
+   return { z.re, iz };
 }
 
 template <typename T>
