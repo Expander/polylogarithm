@@ -55,8 +55,8 @@ TEST_CASE("test_kummer_relation")
       const auto lhs = Li(2,std::exp(i*t));
       const auto rhs = z2 - t*(2*pi - t)/4. + i*Cl(2,t);
 
-      CHECK_CLOSE(std::real(lhs), std::real(rhs), 1e-15);
-      CHECK_CLOSE(std::imag(lhs), std::imag(rhs), 1e-15);
+      CHECK_CLOSE(std::real(lhs), std::real(rhs), 1e-14);
+      CHECK_CLOSE(std::imag(lhs), std::imag(rhs), 1e-14);
    }
 }
 

@@ -20,14 +20,6 @@ struct Complex {
    T im{};
 };
 
-/// converts -0.0 to 0.0
-template <typename T>
-Complex<T> pos(const Complex<T>& z) noexcept
-{
-   const T iz = z.im == T(0) ? std::abs(z.im) : z.im;
-   return { z.re, iz };
-}
-
 template <typename T>
 constexpr T arg(const Complex<T>& z) noexcept
 {
@@ -41,10 +33,15 @@ constexpr Complex<T> conj(const Complex<T>& z) noexcept
 }
 
 template <typename T>
-Complex<T> log(const Complex<T>& z_) noexcept
+Complex<T> log(const Complex<T>& z) noexcept
 {
-   const Complex<T> z = pos(z_);
-   return { 0.5*std::log(norm_sqr(z)), arg(z) };
+   T a = arg(z);
+
+   if (z.im == T(0) && a < T(0)) {
+      a = -a;
+   }
+
+   return { 0.5*std::log(norm_sqr(z)), a };
 }
 
 template <typename T>

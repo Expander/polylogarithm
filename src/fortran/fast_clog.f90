@@ -18,7 +18,7 @@ double complex function fast_cdlog(z)
 
   re = real(z)
   im = aimag(z)
-  fast_cdlog = dcmplx(0.5D0*log(re*re + im*im), datan2(im, re))
+  fast_cdlog = dcmplx(0.5D0*log(re**2 + im**2), datan2(im, re))
 
 end function fast_cdlog
 
@@ -32,15 +32,15 @@ end function fast_cdlog
 !*********************************************************************
 double complex function fast_pos_cdlog(z)
   implicit none
-  double complex :: z, fast_cdlog
+  double complex :: z
   double precision :: re, im, arg
 
   re = real(z)
   im = aimag(z)
   arg = datan2(im, re)
 
-  if (im .eq. 0) arg = -arg
+  if (im .eq. 0 .and. arg .lt. 0) arg = -arg
 
-  fast_pos_cdlog = dcmplx(0.5D0*log(re*re + im*im), arg)
+  fast_pos_cdlog = dcmplx(0.5D0*log(re**2 + im**2), arg)
 
 end function fast_pos_cdlog
