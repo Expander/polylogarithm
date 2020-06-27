@@ -1,19 +1,19 @@
 #include <tsil.h>
 
+#ifdef ENABLE_FORTRAN
 void li2sub_(double*, const double*);
 void ltini_(void);
-
 void init_looptools()
 {
    ltini_();
 }
-
 double looptools_dilog(double x)
 {
    double res = 0;
    li2sub_(&res, &x);
    return res;
 }
+#endif
 
 TSIL_REAL TSIL_dilog_real(TSIL_REAL x);
 

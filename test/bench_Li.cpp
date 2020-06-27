@@ -221,7 +221,9 @@ void print_headline(const std::string& text)
 int main() {
    using namespace polylogarithm::bench;
 
+#ifdef ENABLE_FORTRAN
    init_looptools();
+#endif
 
    const std::size_t N = 1000000;
    const auto min = -5.0;
@@ -271,8 +273,10 @@ int main() {
    bench_fn([&](double x) { return koelbig_dilog(x); }, values_d,
             "Koelbig", "double");
 
+#ifdef ENABLE_FORTRAN
    bench_fn([&](double x) { return looptools_dilog(x); }, values_d,
             "LoopTools", "double");
+#endif
 
    bench_fn([&](double x) { return morris_dilog(x); }, values_d,
             "Morris", "double");

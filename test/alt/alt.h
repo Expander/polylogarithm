@@ -20,8 +20,10 @@ double koelbig_dilog(double x);
 
 long double koelbig_dilogl(long double x);
 
+#ifdef ENABLE_FORTRAN
 void init_looptools();
 double looptools_dilog(double x);
+#endif
 
 double morris_dilog(double x);
 

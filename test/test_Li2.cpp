@@ -275,7 +275,10 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_real_fixed_values")
 {
+#ifdef ENABLE_FORTRAN
    init_looptools();
+#endif
+
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
 
@@ -299,7 +302,9 @@ TEST_CASE("test_real_fixed_values")
          const auto li64_hassani  = hassani_dilog(x64);
          const auto li64_koelbig  = koelbig_dilog(x64);
          const auto li128_koelbig = koelbig_dilogl(x128);
+#ifdef ENABLE_FORTRAN
          const auto li64_looptools= looptools_dilog(x64);
+#endif
          const auto li64_morris   = morris_dilog(x64);
 #ifdef ENABLE_GSL
          const auto li64_gsl      = gsl_Li2(x64);
@@ -321,7 +326,9 @@ TEST_CASE("test_real_fixed_values")
          INFO("Li2(64)  real = " << li64_cephes_2  << " (cephes 2)");
          INFO("Li2(64)  real = " << li64_hassani   << " (hassani)");
          INFO("Li2(64)  real = " << li64_koelbig   << " (koelbig)");
+#ifdef ENABLE_FORTRAN
          INFO("Li2(64)  real = " << li64_looptools << " (looptools)");
+#endif
          INFO("Li2(64)  real = " << li64_morris    << " (morris)");
 #ifdef ENABLE_GSL
          INFO("Li2(64)  real = " << li64_gsl       << " (GSL)");
@@ -345,7 +352,9 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(li64_cephes_2 , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_hassani  , std::real(li64_expected) , 100*eps64);
          CHECK_CLOSE(li64_koelbig  , std::real(li64_expected) , 2*eps64);
+#ifdef ENABLE_FORTRAN
          CHECK_CLOSE(li64_looptools, std::real(li64_expected) , 2*eps64);
+#endif
          CHECK_CLOSE(li64_morris   , std::real(li64_expected) , 2*eps64);
 #ifdef ENABLE_GSL
          CHECK_CLOSE(li64_gsl      , std::real(li64_expected) , 2*eps64);
@@ -432,7 +441,9 @@ TEST_CASE("test_real_random_values")
 {
    using namespace polylogarithm::bench;
 
+#ifdef ENABLE_FORTRAN
    init_looptools();
+#endif
 
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto values = generate_random_scalars<double>(10000, -10, 10);
@@ -453,7 +464,9 @@ TEST_CASE("test_real_random_values")
       const double li2_cephes_2 = cephes_dilog_2(v);
       const double li2_hassani = hassani_dilog(v);
       const double li2_koelbig = koelbig_dilog(v);
+#ifdef ENABLE_FORTRAN
       const double li2_looptools = looptools_dilog(v);
+#endif
       const double li2_morris = morris_dilog(v);
 
       INFO("x = " << v);
@@ -472,7 +485,9 @@ TEST_CASE("test_real_random_values")
       INFO("Li2(64) real = " << li2_cephes_2 << " (cephes 2)");
       INFO("Li2(64) real = " << li2_hassani  << " (Hassani)");
       INFO("Li2(64) real = " << li2_koelbig  << " (Koelbig)");
+#ifdef ENABLE_FORTRAN
       INFO("Li2(64) real = " << li2_looptools<< " (LoopTools)");
+#endif
       INFO("Li2(64) real = " << li2_morris   << " (Morris)");
 
       CHECK_CLOSE(li2, li2_c        , eps64);
@@ -489,7 +504,9 @@ TEST_CASE("test_real_random_values")
       CHECK_CLOSE(li2, li2_cephes_2 , 2*eps64);
       CHECK_CLOSE(li2, li2_hassani  , 100*eps64);
       CHECK_CLOSE(li2, li2_koelbig  , 2*eps64);
+#ifdef ENABLE_FORTRAN
       CHECK_CLOSE(li2, li2_looptools, 2*eps64);
+#endif
       CHECK_CLOSE(li2, li2_morris   , eps64);
    }
 }
