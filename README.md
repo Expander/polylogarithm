@@ -27,5 +27,4 @@ implementation in [SPheno](https://spheno.hepforge.org/).
 Copying
 -------
 
-Polylogarithm is licenced under the GNU Lesser General Public License
-(GNU LGPL) version 3.
+Polylogarithm is licenced under the MIT License.
