@@ -17,11 +17,6 @@ addons:
     packages:
       - gfortran
       - libgsl0-dev
-  homebrew:
-    packages:
-      - gcc
-      - gsl
-    update: true
 script:
   - mkdir build
   - cd build
