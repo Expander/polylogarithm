@@ -24,6 +24,21 @@ The implementation of the complex dilogarithm is inspired by the
 implementation in [SPheno](https://spheno.hepforge.org/).
 
 
+Citation
+--------
+
+~~~
+@software{polylogarithm,
+    author       = {{Alexander Voigt}},
+    title        = {{Polylogarithm}},
+    year         = "2020",
+    version      = {6.0.0},
+    url          = {https://github.com/Expander/polylogarithm},
+    note         = "[License: MIT]"
+}
+~~~
+
+
 Copying
 -------
 
