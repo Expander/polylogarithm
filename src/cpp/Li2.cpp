@@ -14,12 +14,12 @@ namespace polylogarithm {
 
 namespace {
 
-   template <typename T>
-   T horner(T x, const T* c, int len) noexcept
+   template <typename T, int N>
+   T horner(T x, const T (&c)[N]) noexcept
    {
       T p = 0;
-      while (len--)
-         p = p*x + c[len];
+      for (int i = N - 1; i >= 0; --i)
+         p = p*x + c[i];
       return p;
    }
 
@@ -117,8 +117,8 @@ double Li2(double x) noexcept
 
    const double z = y - 0.25;
 
-   const double p = horner(z, P, sizeof(P)/sizeof(P[0]));
-   const double q = horner(z, Q, sizeof(Q)/sizeof(Q[0]));
+   const double p = horner(z, P);
+   const double q = horner(z, Q);
 
    return r + s*y*p/q;
 }
@@ -242,8 +242,8 @@ long double Li2(long double x) noexcept
 
    const long double z = y - 0.25L;
 
-   const long double p = horner(z, P, sizeof(P)/sizeof(P[0]));
-   const long double q = horner(z, Q, sizeof(Q)/sizeof(Q[0]));
+   const long double p = horner(z, P);
+   const long double q = horner(z, Q);
 
    return r + s*y*p/q;
 }
