@@ -277,48 +277,48 @@ double _Complex cli2(double _Complex z)
       return z;
    }
 
-   double _Complex cy = 0.0, cz = 0.0;
+   double _Complex u = 0.0, rest = 0.0;
    int sgn = 1;
 
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5) {
       if (nz > 1.0) {
          const double _Complex lz = fast_clog(-z);
-         cy = -0.5*lz*lz - PI*PI/6;
-         cz = -fast_clog(1.0 - 1.0 / z);
+         u = -fast_clog(1.0 - 1.0 / z);
+         rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       } else { /* nz <= 1 */
-         cy = 0;
-         cz = -fast_clog(1.0 - z);
+         u = -fast_clog(1.0 - z);
+         rest = 0;
          sgn = 1;
       }
    } else { /* rz > 0.5 */
       if (nz <= 2*rz) {
-         cz = -fast_clog(z);
-         cy = cz*fast_clog(1.0 - z) + PI*PI/6;
+         u = -fast_clog(z);
+         rest = u*fast_clog(1.0 - z) + PI*PI/6;
          sgn = -1;
       } else { /* nz > 2*rz */
          const double _Complex lz = fast_clog(-z);
-         cy = -0.5*lz*lz - PI*PI/6;
-         cz = -fast_clog(1.0 - 1.0 / z);
+         u = -fast_clog(1.0 - 1.0 / z);
+         rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       }
    }
 
-   const double _Complex cz2 = cz*cz;
-   const double _Complex cz4 = cz2*cz2;
+   const double _Complex u2 = u*u;
+   const double _Complex u4 = u2*u2;
    const double _Complex sum =
-      cz +
-      cz2 * (bf[0] +
-      cz  * (bf[1] +
-      cz2 * (
+      u +
+      u2 * (bf[0] +
+      u  * (bf[1] +
+      u2 * (
           bf[2] +
-          cz2*bf[3] +
-          cz4*(bf[4] + cz2*bf[5]) +
-          cz4*cz4*(bf[6] + cz2*bf[7] + cz4*(bf[8] + cz2*bf[9]))
+          u2*bf[3] +
+          u4*(bf[4] + u2*bf[5]) +
+          u4*u4*(bf[6] + u2*bf[7] + u4*(bf[8] + u2*bf[9]))
       )));
 
-   return (double)sgn * sum + cy;
+   return (double)sgn * sum + rest;
 }
 
 
@@ -379,44 +379,44 @@ long double _Complex cli2l(long double _Complex z)
       return z;
    }
 
-   long double _Complex cy = 0.0, cz = 0.0;
+   long double _Complex u = 0.0, rest = 0.0;
    int sgn = 1;
 
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5L) {
       if (nz > 1.0L) {
          const long double _Complex lz = fast_clogl(-z);
-         cy = -0.5L*lz*lz - PI*PI/6;
-         cz = -fast_clogl(1.0L - 1.0L/z);
+         u = -fast_clogl(1.0L - 1.0L/z);
+         rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       } else { /* nz <= 1 */
-         cy = 0;
-         cz = -fast_clogl(1.0L - z);
+         u = -fast_clogl(1.0L - z);
+         rest = 0;
          sgn = 1;
       }
    } else { /* rz > 0.5L */
       if (nz <= 2*rz) {
-         cz = -fast_clogl(z);
-         cy = cz * fast_clogl(1.0L - z) + PI*PI/6;
+         u = -fast_clogl(z);
+         rest = u * fast_clogl(1.0L - z) + PI*PI/6;
          sgn = -1;
       } else { /* nz > 2*rz */
          const long double _Complex lz = fast_clogl(-z);
-         cy = -0.5L*lz*lz - PI*PI/6;
-         cz = -fast_clogl(1.0L - 1.0L/z);
+         u = -fast_clogl(1.0L - 1.0L/z);
+         rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       }
    }
 
    /* the dilogarithm */
-   const long double _Complex cz2 = cz*cz;
+   const long double _Complex u2 = u*u;
    long double _Complex sum = 0.0L;
 
    for (int i = sizeof(bf)/sizeof(bf[0]) - 1; i >= 2; i--) {
-      sum = cz2 * (bf[i] + sum);
+      sum = u2 * (bf[i] + sum);
    }
 
    /* lowest order terms w/ different powers */
-   sum = cz + cz2 * (bf[0] + cz * (bf[1] + sum));
+   sum = u + u2 * (bf[0] + u * (bf[1] + sum));
 
-   return (long double)sgn * sum + cy;
+   return (long double)sgn * sum + rest;
 }

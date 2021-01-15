@@ -95,7 +95,7 @@ end function dli2
 
 double complex function cdli2(z)
   implicit none
-  double complex :: z, cy, cz, cz2, cz4, sum, fast_cdlog
+  double complex :: z, rest, u, u2, u4, sum, fast_cdlog
   double precision :: rz, iz, nz, sgn, dli2
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision, parameter :: bf(10) = (/ &
@@ -127,39 +127,39 @@ double complex function cdli2(z)
   ! transformation to |z| < 1, Re(z) <= 0.5
   if (rz .le. 0.5D0) then
      if (nz .gt. 1) then
-        cy = -0.5D0*fast_cdlog(-z)**2 - PI**2/6
-        cz = -fast_cdlog(1 - 1/z)
+        u = -fast_cdlog(1 - 1/z)
+        rest = -0.5D0*fast_cdlog(-z)**2 - PI**2/6
         sgn = -1
      else ! nz <= 1
-        cy = 0
-        cz = -fast_cdlog(1 - z)
+        u = -fast_cdlog(1 - z)
+        rest = 0
         sgn = 1
      endif
   else ! rz > 0.5D0
      if (nz .le. 2*rz) then
-        cz = -fast_cdlog(z)
-        cy = cz*fast_cdlog(1 - z) + PI**2/6
+        u = -fast_cdlog(z)
+        rest = u*fast_cdlog(1 - z) + PI**2/6
         sgn = -1
      else ! nz > 2*rz
-        cy = -0.5D0*fast_cdlog(-z)**2 - PI**2/6
-        cz = -fast_cdlog(1 - 1/z)
+        u = -fast_cdlog(1 - 1/z)
+        rest = -0.5D0*fast_cdlog(-z)**2 - PI**2/6
         sgn = -1
      endif
   endif
 
-  cz2 = cz**2
-  cz4 = cz2**2
-  sum =                                                         &
-     cz +                                                       &
-     cz2 * (bf(1) +                                             &
-     cz  * (bf(2) +                                             &
-     cz2 * (                                                    &
-         bf(3) +                                                &
-         cz2*bf(4) +                                            &
-         cz4*(bf(5) + cz2*bf(6)) +                              &
-         cz4*cz4*(bf(7) + cz2*bf(8) + cz4*(bf(9) + cz2*bf(10))) &
+  u2 = u**2
+  u4 = u2**2
+  sum =                                                    &
+     u +                                                   &
+     u2 * (bf(1) +                                         &
+     u  * (bf(2) +                                         &
+     u2 * (                                                &
+         bf(3) +                                           &
+         u2*bf(4) +                                        &
+         u4*(bf(5) + u2*bf(6)) +                           &
+         u4*u4*(bf(7) + u2*bf(8) + u4*(bf(9) + u2*bf(10))) &
      )));
 
-  cdli2 = sgn*sum + cy
+  cdli2 = sgn*sum + rest
 
 end function cdli2

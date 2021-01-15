@@ -292,37 +292,37 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
       return z_;
    }
 
-   Complex<double> cy(0.0, 0.0), cz(0.0, 0.0);
+   Complex<double> u(0.0, 0.0), rest(0.0, 0.0);
    double sgn = 1;
 
    // transformation to |z|<1, Re(z)<=0.5
    if (z.re <= 0.5) {
       if (nz > 1) {
          const Complex<double> lz = log(-z);
-         cy = -0.5*lz*lz - PI*PI/6;
-         cz = -log(1.0 - 1.0 / z);
+         u = -log(1.0 - 1.0 / z);
+         rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       } else { // nz <= 1
-         cy = 0;
-         cz = -log(1.0 - z);
+         u = -log(1.0 - z);
+         rest = 0;
          sgn = 1;
       }
    } else { // z.re > 0.5
       if (nz <= 2*z.re) {
-         cz = -log(z);
-         cy = cz*log(1.0 - z) + PI*PI/6;
+         u = -log(z);
+         rest = u*log(1.0 - z) + PI*PI/6;
          sgn = -1;
       } else { // nz > 2*z.re
          const Complex<double> lz = log(-z);
-         cy = -0.5*lz*lz - PI*PI/6;
-         cz = -log(1.0 - 1.0 / z);
+         u = -log(1.0 - 1.0 / z);
+         rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       }
    }
 
-   const Complex<double> cz2(cz*cz);
+   const Complex<double> u2(u*u);
 
-   return sgn*(cz + cz2*(bf[0] + cz*horner<1>(cz2, bf))) + cy;
+   return sgn*(u + u2*(bf[0] + u*horner<1>(u2, bf))) + rest;
 }
 
 /**
@@ -383,37 +383,37 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
       return z_;
    }
 
-   Complex<long double> cy(0.0L, 0.0L), cz(0.0L, 0.0L);
+   Complex<long double> u(0.0L, 0.0L), rest(0.0L, 0.0L);
    long double sgn = 1;
 
    // transformation to |z|<1, Re(z)<=0.5
    if (z.re <= 0.5L) {
       if (nz > 1) {
          const Complex<long double> lz = log(-z);
-         cy = -0.5L*lz*lz - PI*PI/6;
-         cz = -log(1.0L - 1.0L/z);
+         u = -log(1.0L - 1.0L/z);
+         rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       } else { // nz <= 1
-         cy = 0;
-         cz = -log(1.0L - z);
+         u = -log(1.0L - z);
+         rest = 0;
          sgn = 1;
       }
    } else { // z.re > 0.5L
       if (nz <= 2*z.re) {
-         cz = -log(z);
-         cy = cz*log(1.0L - z) + PI*PI/6;
+         u = -log(z);
+         rest = u*log(1.0L - z) + PI*PI/6;
          sgn = -1;
       } else { // nz > 2*z.re
          const Complex<long double> lz = log(-z);
-         cy = -0.5L*lz*lz - PI*PI/6;
-         cz = -log(1.0L - 1.0L/z);
+         u = -log(1.0L - 1.0L/z);
+         rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       }
    }
 
-   const Complex<long double> cz2(cz*cz);
+   const Complex<long double> u2(u*u);
 
-   return sgn*(cz + cz2*(bf[0] + cz*horner<1>(cz2, bf))) + cy;
+   return sgn*(u + u2*(bf[0] + u*horner<1>(u2, bf))) + rest;
 }
 
 } // namespace polylogarithm
