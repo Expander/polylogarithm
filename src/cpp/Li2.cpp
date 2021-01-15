@@ -18,8 +18,9 @@ namespace {
    T horner(T x, const T (&c)[N]) noexcept
    {
       T p = 0;
-      for (int i = N - 1; i >= 0; --i)
+      for (int i = N - 1; i >= 0; --i) {
          p = p*x + c[i];
+      }
       return p;
    }
 
@@ -276,8 +277,6 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
       + 4.5189800296199182e-16
    };
 
-   const double nz = norm_sqr(z);
-
    // special cases
    if (z.im == 0) {
       if (z.re <= 1) {
@@ -285,7 +284,11 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
       }
       // z.re > 1
       return { Li2(z.re), -PI*std::log(z.re) };
-   } else if (nz < std::numeric_limits<double>::epsilon()) {
+   }
+
+   const double nz = norm_sqr(z);
+
+   if (nz < std::numeric_limits<double>::epsilon()) {
       return z_;
    }
 
@@ -367,8 +370,6 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
 
    constexpr int N = sizeof(bf)/sizeof(bf[0]);
 
-   const long double nz = norm_sqr(z);
-
    // special cases
    if (z.im == 0) {
       if (z.re <= 1) {
@@ -376,7 +377,11 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
       }
       // z.re > 1
       return { Li2(z.re), -PI*std::log(z.re) };
-   } else if (nz < std::numeric_limits<long double>::epsilon()) {
+   }
+
+   const long double nz = norm_sqr(z);
+
+   if (nz < std::numeric_limits<long double>::epsilon()) {
       return z_;
    }
 
