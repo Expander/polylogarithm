@@ -24,16 +24,16 @@ namespace {
       return p;
    }
 
-   template <int Nstart, int Nend, typename T, int N>
+   template <int Nstart, typename T, int N>
    Complex<T> horner(const Complex<T>& z, const T (&coeffs)[N]) noexcept
    {
-      static_assert(Nstart <= Nend && Nend < N && Nend >= 1, "invalid array bounds");
+      static_assert(0 <= Nstart && Nstart < N && N >= 2, "invalid array bounds");
 
       const T r = z.re + z.re;
       const T s = z.re * z.re + z.im * z.im;
-      T a = coeffs[Nend], b = coeffs[Nend - 1];
+      T a = coeffs[N - 1], b = coeffs[N - 2];
 
-      for (int i = Nend - 2; i >= Nstart; --i) {
+      for (int i = N - 3; i >= Nstart; --i) {
          const T t = a;
          a = b + r * a;
          b = coeffs[i] - s * t;
@@ -322,7 +322,7 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
 
    const Complex<double> cz2(cz*cz);
 
-   return sgn*(cz + cz2*(bf[0] + cz*horner<1, 9>(cz2, bf))) + cy;
+   return sgn*(cz + cz2*(bf[0] + cz*horner<1>(cz2, bf))) + cy;
 }
 
 /**
@@ -367,8 +367,6 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
       -3.37212196548508947046847363525493096e-37L
 #endif
    };
-
-   constexpr int N = sizeof(bf)/sizeof(bf[0]);
 
    // special cases
    if (z.im == 0) {
@@ -415,7 +413,7 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
 
    const Complex<long double> cz2(cz*cz);
 
-   return sgn*(cz + cz2*(bf[0] + cz*horner<1, N-1>(cz2, bf))) + cy;
+   return sgn*(cz + cz2*(bf[0] + cz*horner<1>(cz2, bf))) + cy;
 }
 
 } // namespace polylogarithm
