@@ -112,14 +112,17 @@ double complex function cdli2(z)
 
   rz = real(z)
   iz = aimag(z)
-  nz = rz**2 + iz**2
 
   ! special cases
   if (iz .eq. 0) then
      if (rz .le. 1) cdli2 = dcmplx(dli2(rz), 0)
      if (rz .gt. 1) cdli2 = dcmplx(dli2(rz), -PI*log(rz))
      return
-  elseif (nz .lt. EPSILON(1D0)) then
+  endif
+
+  nz = rz**2 + iz**2
+
+  if (nz .lt. EPSILON(1D0)) then
      cdli2 = z
      return
   endif

@@ -264,7 +264,6 @@ double _Complex cli2(double _Complex z)
 
    const double rz = creal(z);
    const double iz = cimag(z);
-   const double nz = rz*rz + iz*iz;
 
    /* special cases */
    if (iz == 0.0) {
@@ -273,7 +272,11 @@ double _Complex cli2(double _Complex z)
       }
       // rz > 1.0
       return li2(rz) - PI*log(rz)*I;
-   } else if (nz < DBL_EPSILON) {
+   }
+
+   const double nz = rz*rz + iz*iz;
+
+   if (nz < DBL_EPSILON) {
       return z;
    }
 
@@ -366,7 +369,6 @@ long double _Complex cli2l(long double _Complex z)
 
    const long double rz = creall(z);
    const long double iz = cimagl(z);
-   const long double nz = rz*rz + iz*iz;
 
    /* special cases */
    if (iz == 0.0) {
@@ -375,7 +377,11 @@ long double _Complex cli2l(long double _Complex z)
       }
       // rz > 1.0
       return li2l(rz) - PI*logl(rz)*I;
-   } else if (nz < LDBL_EPSILON) {
+   }
+
+   const long double nz = rz*rz + iz*iz;
+
+   if (nz < LDBL_EPSILON) {
       return z;
    }
 
