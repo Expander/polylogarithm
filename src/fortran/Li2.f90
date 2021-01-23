@@ -161,7 +161,7 @@ double complex function cdli2(z)
          u2*bf(4) +                                        &
          u4*(bf(5) + u2*bf(6)) +                           &
          u4*u4*(bf(7) + u2*bf(8) + u4*(bf(9) + u2*bf(10))) &
-     )));
+     )))
 
   cdli2 = sgn*sum + rest
 

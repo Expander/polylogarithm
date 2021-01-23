@@ -74,7 +74,7 @@ double complex function cdli5(z)
          u2 * (cs(3) +       &
          u2 * (cs(4) +       &
          u2 * (cs(5) +       &
-         u2 * (cs(6)))))))));
+         u2 * (cs(6)))))))))
       return
    endif
 
@@ -89,7 +89,7 @@ double complex function cdli5(z)
       endif
       lmz = dcmplx(lnz, arg) ! log(-z)
       u = -fast_pos_cdlog(1 - 1/z)
-      rest = -lmz*(7*PI4 + lmz**2*(10*PI2 + 3*lmz**2))/360;
+      rest = -lmz*(7*PI4 + lmz**2*(10*PI2 + 3*lmz**2))/360
    endif
 
    u2 = u**2
@@ -103,6 +103,6 @@ double complex function cdli5(z)
       u4*(bf(4) + u*bf(5) + u2*(bf(6) + u*bf(7))) +          &
       u8*(bf(8) + u*bf(9) + u2*(bf(10) + u*bf(11)) +         &
           u4*(bf(12) + u*bf(13) + u2*(bf(14) + u*bf(15)))) + &
-      u8*u8*(bf(16) + u*bf(17) + u2*(bf(18) + u*bf(19)));
+      u8*u8*(bf(16) + u*bf(17) + u2*(bf(18) + u*bf(19)))
 
 end function cdli5
