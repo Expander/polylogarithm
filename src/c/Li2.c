@@ -10,15 +10,6 @@
 #include "fast_clog.h"
 
 
-static double horner(double x, const double* c, int len)
-{
-   double p = 0;
-   while (len--)
-      p = p*x + c[len];
-   return p;
-}
-
-
 static long double hornerl(long double x, const long double* c, int len)
 {
    long double p = 0;
@@ -101,9 +92,13 @@ double li2(double x)
    }
 
    const double z = y - 0.25;
+   const double z2 = z*z;
+   const double z4 = z2*z2;
 
-   const double p = horner(z, P, sizeof(P)/sizeof(P[0]));
-   const double q = horner(z, Q, sizeof(Q)/sizeof(Q[0]));
+   const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]) +
+                    z4 * (P[4] + z * P[5] + z2 * (P[6] + z * P[7]));
+   const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
+                    z4 * (Q[4] + z * Q[5] + z2 * (Q[6] + z * Q[7]));
 
    return r + s*y*p/q;
 }

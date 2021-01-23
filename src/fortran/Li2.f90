@@ -17,7 +17,7 @@
 
 double precision function dli2(x)
   implicit none
-  double precision :: x, y, r, s, z, p, q, l, dhorner
+  double precision :: x, y, r, s, z, z2, z4, p, q, l
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision, parameter :: cp(8) = (/ &
       1.0706105563309304277D+0,             &
@@ -77,9 +77,13 @@ double precision function dli2(x)
    endif
 
   z = y - 0.25D0
+  z2 = z*z
+  z4 = z2*z2
 
-  p = dhorner(z, cp, 8)
-  q = dhorner(z, cq, 8)
+  p = cp(1) + z * cp(2) + z2 * (cp(3) + z * cp(4)) +      &
+      z4 * (cp(5) + z * cp(6) + z2 * (cp(7) + z * cp(8)))
+  q = cq(1) + z * cq(2) + z2 * (cq(3) + z * cq(4)) +      &
+      z4 * (cq(5) + z * cq(6) + z2 * (cq(7) + z * cq(8)))
 
   dli2 = r + s*y*p/q
 
