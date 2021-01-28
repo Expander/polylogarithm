@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: ls
-      run: ls
+      run: find ../../ -name CMakeLists.txt
     - name: cmake
       run: cmake .
       env:
