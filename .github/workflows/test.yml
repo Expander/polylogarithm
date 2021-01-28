@@ -14,11 +14,11 @@ jobs:
 
     steps:
     - name: cmake
-      run: cmake ..
+      run: cmake -Bbuild
       env:
         CXXFLAGS: ${{ matrix.cxxflags }}
     - name: cmake build
-      run: cmake --build .
+      run: cmake --build build
     - name: ctest
       run: ctest
       env:
