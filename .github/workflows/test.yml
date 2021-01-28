@@ -10,17 +10,14 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest]
+        cxxflags: ["", "-Ofast -ffast-math"]
 
     steps:
     - uses: actions/checkout@v1
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: '3.x'
-    - name: install conan
-      run: pip install conan
     - name: cmake
       run: cmake .
+      env:
+        CXXFLAGS: ${{ matrix.cxxflags }}
     - name: cmake build
       run: cmake --build .
     - name: ctest
