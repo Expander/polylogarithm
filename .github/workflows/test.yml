@@ -13,8 +13,6 @@ jobs:
         cxxflags: ["", "-Ofast -ffast-math"]
 
     steps:
-    - name: ls
-      run: echo $(find ../../ -name CMakeLists.txt) >&2
     - name: cmake
       run: cmake .
       env:
