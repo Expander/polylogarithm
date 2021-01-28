@@ -11,6 +11,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, macOS-latest]
         cxxflags: ["", "-Ofast -ffast-math"]
+        include:
+          - os: windows-latest
+            cxxflags:
 
     steps:
     - uses: actions/checkout@v1
