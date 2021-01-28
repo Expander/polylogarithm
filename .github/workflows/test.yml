@@ -13,12 +13,14 @@ jobs:
         cxxflags: ["", "-Ofast -ffast-math"]
 
     steps:
+    - name: ls
+      run: ls
     - name: cmake
-      run: cmake -Bbuild
+      run: cmake .
       env:
         CXXFLAGS: ${{ matrix.cxxflags }}
     - name: cmake build
-      run: cmake --build build
+      run: cmake --build .
     - name: ctest
       run: ctest
       env:
