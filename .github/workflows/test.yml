@@ -13,7 +13,7 @@ jobs:
         cxxflags: ["", "-Ofast -ffast-math"]
       include:
         - os: windows-latest
-          cxxflags:
+          cxxflags: ""
 
     steps:
     - uses: actions/checkout@v1
