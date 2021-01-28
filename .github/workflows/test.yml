@@ -1,0 +1,26 @@
+name: test
+
+on: [push]
+
+jobs:
+  test:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+        cxxflags: ["", "-Ofast -ffast-math"]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: cmake
+      run: cmake .
+      env:
+        CXXFLAGS: ${{ matrix.cxxflags }}
+    - name: cmake build
+      run: cmake --build .
+    - name: ctest
+      run: ctest
+      env:
+        CTEST_OUTPUT_ON_FAILURE: 1
