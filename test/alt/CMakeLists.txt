@@ -3,6 +3,7 @@ add_subdirectory(algorithm_490)
 add_subdirectory(babar)
 add_subdirectory(cephes)
 add_subdirectory(hassani)
+add_subdirectory(hdecay)
 add_subdirectory(hollik)
 add_subdirectory(koelbig)
 add_subdirectory(morris)
@@ -23,6 +24,7 @@ target_link_libraries(alt
     babar
     cephes
     hassani
+    hdecay
     hollik
     koelbig
     morris

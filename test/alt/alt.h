@@ -22,6 +22,8 @@ long double koelbig_dilogl(long double x);
 
 double morris_dilog(double x);
 
+void hdecay_dilog(double re, double im, double* res_re, double* res_im);
+
 void hollik_dilog(double re, double im, double* res_re, double* res_im);
 
 void sherpa_dilog(double re, double im, double* res_re, double* res_im);
