@@ -35,6 +35,12 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 
 namespace {
 
+std::complex<double> hdecay_Li2(std::complex<double> z) {
+   double li2_re{}, li2_im{};
+   hdecay_dilog(std::real(z), std::imag(z), &li2_re, &li2_im);
+   return { li2_re, li2_im };
+}
+
 std::complex<double> hollik_Li2(std::complex<double> z) {
    double li2_re{}, li2_im{};
    hollik_dilog(std::real(z), std::imag(z), &li2_re, &li2_im);
@@ -301,6 +307,9 @@ int main() {
    bench_fn([&](std::complex<double> z) { return gsl_Li2(z); },
             values_cd, "GSL", "double");
 #endif
+
+   bench_fn([&](std::complex<double> z) { return hdecay_Li2(z); },
+            values_cd, "HDECAY", "double");
 
    bench_fn([&](std::complex<double> z) { return hollik_Li2(z); },
             values_cd, "Hollik", "double");

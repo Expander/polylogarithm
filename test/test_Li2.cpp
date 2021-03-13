@@ -81,6 +81,12 @@ std::complex<double> to_c64(std::complex<long double> z)
    return std::complex<double>(std::real(z), std::imag(z));
 }
 
+std::complex<double> hdecay_Li2(std::complex<double> z) {
+   double li2_re{}, li2_im{};
+   hdecay_dilog(std::real(z), std::imag(z), &li2_re, &li2_im);
+   return { li2_re, li2_im };
+}
+
 std::complex<double> hollik_Li2(std::complex<double> z) {
    double li2_re{}, li2_im{};
    hollik_dilog(std::real(z), std::imag(z), &li2_re, &li2_im);
@@ -266,6 +272,7 @@ TEST_CASE("test_special_values")
 #ifdef ENABLE_GSL
       CHECK_CLOSE_COMPLEX(gsl_Li2(z0)   , li0, eps);
 #endif
+      CHECK_CLOSE_COMPLEX(hdecay_Li2(z0), li0, eps);
       CHECK_CLOSE_COMPLEX(hollik_Li2(z0), li0, eps);
       CHECK_CLOSE_COMPLEX(tsil_Li2(z0)  , li0, eps);
       CHECK_CLOSE_COMPLEX(sherpa_Li2(z0), li0, 2*eps);
@@ -382,6 +389,7 @@ TEST_CASE("test_complex_fixed_values")
 #ifdef ENABLE_GSL
       const auto li64_gsl    = gsl_Li2(z64);
 #endif
+      const auto li64_hdecay = hdecay_Li2(z64);
       const auto li64_hollik = hollik_Li2(z64);
       const auto li128_tsil  = tsil_Li2(z128);
       const auto li64_sherpa = sherpa_Li2(z64);
@@ -392,6 +400,7 @@ TEST_CASE("test_complex_fixed_values")
 #ifdef ENABLE_GSL
       INFO("Li2(64)  cmpl = " << li64_gsl       << " (GSL)");
 #endif
+      INFO("Li2(64)  cmpl = " << li64_hdecay    << " (HDECAY)");
       INFO("Li2(64)  cmpl = " << li64_hollik    << " (Hollik)");
       INFO("Li2(64)  cmpl = " << li64_poly      << " (polylogarithm C++)");
       INFO("Li2(64)  cmpl = " << li64_poly_c    << " (polylogarithm C)");
@@ -415,6 +424,7 @@ TEST_CASE("test_complex_fixed_values")
 #ifdef ENABLE_GSL
       CHECK_CLOSE_COMPLEX(li64_gsl    , li64_expected , 10*eps64);
 #endif
+      CHECK_CLOSE_COMPLEX(li64_hdecay , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_hollik , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_sherpa , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_spheno , li64_expected , 2*eps64);
@@ -501,6 +511,7 @@ TEST_CASE("test_complex_random_values")
 #ifdef ENABLE_GSL
       const std::complex<double> li2_gsl = gsl_Li2(v);
 #endif
+      const std::complex<double> li2_hdecay = hdecay_Li2(v);
       const std::complex<double> li2_hollik = hollik_Li2(v);
       const std::complex<double> li2_sherpa = sherpa_Li2(v);
       const std::complex<double> li2_spheno = spheno_Li2(v);
@@ -515,6 +526,7 @@ TEST_CASE("test_complex_random_values")
 #ifdef ENABLE_GSL
       INFO("Li2(64) cmpl = " << li2_gsl    << " (GSL)");
 #endif
+      INFO("Li2(64) cmpl = " << li2_hdecay << " (HDECAY)");
       INFO("Li2(64) cmpl = " << li2_hollik << " (Hollik)");
       INFO("Li2(64) cmpl = " << li2_sherpa << " (Sherpa)");
       INFO("Li2(64) cmpl = " << li2_spheno << " (SPheno)");
@@ -528,6 +540,7 @@ TEST_CASE("test_complex_random_values")
       CHECK_CLOSE_COMPLEX(li2, li2_f     , 10*eps);
 #endif
       CHECK_CLOSE_COMPLEX(li2, li2_tsil  , 10*eps);
+      CHECK_CLOSE_COMPLEX(li2, li2_hdecay, 10*eps);
       CHECK_CLOSE_COMPLEX(li2, li2_hollik, 10*eps);
       CHECK_CLOSE_COMPLEX(li2, li2_sherpa, 10*eps);
       CHECK_CLOSE_COMPLEX(li2, li2_spheno, 10*eps);
