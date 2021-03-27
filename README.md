@@ -31,8 +31,8 @@ Citation
 @software{polylogarithm,
     author       = {{Alexander Voigt}},
     title        = {{Polylogarithm}},
-    year         = "2020",
-    version      = {6.0.0},
+    year         = "2021",
+    version      = {6.2.0},
     url          = {https://github.com/Expander/polylogarithm},
     note         = "[License: MIT]"
 }
