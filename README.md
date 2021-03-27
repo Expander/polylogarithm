@@ -1,7 +1,7 @@
 Polylogarithm
 =============
 
-[![Build Status](https://travis-ci.org/Expander/polylogarithm.svg?branch=master)](https://travis-ci.org/Expander/polylogarithm)
+[![Build Status](https://github.com/Expander/polylogarithm/workflows/test/badge.svg)](https://github.com/Expander/polylogarithm/actions)
 
 The Polylogarithm package provides C, C++ and Fortran implementations
 of various polylogarithms, including the real and complex dilogarithm,
