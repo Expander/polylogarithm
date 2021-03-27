@@ -117,9 +117,13 @@ double Li2(double x) noexcept
    }
 
    const double z = y - 0.25;
+   const double z2 = z*z;
+   const double z4 = z2*z2;
 
-   const double p = horner(z, P);
-   const double q = horner(z, Q);
+   const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]) +
+                    z4 * (P[4] + z * P[5] + z2 * (P[6] + z * P[7]));
+   const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
+                    z4 * (Q[4] + z * Q[5] + z2 * (Q[6] + z * Q[7]));
 
    return r + s*y*p/q;
 }
