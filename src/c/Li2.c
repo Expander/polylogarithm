@@ -366,11 +366,11 @@ long double _Complex cli2l(long double _Complex z)
    const long double iz = cimagl(z);
 
    /* special cases */
-   if (iz == 0.0) {
-      if (rz <= 1.0) {
+   if (iz == 0) {
+      if (rz <= 1) {
          return li2l(rz);
       }
-      // rz > 1.0
+      // rz > 1
       return li2l(rz) - PI*logl(rz)*I;
    }
 
@@ -380,7 +380,7 @@ long double _Complex cli2l(long double _Complex z)
       return z;
    }
 
-   long double _Complex u = 0.0, rest = 0.0;
+   long double _Complex u = 0, rest = 0;
    int sgn = 1;
 
    /* transformation to |z|<1, Re(z)<=0.5 */
