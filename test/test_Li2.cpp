@@ -255,6 +255,17 @@ TEST_CASE("test_special_values")
                pi2, eps);
 
    {
+      // special point wher z^2 < epsilon
+      const std::complex<double> z(-1.08371e-08,1.32716e-24);
+      const std::complex<double> li2_expected(-1.08370999706393160389154078878181e-8, 1.3271599928087172e-24);
+      const std::complex<double> li2(Li2(z));
+
+      CHECK_CLOSE_COMPLEX(Li2(z), li2_expected, eps);
+      CHECK(std::abs(std::real(li2 - li2_expected)) == 0.0);
+      CHECK(std::abs(std::imag(li2 - li2_expected)) == 0.0);
+   }
+
+   {
       // special point where Re[Li2[z]] == 0
       const std::complex<double> z0(12.5951703698450161286398965, 0.0);
       const std::complex<double> li0(
