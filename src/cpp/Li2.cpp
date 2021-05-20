@@ -384,7 +384,7 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
    const long double nz = norm_sqr(z);
 
    if (nz < std::numeric_limits<long double>::epsilon()) {
-      return z_;
+      return z*(1.0L + 0.25L*z);
    }
 
    Complex<long double> u(0.0L, 0.0L), rest(0.0L, 0.0L);
