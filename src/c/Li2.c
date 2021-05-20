@@ -272,7 +272,7 @@ double _Complex cli2(double _Complex z)
    const double nz = rz*rz + iz*iz;
 
    if (nz < DBL_EPSILON) {
-      return z;
+      return z*(1.0 + 0.25*z);
    }
 
    double _Complex u = 0.0, rest = 0.0;
@@ -377,7 +377,7 @@ long double _Complex cli2l(long double _Complex z)
    const long double nz = rz*rz + iz*iz;
 
    if (nz < LDBL_EPSILON) {
-      return z;
+      return z*(1.0L + 0.25L*z);
    }
 
    long double _Complex u = 0, rest = 0;
