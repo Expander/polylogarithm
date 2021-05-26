@@ -35,6 +35,12 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 
 namespace {
 
+std::complex<long double> lt_Li2(std::complex<long double> z) {
+   long double re, im;
+   looptools_dilog(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<double> hdecay_Li2(std::complex<double> z) {
    double li2_re{}, li2_im{};
    hdecay_dilog(std::real(z), std::imag(z), &li2_re, &li2_im);
@@ -325,6 +331,9 @@ int main() {
 
    bench_fn([&](std::complex<long double> z) { return poly_Li2(z); },
             values_cl, "polylogarithm C",  "long double");
+
+   bench_fn([&](std::complex<long double> z) { return lt_Li2(z); },
+            values_cl, "LoopTools", "long double");
 
    bench_fn([&](std::complex<long double> z) { return tsil_Li2(z); },
             values_cl, "TSIL", "long double");
