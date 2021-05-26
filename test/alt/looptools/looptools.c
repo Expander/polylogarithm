@@ -2,19 +2,6 @@
 #include <math.h>
 
 
-/*
-  Implementation of dilogarithm from FeynHiggs 2.16.0.
-
-  file: src/LT/spence.F
-
-  Translated to C by Alexander Voigt
- */
-static long double complex spence(long double complex x)
-{
-   return x;
-}
-
-
 static long double complex Li2series(long double complex x1)
 {
    /* these are the even-n Bernoulli numbers, already divided by (n + 1)!
@@ -64,10 +51,59 @@ static long double complex Li2series(long double complex x1)
 }
 
 
+/*
+  Implementation of dilogarithm from FeynHiggs 2.16.0.
+
+  file: src/LT/spence.F
+
+  Translated to C by Alexander Voigt
+ */
+static long double complex spence(int i_in, long double complex x_in, int s)
+{
+   long double complex x[2], sp;
+   long double ax1;
+   long double I1 = 1;
+   long double I2 = I1/2;
+   long double pi = 3.1415926535897932384626433832795029l;
+   long double zeta2 = pi*pi/6;
+   long double zeroeps = 1e-20l;
+   long double complex cI = 0.0l + 1.0lI;
+   long double complex cIeps = cI*1e-50l;
+
+   x[i_in] = x_in;
+   x[1 - i_in] = 1 - x_in;
+
+   if (creall(x[0]) < I2) {
+      if (cabsl(x[0]) < 1) {
+         sp = Li2series(x[1] - s * cIeps);
+      } else {
+         long double complex l = logl(-x[0] - s * cIeps);
+         sp = -zeta2 - l * l / 2 - Li2series(-x[1] / x[0] + s * cIeps);
+      }
+   } else {
+      sp = zeta2;
+      ax1 = cabsl(x[1]);
+
+      if (ax1 > zeroeps) {
+         sp = zeta2 - logl(x[0] + s * cIeps) * logl(x[1] - s * cIeps);
+         if (ax1 < 1) {
+            sp = sp - Li2series(x[0] + s * cIeps);
+         } else {
+            long double complex l = logl(-x[1] - s * cIeps);
+            sp = sp + zeta2 + l * l / 2 + Li2series(-x[0] / x[1] - s * cIeps);
+         }
+      }
+   }
+
+   return sp;
+}
+
+
 void looptools_dilog(long double re, long double im, long double* res_re, long double* res_im)
 {
+   int zPrec = 0;
    long double complex z = re + I*im;
-   long double complex result = spence(z);
+   long double complex result = spence(0, z, zPrec);
    *res_re = creall(result);
    *res_im = cimagl(result);
 }
