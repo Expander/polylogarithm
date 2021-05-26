@@ -6,7 +6,7 @@ static long double complex Li2series(long double complex x1)
 {
    /* these are the even-n Bernoulli numbers, already divided by (n + 1)!
       as in Table[BernoulliB[n]/(n + 1)!, {n, 2, 50, 2}] */
-   long double complex b[25] = {
+   long double b[25] = {
        0.02777777777777777777777777777777777777777777778e0l,
       -0.000277777777777777777777777777777777777777777778e0l,
        4.72411186696900982615268329554043839758125472e-6l,
