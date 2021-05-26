@@ -61,7 +61,6 @@ static long double complex Li2series(long double complex x1)
 static long double complex spence(int i_in, long double complex x_in, int s)
 {
    long double complex x[2], sp;
-   long double ax1;
    long double I1 = 1;
    long double I2 = I1/2;
    long double pi = 3.1415926535897932384626433832795029l;
@@ -82,7 +81,7 @@ static long double complex spence(int i_in, long double complex x_in, int s)
       }
    } else {
       sp = zeta2;
-      ax1 = cabsl(x[1]);
+      long double ax1 = cabsl(x[1]);
 
       if (ax1 > zeroeps) {
          sp = zeta2 - logl(x[0] + s * cIeps) * logl(x[1] - s * cIeps);
