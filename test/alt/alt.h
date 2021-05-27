@@ -20,7 +20,7 @@ double koelbig_dilog(double x);
 
 long double koelbig_dilogl(long double x);
 
-void looptools_dilog(long double re, long double im, long double* res_re, long double* res_im);
+void feynhiggs_dilog(long double re, long double im, long double* res_re, long double* res_im);
 
 double morris_dilog(double x);
 

@@ -37,7 +37,7 @@ namespace {
 
 std::complex<long double> lt_Li2(std::complex<long double> z) {
    long double re, im;
-   looptools_dilog(std::real(z), std::imag(z), &re, &im);
+   feynhiggs_dilog(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
 

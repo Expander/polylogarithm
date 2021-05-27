@@ -107,7 +107,7 @@ static long double complex spence(int i_in, long double complex x_in, int s)
 }
 
 
-void looptools_dilog(long double re, long double im, long double* res_re, long double* res_im)
+void feynhiggs_dilog(long double re, long double im, long double* res_re, long double* res_im)
 {
    int zPrec = 0;
    long double complex z = re + I*im;
