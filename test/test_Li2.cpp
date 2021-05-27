@@ -94,7 +94,7 @@ std::complex<double> hollik_Li2(std::complex<double> z) {
 }
 
 std::complex<long double> lt_Li2(std::complex<long double> z) {
-   long double re, im;
+   long double re{}, im{};
    feynhiggs_dilog(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
@@ -150,7 +150,7 @@ std::complex<double> spheno_Li2(std::complex<double> z) {
 }
 
 std::complex<long double> tsil_Li2(std::complex<long double> z) {
-   long double re, im;
+   long double re{}, im{};
    tsil_dilog_complex(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }

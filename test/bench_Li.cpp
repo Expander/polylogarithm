@@ -36,7 +36,7 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 namespace {
 
 std::complex<long double> lt_Li2(std::complex<long double> z) {
-   long double re, im;
+   long double re{}, im{};
    feynhiggs_dilog(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
