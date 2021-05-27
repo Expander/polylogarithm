@@ -6,6 +6,7 @@ add_subdirectory(hassani)
 add_subdirectory(hdecay)
 add_subdirectory(hollik)
 add_subdirectory(koelbig)
+add_subdirectory(feynhiggs)
 add_subdirectory(morris)
 add_subdirectory(sherpa)
 add_subdirectory(spheno)
@@ -27,6 +28,7 @@ target_link_libraries(alt
     hdecay
     hollik
     koelbig
+    feynhiggs
     morris
     sherpa
     spheno

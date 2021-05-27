@@ -20,6 +20,8 @@ double koelbig_dilog(double x);
 
 long double koelbig_dilogl(long double x);
 
+void feynhiggs_dilog(long double re, long double im, long double* res_re, long double* res_im);
+
 double morris_dilog(double x);
 
 void hdecay_dilog(double re, double im, double* res_re, double* res_im);
