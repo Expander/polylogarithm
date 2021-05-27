@@ -34,7 +34,7 @@ static long double complex Li2series(long double complex x1)
        4.83577851804055089628705937311537820769430091e-42l
    };
 
-   long double complex xm = -logl(x1);
+   long double complex xm = -clogl(x1);
    long double complex x2 = xm*xm;
    long double complex ls = xm - x2/4;
 
@@ -76,7 +76,7 @@ static long double complex spence(int i_in, long double complex x_in, int s)
       if (cabsl(x[0]) < 1) {
          sp = Li2series(x[1] - s * cIeps);
       } else {
-         long double complex l = logl(-x[0] - s * cIeps);
+         long double complex l = clogl(-x[0] - s * cIeps);
          sp = -zeta2 - l * l / 2 - Li2series(-x[1] / x[0] + s * cIeps);
       }
    } else {
@@ -84,11 +84,11 @@ static long double complex spence(int i_in, long double complex x_in, int s)
       long double ax1 = cabsl(x[1]);
 
       if (ax1 > zeroeps) {
-         sp = zeta2 - logl(x[0] + s * cIeps) * logl(x[1] - s * cIeps);
+         sp = zeta2 - clogl(x[0] + s * cIeps) * clogl(x[1] - s * cIeps);
          if (ax1 < 1) {
             sp = sp - Li2series(x[0] + s * cIeps);
          } else {
-            long double complex l = logl(-x[1] - s * cIeps);
+            long double complex l = clogl(-x[1] - s * cIeps);
             sp = sp + zeta2 + l * l / 2 + Li2series(-x[0] / x[1] - s * cIeps);
          }
       }
