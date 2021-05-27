@@ -75,7 +75,7 @@ static long double complex spence(int i_in, long double complex x_in, int s)
    long double pi = 3.1415926535897932384626433832795029l;
    long double zeta2 = pi*pi/6;
    long double zeroeps = 1e-20l;
-   long double complex cI = 0.0l + 1.0lI;
+   long double complex cI = 0.0l + 1.0l*I;
    long double complex cIeps = cI*1e-50l;
 
    x[i_in] = x_in;
