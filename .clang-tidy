@@ -1,7 +1,7 @@
 Checks: >
     *,
     -*-avoid-c-arrays,
-    -*-avoid-magic-numbers,
+    -*-magic-numbers,
     -cppcoreguidelines-pro-bounds-constant-array-index,
     -google-explicit-constructor,
     -fuchsia-default-arguments-calls,
