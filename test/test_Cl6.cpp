@@ -25,7 +25,7 @@ std::vector<double> float_range(
 
 TEST_CASE("test_special_values")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl6;
    const double pi  = M_PI;
 
    // Cl_6(Pi/2) = DirichletBeta(6)
@@ -34,7 +34,7 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_duplication_formula")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl6;
    const double pi  = M_PI;
 
    const auto thetas = float_range(0., pi, 100);
@@ -47,7 +47,7 @@ TEST_CASE("test_duplication_formula")
 
 TEST_CASE("test_roots")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl6;
    const double pi  = M_PI;
 
    for (int k = -10; k < 10; k++) {

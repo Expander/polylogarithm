@@ -35,7 +35,7 @@ std::vector<double> float_range(
 
 TEST_CASE("test_special_values")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl;
    const double pi  = M_PI;
    const double catalan = 0.91596559417721901505460351493238411077414937428167;
 
@@ -44,7 +44,8 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_kummer_relation")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl;
+   using polylogarithm::Li;
    const double pi  = M_PI;
    const double z2  = 1.644934066848226436472415166646025189218949901206798437735558229;
    const std::complex<double> i(0.,1.);
@@ -62,7 +63,12 @@ TEST_CASE("test_kummer_relation")
 
 TEST_CASE("test_fixed_implementations")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl;
+   using polylogarithm::Cl2;
+   using polylogarithm::Cl3;
+   using polylogarithm::Cl4;
+   using polylogarithm::Cl5;
+   using polylogarithm::Cl6;
 
    const double pi = M_PI;
    const double eps = 1e-10;
@@ -85,7 +91,7 @@ TEST_CASE("test_fixed_implementations")
 
 TEST_CASE("test_duplication_formula")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl;
 
    const double pi = M_PI;
    const double eps = 1e-9;
@@ -104,7 +110,7 @@ TEST_CASE("test_duplication_formula")
 
 TEST_CASE("test_roots")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl;
    const double pi  = M_PI;
 
    for (int k = -10; k < 10; k++) {

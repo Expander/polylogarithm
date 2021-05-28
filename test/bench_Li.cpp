@@ -231,7 +231,8 @@ void print_headline(const std::string& text)
 }
 
 int main() {
-   using namespace polylogarithm::bench;
+   using polylogarithm::bench::generate_random_scalars;
+   using polylogarithm::bench::generate_random_complexes;
 
    const std::size_t N = 1000000;
    const auto min = -5.0;

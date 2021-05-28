@@ -476,7 +476,7 @@ TEST_CASE("test_complex_fixed_values")
 
 TEST_CASE("test_real_random_values")
 {
-   using namespace polylogarithm::bench;
+   using polylogarithm::bench::generate_random_scalars;
 
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto values = generate_random_scalars<double>(10000, -10, 10);
@@ -537,7 +537,7 @@ TEST_CASE("test_real_random_values")
 
 TEST_CASE("test_complex_random_values")
 {
-   using namespace polylogarithm::bench;
+   using polylogarithm::bench::generate_random_complexes;
 
    const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
    const auto values = generate_random_complexes<double>(10000, -10, 10);

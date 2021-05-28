@@ -25,7 +25,7 @@ std::vector<double> float_range(
 
 TEST_CASE("test_special_values")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl5;
    const double pi = M_PI;
    const double z5 = 1.036927755143370;
 
@@ -37,7 +37,7 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_duplication_formula")
 {
-   using namespace polylogarithm;
+   using polylogarithm::Cl5;
    const double pi  = M_PI;
 
    const auto thetas = float_range(0., pi, 100);
