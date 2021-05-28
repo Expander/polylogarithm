@@ -71,8 +71,8 @@ const std::vector<std::complex<double>> special_values = {
 std::complex<double> clog(std::complex<double> z) {
    std::complex<double> zf(z);
    // convert -0.0 to 0.0
-   if (std::real(zf) == 0.0) zf.real(0.0);
-   if (std::imag(zf) == 0.0) zf.imag(0.0);
+   if (std::real(zf) == 0.0) { zf.real(0.0); }
+   if (std::imag(zf) == 0.0) { zf.imag(0.0); }
    return std::log(zf);
 }
 
@@ -163,8 +163,9 @@ const auto Relation_1 = [](std::complex<double> z) {
 const auto Relation_2 = [](std::complex<double> z) {
    using polylogarithm::Li2;
 
-   if (std::abs(z) < 1e-10 || std::real(z) < 0.)
+   if (std::abs(z) < 1e-10 || std::real(z) < 0.) {
       return zero;
+   }
 
    return Li2(1.-z) + Li2(1.-1./z) + clog(z)*clog(z)/2.;
 };
@@ -172,8 +173,9 @@ const auto Relation_2 = [](std::complex<double> z) {
 const auto Relation_3 = [](std::complex<double> z) {
    using polylogarithm::Li2;
 
-   if (std::abs(z) < 1e-10 || std::abs(std::real(z) - 1.) < 1e-10)
+   if (std::abs(z) < 1e-10 || std::abs(std::real(z) - 1.) < 1e-10) {
       return zero;
+   }
 
    return Li2(z) + Li2(1.-z)
       - (M_PI*M_PI/6. - clog(z) * clog(1.-z));
@@ -183,8 +185,9 @@ const auto Relation_4 = [](std::complex<double> z) {
    using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10 || std::abs(std::real(z) + 1.) < 1e-10
-       || std::real(z) < 0. || std::imag(z) < 0.)
+       || std::real(z) < 0. || std::imag(z) < 0.) {
       return zero;
+   }
 
    return Li2(-z) - Li2(1.-z) + Li2(1.-z*z)/2.
       - (-M_PI*M_PI/12. - clog(z) * clog(1.+z));
@@ -194,8 +197,9 @@ const auto Relation_5 = [](std::complex<double> z) {
    using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10
-       || (std::real(z) > 0. && std::real(z) < 1.))
+       || (std::real(z) > 0. && std::real(z) < 1.)) {
       return zero;
+   }
 
    return Li2(z) + Li2(1./z)
       - (-M_PI*M_PI/6. - clog(-z)*clog(-z)/2.);

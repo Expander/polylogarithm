@@ -24,8 +24,8 @@ template <class T> T pow3(T x) { return x*x*x; }
 std::complex<double> clog(std::complex<double> z) {
    std::complex<double> zf(z);
    // convert -0.0 to 0.0
-   if (std::real(zf) == 0.0) zf.real(0.0);
-   if (std::imag(zf) == 0.0) zf.imag(0.0);
+   if (std::real(zf) == 0.0) { zf.real(0.0); }
+   if (std::imag(zf) == 0.0) { zf.imag(0.0); }
    return std::log(zf);
 }
 
@@ -60,7 +60,7 @@ std::complex<long double> poly_Li3(std::complex<long double> z) {
 
 std::complex<long double> tsil_Li3(std::complex<long double> z)
 {
-   long double re, im;
+   long double re{}, im{};
    tsil_trilog_complex(std::real(z), std::imag(z), &re, &im);
    return { re, im };
 }
@@ -74,13 +74,15 @@ const auto Relation_2 = [](std::complex<double> z) -> std::complex<double> {
    using polylogarithm::Li3;
    using std::log;
 
-   if (std::abs(z) == 0)
+   if (std::abs(z) == 0) {
       return {0.,0.};
+   }
 
    // Relation does not seem to hold for Li[3,z], not even for
    // Mathematica's PolyLog[3,z], when 0 < Re[z] < 1.
-   if (std::real(z) > 0. && std::real(z) < 1.)
+   if (std::real(z) > 0. && std::real(z) < 1.) {
       return {0.,0.};
+   }
 
    return Li3(z) - Li3(1./z) - (-pow3(clog(-z))/6. - M_PI*M_PI/6.*clog(-z));
 };
@@ -90,13 +92,15 @@ const auto Relation_3 = [](std::complex<double> z) -> std::complex<double> {
    using std::log;
    const double zeta3 = 1.202056903159594;
 
-   if (std::abs(std::real(1. - z)) < 1e-10)
+   if (std::abs(std::real(1. - z)) < 1e-10) {
       return {0.,0.};
+   }
 
    // Relation does not seem to hold for Li[3,z], not even for
    // Mathematica's PolyLog[3,z], when Re[z] < 0 and Im[z] = 0.
-   if (std::real(z) <= 0. && std::imag(z) == 0.)
+   if (std::real(z) <= 0. && std::imag(z) == 0.) {
       return {0.,0.};
+   }
 
    return Li3(z) + Li3(1.-z) + Li3(1.-1./z)
       - (zeta3 + pow3(log(z))/6. + M_PI*M_PI/6.*clog(z) - 0.5*sqr(clog(z))*clog(1.-z));
