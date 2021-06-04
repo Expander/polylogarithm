@@ -16,9 +16,9 @@
 !*********************************************************************
       double precision function dli2(x)
       implicit none
-      double precision :: x, y, r, s, z, z2, z4, p, q, l
-      double precision, parameter :: PI = 3.14159265358979324D0
-      double precision :: cp(8), cq(8)
+      double precision x, y, r, s, z, z2, z4, p, q, l, PI
+      parameter (PI = 3.14159265358979324D0)
+      double precision cp(8), cq(8)
       data cp / 1.0706105563309304277D+0,
      &         -4.5353562730201404017D+0,
      &          7.4819657596286408905D+0,
@@ -85,7 +85,7 @@
 
       dli2 = r + s*y*p/q
 
-      end function dli2
+      end
 
 
 !*********************************************************************
@@ -96,10 +96,10 @@
 !*********************************************************************
       double complex function cdli2(z)
       implicit none
-      double complex :: z, rest, u, u2, u4, sum, fast_cdlog
-      double precision :: rz, iz, nz, sgn, dli2
-      double precision, parameter :: PI = 3.14159265358979324D0
-      double precision :: bf(10)
+      double complex z, rest, u, u2, u4, sum, fast_cdlog
+      double precision rz, iz, nz, sgn, dli2, PI
+      parameter (PI = 3.14159265358979324D0)
+      double precision bf(10)
       data bf /- 2.5000000000000000D-01,
      &         + 2.7777777777777778D-02,
      &         - 2.7777777777777778D-04,
@@ -112,7 +112,7 @@
      &         + 4.5189800296199182D-16 /
 
       rz = real(z)
-      iz = aimag(z)
+      iz = dimag(z)
 
       ! special cases
       if (iz .eq. 0) then
@@ -123,7 +123,7 @@
 
       nz = rz**2 + iz**2
 
-      if (nz .lt. EPSILON(1D0)) then
+      if (nz .lt. 1.0D-15) then
          cdli2 = z*(1 + 0.25D0*z)
          return
       endif
@@ -166,4 +166,4 @@
 
       cdli2 = sgn*sum + rest
 
-      end function cdli2
+      end
