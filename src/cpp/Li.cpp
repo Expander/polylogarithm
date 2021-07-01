@@ -82,11 +82,16 @@ namespace {
    bool is_even(int64_t n) { return n % 2 == 0; }
 
    /// complex logarithm, converts -0.0 to 0.0
-   std::complex<double> clog(std::complex<double> z) noexcept
+   std::complex<double> clog(const std::complex<double>& z) noexcept
    {
-      if (std::real(z) == 0.0) { z.real(0.0); }
-      if (std::imag(z) == 0.0) { z.imag(0.0); }
-      return std::log(z);
+      const double n = std::imag(z)*std::imag(z) + std::real(z)*std::real(z);
+      double a = std::arg(z);
+
+      if (std::imag(z) == 0.0 && a < 0.0) {
+         a = -a;
+      }
+
+      return { 0.5*std::log(n), a };
    }
 
    /// Binomial coefficients
