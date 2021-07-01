@@ -223,11 +223,13 @@ namespace {
       return xn[p];
    }
 
+   // n > 0
    std::vector<double> powers_to(int64_t exponent, int64_t n)
    {
       std::vector<double> powers(n);
+      powers[0] = 0.0;
 
-      for (int64_t k = 0; k < n; k++) {
+      for (int64_t k = 1; k < n; k++) {
          powers[k] = std::pow(k, exponent);
       }
 
