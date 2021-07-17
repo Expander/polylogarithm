@@ -22,11 +22,11 @@ ExportData[f_, prec_] :=
            Print["Generating data for " <> ToString[f]];
            data = Join[
                GenerateGridData[f, prec, {0, 2 Pi, 1/100}],
-               GenerateLimitData[f, prec, prec, 1/10, 0],
-               GenerateLimitData[f, prec, prec, 1/10, Pi/2],
-               GenerateLimitData[f, prec, prec, 1/10, Pi],
-               GenerateLimitData[f, prec, prec, 1/10, 3Pi/2],
-               GenerateLimitData[f, prec, prec, 1/10, 2Pi]
+               GenerateLimitData[f, prec, prec, 1/10, 0,    +1],
+               GenerateLimitData[f, prec, prec, 1/10, Pi/2    ],
+               GenerateLimitData[f, prec, prec, 1/10, Pi      ],
+               GenerateLimitData[f, prec, prec, 1/10, 3Pi/2   ],
+               GenerateLimitData[f, prec, prec, 1/10, 2Pi,  -1]
            ];
            filename = ToString[f] <> ".txt";
            Print["Writing data to ", filename];
