@@ -1,6 +1,5 @@
 #include "alt.h"
 #include "bench.hpp"
-#include "c_wrappers.h"
 #include "Cl2.hpp"
 #include "Cl3.hpp"
 #include "Cl4.hpp"
