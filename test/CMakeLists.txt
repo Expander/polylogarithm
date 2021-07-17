@@ -24,6 +24,7 @@ function(add_polylogarithm_test name)
 endfunction()
 
 add_polylogarithm_test(bench_Li ${LIBGSL})
+add_polylogarithm_test(bench_Cl ${LIBGSL})
 add_polylogarithm_test(test_Cl)
 add_polylogarithm_test(test_Cl2 ${LIBGSL})
 add_polylogarithm_test(test_Cl3)
