@@ -110,7 +110,7 @@ TEST_CASE("test_real_fixed_values")
       INFO("Cl2(128) cmpl = " << cl128_expected << " (expected)");
       INFO("Cl2(128) cmpl = " << cl128_poly     << " (polylogarithm C++)");
 
-      if (std::abs(x64) > 1e-3 && std::abs(x64 - 2*pi64) > 1e-1) {
+      if (std::abs(x64 - 2*pi64) > 1e-1) {
          CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64);
       }
 #ifdef ENABLE_GSL
