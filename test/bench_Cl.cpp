@@ -2,6 +2,10 @@
 #include "bench.hpp"
 #include "c_wrappers.h"
 #include "Cl2.hpp"
+#include "Cl3.hpp"
+#include "Cl4.hpp"
+#include "Cl5.hpp"
+#include "Cl6.hpp"
 #include <iostream>
 #include <iomanip>
 
@@ -67,6 +71,38 @@ int main() {
 #endif
 
    bench_fn([&](long double x) { return polylogarithm::Cl2(x); }, values_l,
+            "polylogarithm C++", "long double");
+
+   print_headline("Cl3");
+
+   bench_fn([&](double x) { return polylogarithm::Cl3(x); }, values_d,
+            "polylogarithm C++", "double");
+
+   bench_fn([&](long double x) { return polylogarithm::Cl3(x); }, values_l,
+            "polylogarithm C++", "long double");
+
+   print_headline("Cl4");
+
+   bench_fn([&](double x) { return polylogarithm::Cl4(x); }, values_d,
+            "polylogarithm C++", "double");
+
+   bench_fn([&](long double x) { return polylogarithm::Cl4(x); }, values_l,
+            "polylogarithm C++", "long double");
+
+   print_headline("Cl5");
+
+   bench_fn([&](double x) { return polylogarithm::Cl5(x); }, values_d,
+            "polylogarithm C++", "double");
+
+   bench_fn([&](long double x) { return polylogarithm::Cl5(x); }, values_l,
+            "polylogarithm C++", "long double");
+
+   print_headline("Cl6");
+
+   bench_fn([&](double x) { return polylogarithm::Cl6(x); }, values_d,
+            "polylogarithm C++", "double");
+
+   bench_fn([&](long double x) { return polylogarithm::Cl6(x); }, values_l,
             "polylogarithm C++", "long double");
 
    return 0;
