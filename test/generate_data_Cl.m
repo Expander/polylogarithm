@@ -35,5 +35,13 @@ ExportData[f_, prec_] :=
 
 
 Cl2[x_] := ResourceFunction["ClausenCl"][2, x]
+Cl3[x_] := ResourceFunction["ClausenCl"][3, x]
+Cl4[x_] := ResourceFunction["ClausenCl"][4, x]
+Cl5[x_] := ResourceFunction["ClausenCl"][5, x]
+Cl6[x_] := ResourceFunction["ClausenCl"][6, x]
 
 ExportData[Cl2, 40];
+ExportData[Cl3, 40];
+ExportData[Cl4, 40];
+ExportData[Cl5, 40];
+ExportData[Cl6, 40];
