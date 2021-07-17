@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
+#include "alt.h"
 #include "Cl2.hpp"
 #include "Li2.hpp"
 #include "read_data.hpp"
@@ -89,19 +90,21 @@ TEST_CASE("test_real_fixed_values")
       const auto cl128_expected = v.second;
       const auto cl64_expected = static_cast<double>(cl128_expected);
 
-      const auto cl64_poly   = polylogarithm::Cl2(x64);
-      const auto cl128_poly  = polylogarithm::Cl2(x128);
+      const auto cl64_koelbig = koelbig_cl2(x64);
+      const auto cl64_poly    = polylogarithm::Cl2(x64);
+      const auto cl128_poly   = polylogarithm::Cl2(x128);
 
 #ifdef ENABLE_GSL
-      const auto cl2_gsl     = gsl_cl2(x64);
+      const auto cl64_gsl     = gsl_cl2(x64);
 #endif
 
       INFO("x(64)         = " << x64);
       INFO("Cl2(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl2(64)  real = " << cl64_poly      << " (polylogarithm C++)");
 #ifdef ENABLE_GSL
-      INFO("Cl2(64) cmpl  = " << cl2_gsl        << " (GSL)");
+      INFO("Cl2(64) cmpl  = " << cl64_gsl       << " (GSL)");
 #endif
+      INFO("Cl2(64) cmpl  = " << cl64_koelbig   << " (Koelbig)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
       INFO("Cl2(128) cmpl = " << cl128_expected << " (expected)");
@@ -112,9 +115,10 @@ TEST_CASE("test_real_fixed_values")
       }
 #ifdef ENABLE_GSL
       if (std::abs(x64 - 2*pi64) > 1e-3) {
-         CHECK_CLOSE(cl2_gsl     , cl64_expected , 2*eps64);
+         CHECK_CLOSE(cl64_gsl    , cl64_expected , 2*eps64);
       }
 #endif
+      // CHECK_CLOSE(cl64_koelbig   , cl64_expected , 2*eps64);
       if (std::abs(x128) > 1e-4 && std::abs(x128 - 2*pi128) > 1e-3) {
          CHECK_CLOSE(cl128_poly  , cl128_expected, 2*eps128);
       }

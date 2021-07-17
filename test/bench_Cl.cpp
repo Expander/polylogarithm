@@ -64,6 +64,9 @@ int main() {
    bench_fn([&](double x) { return polylogarithm::Cl2(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return koelbig_cl2(x); }, values_d,
+            "Koelbig C++", "double");
+
 #ifdef ENABLE_GSL
    bench_fn([&](double x) { return gsl_cl2(x); }, values_d,
             "GSL", "double");

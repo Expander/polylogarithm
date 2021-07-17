@@ -1,5 +1,12 @@
 #include <math.h>
 
+
+double koelbig_cl2(double x)
+{
+   return 0;
+}
+
+
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
  * @param x real argument
