@@ -52,13 +52,13 @@ double Cl2(double x) noexcept
 
    double h = 0;
    double v = std::fmod(std::abs(x), PI2);
-   double S = x >= 0 ? 1 : -1;
+   double sgn = x >= 0 ? 1 : -1;
 
    if (v > PI) {
       const double p0 = 6.28125;
       const double p1 = 0.0019353071795864769253;
       v = (p0 - v) + p1;
-      S = -S;
+      sgn = -sgn;
    }
 
    if (v == 0 || v == PI) {
@@ -87,7 +87,7 @@ double Cl2(double x) noexcept
       h = (PI - v)*(b0 - h*b2);
    }
 
-   return S*h;
+   return sgn*h;
 }
 
 /**
