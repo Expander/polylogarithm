@@ -21,7 +21,6 @@ namespace polylogarithm {
  */
 double Cl2(double x) noexcept
 {
-   const double R1 = 1, HF = R1/2;
    const double PI = 3.14159265358979324;
    const double PI2 = 2*PI, PIH = PI/2, RPIH = 2/PI;
    const double A[9] = {
@@ -73,7 +72,7 @@ double Cl2(double x) noexcept
          B2 = B1;
          B1 = B0;
       }
-      H = V*(1 - std::log(V) + HF*V*V*(B0 - H*B2));
+      H = V*(1 - std::log(V) + 0.5*V*V*(B0 - H*B2));
    } else {
       const double U = RPIH*V - 2;
       H = 2*U*U - 1;
