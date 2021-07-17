@@ -56,7 +56,9 @@ double Cl2(double x) noexcept
    double S = x >= 0 ? 1 : -1;
 
    if (V > PI) {
-      V = PI2 - V;
+      const double p0 = 6.28125;
+      const double p1 = 0.0019353071795864769253;
+      V = (p0 - V) + p1;
       S = -S;
    }
 
