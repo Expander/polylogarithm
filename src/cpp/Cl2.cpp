@@ -61,10 +61,9 @@ double Cl2(double x) noexcept
       -0.000000000000000007,
    };
 
-   double ALFA, B0, B1, B2, H, U, S, V;
-
-   V = fmod(fabs(x), PI2);
-   S = sign(R1, x);
+   double H = 0;
+   double V = fmod(fabs(x), PI2);
+   double S = sign(R1, x);
 
    if (V > PI) {
       V = PI2 - V;
@@ -74,11 +73,10 @@ double Cl2(double x) noexcept
    if (V == 0 || V == PI) {
       H = 0;
    } else if (V < PIH) {
-      U = RPIH*V;
+      const double U = RPIH*V;
       H = 2*U*U - 1;
-      ALFA = H + H;
-      B1 = 0;
-      B2 = 0;
+      const double ALFA = H + H;
+      double B0 = 0, B1 = 0, B2 = 0;
       for (int i = 8; i >= 0; i--) {
          B0 = A[i] + ALFA*B1 - B2;
          B2 = B1;
@@ -86,11 +84,10 @@ double Cl2(double x) noexcept
       }
       H = V*(1 - log(V) + HF*V*V*(B0 - H*B2));
    } else {
-      U = RPIH*V - 2;
+      const double U = RPIH*V - 2;
       H = 2*U*U - 1;
-      ALFA = H + H;
-      B1 = 0;
-      B2 = 0;
+      const double ALFA = H + H;
+      double B0 = 0, B1 = 0, B2 = 0;
       for (int i = 13; i >= 0; i--) {
          B0 = B[i] + ALFA*B1 - B2;
          B2 = B1;
