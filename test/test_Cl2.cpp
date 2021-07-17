@@ -110,9 +110,11 @@ TEST_CASE("test_real_fixed_values")
       if (std::abs(x64) > 1e-3 && std::abs(x64 - 2*pi64) > 1e-1) {
          CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64);
       }
+#ifdef ENABLE_GSL
       if (std::abs(x64 - 2*pi64) > 1e-3) {
          CHECK_CLOSE(cl2_gsl     , cl64_expected , 2*eps64);
       }
+#endif
       if (std::abs(x128) > 1e-4 && std::abs(x128 - 2*pi128) > 1e-3) {
          CHECK_CLOSE(cl128_poly  , cl128_expected, 2*eps128);
       }
