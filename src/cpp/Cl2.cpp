@@ -10,15 +10,6 @@
 
 namespace polylogarithm {
 
-namespace {
-
-double sign(double a, double b)
-{
-   return b >= 0 ? fabs(a) : -fabs(a);
-}
-
-} // anonymous namespace
-
 /**
  * @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$
  * @param x real angle
@@ -63,7 +54,7 @@ double Cl2(double x) noexcept
 
    double H = 0;
    double V = std::fmod(std::abs(x), PI2);
-   double S = sign(R1, x);
+   double S = x >= 0 ? 1 : -1;
 
    if (V > PI) {
       V = PI2 - V;
