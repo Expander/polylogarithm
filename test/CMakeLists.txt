@@ -25,7 +25,7 @@ endfunction()
 
 add_polylogarithm_test(bench_Li ${LIBGSL})
 add_polylogarithm_test(test_Cl)
-add_polylogarithm_test(test_Cl2)
+add_polylogarithm_test(test_Cl2 ${LIBGSL})
 add_polylogarithm_test(test_Cl3)
 add_polylogarithm_test(test_Cl4)
 add_polylogarithm_test(test_Cl5)

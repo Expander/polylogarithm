@@ -54,5 +54,34 @@ read_from_file(const std::string& filename)
    return data;
 }
 
+/**
+ * Reads real numbers and corresponding results from a file.
+ *
+ * @param filename file name
+ * @tparam T data type for real numbers
+ *
+ * @return vector of pairs, where the first element in the pair is the
+ * number and the second element is the corresponding result.
+ */
+template <typename T>
+std::vector<std::pair<T, T>>
+read_reals_from_file(const std::string& filename)
+{
+   std::vector<std::pair<T, T>> data;
+   std::string line;
+   std::ifstream fstr(filename);
+
+   while (std::getline(fstr, line)) {
+      T x{}, y{};
+
+      std::istringstream isstr(line);
+      isstr >> x >> y;
+
+      data.push_back(std::make_pair(x, y));
+   }
+
+   return data;
+}
+
 } // namespace test
 } // namespace polylogarithm

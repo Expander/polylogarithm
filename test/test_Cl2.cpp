@@ -3,12 +3,24 @@
 #include "doctest.h"
 #include "Cl2.hpp"
 #include "Li2.hpp"
+#include "read_data.hpp"
 #include <cmath>
 #include <complex>
+#include <limits>
 #include <vector>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
+
+#ifdef ENABLE_GSL
+
+#include <gsl/gsl_sf_clausen.h>
+
+double gsl_cl2(double x) {
+   return gsl_sf_clausen(x);;
+}
+
+#endif
 
 std::vector<double> float_range(
    double start, double stop, std::size_t number_of_steps)
@@ -59,5 +71,50 @@ TEST_CASE("test_roots")
 
    for (int k = -10; k < 10; k++) {
       CHECK_SMALL(Cl2(k*pi), 1e-10);
+   }
+}
+
+TEST_CASE("test_real_fixed_values")
+{
+   const double pi64 = 3.1415926535897932;
+   const double pi128 = 3.14159265358979323846264338327950288419717;
+   const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
+   const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+   const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Cl2.txt");
+   const auto fixed_values = polylogarithm::test::read_reals_from_file<long double>(filename);
+
+   for (auto v: fixed_values) {
+      const auto x128 = v.first;
+      const auto x64 = static_cast<double>(x128);
+      const auto cl128_expected = v.second;
+      const auto cl64_expected = static_cast<double>(cl128_expected);
+
+      const auto cl64_poly   = polylogarithm::Cl2(x64);
+      const auto cl128_poly  = polylogarithm::Cl2(x128);
+
+#ifdef ENABLE_GSL
+      const auto cl2_gsl     = gsl_cl2(x64);
+#endif
+
+      INFO("x(64)         = " << x64);
+      INFO("Cl2(64)  real = " << cl64_expected  << " (expected)");
+      INFO("Cl2(64)  real = " << cl64_poly      << " (polylogarithm C++)");
+#ifdef ENABLE_GSL
+      INFO("Cl2(64) cmpl  = " << cl2_gsl        << " (GSL)");
+#endif
+      INFO("------------------------------------------------------------");
+      INFO("x(128)        = " << x128);
+      INFO("Cl2(128) cmpl = " << cl128_expected << " (expected)");
+      INFO("Cl2(128) cmpl = " << cl128_poly     << " (polylogarithm C++)");
+
+      if (std::abs(x64) > 1e-3 && std::abs(x64 - 2*pi64) > 1e-1) {
+         CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64);
+      }
+      if (std::abs(x64 - 2*pi64) > 1e-3) {
+         CHECK_CLOSE(cl2_gsl     , cl64_expected , 2*eps64);
+      }
+      if (std::abs(x128) > 1e-4 && std::abs(x128 - 2*pi128) > 1e-3) {
+         CHECK_CLOSE(cl128_poly  , cl128_expected, 2*eps128);
+      }
    }
 }
