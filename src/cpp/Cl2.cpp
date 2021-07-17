@@ -99,23 +99,13 @@ double Cl2(double x) noexcept
 long double Cl2(long double x) noexcept
 {
    const long double PI = 3.14159265358979323846264338327950288L;
-   const std::complex<long double> i(0.0L, 1.0L);
 
-   while (x >= 2*PI) {
-      x -= 2*PI;
-   }
+   x = std::fmod(std::abs(x), 2*PI);
+   const long double s = x >= 0 ? 1 : -1;
 
-   while (x < 0.0L) {
-      x += 2*PI;
-   }
+   const std::complex<long double> ix(0.0L, x);
 
-   if (std::abs(x) < std::numeric_limits<long double>::epsilon() ||
-       std::abs(x - PI) < std::numeric_limits<long double>::epsilon() ||
-       std::abs(x - 2*PI) < std::numeric_limits<long double>::epsilon()) {
-      return 0.0L;
-   }
-
-   return std::imag(Li2(std::exp(i*x)));
+   return s*std::imag(Li2(std::exp(ix)));
 }
 
 } // namespace polylogarithm
