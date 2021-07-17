@@ -62,7 +62,7 @@ double Cl2(double x) noexcept
    };
 
    double H = 0;
-   double V = fmod(fabs(x), PI2);
+   double V = std::fmod(std::abs(x), PI2);
    double S = sign(R1, x);
 
    if (V > PI) {
@@ -82,7 +82,7 @@ double Cl2(double x) noexcept
          B2 = B1;
          B1 = B0;
       }
-      H = V*(1 - log(V) + HF*V*V*(B0 - H*B2));
+      H = V*(1 - std::log(V) + HF*V*V*(B0 - H*B2));
    } else {
       const double U = RPIH*V - 2;
       H = 2*U*U - 1;
