@@ -51,44 +51,44 @@ double Cl2(double x) noexcept
       -0.000000000000000007,
    };
 
-   double H = 0;
-   double V = std::fmod(std::abs(x), PI2);
+   double h = 0;
+   double v = std::fmod(std::abs(x), PI2);
    double S = x >= 0 ? 1 : -1;
 
-   if (V > PI) {
+   if (v > PI) {
       const double p0 = 6.28125;
       const double p1 = 0.0019353071795864769253;
-      V = (p0 - V) + p1;
+      v = (p0 - v) + p1;
       S = -S;
    }
 
-   if (V == 0 || V == PI) {
-      H = 0;
-   } else if (V < PIH) {
-      const double U = RPIH*V;
-      H = 2*U*U - 1;
-      const double ALFA = H + H;
-      double B0 = 0, B1 = 0, B2 = 0;
+   if (v == 0 || v == PI) {
+      h = 0;
+   } else if (v < PIH) {
+      const double u = RPIH*v;
+      h = 2*u*u - 1;
+      const double alfa = h + h;
+      double b0 = 0, b1 = 0, b2 = 0;
       for (int i = 8; i >= 0; i--) {
-         B0 = A[i] + ALFA*B1 - B2;
-         B2 = B1;
-         B1 = B0;
+         b0 = A[i] + alfa*b1 - b2;
+         b2 = b1;
+         b1 = b0;
       }
-      H = V*(1 - std::log(V) + 0.5*V*V*(B0 - H*B2));
+      h = v*(1 - std::log(v) + 0.5*v*v*(b0 - h*b2));
    } else {
-      const double U = RPIH*V - 2;
-      H = 2*U*U - 1;
-      const double ALFA = H + H;
-      double B0 = 0, B1 = 0, B2 = 0;
+      const double u = RPIH*v - 2;
+      h = 2*u*u - 1;
+      const double alfa = h + h;
+      double b0 = 0, b1 = 0, b2 = 0;
       for (int i = 13; i >= 0; i--) {
-         B0 = B[i] + ALFA*B1 - B2;
-         B2 = B1;
-         B1 = B0;
+         b0 = B[i] + alfa*b1 - b2;
+         b2 = b1;
+         b1 = b0;
       }
-      H = (PI - V)*(B0 - H*B2);
+      h = (PI - v)*(b0 - h*b2);
    }
 
-   return S*H;
+   return S*h;
 }
 
 /**
