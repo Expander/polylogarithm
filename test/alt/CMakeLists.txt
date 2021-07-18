@@ -19,7 +19,7 @@ target_include_directories(alt
 )
 
 target_link_libraries(alt
-  PRIVATE
+  PUBLIC
     algorithm_327
     algorithm_490
     babar
