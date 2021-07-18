@@ -132,9 +132,9 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(cl64_koelbig, cl64_expected , 100*eps64);
       }
       if (std::abs(x128 - 2*pi128) > 1e-7) {
-         CHECK_CLOSE(cl128_poly  , cl128_expected, 2*eps128);
-      } else {
          CHECK_CLOSE(cl128_poly  , cl128_expected, 10*eps128);
+      } else {
+         CHECK_CLOSE(cl128_poly  , cl128_expected, 50*eps128);
       }
    }
 }
