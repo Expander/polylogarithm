@@ -102,9 +102,9 @@ TEST_CASE("test_real_fixed_values")
       INFO("Cl2(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl2(64)  real = " << cl64_poly      << " (polylogarithm C++)");
 #ifdef ENABLE_GSL
-      INFO("Cl2(64) cmpl  = " << cl64_gsl       << " (GSL)");
+      INFO("Cl2(64)  cmpl = " << cl64_gsl       << " (GSL)");
 #endif
-      INFO("Cl2(64) cmpl  = " << cl64_koelbig   << " (Koelbig)");
+      INFO("Cl2(64)  cmpl = " << cl64_koelbig   << " (Koelbig)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
       INFO("Cl2(128) cmpl = " << cl128_expected << " (expected)");
@@ -112,19 +112,29 @@ TEST_CASE("test_real_fixed_values")
 
       if (std::abs(x64 - 2*pi64) > 1e-2) {
          CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64);
-      } else {
+      } else if (std::abs(x64 - 2*pi64) > 1e-12) {
          CHECK_CLOSE(cl64_poly   , cl64_expected , 10*eps64);
+      } else {
+         CHECK_CLOSE(cl64_poly   , cl64_expected , 100*eps64);
       }
 #ifdef ENABLE_GSL
       if (std::abs(x64 - 2*pi64) > 1e-3) {
          CHECK_CLOSE(cl64_gsl    , cl64_expected , 2*eps64);
+      } else {
+         CHECK_CLOSE(cl64_gsl    , cl64_expected , 10*eps64);
       }
 #endif
       if (std::abs(x64 - 2*pi64) > 1e-2) {
          CHECK_CLOSE(cl64_koelbig, cl64_expected , 2*eps64);
+      } else if (std::abs(x64 - 2*pi64) > 1e-12) {
+         CHECK_CLOSE(cl64_koelbig, cl64_expected , 10*eps64);
+      } else {
+         CHECK_CLOSE(cl64_koelbig, cl64_expected , 100*eps64);
       }
       if (std::abs(x128 - 2*pi128) > 1e-7) {
          CHECK_CLOSE(cl128_poly  , cl128_expected, 2*eps128);
+      } else {
+         CHECK_CLOSE(cl128_poly  , cl128_expected, 10*eps128);
       }
    }
 }
