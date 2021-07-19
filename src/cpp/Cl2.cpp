@@ -163,7 +163,9 @@ long double Cl2(long double x) noexcept
    long double sgn = x >= 0 ? 1 : -1;
 
    if (v > PI) {
-      v = PI2 - v;
+      const long double p0 = 6.28125L;
+      const long double p1 = 0.0019353071795864769252867665590057683943L;
+      v = (p0 - v) + p1;
       sgn = -sgn;
    }
 
