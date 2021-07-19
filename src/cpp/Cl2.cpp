@@ -73,7 +73,7 @@ double Cl2(double x) noexcept
          b2 = b1;
          b1 = b0;
       }
-      h = v*(1 - std::log(v) + 0.5*v*v*(b0 - h*b2));
+      h = v*(1 - std::log(v) + v*v*(b0 - h*b2)/2);
    } else {
       const double u = RPIH*v - 2;
       h = 2*u*u - 1;
