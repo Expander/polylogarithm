@@ -7,7 +7,6 @@
 #include "Cl5.hpp"
 #include "Li5.hpp"
 #include <cmath>
-#include <limits>
 
 namespace polylogarithm {
 
