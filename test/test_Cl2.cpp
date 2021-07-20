@@ -78,7 +78,7 @@ TEST_CASE("test_roots")
 TEST_CASE("test_real_fixed_values")
 {
    const double pi64 = 3.1415926535897932;
-   const double pi128 = 3.14159265358979323846264338327950288419717;
+   const long double pi128 = 3.14159265358979323846264338327950288419717L;
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
    const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Cl2.txt");
