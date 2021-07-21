@@ -10,18 +10,26 @@
 #include <limits>
 #include <vector>
 
+#ifdef ENABLE_GSL
+#include <gsl/gsl_sf_clausen.h>
+#endif
+
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
 
-#ifdef ENABLE_GSL
+namespace {
 
-#include <gsl/gsl_sf_clausen.h>
-
-double gsl_cl2(double x) {
-   return gsl_sf_clausen(x);;
+double Cl2_via_Li2(double x) noexcept
+{
+   return std::imag(polylogarithm::Li2(std::exp(std::complex<double>(0.0, x))));
 }
 
-#endif
+long double Cl2_via_Li2(long double x) noexcept
+{
+   return std::imag(polylogarithm::Li2(std::exp(std::complex<long double>(0.0L, x))));
+}
+
+} // anonymous namespace
 
 std::vector<double> float_range(
    double start, double stop, std::size_t number_of_steps)
@@ -92,23 +100,27 @@ TEST_CASE("test_real_fixed_values")
 
       const auto cl64_koelbig = koelbig_cl2(x64);
       const auto cl64_poly    = polylogarithm::Cl2(x64);
+      const auto cl64_li2     = Cl2_via_Li2(x64);
       const auto cl128_poly   = polylogarithm::Cl2(x128);
+      const auto cl128_li2    = Cl2_via_Li2(x128);
 
 #ifdef ENABLE_GSL
-      const auto cl64_gsl     = gsl_cl2(x64);
+      const auto cl64_gsl     = gsl_sf_clausen(x64);
 #endif
 
       INFO("x(64)         = " << x64);
       INFO("Cl2(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl2(64)  real = " << cl64_poly      << " (polylogarithm C++)");
+      INFO("Cl2(64)  real = " << cl64_li2       << " (via Li2 C++)");
 #ifdef ENABLE_GSL
-      INFO("Cl2(64)  cmpl = " << cl64_gsl       << " (GSL)");
+      INFO("Cl2(64)  real = " << cl64_gsl       << " (GSL)");
 #endif
-      INFO("Cl2(64)  cmpl = " << cl64_koelbig   << " (Koelbig)");
+      INFO("Cl2(64)  real = " << cl64_koelbig   << " (Koelbig)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
-      INFO("Cl2(128) cmpl = " << cl128_expected << " (expected)");
-      INFO("Cl2(128) cmpl = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl2(128) real = " << cl128_expected << " (expected)");
+      INFO("Cl2(128) real = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl2(128) real = " << cl128_li2      << " (via Li2 C++)");
 
       if (std::abs(x64 - 2*pi64) > 1e-2) {
          CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64);
@@ -117,6 +129,7 @@ TEST_CASE("test_real_fixed_values")
       } else {
          CHECK_CLOSE(cl64_poly   , cl64_expected , 100*eps64);
       }
+      CHECK_CLOSE(cl64_li2       , cl64_expected , 10*eps64);
 #ifdef ENABLE_GSL
       if (std::abs(x64 - 2*pi64) > 1e-3) {
          CHECK_CLOSE(cl64_gsl    , cl64_expected , 2*eps64);
@@ -136,5 +149,6 @@ TEST_CASE("test_real_fixed_values")
       } else {
          CHECK_CLOSE(cl128_poly  , cl128_expected, 50*eps128);
       }
+      CHECK_CLOSE(cl128_li2      , cl128_expected, 10*eps128);
    }
 }
