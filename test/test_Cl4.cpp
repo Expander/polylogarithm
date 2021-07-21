@@ -78,8 +78,8 @@ TEST_CASE("test_real_fixed_values")
       INFO("Cl4(64)  real = " << cl64_poly      << " (polylogarithm C++)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
-      INFO("Cl4(128) cmpl = " << cl128_expected << " (expected)");
-      INFO("Cl4(128) cmpl = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl4(128) real = " << cl128_expected << " (expected)");
+      INFO("Cl4(128) real = " << cl128_poly     << " (polylogarithm C++)");
 
       CHECK_CLOSE(cl64_poly , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl128_poly, cl128_expected, 2*eps128);
