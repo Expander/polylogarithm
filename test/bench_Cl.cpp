@@ -5,20 +5,25 @@
 #include "Cl4.hpp"
 #include "Cl5.hpp"
 #include "Cl6.hpp"
+#include "Li2.hpp"
 #include <iostream>
 #include <iomanip>
 
+#ifdef ENABLE_GSL
+#include <gsl/gsl_sf_clausen.h>
+#endif
+
 namespace {
 
-#ifdef ENABLE_GSL
-
-#include <gsl/gsl_sf_clausen.h>
-
-double gsl_cl2(double x) {
-   return gsl_sf_clausen(x);
+double Cl2_via_Li2(double x) noexcept
+{
+   return std::imag(polylogarithm::Li2(std::exp(std::complex<double>(0.0, x))));
 }
 
-#endif
+long double Cl2_via_Li2(long double x) noexcept
+{
+   return std::imag(polylogarithm::Li2(std::exp(std::complex<long double>(0.0L, x))));
+}
 
 } // anonymous namespace
 
@@ -64,16 +69,22 @@ int main() {
    bench_fn([&](double x) { return polylogarithm::Cl2(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return Cl2_via_Li2(x); }, values_d,
+            "via Li2 C++", "double");
+
    bench_fn([&](double x) { return koelbig_cl2(x); }, values_d,
-            "Koelbig", "double");
+            "Koelbig C", "double");
 
 #ifdef ENABLE_GSL
-   bench_fn([&](double x) { return gsl_cl2(x); }, values_d,
+   bench_fn([&](double x) { return gsl_sf_clausen(x); }, values_d,
             "GSL", "double");
 #endif
 
    bench_fn([&](long double x) { return polylogarithm::Cl2(x); }, values_l,
             "polylogarithm C++", "long double");
+
+   bench_fn([&](long double x) { return Cl2_via_Li2(x); }, values_l,
+            "via Li2 C++", "long double");
 
    print_headline("Cl3");
 
