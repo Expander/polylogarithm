@@ -6,7 +6,6 @@
 
 #include "Cl2.hpp"
 #include "Li2.hpp"
-#include <limits>
 
 namespace polylogarithm {
 
@@ -14,54 +13,189 @@ namespace polylogarithm {
  * @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$
  * @param x real angle
  * @return \f$\mathrm{Cl}_2(\theta)\f$
+ * @author K.S. Kölbig
+ * @note Implementation translated by Alexander Voigt from CERNLIB DCLAUS function C326
+ *
+ * Journal of Computational and Applied Mathematics 64 (1995) 295-297.
  */
 double Cl2(double x) noexcept
 {
-   const double PI = 3.141592653589793;
-   const std::complex<double> i(0.0, 1.0);
+   const double PI = 3.14159265358979324;
+   const double PI2 = 2*PI, PIH = PI/2, RPIH = 2/PI;
+   const double A[9] = {
+      0.0279528319735756613,
+      0.0001763088743898116,
+      0.0000012662741461157,
+      0.0000000117171818134,
+      0.0000000001230064129,
+      0.0000000000013952729,
+      0.0000000000000166908,
+      0.0000000000000002076,
+      0.0000000000000000027
+   };
+   const double B[14] = {
+       0.639097088857265341,
+      -0.054980569301851716,
+      -0.000961261945950606,
+      -0.000032054686822550,
+      -0.000001329461695426,
+      -0.000000062093601824,
+      -0.000000003129600656,
+      -0.000000000166351954,
+      -0.000000000009196527,
+      -0.000000000000524004,
+      -0.000000000000030580,
+      -0.000000000000001820,
+      -0.000000000000000110,
+      -0.000000000000000007,
+   };
 
-   while (x >= 2*PI) {
-      x -= 2*PI;
+   double h = 0;
+   double v = std::fmod(std::abs(x), PI2);
+   double sgn = x >= 0 ? 1 : -1;
+
+   if (v > PI) {
+      const double p0 = 6.28125;
+      const double p1 = 0.0019353071795864769253;
+      v = (p0 - v) + p1;
+      sgn = -sgn;
    }
 
-   while (x < 0.0) {
-      x += 2*PI;
+   if (v == 0 || v == PI) {
+      h = 0;
+   } else if (v < PIH) {
+      const double u = RPIH*v;
+      h = 2*u*u - 1;
+      const double alfa = h + h;
+      double b0 = 0, b1 = 0, b2 = 0;
+      for (int i = 8; i >= 0; i--) {
+         b0 = A[i] + alfa*b1 - b2;
+         b2 = b1;
+         b1 = b0;
+      }
+      h = v*(1 - std::log(v) + v*v*(b0 - h*b2)/2);
+   } else {
+      const double u = RPIH*v - 2;
+      h = 2*u*u - 1;
+      const double alfa = h + h;
+      double b0 = 0, b1 = 0, b2 = 0;
+      for (int i = 13; i >= 0; i--) {
+         b0 = B[i] + alfa*b1 - b2;
+         b2 = b1;
+         b1 = b0;
+      }
+      h = (PI - v)*(b0 - h*b2);
    }
 
-   if (std::abs(x) < std::numeric_limits<double>::epsilon() ||
-       std::abs(x - PI) < std::numeric_limits<double>::epsilon() ||
-       std::abs(x - 2*PI) < std::numeric_limits<double>::epsilon()) {
-      return 0.0;
-   }
-
-   return std::imag(Li2(std::exp(i*x)));
+   return sgn*h;
 }
 
 /**
  * @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$ with long double precision
  * @param x real angle
  * @return \f$\mathrm{Cl}_2(\theta)\f$
+ * @author K.S. Kölbig
+ * @note Implementation translated from CERNLIB DCLAUS function C326
+ * and extended to long double precision by Alexander Voigt.
+ *
+ * Journal of Computational and Applied Mathematics 64 (1995) 295-297.
  */
 long double Cl2(long double x) noexcept
 {
    const long double PI = 3.14159265358979323846264338327950288L;
-   const std::complex<long double> i(0.0L, 1.0L);
+   const long double PI2 = 2*PI, PIH = PI/2, RPIH = 2/PI;
+   const long double A[19] = {
+      0.0279528319735756613494585924765551791L,
+      0.0001763088743898115653057636473920103L,
+      0.0000012662741461156530021975187159184L,
+      0.0000000117171818134392379295428166866L,
+      0.0000000001230064128833746922855709386L,
+      0.0000000000013952728970012911958374309L,
+      0.0000000000000166907761628567345146740L,
+      0.0000000000000002076091315145432983502L,
+      0.0000000000000000026609198306058056092L,
+      0.0000000000000000000349249563561378275L,
+      0.0000000000000000000004673313082962865L,
+      0.0000000000000000000000063542322337428L,
+      0.0000000000000000000000000875698871820L,
+      0.0000000000000000000000000012208003299L,
+      0.0000000000000000000000000000171890569L,
+      0.0000000000000000000000000000002441331L,
+      0.0000000000000000000000000000000034940L,
+      0.0000000000000000000000000000000000503L,
+      0.0000000000000000000000000000000000007L
+   };
+   const double B[30] = {
+      0.6390970888572653413071869135953864197L,
+     -0.0549805693018517156397035696498958507L,
+     -0.0009612619459506064293859076874070709L,
+     -0.0000320546868225504765586825318112711L,
+     -0.0000013294616954255450141343828695514L,
+     -0.0000000620936018243975194590942773212L,
+     -0.0000000031296006563911126723262365339L,
+     -0.0000000001663519538192669775933926077L,
+     -0.0000000000091965272507194254496027281L,
+     -0.0000000000005240037738758450093649037L,
+     -0.0000000000000305803841873659454134183L,
+     -0.0000000000000018196918249487950988000L,
+     -0.0000000000000001100398263196261522324L,
+     -0.0000000000000000067451775715424687730L,
+     -0.0000000000000000004182784651572477035L,
+     -0.0000000000000000000261987180876106127L,
+     -0.0000000000000000000016553211620337322L,
+     -0.0000000000000000000001053943580037580L,
+     -0.0000000000000000000000067562822456482L,
+     -0.0000000000000000000000004357492971838L,
+     -0.0000000000000000000000000282576222954L,
+     -0.0000000000000000000000000018415141361L,
+     -0.0000000000000000000000000001205472536L,
+     -0.0000000000000000000000000000079233873L,
+     -0.0000000000000000000000000000005227403L,
+     -0.0000000000000000000000000000000346060L,
+     -0.0000000000000000000000000000000022982L,
+     -0.0000000000000000000000000000000001531L,
+     -0.0000000000000000000000000000000000102L,
+     -0.0000000000000000000000000000000000007L
+   };
 
-   while (x >= 2*PI) {
-      x -= 2*PI;
+   long double h = 0;
+   long double v = std::fmod(std::abs(x), PI2);
+   long double sgn = x >= 0 ? 1 : -1;
+
+   if (v > PI) {
+      const long double p0 = 6.28125L;
+      const long double p1 = 0.0019353071795864769252867665590057683943L;
+      v = (p0 - v) + p1;
+      sgn = -sgn;
    }
 
-   while (x < 0.0L) {
-      x += 2*PI;
+   if (v == 0 || v == PI) {
+      h = 0;
+   } else if (v < PIH) {
+      const long double u = RPIH*v;
+      h = 2*u*u - 1;
+      const long double alfa = h + h;
+      long double b0 = 0, b1 = 0, b2 = 0;
+      for (int i = 18; i >= 0; i--) {
+         b0 = A[i] + alfa*b1 - b2;
+         b2 = b1;
+         b1 = b0;
+      }
+      h = v*(1 - std::log(v) + v*v*(b0 - h*b2)/2);
+   } else {
+      const long double u = RPIH*v - 2;
+      h = 2*u*u - 1;
+      const long double alfa = h + h;
+      long double b0 = 0, b1 = 0, b2 = 0;
+      for (int i = 29; i >= 0; i--) {
+         b0 = B[i] + alfa*b1 - b2;
+         b2 = b1;
+         b1 = b0;
+      }
+      h = (PI - v)*(b0 - h*b2);
    }
 
-   if (std::abs(x) < std::numeric_limits<long double>::epsilon() ||
-       std::abs(x - PI) < std::numeric_limits<long double>::epsilon() ||
-       std::abs(x - 2*PI) < std::numeric_limits<long double>::epsilon()) {
-      return 0.0L;
-   }
-
-   return std::imag(Li2(std::exp(i*x)));
+   return sgn*h;
 }
 
 } // namespace polylogarithm

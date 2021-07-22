@@ -1,14 +1,35 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
+#include "alt.h"
 #include "Cl2.hpp"
 #include "Li2.hpp"
+#include "read_data.hpp"
 #include <cmath>
 #include <complex>
+#include <limits>
 #include <vector>
+
+#ifdef ENABLE_GSL
+#include <gsl/gsl_sf_clausen.h>
+#endif
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
+
+namespace {
+
+double Cl2_via_Li2(double x) noexcept
+{
+   return std::imag(polylogarithm::Li2(std::exp(std::complex<double>(0.0, x))));
+}
+
+long double Cl2_via_Li2(long double x) noexcept
+{
+   return std::imag(polylogarithm::Li2(std::exp(std::complex<long double>(0.0L, x))));
+}
+
+} // anonymous namespace
 
 std::vector<double> float_range(
    double start, double stop, std::size_t number_of_steps)
@@ -59,5 +80,75 @@ TEST_CASE("test_roots")
 
    for (int k = -10; k < 10; k++) {
       CHECK_SMALL(Cl2(k*pi), 1e-10);
+   }
+}
+
+TEST_CASE("test_real_fixed_values")
+{
+   const double pi64 = 3.1415926535897932;
+   const long double pi128 = 3.14159265358979323846264338327950288419717L;
+   const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
+   const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+   const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Cl2.txt");
+   const auto fixed_values = polylogarithm::test::read_reals_from_file<long double>(filename);
+
+   for (auto v: fixed_values) {
+      const auto x128 = v.first;
+      const auto x64 = static_cast<double>(x128);
+      const auto cl128_expected = v.second;
+      const auto cl64_expected = static_cast<double>(cl128_expected);
+
+      const auto cl64_koelbig = koelbig_cl2(x64);
+      const auto cl64_poly    = polylogarithm::Cl2(x64);
+      const auto cl64_li2     = Cl2_via_Li2(x64);
+      const auto cl128_poly   = polylogarithm::Cl2(x128);
+      const auto cl128_li2    = Cl2_via_Li2(x128);
+
+#ifdef ENABLE_GSL
+      const auto cl64_gsl     = gsl_sf_clausen(x64);
+#endif
+
+      INFO("x(64)         = " << x64);
+      INFO("Cl2(64)  real = " << cl64_expected  << " (expected)");
+      INFO("Cl2(64)  real = " << cl64_poly      << " (polylogarithm C++)");
+      INFO("Cl2(64)  real = " << cl64_li2       << " (via Li2 C++)");
+#ifdef ENABLE_GSL
+      INFO("Cl2(64)  real = " << cl64_gsl       << " (GSL)");
+#endif
+      INFO("Cl2(64)  real = " << cl64_koelbig   << " (Koelbig)");
+      INFO("------------------------------------------------------------");
+      INFO("x(128)        = " << x128);
+      INFO("Cl2(128) real = " << cl128_expected << " (expected)");
+      INFO("Cl2(128) real = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl2(128) real = " << cl128_li2      << " (via Li2 C++)");
+
+      if (std::abs(x64 - 2*pi64) > 1e-2) {
+         CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64);
+      } else if (std::abs(x64 - 2*pi64) > 1e-12) {
+         CHECK_CLOSE(cl64_poly   , cl64_expected , 10*eps64);
+      } else {
+         CHECK_CLOSE(cl64_poly   , cl64_expected , 100*eps64);
+      }
+      CHECK_CLOSE(cl64_li2       , cl64_expected , 10*eps64);
+#ifdef ENABLE_GSL
+      if (std::abs(x64 - 2*pi64) > 1e-3) {
+         CHECK_CLOSE(cl64_gsl    , cl64_expected , 2*eps64);
+      } else {
+         CHECK_CLOSE(cl64_gsl    , cl64_expected , 10*eps64);
+      }
+#endif
+      if (std::abs(x64 - 2*pi64) > 1e-2) {
+         CHECK_CLOSE(cl64_koelbig, cl64_expected , 2*eps64);
+      } else if (std::abs(x64 - 2*pi64) > 1e-12) {
+         CHECK_CLOSE(cl64_koelbig, cl64_expected , 10*eps64);
+      } else {
+         CHECK_CLOSE(cl64_koelbig, cl64_expected , 100*eps64);
+      }
+      if (std::abs(x128 - 2*pi128) > 1e-10L) {
+         CHECK_CLOSE(cl128_poly  , cl128_expected, 6*eps128);
+      } else {
+         CHECK_CLOSE(cl128_poly  , cl128_expected, 50*eps128);
+      }
+      CHECK_CLOSE(cl128_li2      , cl128_expected, 10*eps128);
    }
 }

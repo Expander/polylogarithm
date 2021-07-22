@@ -7,7 +7,6 @@
 #include "Cl6.hpp"
 #include "Li6.hpp"
 #include <cmath>
-#include <limits>
 
 namespace polylogarithm {
 
@@ -18,24 +17,8 @@ namespace polylogarithm {
  */
 double Cl6(double x) noexcept
 {
-   const double PI = 3.141592653589793;
-   const std::complex<double> i(0.0, 1.0);
-
-   while (x >= 2*PI) {
-      x -= 2*PI;
-   }
-
-   while (x < 0.0) {
-      x += 2*PI;
-   }
-
-   if (std::abs(x) < std::numeric_limits<double>::epsilon() ||
-       std::abs(x - PI) < std::numeric_limits<double>::epsilon() ||
-       std::abs(x - 2*PI) < std::numeric_limits<double>::epsilon()) {
-      return 0.0;
-   }
-
-   return std::imag(Li6(std::exp(i*x)));
+   const std::complex<double> ix(0.0, x);
+   return std::imag(Li6(std::exp(ix)));
 }
 
 /**
@@ -45,24 +28,8 @@ double Cl6(double x) noexcept
  */
 long double Cl6(long double x) noexcept
 {
-   const long double PI = 3.14159265358979323846264338327950288L;
-   const std::complex<long double> i(0.0L, 1.0L);
-
-   while (x >= 2*PI) {
-      x -= 2*PI;
-   }
-
-   while (x < 0.0L) {
-      x += 2*PI;
-   }
-
-   if (std::abs(x) < std::numeric_limits<long double>::epsilon() ||
-       std::abs(x - PI) < std::numeric_limits<long double>::epsilon() ||
-       std::abs(x - 2*PI) < std::numeric_limits<long double>::epsilon()) {
-      return 0.0L;
-   }
-
-   return std::imag(Li6(std::exp(i*x)));
+   const std::complex<long double> ix(0.0L, x);
+   return std::imag(Li6(std::exp(ix)));
 }
 
 } // namespace polylogarithm

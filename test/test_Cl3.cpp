@@ -2,6 +2,7 @@
 
 #include "doctest.h"
 #include "Cl3.hpp"
+#include "read_data.hpp"
 #include <cmath>
 #include <complex>
 #include <vector>
@@ -45,5 +46,34 @@ TEST_CASE("test_duplication_formula")
    for (const auto t: thetas) {
       const auto rel = Cl3(2*t) - (4*Cl3(t) + 4*Cl3(pi - t));
       CHECK_SMALL(rel, 2e-10);
+   }
+}
+
+TEST_CASE("test_real_fixed_values")
+{
+   const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
+   const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+   const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Cl3.txt");
+   const auto fixed_values = polylogarithm::test::read_reals_from_file<long double>(filename);
+
+   for (auto v: fixed_values) {
+      const auto x128 = v.first;
+      const auto x64 = static_cast<double>(x128);
+      const auto cl128_expected = v.second;
+      const auto cl64_expected = static_cast<double>(cl128_expected);
+
+      const auto cl64_poly    = polylogarithm::Cl3(x64);
+      const auto cl128_poly   = polylogarithm::Cl3(x128);
+
+      INFO("x(64)         = " << x64);
+      INFO("Cl3(64)  real = " << cl64_expected  << " (expected)");
+      INFO("Cl3(64)  real = " << cl64_poly      << " (polylogarithm C++)");
+      INFO("------------------------------------------------------------");
+      INFO("x(128)        = " << x128);
+      INFO("Cl3(128) real = " << cl128_expected << " (expected)");
+      INFO("Cl3(128) real = " << cl128_poly     << " (polylogarithm C++)");
+
+      CHECK_CLOSE(cl64_poly , cl64_expected , 2*eps64 );
+      CHECK_CLOSE(cl128_poly, cl128_expected, 2*eps128);
    }
 }

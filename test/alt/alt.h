@@ -16,6 +16,8 @@ double cephes_dilog_2(double x);
 
 double hassani_dilog(double x);
 
+double koelbig_cl2(double x);
+
 double koelbig_dilog(double x);
 
 long double koelbig_dilogl(long double x);

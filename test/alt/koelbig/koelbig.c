@@ -1,5 +1,99 @@
 #include <math.h>
 
+
+static double sign(double a, double b) {
+   return b >= 0 ? fabs(a) : -fabs(a);
+}
+
+
+/**
+ * @brief Clausen function \f$\mathrm{Cl}_2(x)\f$
+ * @param x real argument
+ * @return \f$\mathrm{Cl}_2(x)\f$
+ * @author K.S. Kölbig
+ * @note Implementation translated by Alexander Voigt from CERNLIB DCLAUS function C326
+ *
+ * Journal of Computational and Applied Mathematics 64 (1995) 295-297.
+ *
+ * Implemented as a truncated series expansion in terms of Chebyshev
+ * polynomials, see [Yudell L. Luke: Mathematical functions and their
+ * approximations, Academic Press Inc., New York 1975, p.67].
+ */
+double koelbig_cl2(double X)
+{
+   const double R1 = 1, HF = R1/2;
+   const double PI = 3.14159265358979324;
+   const double PI2 = 2*PI, PIH = PI/2, RPIH = 2/PI;
+   const double A[9] = {
+      0.0279528319735756613,
+      0.0001763088743898116,
+      0.0000012662741461157,
+      0.0000000117171818134,
+      0.0000000001230064129,
+      0.0000000000013952729,
+      0.0000000000000166908,
+      0.0000000000000002076,
+      0.0000000000000000027
+   };
+   const double B[14] = {
+       0.639097088857265341,
+      -0.054980569301851716,
+      -0.000961261945950606,
+      -0.000032054686822550,
+      -0.000001329461695426,
+      -0.000000062093601824,
+      -0.000000003129600656,
+      -0.000000000166351954,
+      -0.000000000009196527,
+      -0.000000000000524004,
+      -0.000000000000030580,
+      -0.000000000000001820,
+      -0.000000000000000110,
+      -0.000000000000000007,
+   };
+
+   double ALFA, B0, B1, B2, H, U, S, V;
+
+   V = fmod(fabs(X), PI2);
+   S = sign(R1, X);
+
+   if (V > PI) {
+      V = PI2 - V;
+      S = -S;
+   }
+
+   if (V == 0 || V == PI) {
+      H = 0;
+   } else if (V < PIH) {
+      U = RPIH*V;
+      H = 2*U*U - 1;
+      ALFA = H + H;
+      B1 = 0;
+      B2 = 0;
+      for (int i = 8; i >= 0; i--) {
+         B0 = A[i] + ALFA*B1 - B2;
+         B2 = B1;
+         B1 = B0;
+      }
+      H = V*(1 - log(V) + HF*V*V*(B0 - H*B2));
+   } else {
+      U = RPIH*V - 2;
+      H = 2*U*U - 1;
+      ALFA = H + H;
+      B1 = 0;
+      B2 = 0;
+      for (int i = 13; i >= 0; i--) {
+         B0 = B[i] + ALFA*B1 - B2;
+         B2 = B1;
+         B1 = B0;
+      }
+      H = (PI - V)*(B0 - H*B2);
+   }
+
+   return S*H;
+}
+
+
 /**
  * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
  * @param x real argument
