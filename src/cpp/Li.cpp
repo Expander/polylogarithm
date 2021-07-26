@@ -7,6 +7,7 @@
 #include "Li.hpp"
 #include <array>
 #include <cmath>
+#include <complex>
 #include <cstdint>
 #include <limits>
 #include <vector>
@@ -326,17 +327,7 @@ namespace {
  */
 double Cl(int64_t n, double x)
 {
-   const double PI = 3.141592653589793;
-   const std::complex<double> i(0.,1.);
-   const std::complex<double> li = Li(n, std::exp(i*x));
-
-   while (x >= 2*PI) {
-      x -= 2*PI;
-   }
-
-   while (x < 0.) {
-      x += 2*PI;
-   }
+   const std::complex<double> li = Li(n, std::polar(1.0, x));
 
    if (is_even(n)) {
       return std::imag(li);
