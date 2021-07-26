@@ -6,7 +6,7 @@
 
 #include "Cl5.hpp"
 #include "Li5.hpp"
-#include <cmath>
+#include <complex>
 
 namespace polylogarithm {
 
@@ -17,8 +17,7 @@ namespace polylogarithm {
  */
 double Cl5(double x) noexcept
 {
-   const std::complex<double> ix(0.0, x);
-   return std::real(Li5(std::exp(ix)));
+   return std::real(Li5(std::polar(1.0, x)));
 }
 
 /**
@@ -28,8 +27,7 @@ double Cl5(double x) noexcept
  */
 long double Cl5(long double x) noexcept
 {
-   const std::complex<long double> ix(0.0L, x);
-   return std::real(Li5(std::exp(ix)));
+   return std::real(Li5(std::polar(1.0L, x)));
 }
 
 } // namespace polylogarithm

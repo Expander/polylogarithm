@@ -6,7 +6,7 @@
 
 #include "Cl6.hpp"
 #include "Li6.hpp"
-#include <cmath>
+#include <complex>
 
 namespace polylogarithm {
 
@@ -17,8 +17,7 @@ namespace polylogarithm {
  */
 double Cl6(double x) noexcept
 {
-   const std::complex<double> ix(0.0, x);
-   return std::imag(Li6(std::exp(ix)));
+   return std::imag(Li6(std::polar(1.0, x)));
 }
 
 /**
@@ -28,8 +27,7 @@ double Cl6(double x) noexcept
  */
 long double Cl6(long double x) noexcept
 {
-   const std::complex<long double> ix(0.0L, x);
-   return std::imag(Li6(std::exp(ix)));
+   return std::imag(Li6(std::polar(1.0L, x)));
 }
 
 } // namespace polylogarithm
