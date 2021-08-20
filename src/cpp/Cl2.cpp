@@ -50,9 +50,12 @@ double Cl2(double x) noexcept
       -0.000000000000000007,
    };
 
-   const double ax = std::abs(x);
-   double v = ax < PI2 ? ax : std::fmod(ax, PI2);
+   double v = std::abs(x);
    double sgn = x >= 0 ? 1 : -1;
+
+   if (v >= PI2) {
+      v = std::fmod(v, PI2);
+   }
 
    if (v > PI) {
       const double p0 = 6.28125;
