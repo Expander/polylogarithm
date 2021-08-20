@@ -208,6 +208,11 @@ template <typename T, typename Fn>
 void bench_fn(Fn f, const std::vector<T>& values, const std::string& name,
               const std::string& type)
 {
+   // warm-up
+   for (const auto& v: values) {
+      polylogarithm::bench::do_not_optimize(f(v));
+   }
+
    const auto total_time = polylogarithm::bench::time_in_seconds([&] {
          for (const auto& v: values) {
             polylogarithm::bench::do_not_optimize(f(v));
