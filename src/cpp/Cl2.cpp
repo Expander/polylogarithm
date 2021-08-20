@@ -163,9 +163,12 @@ long double Cl2(long double x) noexcept
      -0.0000000000000000000000000000000000007L
    };
 
-   long double h = 0;
-   long double v = std::fmod(std::abs(x), PI2);
+   long double v = std::abs(x);
    long double sgn = x >= 0 ? 1 : -1;
+
+   if (v >= PI2) {
+      v = std::fmod(v, PI2);
+   }
 
    if (v > PI) {
       const long double p0 = 6.28125L;
@@ -173,6 +176,8 @@ long double Cl2(long double x) noexcept
       v = (p0 - v) + p1;
       sgn = -sgn;
    }
+
+   long double h = 0;
 
    if (v == 0 || v == PI) {
       h = 0;
