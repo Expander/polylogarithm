@@ -50,8 +50,8 @@ double Cl2(double x) noexcept
       -0.000000000000000007,
    };
 
-   double h = 0;
-   double v = std::fmod(std::abs(x), PI2);
+   const double ax = std::abs(x);
+   double v = ax < PI2 ? ax : std::fmod(ax, PI2);
    double sgn = x >= 0 ? 1 : -1;
 
    if (v > PI) {
@@ -60,6 +60,8 @@ double Cl2(double x) noexcept
       v = (p0 - v) + p1;
       sgn = -sgn;
    }
+
+   double h = 0;
 
    if (v == 0 || v == PI) {
       h = 0;
