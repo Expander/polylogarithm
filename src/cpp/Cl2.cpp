@@ -50,26 +50,30 @@ double Cl2(double x) noexcept
       -0.000000000000000007,
    };
 
-   double v = std::abs(x);
-   double sgn = x >= 0 ? 1 : -1;
+   double sgn = 1;
 
-   if (v >= PI2) {
-      v = std::fmod(v, PI2);
+   if (x < 0) {
+      x = -x;
+      sgn = -1;
    }
 
-   if (v > PI) {
+   if (x >= PI2) {
+      x = std::fmod(x, PI2);
+   }
+
+   if (x > PI) {
       const double p0 = 6.28125;
       const double p1 = 0.0019353071795864769253;
-      v = (p0 - v) + p1;
+      x = (p0 - x) + p1;
       sgn = -sgn;
    }
 
    double h = 0;
 
-   if (v == 0 || v == PI) {
+   if (x == 0 || x == PI) {
       h = 0;
-   } else if (v < PIH) {
-      const double u = RPIH*v;
+   } else if (x < PIH) {
+      const double u = RPIH*x;
       h = 2*u*u - 1;
       const double alfa = h + h;
       double b0 = 0, b1 = 0, b2 = 0;
@@ -78,9 +82,9 @@ double Cl2(double x) noexcept
          b2 = b1;
          b1 = b0;
       }
-      h = v*(1 - std::log(v) + v*v*(b0 - h*b2)/2);
+      h = x*(1 - std::log(x) + x*x*(b0 - h*b2)/2);
    } else {
-      const double u = RPIH*v - 2;
+      const double u = RPIH*x - 2;
       h = 2*u*u - 1;
       const double alfa = h + h;
       double b0 = 0, b1 = 0, b2 = 0;
@@ -89,7 +93,7 @@ double Cl2(double x) noexcept
          b2 = b1;
          b1 = b0;
       }
-      h = (PI - v)*(b0 - h*b2);
+      h = (PI - x)*(b0 - h*b2);
    }
 
    return sgn*h;
@@ -163,26 +167,30 @@ long double Cl2(long double x) noexcept
      -0.0000000000000000000000000000000000007L
    };
 
-   long double v = std::abs(x);
-   long double sgn = x >= 0 ? 1 : -1;
+   long double sgn = 1;
 
-   if (v >= PI2) {
-      v = std::fmod(v, PI2);
+   if (x < 0) {
+      x = -x;
+      sgn = -1;
    }
 
-   if (v > PI) {
+   if (x >= PI2) {
+      x = std::fmod(x, PI2);
+   }
+
+   if (x > PI) {
       const long double p0 = 6.28125L;
       const long double p1 = 0.0019353071795864769252867665590057683943L;
-      v = (p0 - v) + p1;
+      x = (p0 - x) + p1;
       sgn = -sgn;
    }
 
    long double h = 0;
 
-   if (v == 0 || v == PI) {
+   if (x == 0 || x == PI) {
       h = 0;
-   } else if (v < PIH) {
-      const long double u = RPIH*v;
+   } else if (x < PIH) {
+      const long double u = RPIH*x;
       h = 2*u*u - 1;
       const long double alfa = h + h;
       long double b0 = 0, b1 = 0, b2 = 0;
@@ -191,9 +199,9 @@ long double Cl2(long double x) noexcept
          b2 = b1;
          b1 = b0;
       }
-      h = v*(1 - std::log(v) + v*v*(b0 - h*b2)/2);
+      h = x*(1 - std::log(x) + x*x*(b0 - h*b2)/2);
    } else {
-      const long double u = RPIH*v - 2;
+      const long double u = RPIH*x - 2;
       h = 2*u*u - 1;
       const long double alfa = h + h;
       long double b0 = 0, b1 = 0, b2 = 0;
@@ -202,7 +210,7 @@ long double Cl2(long double x) noexcept
          b2 = b1;
          b1 = b0;
       }
-      h = (PI - v)*(b0 - h*b2);
+      h = (PI - x)*(b0 - h*b2);
    }
 
    return sgn*h;
