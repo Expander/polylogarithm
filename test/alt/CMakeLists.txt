@@ -11,6 +11,7 @@ add_subdirectory(morris)
 add_subdirectory(sherpa)
 add_subdirectory(spheno)
 add_subdirectory(tsil)
+add_subdirectory(wu)
 
 add_library(alt alt.c)
 
@@ -33,4 +34,5 @@ target_link_libraries(alt
     sherpa
     spheno
     tsil
+    wu
 )

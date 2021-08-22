@@ -101,6 +101,7 @@ TEST_CASE("test_real_fixed_values")
       const auto cl64_koelbig = koelbig_cl2(x64);
       const auto cl64_poly    = polylogarithm::Cl2(x64);
       const auto cl64_li2     = Cl2_via_Li2(x64);
+      const auto cl64_wu      = clausen_2_wu(x64);
       const auto cl128_poly   = polylogarithm::Cl2(x128);
       const auto cl128_li2    = Cl2_via_Li2(x128);
 
@@ -116,6 +117,7 @@ TEST_CASE("test_real_fixed_values")
       INFO("Cl2(64)  real = " << cl64_gsl       << " (GSL)");
 #endif
       INFO("Cl2(64)  real = " << cl64_koelbig   << " (Koelbig)");
+      INFO("Cl2(64)  real = " << cl64_wu        << " (Wu et.al.)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
       INFO("Cl2(128) real = " << cl128_expected << " (expected)");
@@ -144,6 +146,13 @@ TEST_CASE("test_real_fixed_values")
       } else {
          CHECK_CLOSE(cl64_koelbig, cl64_expected , 100*eps64);
       }
+      if (std::abs(x64 - 2*pi64) > 1e-2 &&
+          std::abs(x64 - pi64) > 1e-2) {
+         if (std::fmod(std::abs(x64), pi64) < 0.5) {
+            CHECK_CLOSE(cl64_wu  , cl64_expected , 1e-7);
+         }
+      }
+
       if (std::abs(x128 - 2*pi128) > 1e-10L) {
          CHECK_CLOSE(cl128_poly  , cl128_expected, 6*eps128);
       } else {

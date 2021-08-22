@@ -40,6 +40,8 @@ void tsil_dilog_complex(long double re, long double im, long double* res_re, lon
 
 void tsil_trilog_complex(long double re, long double im, long double* res_re, long double* res_im);
 
+double clausen_2_wu(double x);
+
 #ifdef __cplusplus
 }
 #endif
