@@ -86,6 +86,9 @@ int main() {
             "GSL", "double");
 #endif
 
+   bench_fn([&](double x) { return clausen_2_wu(x); }, values_d,
+            "Wu", "double");
+
    bench_fn([&](long double x) { return polylogarithm::Cl2(x); }, values_l,
             "polylogarithm C++", "long double");
 
