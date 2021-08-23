@@ -100,6 +100,9 @@ int main() {
    bench_fn([&](double x) { return polylogarithm::Cl3(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return clausen_3_wu(x); }, values_d,
+            "Wu", "double");
+
    bench_fn([&](long double x) { return polylogarithm::Cl3(x); }, values_l,
             "polylogarithm C++", "long double");
 

@@ -1,7 +1,7 @@
 #include <math.h>
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$
+ * @brief Clausen function \f$\mathrm{Cl}_2(\theta)\f$
  * @param x real angle
  * @return \f$\mathrm{Cl}_2(\theta)\f$
  * @author Alexander Voigt
@@ -74,4 +74,80 @@ double clausen_2_wu(double x)
    sum -= log(2*sin(x/2));
 
    return sgn*x*sum;
+}
+
+/**
+ * @brief Clausen function \f$\mathrm{Cl}_3(\theta)\f$
+ * @param x real angle
+ * @return \f$\mathrm{Cl}_3(\theta)\f$
+ * @author Alexander Voigt
+ *
+ * Implementation as series expansion from Jiming Wu, Xiaoping Zhang,
+ * Dongjie Liu: "An efficient calculation of the Clausen functions
+ * Cl_n(0)(n >= 2)"
+ */
+double clausen_3_wu(double x)
+{
+   const double PI = 3.14159265358979324;
+   const double PI2 = 2*PI;
+   const double C[] = {
+      1.2020569031595943,
+     -0.75,
+      1.7361111111111111e-02,
+      1.6203703703703704e-04,
+      2.6573129251700680e-06,
+      5.0521751910640800e-08,
+      1.0280221244025958e-09,
+      2.1775508813272637e-11,
+      4.7396483546174904e-13,
+      1.0523517259825012e-14,
+      2.3724645155504571e-16,
+      5.4136342063674700e-18,
+      1.2475096984511389e-19,
+      2.8982349732072164e-21,
+      6.7795306977020209e-23,
+      1.5951668979204825e-24,
+      3.7722999459245736e-26,
+      8.9602350004691215e-28,
+      2.1365627618154762e-29,
+      5.1121551453039508e-31,
+      1.2269426427592847e-32,
+      2.9528444795333068e-34,
+      7.1242132481949272e-36,
+      1.7227144823673827e-37,
+      4.1742940635473232e-39
+   };
+
+   if (x < 0) {
+      x = -x;
+   }
+
+   if (x >= PI2) {
+      x = fmod(x, PI2);
+   }
+
+   if (x > PI) {
+      const double p0 = 6.28125;
+      const double p1 = 0.0019353071795864769253;
+      x = (p0 - x) + p1;
+   }
+
+   if (x == 0) {
+      return C[0];
+   }
+
+   if (x == PI) {
+      return -0.75*C[0];
+   }
+
+   const double x2 = x*x;
+   double sum = 0;
+
+   for (int i = sizeof(C)/sizeof(C[0]) - 1; i >= 0; --i) {
+      sum = x2*sum + C[i];
+   }
+
+   sum += x2/2*log(2*sin(x/2));
+
+   return sum;
 }
