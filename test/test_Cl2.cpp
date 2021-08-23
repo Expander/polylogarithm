@@ -146,11 +146,10 @@ TEST_CASE("test_real_fixed_values")
       } else {
          CHECK_CLOSE(cl64_koelbig, cl64_expected , 100*eps64);
       }
-      if (std::abs(x64 - 2*pi64) > 1e-2 &&
-          std::abs(x64 - pi64) > 1e-2) {
-         if (std::fmod(std::abs(x64), pi64) < 0.5) {
-            CHECK_CLOSE(cl64_wu  , cl64_expected , 1e-7);
-         }
+      if (std::abs(x64 - 2*pi64) > 1e-3) {
+         CHECK_CLOSE(cl64_wu  , cl64_expected , 2*eps64);
+      } else {
+         CHECK_CLOSE(cl64_wu  , cl64_expected , 10*eps64);
       }
 
       if (std::abs(x128 - 2*pi128) > 1e-10L) {
