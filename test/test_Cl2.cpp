@@ -98,6 +98,7 @@ TEST_CASE("test_real_fixed_values")
       const auto cl128_expected = v.second;
       const auto cl64_expected = static_cast<double>(cl128_expected);
 
+      const auto cl64_bernoulli = clausen_2_bernoulli(x64);
       const auto cl64_koelbig = koelbig_cl2(x64);
       const auto cl64_poly    = polylogarithm::Cl2(x64);
       const auto cl64_li2     = Cl2_via_Li2(x64);
@@ -116,6 +117,7 @@ TEST_CASE("test_real_fixed_values")
 #ifdef ENABLE_GSL
       INFO("Cl2(64)  real = " << cl64_gsl       << " (GSL)");
 #endif
+      INFO("Cl2(64)  real = " << cl64_bernoulli << " (Bernoulli series)");
       INFO("Cl2(64)  real = " << cl64_koelbig   << " (Koelbig)");
       INFO("Cl2(64)  real = " << cl64_wu        << " (Wu et.al.)");
       INFO("------------------------------------------------------------");
@@ -132,6 +134,11 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(cl64_poly   , cl64_expected , 100*eps64);
       }
       CHECK_CLOSE(cl64_li2       , cl64_expected , 10*eps64);
+      if (std::abs(x64 - 2*pi64) > 1e-3) {
+         CHECK_CLOSE(cl64_bernoulli, cl64_expected , 2*eps64);
+      } else {
+         CHECK_CLOSE(cl64_bernoulli, cl64_expected , 10*eps64);
+      }
 #ifdef ENABLE_GSL
       if (std::abs(x64 - 2*pi64) > 1e-3) {
          CHECK_CLOSE(cl64_gsl    , cl64_expected , 2*eps64);

@@ -1,6 +1,7 @@
 add_subdirectory(algorithm_327)
 add_subdirectory(algorithm_490)
 add_subdirectory(babar)
+add_subdirectory(bernoulli)
 add_subdirectory(cephes)
 add_subdirectory(hassani)
 add_subdirectory(hdecay)
@@ -24,6 +25,7 @@ target_link_libraries(alt
     algorithm_327
     algorithm_490
     babar
+    bernoulli
     cephes
     hassani
     hdecay

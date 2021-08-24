@@ -78,6 +78,9 @@ int main() {
    bench_fn([&](double x) { return Cl2_via_Li2(x); }, values_d,
             "via Li2 C++", "double");
 
+   bench_fn([&](double x) { return clausen_2_bernoulli(x); }, values_d,
+            "Bernoulli", "double");
+
    bench_fn([&](double x) { return koelbig_cl2(x); }, values_d,
             "Koelbig C", "double");
 
