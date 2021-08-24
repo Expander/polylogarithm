@@ -2,7 +2,8 @@
 
   This Mathematica script contains implementations of the Clausen[2,x]
   function in the intervals [0,Pi) and (0,2Pi) in terms of Bernoulli
-  numbers.
+  numbers [Abramowitz and Stegun, "Handbook of Mathematical Functions
+  with Formulas, Graphs, and Mathematical Tables", 27.8.2-3].
 
  *)
 
