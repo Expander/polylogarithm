@@ -65,9 +65,9 @@ double clausen_2_wu(double x)
    }
 
    const double x2 = x*x;
-   double sum = 0;
+   double sum = C[sizeof(C)/sizeof(C[0]) - 1];
 
-   for (int i = sizeof(C)/sizeof(C[0]) - 1; i >= 0; --i) {
+   for (int i = sizeof(C)/sizeof(C[0]) - 2; i >= 0; --i) {
       sum = x2*sum + C[i];
    }
 
@@ -141,9 +141,9 @@ double clausen_3_wu(double x)
    }
 
    const double x2 = x*x;
-   double sum = 0;
+   double sum = C[sizeof(C)/sizeof(C[0]) - 1];
 
-   for (int i = sizeof(C)/sizeof(C[0]) - 1; i >= 0; --i) {
+   for (int i = sizeof(C)/sizeof(C[0]) - 2; i >= 0; --i) {
       sum = x2*sum + C[i];
    }
 
