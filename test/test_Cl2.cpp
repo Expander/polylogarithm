@@ -155,13 +155,13 @@ TEST_CASE("test_real_fixed_values")
       } else {
          CHECK_CLOSE(cl64_koelbig, cl64_expected , 100*eps64);
       }
-      // if (std::abs(x64 - 2*pi64) > 1e-2) {
-      //    CHECK_CLOSE(cl64_pade, cl64_expected , 2*eps64);
-      // } else if (std::abs(x64 - 2*pi64) > 1e-12) {
-      //    CHECK_CLOSE(cl64_pade, cl64_expected , 10*eps64);
-      // } else {
-      //    CHECK_CLOSE(cl64_pade, cl64_expected , 100*eps64);
-      // }
+      if (std::abs(x64 - 2*pi64) > 1e-2) {
+         CHECK_CLOSE(cl64_pade, cl64_expected , 2*eps64);
+      } else if (std::abs(x64 - 2*pi64) > 1e-12) {
+         CHECK_CLOSE(cl64_pade, cl64_expected , 10*eps64);
+      } else {
+         CHECK_CLOSE(cl64_pade, cl64_expected , 100*eps64);
+      }
       if (std::abs(x64 - 2*pi64) > 1e-3) {
          CHECK_CLOSE(cl64_wu  , cl64_expected , 2*eps64);
       } else {
