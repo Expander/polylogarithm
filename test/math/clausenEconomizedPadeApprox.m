@@ -8,7 +8,7 @@ Needs["FunctionApproximations`"];
 Get["../test/math/clausenBernoulli.m"];
 
 (* maximum number of terms in Cl2 series *)
-nMax = 20;
+nMax = 100;
 
 (* output precision *)
 outPrec = 17;
@@ -21,7 +21,7 @@ PolynomialStandardForm[expr_, x_] :=
     ]
 
 FormatCoeffs[expr_, x_, prec_] :=
-    CForm @ N[#, prec]& /@ CoefficientList[expr, x]
+    ScientificForm @ CForm @ N[#, prec]& /@ CoefficientList[expr, x]
 
 CalcPade[fn_, interval_, nTerms_] :=
     Module[{half = interval[[1]] + (interval[[2]] - interval[[1]])/2,
@@ -45,4 +45,4 @@ CalcPade[fn_, interval_, nTerms_] :=
 CalcPade[N[2/#^2 (Cl2Lo[#, nMax]/# - 1 + Log[#]), 10*outPrec]&, {0, Pi/2}, 6];
 
 (* interval = {Pi/2, Pi}; *)
-CalcPade[N[Cl2Hi[#, nMax]/(Pi - #), 10*outPrec]&, {Pi/2, Pi}, 11];
+CalcPade[N[Cl2Hi[#, nMax]/(Pi - #), 10*outPrec]&, {Pi/2, Pi}, 10];
