@@ -21,12 +21,12 @@ namespace {
 
 double Cl2_via_Li2(double x) noexcept
 {
-   return std::imag(polylogarithm::Li2(std::exp(std::complex<double>(0.0, x))));
+   return std::imag(polylogarithm::Li2(std::polar(1.0, x)));
 }
 
 long double Cl2_via_Li2(long double x) noexcept
 {
-   return std::imag(polylogarithm::Li2(std::exp(std::complex<long double>(0.0L, x))));
+   return std::imag(polylogarithm::Li2(std::polar(1.0L, x)));
 }
 
 } // anonymous namespace
