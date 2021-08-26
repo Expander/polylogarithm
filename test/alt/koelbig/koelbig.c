@@ -19,7 +19,7 @@ static double sign(double a, double b) {
  * polynomials, see [Yudell L. Luke: Mathematical functions and their
  * approximations, Academic Press Inc., New York 1975, p.67].
  */
-double koelbig_cl2(double X)
+double clausen_2_koelbig(double X)
 {
    const double R1 = 1, HF = R1/2;
    const double PI = 3.14159265358979324;

@@ -9,6 +9,7 @@ add_subdirectory(hollik)
 add_subdirectory(koelbig)
 add_subdirectory(feynhiggs)
 add_subdirectory(morris)
+add_subdirectory(pade)
 add_subdirectory(sherpa)
 add_subdirectory(spheno)
 add_subdirectory(tsil)
@@ -33,6 +34,7 @@ target_link_libraries(alt
     koelbig
     feynhiggs
     morris
+    pade
     sherpa
     spheno
     tsil

@@ -81,13 +81,16 @@ int main() {
    bench_fn([&](double x) { return clausen_2_bernoulli(x); }, values_d,
             "Bernoulli", "double");
 
-   bench_fn([&](double x) { return koelbig_cl2(x); }, values_d,
-            "Koelbig C", "double");
-
 #ifdef ENABLE_GSL
    bench_fn([&](double x) { return gsl_sf_clausen(x); }, values_d,
             "GSL", "double");
 #endif
+
+   bench_fn([&](double x) { return clausen_2_koelbig(x); }, values_d,
+            "Koelbig C", "double");
+
+   bench_fn([&](double x) { return clausen_2_pade(x); }, values_d,
+            "Pade C", "double");
 
    bench_fn([&](double x) { return clausen_2_wu(x); }, values_d,
             "Wu", "double");

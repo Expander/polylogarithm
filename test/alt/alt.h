@@ -16,8 +16,6 @@ double cephes_dilog_2(double x);
 
 double hassani_dilog(double x);
 
-double koelbig_cl2(double x);
-
 double koelbig_dilog(double x);
 
 long double koelbig_dilogl(long double x);
@@ -40,10 +38,13 @@ void tsil_dilog_complex(long double re, long double im, long double* res_re, lon
 
 void tsil_trilog_complex(long double re, long double im, long double* res_re, long double* res_im);
 
-double clausen_2_wu(double x);
-double clausen_3_wu(double x);
+// Clausen functions
 
 double clausen_2_bernoulli(double x);
+double clausen_2_koelbig(double x);
+double clausen_2_pade(double x);
+double clausen_2_wu(double x);
+double clausen_3_wu(double x);
 
 #ifdef __cplusplus
 }
