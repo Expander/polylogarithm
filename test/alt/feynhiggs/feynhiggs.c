@@ -5,8 +5,8 @@
 /* transforms -0.0 -> 0.0 */
 static long double complex pclogl(long double complex z)
 {
-   long double re = creall(z) == 0.0 ? fabs(creall(z)) : creall(z);
-   long double im = cimagl(z) == 0.0 ? fabs(cimagl(z)) : cimagl(z);
+   long double re = creall(z) == 0.0l ? fabsl(creall(z)) : creall(z);
+   long double im = cimagl(z) == 0.0l ? fabsl(cimagl(z)) : cimagl(z);
    return clogl(re + I*im);
 }
 
