@@ -187,11 +187,13 @@ long double Cl2(long double x) noexcept
       sgn = -sgn;
    }
 
+   if (x == 0 || x == PI) {
+      return 0;
+   }
+
    long double h = 0;
 
-   if (x == 0 || x == PI) {
-      h = 0;
-   } else if (x < PIH) {
+   if (x < PIH) {
       const long double u = RPIH*x;
       h = 2*u*u - 1;
       const long double alfa = h + h;
