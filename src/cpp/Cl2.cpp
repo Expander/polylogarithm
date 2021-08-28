@@ -68,11 +68,13 @@ double Cl2(double x) noexcept
       sgn = -sgn;
    }
 
+   if (x == 0 || x == PI) {
+      return 0;
+   }
+
    double h = 0;
 
-   if (x == 0 || x == PI) {
-      h = 0;
-   } else if (x < PIH) {
+   if (x < PIH) {
       const double u = RPIH*x;
       h = 2*u*u - 1;
       const double alfa = h + h;
