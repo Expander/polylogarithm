@@ -42,7 +42,11 @@ CalcPade[fn_, interval_, nTerms_] :=
     ]
 
 (* interval = {0, Pi/2}; *)
-CalcPade[N[2/#^2 (Cl2Lo[#, nMax]/# - 1 + Log[#]), 10*outPrec]&, {0, Pi/2}, 6];
+fLo[x_] := 2/x^2 (Cl2Lo[x, nMax]/x - 1 + Log[x])
+
+CalcPade[N[fLo[#], 10*outPrec]&, {0, Pi/2}, 6];
 
 (* interval = {Pi/2, Pi}; *)
-CalcPade[N[Cl2Hi[#, nMax]/(Pi - #), 10*outPrec]&, {Pi/2, Pi}, 10];
+fHi[x_] := Cl2Hi[x, nMax]/(Pi - x)
+
+CalcPade[N[fHi[#], 10*outPrec]&, {Pi/2, Pi}, 10];
