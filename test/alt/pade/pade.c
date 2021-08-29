@@ -69,9 +69,9 @@ double clausen_2_pade(double x)
       const double z2 = z*z;
       const double z4 = z2*z2;
       const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]) +
-         z4 * (P[4] + z * P[5] + z2 * (P[6]));
+         z4 * (P[4] + z * P[5] + z2 * P[6]);
       const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
-         z4 * (Q[4] + z * Q[5] + z2 * (Q[6]));
+         z4 * (Q[4] + z * Q[5] + z2 * Q[6]);
 
       h = y*p/q;
    }
