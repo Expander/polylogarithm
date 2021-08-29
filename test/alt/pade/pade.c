@@ -45,12 +45,13 @@ double clausen_2_pade(double x)
          3.6543318130278056e-04, -8.4709594747969947e-07
       };
 
-      const double z = x*x - PI4;
+      const double y = x*x;
+      const double z = y - PI4;
       const double z2 = z*z;
       const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]);
       const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]);
 
-      h = x*(1 - log(x) + x*x*p/q/2);
+      h = x*(1 - log(x) + y*p/q/2);
    } else {
       const double P[] = {
          6.6703664252965825e-01,  6.6614199965545781e-01,
