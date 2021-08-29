@@ -49,6 +49,8 @@ fnLo[x_] := fLo[Sqrt[x]]
 CalcPade[N[fnLo[#], 10*outPrec]&, {0, Pi/2}, 3];
 
 (* interval = {Pi/2, Pi}; *)
-fnHi[x_] := Cl2Hi[x, nMax]/(Pi - x)
+fHi[x_] := Cl2Hi[x, nMax]/(Pi - x)
 
-CalcPade[N[fnHi[#], 10*outPrec]&, {Pi/2, Pi}, 10];
+fnHi[x_] := fHi[Sqrt[x] + Pi]
+
+CalcPade[N[fnHi[#], 10*outPrec]&, {Pi/2, Pi}, 6];
