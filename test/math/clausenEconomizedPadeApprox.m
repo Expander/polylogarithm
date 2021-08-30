@@ -45,9 +45,7 @@ CalcPade[fn_, interval_, nTerms_] :=
 (* interval = {0, Pi/2}; *)
 fLo[x_] := 2/x^2 (Cl2Lo[x, nMax]/x - 1 + Log[x])
 
-fnLo[x_] := fLo[Sqrt[x]]
-
-CalcPade[N[fnLo[#], 10*outPrec]&, {0, Pi/2}, 3];
+CalcPade[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, 3];
 
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl2Hi[x, nMax]/(Pi - x)
@@ -58,6 +56,4 @@ trans[x_] := Sqrt[x] + Pi
 (* inverse transformation *)
 itrans[x_] := (Pi - x)^2
 
-fnHi[x_] := fHi[trans[x]]
-
-CalcPade[N[fnHi[#], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];

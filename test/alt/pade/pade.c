@@ -10,7 +10,7 @@
 double clausen_2_pade(double x)
 {
    const double PI = 3.14159265358979324;
-   const double PI2 = 2*PI, PIH = PI/2, PI4 = PI/4, PI28 = PI*PI/8;
+   const double PI2 = 2*PI, PIH = PI/2, PI28 = PI*PI/8;
    double sgn = 1;
 
    if (x < 0) {
@@ -37,15 +37,15 @@ double clausen_2_pade(double x)
 
    if (x < PIH) {
       const double P[] = {
-         2.7887843484730669e-02, -8.7658005565574189e-04,
-         6.6596845091611126e-06, -7.2581927220626547e-09
+         2.7951565822419270e-02, -8.8865360514541522e-04,
+         6.8282348222485902e-06, -7.5276232403566808e-09
       };
       const double Q[] = {
-         1.0000000000000000e+00, -3.6502848628035564e-02,
-         3.6543318130278056e-04, -8.4709594747969947e-07
+         1.0000000000000000e+00, -3.6904397961160525e-02,
+         3.7342870576106476e-04, -8.7460760866531179e-07
       };
       const double y = x*x;
-      const double z = y - PI4;
+      const double z = y - PI28;
       const double z2 = z*z;
       const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]);
       const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]);
