@@ -26,7 +26,7 @@ FormatCoeffs[expr_, x_, prec_] :=
 CalcPade[fn_, interval_, nTerms_] :=
     Module[{half = interval[[1]] + (interval[[2]] - interval[[1]])/2,
             approx, diff, maxErr, y, range},
-           approx = EconomizedRationalApproximation[fn[x], {x, interval, nTerms, nTerms}] /. (-half + x) -> y;
+           approx = EconomizedRationalApproximation[fn[x], {x, interval, nTerms, nTerms}] /. x -> (y + half);
            approx = PolynomialStandardForm[approx, y];
            Print["Pade approximant for ", InputForm[fn], " on the interval ", InputForm[interval]];
            Print["Numerator coefficients: ",
@@ -34,6 +34,7 @@ CalcPade[fn_, interval_, nTerms_] :=
            Print["Denominator coefficients: ",
                  FormatCoeffs[#,y,outPrec]& @ Denominator[approx]];
            (* calculate maximum deviation *)
+           Print["half interval: ", InputForm[half]];
            diff = (approx - fn[x]) /. y -> x - half;
            range = Range[interval[[1]] + 10^(-outPrec), interval[[2]], (interval[[2]] - interval[[1]])/100];
            maxErr = Max @ Abs @ N[diff /. x -> #, outPrec]& @ range;
@@ -51,6 +52,12 @@ CalcPade[N[fnLo[#], 10*outPrec]&, {0, Pi/2}, 3];
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl2Hi[x, nMax]/(Pi - x)
 
-fnHi[x_] := fHi[Sqrt[x] + Pi]
+(* transformation *)
+trans[x_] := Sqrt[x] + Pi
 
-CalcPade[N[fnHi[#], 10*outPrec]&, {Pi/2, Pi}, 6];
+(* inverse transformation *)
+itrans[x_] := (Pi - x)^2
+
+fnHi[x_] := fHi[trans[x]]
+
+CalcPade[N[fnHi[#], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
