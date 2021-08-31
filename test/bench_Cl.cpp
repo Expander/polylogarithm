@@ -98,6 +98,9 @@ int main() {
    bench_fn([&](long double x) { return polylogarithm::Cl2(x); }, values_l,
             "polylogarithm C++", "long double");
 
+   bench_fn([&](long double x) { return clausen_2l_koelbig(x); }, values_l,
+            "Koelbig C", "long double");
+
    bench_fn([&](long double x) { return Cl2_via_Li2(x); }, values_l,
             "via Li2 C++", "long double");
 
