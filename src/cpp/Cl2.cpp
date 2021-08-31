@@ -9,20 +9,6 @@
 
 namespace polylogarithm {
 
-namespace {
-
-   template <typename T, int N>
-   T horner(T x, const T (&c)[N]) noexcept
-   {
-      T p = c[N - 1];
-      for (int i = N - 2; i >= 0; --i) {
-         p = p*x + c[i];
-      }
-      return p;
-   }
-
-} // anonymous namespace
-
 /**
  * @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$
  * @param x real angle
@@ -160,8 +146,13 @@ long double Cl2(long double x) noexcept
       };
       const long double y = x*x;
       const long double z = y - PI28;
-      const long double p = horner(z, P);
-      const long double q = horner(z, Q);
+      const long double z2 = z*z;
+      const long double z4 = z2*z2;
+      const long double z8 = z4*z4;
+      const long double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]) +
+         z4 * (P[4] + z * P[5] + z2 * (P[6] + z * P[7])) + z8 * P[8];
+      const long double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
+         z4 * (Q[4] + z * Q[5] + z2 * (Q[6] + z * Q[7])) + z8 * Q[8];
 
       h = x*(1 - std::log(x) + y*p/q/2);
    } else {
@@ -197,8 +188,15 @@ long double Cl2(long double x) noexcept
       };
       const long double y = PI - x;
       const long double z = y*y - PI28;
-      const long double p = horner(z, P);
-      const long double q = horner(z, Q);
+      const long double z2 = z*z;
+      const long double z4 = z2*z2;
+      const long double z8 = z4*z4;
+      const long double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]) +
+         z4 * (P[4] + z * P[5] + z2 * (P[6] + z * P[7])) +
+         z8 * (P[8] + z * P[9] + z2 * (P[10] + z * P[11]) + z4 * P[12]);
+      const long double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
+         z4 * (Q[4] + z * Q[5] + z2 * (Q[6] + z * Q[7])) +
+         z8 * (Q[8] + z * Q[9] + z2 * (Q[10] + z * Q[11]) + z4 * Q[12]);
 
       h = y*p/q;
    }
