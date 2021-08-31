@@ -99,13 +99,14 @@ TEST_CASE("test_real_fixed_values")
       const auto cl64_expected = static_cast<double>(cl128_expected);
 
       const auto cl64_bernoulli = clausen_2_bernoulli(x64);
-      const auto cl64_koelbig = clausen_2_koelbig(x64);
-      const auto cl64_pade    = clausen_2_pade(x64);
-      const auto cl64_poly    = polylogarithm::Cl2(x64);
-      const auto cl64_li2     = Cl2_via_Li2(x64);
-      const auto cl64_wu      = clausen_2_wu(x64);
-      const auto cl128_poly   = polylogarithm::Cl2(x128);
-      const auto cl128_li2    = Cl2_via_Li2(x128);
+      const auto cl64_koelbig   = clausen_2_koelbig(x64);
+      const auto cl64_pade      = clausen_2_pade(x64);
+      const auto cl64_poly      = polylogarithm::Cl2(x64);
+      const auto cl64_li2       = Cl2_via_Li2(x64);
+      const auto cl64_wu        = clausen_2_wu(x64);
+      const auto cl128_poly     = polylogarithm::Cl2(x128);
+      const auto cl128_koelbig  = clausen_2l_koelbig(x128);
+      const auto cl128_li2      = Cl2_via_Li2(x128);
 
 #ifdef ENABLE_GSL
       const auto cl64_gsl     = gsl_sf_clausen(x64);
@@ -126,6 +127,7 @@ TEST_CASE("test_real_fixed_values")
       INFO("x(128)        = " << x128);
       INFO("Cl2(128) real = " << cl128_expected << " (expected)");
       INFO("Cl2(128) real = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl2(128) real = " << cl128_koelbig  << " (Koelbig)");
       INFO("Cl2(128) real = " << cl128_li2      << " (via Li2 C++)");
 
       if (std::abs(x64 - 2*pi64) > 1e-2) {
@@ -172,6 +174,11 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(cl128_poly  , cl128_expected, 6*eps128);
       } else {
          CHECK_CLOSE(cl128_poly  , cl128_expected, 50*eps128);
+      }
+      if (std::abs(x128 - 2*pi128) > 1e-10L) {
+         CHECK_CLOSE(cl128_koelbig, cl128_expected, 6*eps128);
+      } else {
+         CHECK_CLOSE(cl128_koelbig, cl128_expected, 50*eps128);
       }
       CHECK_CLOSE(cl128_li2      , cl128_expected, 10*eps128);
    }

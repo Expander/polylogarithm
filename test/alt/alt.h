@@ -42,6 +42,7 @@ void tsil_trilog_complex(long double re, long double im, long double* res_re, lo
 
 double clausen_2_bernoulli(double x);
 double clausen_2_koelbig(double x);
+long double clausen_2l_koelbig(long double x);
 double clausen_2_pade(double x);
 double clausen_2_wu(double x);
 double clausen_3_wu(double x);
