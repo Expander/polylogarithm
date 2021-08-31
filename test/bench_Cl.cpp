@@ -1,5 +1,6 @@
 #include "alt.h"
 #include "bench.hpp"
+#include "fortran_wrappers.h"
 #include "Cl2.hpp"
 #include "Cl3.hpp"
 #include "Cl4.hpp"
@@ -14,6 +15,16 @@
 #endif
 
 namespace {
+
+#ifdef ENABLE_FORTRAN
+
+double poly_Cl2_fortran(double x) {
+   double res{};
+   cl2_fortran(&x, &res);
+   return res;
+}
+
+#endif
 
 double Cl2_via_Li2(double x) noexcept
 {
@@ -74,6 +85,11 @@ int main() {
 
    bench_fn([&](double x) { return polylogarithm::Cl2(x); }, values_d,
             "polylogarithm C++", "double");
+
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](double x) { return poly_Cl2_fortran(x); }, values_d,
+            "polylogarithm Fortran", "double");
+#endif
 
    bench_fn([&](double x) { return Cl2_via_Li2(x); }, values_d,
             "via Li2 C++", "double");

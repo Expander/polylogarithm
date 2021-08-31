@@ -2,6 +2,7 @@
 
 #include "doctest.h"
 #include "alt.h"
+#include "fortran_wrappers.h"
 #include "Cl2.hpp"
 #include "Li2.hpp"
 #include "read_data.hpp"
@@ -18,6 +19,16 @@
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
 
 namespace {
+
+#ifdef ENABLE_FORTRAN
+
+double poly_Cl2_fortran(double x) {
+   double res{};
+   cl2_fortran(&x, &res);
+   return res;
+}
+
+#endif
 
 double Cl2_via_Li2(double x) noexcept
 {
@@ -102,6 +113,9 @@ TEST_CASE("test_real_fixed_values")
       const auto cl64_koelbig   = clausen_2_koelbig(x64);
       const auto cl64_pade      = clausen_2_pade(x64);
       const auto cl64_poly      = polylogarithm::Cl2(x64);
+#ifdef ENABLE_FORTRAN
+      const auto cl64_poly_f    = poly_Cl2_fortran(x64);
+#endif
       const auto cl64_li2       = Cl2_via_Li2(x64);
       const auto cl64_wu        = clausen_2_wu(x64);
       const auto cl128_poly     = polylogarithm::Cl2(x128);
@@ -115,6 +129,9 @@ TEST_CASE("test_real_fixed_values")
       INFO("x(64)         = " << x64);
       INFO("Cl2(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl2(64)  real = " << cl64_poly      << " (polylogarithm C++)");
+#ifdef ENABLE_FORTRAN
+      INFO("Cl2(64)  real = " << cl64_poly_f    << " (polylogarithm Fortran)");
+#endif
       INFO("Cl2(64)  real = " << cl64_li2       << " (via Li2 C++)");
 #ifdef ENABLE_GSL
       INFO("Cl2(64)  real = " << cl64_gsl       << " (GSL)");
@@ -137,6 +154,15 @@ TEST_CASE("test_real_fixed_values")
       } else {
          CHECK_CLOSE(cl64_poly   , cl64_expected , 100*eps64);
       }
+#ifdef ENABLE_FORTRAN
+      if (std::abs(x64 - 2*pi64) > 1e-2) {
+         CHECK_CLOSE(cl64_poly_f , cl64_expected , 2*eps64);
+      } else if (std::abs(x64 - 2*pi64) > 1e-12) {
+         CHECK_CLOSE(cl64_poly_f , cl64_expected , 10*eps64);
+      } else {
+         CHECK_CLOSE(cl64_poly_f , cl64_expected , 100*eps64);
+      }
+#endif
       CHECK_CLOSE(cl64_li2       , cl64_expected , 10*eps64);
       if (std::abs(x64 - 2*pi64) > 1e-3) {
          CHECK_CLOSE(cl64_bernoulli, cl64_expected , 2*eps64);

@@ -2,6 +2,7 @@ if(CMAKE_Fortran_COMPILER)
   add_library(polylog_fortran
     fortran_wrappers.f90
     fast_clog.f90
+    Cl2.f90
     Li2.f90
     Li3.f90
     Li4.f90

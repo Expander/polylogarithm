@@ -5,6 +5,16 @@
 !*********************************************************************
 
 
+subroutine cl2_fortran(x, res) bind(C)
+  use, intrinsic :: iso_c_binding
+  implicit none
+  real(c_double), intent(in)  :: x
+  real(c_double), intent(out) :: res
+  double precision dcl2
+  res = dcl2(x)
+end subroutine cl2_fortran
+
+
 subroutine li2_fortran(x, res) bind(C)
   use, intrinsic :: iso_c_binding
   implicit none
