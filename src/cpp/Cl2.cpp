@@ -14,8 +14,8 @@ namespace {
    template <typename T, int N>
    T horner(T x, const T (&c)[N]) noexcept
    {
-      T p = 0;
-      for (int i = N - 1; i >= 0; --i) {
+      T p = c[N - 1];
+      for (int i = N - 2; i >= 0; --i) {
          p = p*x + c[i];
       }
       return p;
