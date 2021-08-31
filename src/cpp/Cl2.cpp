@@ -104,11 +104,8 @@ double Cl2(double x) noexcept
  * @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$ with long double precision
  * @param x real angle
  * @return \f$\mathrm{Cl}_2(\theta)\f$
- * @author K.S. Kölbig
- * @note Implementation translated from CERNLIB DCLAUS function C326
- * and extended to long double precision by Alexander Voigt.
- *
- * Journal of Computational and Applied Mathematics 64 (1995) 295-297.
+ * @author Alexander Voigt
+ * @note Implementation as economized Padé approximation.
  */
 long double Cl2(long double x) noexcept
 {
