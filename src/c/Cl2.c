@@ -1,8 +1,8 @@
-// ====================================================================
-// This file is part of Polylogarithm.
-//
-// Polylogarithm is licenced under the MIT License.
-// ====================================================================
+/* ====================================================================
+ * This file is part of Polylogarithm.
+ *
+ * Polylogarithm is licenced under the MIT License.
+ * ==================================================================== */
 
 #include <math.h>
 
