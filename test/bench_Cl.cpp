@@ -1,5 +1,6 @@
 #include "alt.h"
 #include "bench.hpp"
+#include "c_wrappers.h"
 #include "fortran_wrappers.h"
 #include "Cl2.hpp"
 #include "Cl3.hpp"
@@ -86,6 +87,9 @@ int main() {
    bench_fn([&](double x) { return polylogarithm::Cl2(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return cl2(x); }, values_d,
+            "polylogarithm C", "double");
+
 #ifdef ENABLE_FORTRAN
    bench_fn([&](double x) { return poly_Cl2_fortran(x); }, values_d,
             "polylogarithm Fortran", "double");
@@ -113,6 +117,9 @@ int main() {
 
    bench_fn([&](long double x) { return polylogarithm::Cl2(x); }, values_l,
             "polylogarithm C++", "long double");
+
+   bench_fn([&](long double x) { return cl2l(x); }, values_l,
+            "polylogarithm C", "long double");
 
    bench_fn([&](long double x) { return clausen_2l_koelbig(x); }, values_l,
             "Koelbig C", "long double");

@@ -2,6 +2,7 @@
 
 #include "doctest.h"
 #include "alt.h"
+#include "c_wrappers.h"
 #include "fortran_wrappers.h"
 #include "Cl2.hpp"
 #include "Li2.hpp"
@@ -113,12 +114,14 @@ TEST_CASE("test_real_fixed_values")
       const auto cl64_koelbig   = clausen_2_koelbig(x64);
       const auto cl64_pade      = clausen_2_pade(x64);
       const auto cl64_poly      = polylogarithm::Cl2(x64);
+      const auto cl64_poly_c    = cl2(x64);
 #ifdef ENABLE_FORTRAN
       const auto cl64_poly_f    = poly_Cl2_fortran(x64);
 #endif
       const auto cl64_li2       = Cl2_via_Li2(x64);
       const auto cl64_wu        = clausen_2_wu(x64);
       const auto cl128_poly     = polylogarithm::Cl2(x128);
+      const auto cl128_poly_c   = cl2l(x128);
       const auto cl128_koelbig  = clausen_2l_koelbig(x128);
       const auto cl128_li2      = Cl2_via_Li2(x128);
 
@@ -129,6 +132,7 @@ TEST_CASE("test_real_fixed_values")
       INFO("x(64)         = " << x64);
       INFO("Cl2(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl2(64)  real = " << cl64_poly      << " (polylogarithm C++)");
+      INFO("Cl2(64)  real = " << cl64_poly_c    << " (polylogarithm C)");
 #ifdef ENABLE_FORTRAN
       INFO("Cl2(64)  real = " << cl64_poly_f    << " (polylogarithm Fortran)");
 #endif
@@ -144,6 +148,7 @@ TEST_CASE("test_real_fixed_values")
       INFO("x(128)        = " << x128);
       INFO("Cl2(128) real = " << cl128_expected << " (expected)");
       INFO("Cl2(128) real = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl2(128) real = " << cl128_poly_c   << " (polylogarithm C)");
       INFO("Cl2(128) real = " << cl128_koelbig  << " (Koelbig)");
       INFO("Cl2(128) real = " << cl128_li2      << " (via Li2 C++)");
 
@@ -153,6 +158,13 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(cl64_poly   , cl64_expected , 10*eps64);
       } else {
          CHECK_CLOSE(cl64_poly   , cl64_expected , 100*eps64);
+      }
+      if (std::abs(x64 - 2*pi64) > 1e-2) {
+         CHECK_CLOSE(cl64_poly_c , cl64_expected , 2*eps64);
+      } else if (std::abs(x64 - 2*pi64) > 1e-12) {
+         CHECK_CLOSE(cl64_poly_c , cl64_expected , 10*eps64);
+      } else {
+         CHECK_CLOSE(cl64_poly_c , cl64_expected , 100*eps64);
       }
 #ifdef ENABLE_FORTRAN
       if (std::abs(x64 - 2*pi64) > 1e-2) {
@@ -200,6 +212,11 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(cl128_poly  , cl128_expected, 6*eps128);
       } else {
          CHECK_CLOSE(cl128_poly  , cl128_expected, 50*eps128);
+      }
+      if (std::abs(x128 - 2*pi128) > 1e-10L) {
+         CHECK_CLOSE(cl128_poly_c, cl128_expected, 6*eps128);
+      } else {
+         CHECK_CLOSE(cl128_poly_c, cl128_expected, 50*eps128);
       }
       if (std::abs(x128 - 2*pi128) > 1e-10L) {
          CHECK_CLOSE(cl128_koelbig, cl128_expected, 6*eps128);
