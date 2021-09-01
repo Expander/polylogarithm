@@ -58,31 +58,32 @@ void bench_fn(Fn f, const std::vector<T>& values, const std::string& name,
              << std::left << type << "time: " << total_time << "s\n";
 }
 
-void print_line()
+void print_line(char c)
 {
-   std::cout << "----------------------------------------------------------------\n";
+   for (int i = 0; i < 60; ++i) {
+      std::cout << c;
+   }
+   std::cout << '\n';
 }
 
-void print_headline(const std::string& text)
+void print_headline_1(const std::string& text)
 {
-   print_line();
+   print_line('=');
    std::cout << text << '\n';
-   print_line();
+   print_line('=');
 }
 
-int main() {
-   using polylogarithm::bench::generate_random_scalars;
-   using polylogarithm::bench::generate_random_complexes;
+void print_headline_2(const std::string& text)
+{
+   print_line('-');
+   std::cout << text << '\n';
+   print_line('-');
+}
 
-   const std::size_t N = 1000000;
-   const auto pi = 3.1415926535897932;
-   const auto min = -8*pi;
-   const auto max = 8*pi;
-
-   const auto values_d  = generate_random_scalars<double>(N, min, max);
-   const auto values_l  = generate_random_scalars<long double>(N, min, max);
-
-   print_headline("Cl2");
+template<typename T, typename U>
+void bench(const T& values_d, const U& values_l)
+{
+   print_headline_2("Cl2");
 
    bench_fn([&](double x) { return polylogarithm::Cl2(x); }, values_d,
             "polylogarithm C++", "double");
@@ -127,7 +128,7 @@ int main() {
    bench_fn([&](long double x) { return Cl2_via_Li2(x); }, values_l,
             "via Li2 C++", "long double");
 
-   print_headline("Cl3");
+   print_headline_2("Cl3");
 
    bench_fn([&](double x) { return polylogarithm::Cl3(x); }, values_d,
             "polylogarithm C++", "double");
@@ -138,7 +139,7 @@ int main() {
    bench_fn([&](long double x) { return polylogarithm::Cl3(x); }, values_l,
             "polylogarithm C++", "long double");
 
-   print_headline("Cl4");
+   print_headline_2("Cl4");
 
    bench_fn([&](double x) { return polylogarithm::Cl4(x); }, values_d,
             "polylogarithm C++", "double");
@@ -146,7 +147,7 @@ int main() {
    bench_fn([&](long double x) { return polylogarithm::Cl4(x); }, values_l,
             "polylogarithm C++", "long double");
 
-   print_headline("Cl5");
+   print_headline_2("Cl5");
 
    bench_fn([&](double x) { return polylogarithm::Cl5(x); }, values_d,
             "polylogarithm C++", "double");
@@ -154,13 +155,37 @@ int main() {
    bench_fn([&](long double x) { return polylogarithm::Cl5(x); }, values_l,
             "polylogarithm C++", "long double");
 
-   print_headline("Cl6");
+   print_headline_2("Cl6");
 
    bench_fn([&](double x) { return polylogarithm::Cl6(x); }, values_d,
             "polylogarithm C++", "double");
 
    bench_fn([&](long double x) { return polylogarithm::Cl6(x); }, values_l,
             "polylogarithm C++", "long double");
+}
+
+int main()
+{
+   using polylogarithm::bench::generate_random_scalars;
+   using polylogarithm::bench::generate_random_complexes;
+
+   const std::size_t N = 1000000;
+   const auto pi = 3.1415926535897932;
+   const auto min = -8*pi;
+   const auto max = 8*pi;
+
+   // range [0,pi), where no range reduction is necessary
+   const auto values_d_redu = generate_random_scalars<double>(N, 0, pi);
+   const auto values_l_redu = generate_random_scalars<long double>(N, 0, pi);
+   // extended range, where range reduction is necessary
+   const auto values_d_full = generate_random_scalars<double>(N, min, max);
+   const auto values_l_full = generate_random_scalars<long double>(N, min, max);
+
+   print_headline_1("Benchmark without range reduction");
+   bench(values_d_redu, values_l_redu);
+
+   print_headline_1("Benchmark with range reduction");
+   bench(values_d_full, values_l_full);
 
    return 0;
 }
