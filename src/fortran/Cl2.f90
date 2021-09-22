@@ -18,10 +18,10 @@ double precision function dcl2(x)
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision, parameter :: PI2 = 2*PI, PIH = PI/2, PI28 = PI*PI/8
   double precision, parameter :: cp(4) = (/ &
-      2.7951565822419270D-2,                &
-     -8.8865360514541522D-4,                &
-      6.8282348222485902D-6,                &
-     -7.5276232403566808D-9                 /)
+      1.3975782911209635D-2,                &
+     -4.4432680257270761D-4,                &
+      3.4141174111242951D-6,                &
+     -3.7638116201783404D-9                 /)
   double precision, parameter :: cq(4) = (/ &
       1.0000000000000000D+0,                &
      -3.6904397961160525D-2,                &
@@ -71,7 +71,7 @@ double precision function dcl2(x)
     z2 = z*z
     p = cp(1) + z * cp(2) + z2 * (cp(3) + z * cp(4))
     q = cq(1) + z * cq(2) + z2 * (cq(3) + z * cq(4))
-    h = x*(1 - log(x) + y*p/q/2)
+    h = x*(1 - log(x) + y*p/q)
   else
     y = PI - x
     z = y*y - PI28
