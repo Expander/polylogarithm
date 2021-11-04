@@ -76,3 +76,38 @@ double clausen_2_pade(double x)
 
    return sgn*h;
 }
+
+/**
+ * @brief Clausen function \f$\mathrm{Cl}_3(\theta) = \mathrm{Re}(\mathrm{Li}_3(e^{i\theta}))\f$
+ * @param x real angle
+ * @return \f$\mathrm{Cl}_3(\theta)\f$
+ * @author Alexander Voigt
+ * @note Implementation as economized Padé approximation.
+ */
+double clausen_3_pade(double x)
+{
+   const double PI = 3.14159265358979324;
+   const double PI2 = 2*PI, PIH = PI/2;
+
+   if (x < 0) {
+      x = -x;
+   }
+
+   if (x >= PI2) {
+      x = fmod(x, PI2);
+   }
+
+   if (x > PI) {
+      const double p0 = 6.28125;
+      const double p1 = 0.0019353071795864769253;
+      x = (p0 - x) + p1;
+   }
+
+   if (x == PIH) {
+      return 0;
+   }
+
+   double h = 0;
+
+   return h;
+}
