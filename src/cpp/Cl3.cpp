@@ -42,7 +42,8 @@ double Cl3(double x) noexcept
       return zeta3;
    }
 
-   double h = 0;
+   const double y = x*x;
+   double p = 0, q = 0;
 
    if (x < PIH) {
       const double P[] = {
@@ -53,12 +54,10 @@ double Cl3(double x) noexcept
          1.0000000000000000e+00, -2.6015033560727570e-02,
          1.5460630299236049e-04, -1.0987530650923219e-07
       };
-      const double y = x*x;
       const double z = y - PI28;
       const double z2 = z*z;
-      const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]);
-      const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]);
-      h = zeta3 + y*(p/q + std::log(x)/2);
+      p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]);
+      q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]);
    } else {
       const double P[] = {
          -7.7188372964351050e-01, 4.13370226274857930e-02,
@@ -70,16 +69,14 @@ double Cl3(double x) noexcept
          1.1524166604454141e-03, -8.9386910907153936e-06,
          2.2836150504603083e-08, -8.1374772008885558e-12
       };
-      const double y = x*x;
       const double z = y - 5*PI28;
       const double z2 = z*z;
       const double z4 = z2*z2;
-      const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]) + z4 * (P[4] + z * P[5]);
-      const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) + z4 * (Q[4] + z * Q[5]);
-      h = zeta3 + y*(p/q + std::log(x)/2);
+      p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]) + z4 * (P[4] + z * P[5]);
+      q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) + z4 * (Q[4] + z * Q[5]);
    }
 
-   return h;
+   return zeta3 + y*(p/q + std::log(x)/2);
 }
 
 /**
