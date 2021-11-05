@@ -8,6 +8,7 @@
 #include "Cl5.hpp"
 #include "Cl6.hpp"
 #include "Li2.hpp"
+#include "Li3.hpp"
 #include <iostream>
 #include <iomanip>
 
@@ -30,6 +31,11 @@ double poly_Cl2_fortran(double x) {
 double Cl2_via_Li2(double x) noexcept
 {
    return std::imag(polylogarithm::Li2(std::polar(1.0, x)));
+}
+
+double Cl3_via_Li3(double x) noexcept
+{
+   return std::real(polylogarithm::Li3(std::polar(1.0, x)));
 }
 
 long double Cl2_via_Li2(long double x) noexcept
@@ -132,6 +138,9 @@ void bench(const T& values_d, const U& values_l)
 
    bench_fn([&](double x) { return polylogarithm::Cl3(x); }, values_d,
             "polylogarithm C++", "double");
+
+   bench_fn([&](double x) { return Cl3_via_Li3(x); }, values_d,
+            "via Li3 C++", "double");
 
    bench_fn([&](double x) { return clausen_3_pade(x); }, values_d,
             "Pade", "double");
