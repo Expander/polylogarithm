@@ -87,7 +87,8 @@ double clausen_2_pade(double x)
 double clausen_3_pade(double x)
 {
    const double PI = 3.14159265358979324;
-   const double PI2 = 2*PI, PIH = PI/2;
+   const double PI2 = 2*PI, PIH = PI/2, PI28 = PI*PI/8;
+   const double zeta3 = 1.2020569031595943;
 
    if (x < 0) {
       x = -x;
@@ -103,11 +104,35 @@ double clausen_3_pade(double x)
       x = (p0 - x) + p1;
    }
 
+   if (x == 0) {
+      return zeta3;
+   }
+
    if (x == PIH) {
       return 0;
    }
 
    double h = 0;
+
+   if (x < PIH) {
+      const double P[] = {
+         -7.283298548144828e-1, 4.444113130391689e-2,
+         -7.1962376789350642e-4, 2.8035540279284208e-6
+      };
+      const double Q[] = {
+         1.0000000000000000e+00, -3.6614844870300241e-2,
+         3.3117584811513189e-04, -4.1874070197428613e-7
+      };
+      const double y = x*x;
+      const double z = y - PI28;
+      const double z2 = z*z;
+      const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]);
+      const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]);
+
+      h = zeta3 + y*(p/q + log(2*sin(x/2))/2);
+   } else {
+      /* @todo(alex) */
+   }
 
    return h;
 }
