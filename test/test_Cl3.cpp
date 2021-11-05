@@ -31,6 +31,11 @@ double Cl3_via_Li3(double x) noexcept
    return std::real(polylogarithm::Li3(std::polar(1.0, x)));
 }
 
+long double Cl3_via_Li3(long double x) noexcept
+{
+   return std::real(polylogarithm::Li3(std::polar(1.0L, x)));
+}
+
 TEST_CASE("test_special_values")
 {
    using polylogarithm::Cl3;
@@ -74,6 +79,7 @@ TEST_CASE("test_real_fixed_values")
       const auto cl64_poly    = polylogarithm::Cl3(x64);
       const auto cl64_wu      = clausen_3_wu(x64);
       const auto cl128_poly   = polylogarithm::Cl3(x128);
+      const auto cl128_li3    = Cl3_via_Li3(x128);
 
       INFO("x(64)         = " << x64);
       INFO("Cl3(64)  real = " << cl64_expected  << " (expected)");
@@ -85,11 +91,13 @@ TEST_CASE("test_real_fixed_values")
       INFO("x(128)        = " << x128);
       INFO("Cl3(128) real = " << cl128_expected << " (expected)");
       INFO("Cl3(128) real = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl3(128) real = " << cl128_li3      << " (via Li3 C++)");
 
       CHECK_CLOSE(cl64_li3  , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_pade , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_wu   , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl128_poly, cl128_expected, 2*eps128);
+      CHECK_CLOSE(cl128_li3 , cl128_expected, 2*eps128);
    }
 }

@@ -43,6 +43,11 @@ long double Cl2_via_Li2(long double x) noexcept
    return std::imag(polylogarithm::Li2(std::polar(1.0L, x)));
 }
 
+long double Cl3_via_Li3(long double x) noexcept
+{
+   return std::real(polylogarithm::Li3(std::polar(1.0L, x)));
+}
+
 } // anonymous namespace
 
 template <typename T, typename Fn>
@@ -150,6 +155,9 @@ void bench(const T& values_d, const U& values_l)
 
    bench_fn([&](long double x) { return polylogarithm::Cl3(x); }, values_l,
             "polylogarithm C++", "long double");
+
+   bench_fn([&](long double x) { return Cl3_via_Li3(x); }, values_l,
+            "via Li3 C++", "long double");
 
    print_headline_2("Cl4");
 
