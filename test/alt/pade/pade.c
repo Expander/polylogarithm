@@ -108,10 +108,6 @@ double clausen_3_pade(double x)
       return zeta3;
    }
 
-   if (x == PIH) {
-      return 0;
-   }
-
    double h = 0;
 
    if (x < PIH) {
@@ -131,7 +127,26 @@ double clausen_3_pade(double x)
 
       h = zeta3 + y*(p/q + log(2*sin(x/2))/2);
    } else {
-      /* @todo(alex) */
+      const double P[] = {
+         -6.3603493635005218e-01, 6.5684157446730646e-02,
+         -2.3565499130760498e-03, 3.5782068616362699e-05,
+         -2.1603488890230991e-07, 3.5781888382472248e-10
+      };
+      const double Q[] = {
+         1.0000000000000000e+00, -7.2267100371655266e-02,
+         1.8193983947330242e-03, -1.8536201173545669e-05,
+         6.4758810460566848e-08, -3.5368448623664113e-11
+      };
+      const double y = x*x;
+      const double z = y - 5*PI28;
+      const double z2 = z*z;
+      const double z4 = z2*z2;
+      const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]) +
+         z4 * (P[4] + z * P[5]);
+      const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
+         z4 * (Q[4] + z * Q[5]);
+
+      h = zeta3 + y*(p/q + log(2*sin(x/2))/2);
    }
 
    return h;
