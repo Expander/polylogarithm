@@ -6,6 +6,7 @@
 
 #include "Cl3.hpp"
 #include "Li3.hpp"
+#include <cmath>
 #include <complex>
 
 namespace polylogarithm {
@@ -28,7 +29,7 @@ double Cl3(double x) noexcept
    }
 
    if (x >= PI2) {
-      x = fmod(x, PI2);
+      x = std::fmod(x, PI2);
    }
 
    if (x > PI) {
@@ -75,7 +76,7 @@ double Cl3(double x) noexcept
       q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) + z4 * (Q[4] + z * Q[5]);
    }
 
-   return zeta3 + y*(p/q + log(2*sin(x/2))/2);
+   return zeta3 + y*(p/q + std::log(2*std::sin(x/2))/2);
 }
 
 /**
