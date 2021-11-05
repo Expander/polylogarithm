@@ -64,6 +64,6 @@ CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
 flo = Cl[3, x, 100];
 
 (* interval = {0, Pi/2}; *)
-fLo[x_] := (Cl[3, x, 10] - Zeta[3])/x^2 - Log[2 Sin[x/2]]/2
+fLo[x_] := (Cl[3, x, 100] - Zeta[3])/x^2 - Log[2 Sin[x/2]]/2
 
 CalcPade[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, 3];
