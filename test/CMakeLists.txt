@@ -10,16 +10,8 @@ add_definitions(-DTEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
 add_subdirectory(alt)
 
 function(add_polylogarithm_exec name)
-  add_executable(
-    ${name}
-    ${name}.cpp
-    )
-  target_link_libraries(
-    ${name}
-    alt
-    polylog
-    ${ARGN}
-    )
+  add_executable(${name} ${name}.cpp)
+  target_link_libraries(${name} alt polylog ${ARGN})
 endfunction()
 
 function(add_polylogarithm_benc name)
