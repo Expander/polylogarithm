@@ -82,7 +82,10 @@ double clausen_2_pade(double x)
  * @param x real angle
  * @return \f$\mathrm{Cl}_3(\theta)\f$
  * @author Alexander Voigt
- * @note Implementation as economized Padé approximation.
+ * @note Implementation as economized Padé approximation in
+ * combination with the series expansion from [Jiming Wu, Xiaoping
+ * Zhang, Dongjie Liu: "An efficient calculation of the Clausen
+ * functions Cl_n(0)(n >= 2)"].
  */
 double clausen_3_pade(double x)
 {
