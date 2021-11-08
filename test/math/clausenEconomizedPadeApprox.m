@@ -6,6 +6,7 @@
 Needs["FunctionApproximations`"];
 
 Get["../test/math/clausenBernoulli.m"];
+Get["../test/math/clausenWu.m"];
 
 (* maximum number of terms in Cl2 series *)
 nMax = 100;
@@ -55,5 +56,17 @@ trans[x_] := Sqrt[x] + Pi
 
 (* inverse transformation *)
 itrans[x_] := (Pi - x)^2
+
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+
+(* Cl3[x] *)
+
+(* interval = {0, Pi/2}; *)
+fLo[x_] := (Cl[3, x, 100] - Zeta[3])/x^2 - Log[x]/2
+
+CalcPade[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, 3];
+
+(* interval = {Pi/2, Pi}; *)
+fHi[x_] := Cl[3, x, 100]
 
 CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
