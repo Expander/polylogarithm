@@ -9,7 +9,7 @@ add_definitions(-DTEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
 
 add_subdirectory(alt)
 
-function(add_polylogarithm_test name)
+function(add_polylogarithm_exec name)
   add_executable(
     ${name}
     ${name}.cpp
@@ -20,11 +20,19 @@ function(add_polylogarithm_test name)
     polylog
     ${ARGN}
     )
+endfunction()
+
+function(add_polylogarithm_benc name)
+  add_polylogarithm_exec(${test} ${name} ${ARGN})
+endfunction()
+
+function(add_polylogarithm_test name)
+  add_polylogarithm_exec(${test} ${name} ${ARGN})
   add_test(NAME ${name} COMMAND ${name})
 endfunction()
 
-add_polylogarithm_test(bench_Li ${LIBGSL})
-add_polylogarithm_test(bench_Cl ${LIBGSL})
+add_polylogarithm_benc(bench_Li ${LIBGSL})
+add_polylogarithm_benc(bench_Cl ${LIBGSL})
 add_polylogarithm_test(test_Cl)
 add_polylogarithm_test(test_Cl2 ${LIBGSL})
 add_polylogarithm_test(test_Cl3)
