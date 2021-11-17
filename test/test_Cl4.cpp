@@ -2,6 +2,7 @@
 
 #include "doctest.h"
 #include "Cl4.hpp"
+#include "Li4.hpp"
 #include "read_data.hpp"
 #include <cmath>
 #include <complex>
@@ -22,6 +23,16 @@ std::vector<double> float_range(
    }
 
    return result;
+}
+
+double Cl4_via_Li4(double x) noexcept
+{
+   return std::imag(polylogarithm::Li4(std::polar(1.0, x)));
+}
+
+long double Cl4_via_Li4(long double x) noexcept
+{
+   return std::imag(polylogarithm::Li4(std::polar(1.0L, x)));
 }
 
 TEST_CASE("test_special_values")
@@ -70,16 +81,20 @@ TEST_CASE("test_real_fixed_values")
       const auto cl128_expected = v.second;
       const auto cl64_expected = static_cast<double>(cl128_expected);
 
+      const auto cl64_li4     = Cl4_via_Li4(x64);
       const auto cl64_poly    = polylogarithm::Cl4(x64);
       const auto cl128_poly   = polylogarithm::Cl4(x128);
+      const auto cl128_li4    = Cl4_via_Li4(x128);
 
       INFO("x(64)         = " << x64);
       INFO("Cl4(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl4(64)  real = " << cl64_poly      << " (polylogarithm C++)");
+      INFO("Cl4(64)  real = " << cl64_li4       << " (via Li4 C++)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
       INFO("Cl4(128) real = " << cl128_expected << " (expected)");
       INFO("Cl4(128) real = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl4(128) real = " << cl128_li4      << " (via Li4 C++)");
 
       CHECK_CLOSE(cl64_poly , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl128_poly, cl128_expected, 2*eps128);
