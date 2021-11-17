@@ -6,6 +6,7 @@
 
 #include "Cl4.hpp"
 #include "Li4.hpp"
+#include <cmath>
 #include <complex>
 
 namespace polylogarithm {
