@@ -31,10 +31,10 @@ Citation
 @software{polylogarithm,
     author       = {{Alexander Voigt}},
     title        = {{Polylogarithm}},
-    year         = "2021",
+    year         = {2021},
     version      = {6.6.0},
     url          = {https://github.com/Expander/polylogarithm},
-    note         = "[License: MIT]"
+    note         = {[License: MIT]}
 }
 ~~~
 
