@@ -9,6 +9,7 @@
 #include "Cl6.hpp"
 #include "Li2.hpp"
 #include "Li3.hpp"
+#include "Li4.hpp"
 #include <iostream>
 #include <iomanip>
 
@@ -38,6 +39,11 @@ double Cl3_via_Li3(double x) noexcept
    return std::real(polylogarithm::Li3(std::polar(1.0, x)));
 }
 
+double Cl4_via_Li4(double x) noexcept
+{
+   return std::imag(polylogarithm::Li4(std::polar(1.0, x)));
+}
+
 long double Cl2_via_Li2(long double x) noexcept
 {
    return std::imag(polylogarithm::Li2(std::polar(1.0L, x)));
@@ -46,6 +52,11 @@ long double Cl2_via_Li2(long double x) noexcept
 long double Cl3_via_Li3(long double x) noexcept
 {
    return std::real(polylogarithm::Li3(std::polar(1.0L, x)));
+}
+
+long double Cl4_via_Li4(long double x) noexcept
+{
+   return std::imag(polylogarithm::Li4(std::polar(1.0L, x)));
 }
 
 } // anonymous namespace
@@ -164,8 +175,14 @@ void bench(const T& values_d, const U& values_l)
    bench_fn([&](double x) { return polylogarithm::Cl4(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return Cl4_via_Li4(x); }, values_d,
+            "via Li4 C++", "double");
+
    bench_fn([&](long double x) { return polylogarithm::Cl4(x); }, values_l,
             "polylogarithm C++", "long double");
+
+   bench_fn([&](long double x) { return Cl4_via_Li4(x); }, values_l,
+            "via Li4 C++", "long double");
 
    print_headline_2("Cl5");
 

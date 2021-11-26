@@ -70,3 +70,15 @@ CalcPade[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, 3];
 fHi[x_] := Cl[3, x, 100]
 
 CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+
+(* Cl4[x] *)
+
+(* interval = {0, Pi/2}; *)
+fLo[x_] := (Cl[4, x, 100]/x - Zeta[3])/x^2 - Log[x]/6
+
+CalcPade[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, 3];
+
+(* interval = {Pi/2, Pi}; *)
+fHi[x_] := Cl[4, x, 100]/(Pi - x)
+
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
