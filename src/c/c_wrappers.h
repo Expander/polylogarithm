@@ -13,6 +13,12 @@ extern "C" {
 /** Clausen function with n=2 */
 double cl2(double x);
 
+/** Clausen function with n=3 */
+double cl3(double x);
+
+/** Clausen function with n=4 */
+double cl4(double x);
+
 /** Clausen function with n=2 with long double precision */
 long double cl2l(long double x);
 

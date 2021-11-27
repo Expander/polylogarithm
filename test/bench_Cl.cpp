@@ -155,6 +155,9 @@ void bench(const T& values_d, const U& values_l)
    bench_fn([&](double x) { return polylogarithm::Cl3(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return cl3(x); }, values_d,
+            "polylogarithm C", "double");
+
    bench_fn([&](double x) { return Cl3_via_Li3(x); }, values_d,
             "via Li3 C++", "double");
 
@@ -174,6 +177,9 @@ void bench(const T& values_d, const U& values_l)
 
    bench_fn([&](double x) { return polylogarithm::Cl4(x); }, values_d,
             "polylogarithm C++", "double");
+
+   bench_fn([&](double x) { return cl4(x); }, values_d,
+            "polylogarithm C", "double");
 
    bench_fn([&](double x) { return Cl4_via_Li4(x); }, values_d,
             "via Li4 C++", "double");
