@@ -15,6 +15,26 @@ subroutine cl2_fortran(x, res) bind(C)
 end subroutine cl2_fortran
 
 
+subroutine cl3_fortran(x, res) bind(C)
+  use, intrinsic :: iso_c_binding
+  implicit none
+  real(c_double), intent(in)  :: x
+  real(c_double), intent(out) :: res
+  double precision dcl3
+  res = dcl3(x)
+end subroutine cl3_fortran
+
+
+subroutine cl4_fortran(x, res) bind(C)
+  use, intrinsic :: iso_c_binding
+  implicit none
+  real(c_double), intent(in)  :: x
+  real(c_double), intent(out) :: res
+  double precision dcl4
+  res = dcl4(x)
+end subroutine cl4_fortran
+
+
 subroutine li2_fortran(x, res) bind(C)
   use, intrinsic :: iso_c_binding
   implicit none

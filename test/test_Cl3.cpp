@@ -4,6 +4,7 @@
 #include "alt.h"
 #include "c_wrappers.h"
 #include "Cl3.hpp"
+#include "fortran_wrappers.h"
 #include "Li3.hpp"
 #include "read_data.hpp"
 #include <cmath>
@@ -26,6 +27,16 @@ std::vector<double> float_range(
 
    return result;
 }
+
+#ifdef ENABLE_FORTRAN
+
+double poly_Cl3_fortran(double x) {
+   double res{};
+   cl3_fortran(&x, &res);
+   return res;
+}
+
+#endif
 
 double Cl3_via_Li3(double x) noexcept
 {
@@ -79,6 +90,9 @@ TEST_CASE("test_real_fixed_values")
       const auto cl64_pade    = clausen_3_pade(x64);
       const auto cl64_poly    = polylogarithm::Cl3(x64);
       const auto cl64_poly_c  = cl3(x64);
+#ifdef ENABLE_FORTRAN
+      const auto cl64_poly_f  = poly_Cl3_fortran(x64);
+#endif
       const auto cl64_wu      = clausen_3_wu(x64);
       const auto cl128_poly   = polylogarithm::Cl3(x128);
       const auto cl128_poly_c = cl3l(x128);
@@ -88,6 +102,9 @@ TEST_CASE("test_real_fixed_values")
       INFO("Cl3(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl3(64)  real = " << cl64_poly      << " (polylogarithm C++)");
       INFO("Cl3(64)  real = " << cl64_poly_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+      INFO("Cl3(64)  real = " << cl64_poly_f    << " (polylogarithm Fortran)");
+#endif
       INFO("Cl3(64)  real = " << cl64_li3       << " (via Li3 C++)");
       INFO("Cl3(64)  real = " << cl64_pade      << " (Pade)");
       INFO("Cl3(64)  real = " << cl64_wu        << " (Wu et.al.)");
@@ -101,6 +118,9 @@ TEST_CASE("test_real_fixed_values")
       CHECK_CLOSE(cl64_li3    , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly_c , cl64_expected , 2*eps64 );
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE(cl64_poly_f , cl64_expected , 2*eps64 );
+#endif
       CHECK_CLOSE(cl64_pade   , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_wu     , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl128_poly  , cl128_expected, 5*eps128);

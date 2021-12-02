@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "c_wrappers.h"
 #include "Cl4.hpp"
+#include "fortran_wrappers.h"
 #include "Li4.hpp"
 #include "read_data.hpp"
 #include <cmath>
@@ -25,6 +26,16 @@ std::vector<double> float_range(
 
    return result;
 }
+
+#ifdef ENABLE_FORTRAN
+
+double poly_Cl4_fortran(double x) {
+   double res{};
+   cl4_fortran(&x, &res);
+   return res;
+}
+
+#endif
 
 double Cl4_via_Li4(double x) noexcept
 {
@@ -85,6 +96,9 @@ TEST_CASE("test_real_fixed_values")
       const auto cl64_li4     = Cl4_via_Li4(x64);
       const auto cl64_poly    = polylogarithm::Cl4(x64);
       const auto cl64_poly_c  = cl4(x64);
+#ifdef ENABLE_FORTRAN
+      const auto cl64_poly_f  = poly_Cl4_fortran(x64);
+#endif
       const auto cl128_poly   = polylogarithm::Cl4(x128);
       const auto cl128_poly_c = cl4l(x128);
       const auto cl128_li4    = Cl4_via_Li4(x128);
@@ -93,6 +107,9 @@ TEST_CASE("test_real_fixed_values")
       INFO("Cl4(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl4(64)  real = " << cl64_poly      << " (polylogarithm C++)");
       INFO("Cl4(64)  real = " << cl64_poly_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+      INFO("Cl4(64)  real = " << cl64_poly_f    << " (polylogarithm Fortran)");
+#endif
       INFO("Cl4(64)  real = " << cl64_li4       << " (via Li4 C++)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
@@ -104,6 +121,9 @@ TEST_CASE("test_real_fixed_values")
       CHECK_CLOSE(cl64_li4    , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly_c , cl64_expected , 2*eps64 );
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE(cl64_poly_f , cl64_expected , 2*eps64 );
+#endif
       CHECK_CLOSE(cl128_li4   , cl128_expected, 2*eps128);
       CHECK_CLOSE(cl128_poly  , cl128_expected, 2*eps128);
       CHECK_CLOSE(cl128_poly_c, cl128_expected, 2*eps128);

@@ -9,6 +9,12 @@ extern "C" {
 /** Clausen function with n=2, Fortran implementation */
 void cl2_fortran(const double* x, double* res);
 
+/** Clausen function with n=3, Fortran implementation */
+void cl3_fortran(const double* x, double* res);
+
+/** Clausen function with n=4, Fortran implementation */
+void cl4_fortran(const double* x, double* res);
+
 /** real polylogarithm with n=2 (dilogarithm), Fortran implementation */
 void li2_fortran(const double* x, double* res);
 
