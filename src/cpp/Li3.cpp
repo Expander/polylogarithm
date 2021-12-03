@@ -34,9 +34,9 @@ namespace {
 } // anonymous namespace
 
 /**
- * @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$
+ * @brief Complex trilogarithm \f$\operatorname{Li}_3(z)\f$
  * @param z_ complex argument
- * @return \f$\mathrm{Li}_3(z)\f$
+ * @return \f$\operatorname{Li}_3(z)\f$
  * @author Alexander Voigt
  */
 std::complex<double> Li3(const std::complex<double>& z_) noexcept
@@ -126,9 +126,9 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
 }
 
 /**
- * @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$ with long double precision
+ * @brief Complex trilogarithm \f$\operatorname{Li}_3(z)\f$ with long double precision
  * @param z_ complex argument
- * @return \f$\mathrm{Li}_3(z)\f$
+ * @return \f$\operatorname{Li}_3(z)\f$
  * @author Alexander Voigt
  */
 std::complex<long double> Li3(const std::complex<long double>& z_) noexcept

@@ -5,9 +5,9 @@
 !*********************************************************************
 
 !*********************************************************************
-!> @brief Clausen function \f$\mathrm{Cl}_3(\theta) = \mathrm{Re}(\mathrm{Li}_3(e^{i\theta}))\f$
+!> @brief Clausen function \f$\operatorname{Cl}_3(\theta) = \operatorname{Re}(\operatorname{Li}_3(e^{i\theta}))\f$
 !> @param x real angle
-!> @return \f$\mathrm{Cl}_3(\theta)\f$
+!> @return \f$\operatorname{Cl}_3(\theta)\f$
 !> @author Alexander Voigt
 !> Implemented as economized Padé approximation.
 !*********************************************************************

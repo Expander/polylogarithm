@@ -11,9 +11,9 @@
 namespace polylogarithm {
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_5(\theta) = \mathrm{Re}(\mathrm{Li}_5(e^{i\theta}))\f$
+ * @brief Clausen function \f$\operatorname{Cl}_5(\theta) = \operatorname{Re}(\operatorname{Li}_5(e^{i\theta}))\f$
  * @param x real angle
- * @return \f$\mathrm{Cl}_5(\theta)\f$
+ * @return \f$\operatorname{Cl}_5(\theta)\f$
  */
 double Cl5(double x) noexcept
 {
@@ -21,9 +21,9 @@ double Cl5(double x) noexcept
 }
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_5(\theta) = \mathrm{Re}(\mathrm{Li}_5(e^{i\theta}))\f$ with long double precision
+ * @brief Clausen function \f$\operatorname{Cl}_5(\theta) = \operatorname{Re}(\operatorname{Li}_5(e^{i\theta}))\f$ with long double precision
  * @param x real angle
- * @return \f$\mathrm{Cl}_5(\theta)\f$
+ * @return \f$\operatorname{Cl}_5(\theta)\f$
  */
 long double Cl5(long double x) noexcept
 {

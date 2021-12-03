@@ -6,9 +6,9 @@
 
 
 !*********************************************************************
-!> @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
+!> @brief Real dilogarithm \f$\operatorname{Li}_2(x)\f$
 !> @param x real argument
-!> @return \f$\mathrm{Li}_2(x)\f$
+!> @return \f$\operatorname{Li}_2(x)\f$
 !> @author Alexander Voigt
 !>
 !> Implemented as an economized Pade approximation with a
@@ -91,9 +91,9 @@ end function dli2
 
 
 !*********************************************************************
-!> @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$
+!> @brief Complex dilogarithm \f$\operatorname{Li}_2(z)\f$
 !> @param z complex argument
-!> @return \f$\mathrm{Li}_2(z)\f$
+!> @return \f$\operatorname{Li}_2(z)\f$
 !> @note Implementation translated from SPheno by Alexander Voigt
 !*********************************************************************
 

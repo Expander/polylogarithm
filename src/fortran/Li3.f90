@@ -6,9 +6,9 @@
 
 
 !*********************************************************************
-!> @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$
+!> @brief Complex trilogarithm \f$\operatorname{Li}_3(z)\f$
 !> @param z complex argument
-!> @return \f$\mathrm{Li}_3(z)\f$
+!> @return \f$\operatorname{Li}_3(z)\f$
 !> @author Alexander Voigt
 !*********************************************************************
 double complex function cdli3(z)

@@ -20,9 +20,9 @@ static long double hornerl(long double x, const long double* c, int len)
 
 
 /**
- * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
+ * @brief Real dilogarithm \f$\operatorname{Li}_2(x)\f$
  * @param x real argument
- * @return \f$\mathrm{Li}_2(x)\f$
+ * @return \f$\operatorname{Li}_2(x)\f$
  * @author Alexander Voigt
  *
  * Implemented as an economized Pade approximation with a
@@ -105,9 +105,9 @@ double li2(double x)
 
 
 /**
- * @brief Real dilogarithm \f$\mathrm{Li}_2(z)\f$ with long double precision
+ * @brief Real dilogarithm \f$\operatorname{Li}_2(z)\f$ with long double precision
  * @param x real argument
- * @return \f$\mathrm{Li}_2(z)\f$
+ * @return \f$\operatorname{Li}_2(z)\f$
  * @author Alexander Voigt
  *
  * Implemented as an economized Pade approximation with a maximum
@@ -231,9 +231,9 @@ long double li2l(long double x)
 
 
 /**
- * @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$
+ * @brief Complex dilogarithm \f$\operatorname{Li}_2(z)\f$
  * @param z complex argument
- * @return \f$\mathrm{Li}_2(z)\f$
+ * @return \f$\operatorname{Li}_2(z)\f$
  * @note Implementation translated from SPheno to C++
  * @author Werner Porod
  * @note translated to C++ by Alexander Voigt
@@ -321,9 +321,9 @@ double _Complex cli2(double _Complex z)
 
 
 /**
- * @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$ with long double precision
+ * @brief Complex dilogarithm \f$\operatorname{Li}_2(z)\f$ with long double precision
  * @param z complex argument
- * @return \f$\mathrm{Li}_2(z)\f$
+ * @return \f$\operatorname{Li}_2(z)\f$
  * @note Implementation translated from SPheno to C++
  * @author Werner Porod
  * @note translated to C++ and extended to long double precision by Alexander Voigt

@@ -10,9 +10,9 @@
 namespace polylogarithm {
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$
+ * @brief Clausen function \f$\operatorname{Cl}_2(\theta) = \operatorname{Im}(\operatorname{Li}_2(e^{i\theta}))\f$
  * @param x real angle
- * @return \f$\mathrm{Cl}_2(\theta)\f$
+ * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author Alexander Voigt
  * @note Implemented as economized Padé approximation.
  */
@@ -87,9 +87,9 @@ double Cl2(double x) noexcept
 }
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$ with long double precision
+ * @brief Clausen function \f$\operatorname{Cl}_2(\theta) = \operatorname{Im}(\operatorname{Li}_2(e^{i\theta}))\f$ with long double precision
  * @param x real angle
- * @return \f$\mathrm{Cl}_2(\theta)\f$
+ * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author Alexander Voigt
  *
  * Implemented as an economized Padé approximation with a maximum

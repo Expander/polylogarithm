@@ -320,10 +320,10 @@ namespace {
 } // anonymous namespace
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_n(\theta)\f$
+ * @brief Clausen function \f$\operatorname{Cl}_n(\theta)\f$
  * @param n degree of Clausen function
  * @param x real angle
- * @return \f$\mathrm{Cl}_n(\theta)\f$
+ * @return \f$\operatorname{Cl}_n(\theta)\f$
  */
 double Cl(int64_t n, double x)
 {
@@ -337,10 +337,10 @@ double Cl(int64_t n, double x)
 }
 
 /**
- * @brief Complex polylogarithm \f$\mathrm{Li}_n(z)\f$
+ * @brief Complex polylogarithm \f$\operatorname{Li}_n(z)\f$
  * @param n degree of the polylogarithm
  * @param z complex argument
- * @return \f$\mathrm{Li}_n(z)\f$
+ * @return \f$\operatorname{Li}_n(z)\f$
  */
 std::complex<double> Li(int64_t n, const std::complex<double>& z)
 {

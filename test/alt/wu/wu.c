@@ -1,9 +1,9 @@
 #include <math.h>
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_2(\theta)\f$
+ * @brief Clausen function \f$\operatorname{Cl}_2(\theta)\f$
  * @param x real angle
- * @return \f$\mathrm{Cl}_2(\theta)\f$
+ * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author Alexander Voigt
  *
  * Implementation as series expansion from Jiming Wu, Xiaoping Zhang,
@@ -77,9 +77,9 @@ double clausen_2_wu(double x)
 }
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_3(\theta)\f$
+ * @brief Clausen function \f$\operatorname{Cl}_3(\theta)\f$
  * @param x real angle
- * @return \f$\mathrm{Cl}_3(\theta)\f$
+ * @return \f$\operatorname{Cl}_3(\theta)\f$
  * @author Alexander Voigt
  *
  * Implementation as series expansion from Jiming Wu, Xiaoping Zhang,

@@ -10,9 +10,9 @@
 #include "fast_clog.h"
 
 /**
- * @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$
+ * @brief Complex trilogarithm \f$\operatorname{Li}_3(z)\f$
  * @param z complex argument
- * @return \f$\mathrm{Li}_3(z)\f$
+ * @return \f$\operatorname{Li}_3(z)\f$
  * @author Alexander Voigt
  */
 double _Complex cli3(double _Complex z)
@@ -104,9 +104,9 @@ double _Complex cli3(double _Complex z)
 
 
 /**
- * @brief Complex trilogarithm \f$\mathrm{Li}_3(z)\f$
+ * @brief Complex trilogarithm \f$\operatorname{Li}_3(z)\f$
  * @param z complex argument
- * @return \f$\mathrm{Li}_3(z)\f$
+ * @return \f$\operatorname{Li}_3(z)\f$
  * @author Alexander Voigt
  */
 long double _Complex cli3l(long double _Complex z)

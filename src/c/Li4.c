@@ -11,9 +11,9 @@
 
 
 /**
- * @brief Complex polylogarithm \f$\mathrm{Li}_4(z)\f$
+ * @brief Complex polylogarithm \f$\operatorname{Li}_4(z)\f$
  * @param z complex argument
- * @return \f$\mathrm{Li}_4(z)\f$
+ * @return \f$\operatorname{Li}_4(z)\f$
  * @author Alexander Voigt
  */
 double _Complex cli4(double _Complex z)
@@ -111,9 +111,9 @@ double _Complex cli4(double _Complex z)
 
 
 /**
- * @brief Complex polylogarithm \f$\mathrm{Li}_4(z)\f$ with long double precision
+ * @brief Complex polylogarithm \f$\operatorname{Li}_4(z)\f$ with long double precision
  * @param z complex argument
- * @return \f$\mathrm{Li}_4(z)\f$
+ * @return \f$\operatorname{Li}_4(z)\f$
  * @author Alexander Voigt
  */
 long double _Complex cli4l(long double _Complex z)

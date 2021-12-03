@@ -7,9 +7,9 @@ static double sign(double a, double b) {
 
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_2(x)\f$
+ * @brief Clausen function \f$\operatorname{Cl}_2(x)\f$
  * @param x real argument
- * @return \f$\mathrm{Cl}_2(x)\f$
+ * @return \f$\operatorname{Cl}_2(x)\f$
  * @author K.S. Kölbig
  * @note Implementation translated by Alexander Voigt from CERNLIB DCLAUS function C326
  *
@@ -95,9 +95,9 @@ double clausen_2_koelbig(double X)
 
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$ with long double precision
+ * @brief Clausen function \f$\operatorname{Cl}_2(\theta) = \operatorname{Im}(\operatorname{Li}_2(e^{i\theta}))\f$ with long double precision
  * @param x real angle
- * @return \f$\mathrm{Cl}_2(\theta)\f$
+ * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author K.S. Kölbig
  * @note Implementation translated from CERNLIB DCLAUS function C326
  * and extended to long double precision by Alexander Voigt.
@@ -215,9 +215,9 @@ long double clausen_2l_koelbig(long double x)
 
 
 /**
- * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
+ * @brief Real dilogarithm \f$\operatorname{Li}_2(x)\f$
  * @param x real argument
- * @return \f$\mathrm{Li}_2(x)\f$
+ * @return \f$\operatorname{Li}_2(x)\f$
  * @author K.S. Kölbig
  * @note Implementation translated by R.Brun from CERNLIB DILOG function C332
  *
@@ -296,9 +296,9 @@ double koelbig_dilog(double x)
 
 
 /**
- * @brief Real dilogarithm \f$\mathrm{Li}_2(z)\f$ with long double precision
+ * @brief Real dilogarithm \f$\operatorname{Li}_2(z)\f$ with long double precision
  * @param x real argument
- * @return \f$\mathrm{Li}_2(z)\f$
+ * @return \f$\operatorname{Li}_2(z)\f$
  * @author K.S. Kölbig
  * @note Implementation based on translation by R.Brun from CERNLIB
  *    DILOG function C332, extended by Alexander Voigt to quadruple

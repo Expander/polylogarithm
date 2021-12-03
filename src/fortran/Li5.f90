@@ -6,9 +6,9 @@
 
 
 !*********************************************************************
-!> @brief Complex polylogarithm \f$\mathrm{Li}_5(z)\f$
+!> @brief Complex polylogarithm \f$\operatorname{Li}_5(z)\f$
 !> @param z complex argument
-!> @return \f$\mathrm{Li}_5(z)\f$
+!> @return \f$\operatorname{Li}_5(z)\f$
 !> @author Alexander Voigt
 !*********************************************************************
 double complex function cdli5(z)

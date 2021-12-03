@@ -11,9 +11,9 @@
 
 
 /**
- * @brief Complex polylogarithm \f$\mathrm{Li}_6(z)\f$
+ * @brief Complex polylogarithm \f$\operatorname{Li}_6(z)\f$
  * @param z complex argument
- * @return \f$\mathrm{Li}_6(z)\f$
+ * @return \f$\operatorname{Li}_6(z)\f$
  * @author Alexander Voigt
  */
 double _Complex cli6(double _Complex z)
@@ -113,9 +113,9 @@ double _Complex cli6(double _Complex z)
 
 
 /**
- * @brief Complex polylogarithm \f$\mathrm{Li}_6(z)\f$ with long double precision
+ * @brief Complex polylogarithm \f$\operatorname{Li}_6(z)\f$ with long double precision
  * @param z complex argument
- * @return \f$\mathrm{Li}_6(z)\f$
+ * @return \f$\operatorname{Li}_6(z)\f$
  * @author Alexander Voigt
  */
 long double _Complex cli6l(long double _Complex z)

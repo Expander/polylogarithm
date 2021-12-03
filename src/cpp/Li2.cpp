@@ -45,9 +45,9 @@ namespace {
 } // anonymous namespace
 
 /**
- * @brief Real dilogarithm \f$\mathrm{Li}_2(x)\f$
+ * @brief Real dilogarithm \f$\operatorname{Li}_2(x)\f$
  * @param x real argument
- * @return \f$\mathrm{Li}_2(x)\f$
+ * @return \f$\operatorname{Li}_2(x)\f$
  * @author Alexander Voigt
  *
  * Implemented as an economized Pade approximation with a
@@ -129,9 +129,9 @@ double Li2(double x) noexcept
 }
 
 /**
- * @brief Real dilogarithm \f$\mathrm{Li}_2(z)\f$ with long double precision
+ * @brief Real dilogarithm \f$\operatorname{Li}_2(z)\f$ with long double precision
  * @param x real argument
- * @return \f$\mathrm{Li}_2(z)\f$
+ * @return \f$\operatorname{Li}_2(z)\f$
  * @author Alexander Voigt
  *
  * Implemented as an economized Pade approximation with a maximum
@@ -254,9 +254,9 @@ long double Li2(long double x) noexcept
 }
 
 /**
- * @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$
+ * @brief Complex dilogarithm \f$\operatorname{Li}_2(z)\f$
  * @param z_ complex argument
- * @return \f$\mathrm{Li}_2(z)\f$
+ * @return \f$\operatorname{Li}_2(z)\f$
  * @note Implementation translated from SPheno to C++
  * @author Werner Porod
  * @note translated to C++ by Alexander Voigt
@@ -330,9 +330,9 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
 }
 
 /**
- * @brief Complex dilogarithm \f$\mathrm{Li}_2(z)\f$ with long double precision
+ * @brief Complex dilogarithm \f$\operatorname{Li}_2(z)\f$ with long double precision
  * @param z_ complex argument
- * @return \f$\mathrm{Li}_2(z)\f$
+ * @return \f$\operatorname{Li}_2(z)\f$
  * @note Implementation translated from SPheno to C++
  * @author Werner Porod
  * @note translated to C++ and extended to long double precision by Alexander Voigt

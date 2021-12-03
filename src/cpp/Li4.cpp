@@ -34,9 +34,9 @@ namespace {
 } // anonymous namespace
 
 /**
- * @brief Complex polylogarithm \f$\mathrm{Li}_4(z)\f$
+ * @brief Complex polylogarithm \f$\operatorname{Li}_4(z)\f$
  * @param z_ complex argument
- * @return \f$\mathrm{Li}_4(z)\f$
+ * @return \f$\operatorname{Li}_4(z)\f$
  * @author Alexander Voigt
  */
 std::complex<double> Li4(const std::complex<double>& z_) noexcept
@@ -124,9 +124,9 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
 }
 
 /**
- * @brief Complex polylogarithm \f$\mathrm{Li}_4(z)\f$ with long double precision
+ * @brief Complex polylogarithm \f$\operatorname{Li}_4(z)\f$ with long double precision
  * @param z_ complex argument
- * @return \f$\mathrm{Li}_4(z)\f$
+ * @return \f$\operatorname{Li}_4(z)\f$
  * @author Alexander Voigt
  */
 std::complex<long double> Li4(const std::complex<long double>& z_) noexcept

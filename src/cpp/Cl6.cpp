@@ -11,9 +11,9 @@
 namespace polylogarithm {
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_6(\theta) = \mathrm{Im}(\mathrm{Li}_6(e^{i\theta}))\f$
+ * @brief Clausen function \f$\operatorname{Cl}_6(\theta) = \operatorname{Im}(\operatorname{Li}_6(e^{i\theta}))\f$
  * @param x real angle
- * @return \f$\mathrm{Cl}_6(\theta)\f$
+ * @return \f$\operatorname{Cl}_6(\theta)\f$
  */
 double Cl6(double x) noexcept
 {
@@ -21,9 +21,9 @@ double Cl6(double x) noexcept
 }
 
 /**
- * @brief Clausen function \f$\mathrm{Cl}_6(\theta) = \mathrm{Im}(\mathrm{Li}_6(e^{i\theta}))\f$ with long double precision
+ * @brief Clausen function \f$\operatorname{Cl}_6(\theta) = \operatorname{Im}(\operatorname{Li}_6(e^{i\theta}))\f$ with long double precision
  * @param x real angle
- * @return \f$\mathrm{Cl}_6(\theta)\f$
+ * @return \f$\operatorname{Cl}_6(\theta)\f$
  */
 long double Cl6(long double x) noexcept
 {

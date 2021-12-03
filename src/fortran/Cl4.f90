@@ -5,9 +5,9 @@
 !*********************************************************************
 
 !*********************************************************************
-!> @brief Clausen function \f$\mathrm{Cl}_4(\theta) = \mathrm{Im}(\mathrm{Li}_4(e^{i\theta}))\f$
+!> @brief Clausen function \f$\operatorname{Cl}_4(\theta) = \operatorname{Im}(\operatorname{Li}_4(e^{i\theta}))\f$
 !> @param x real angle
-!> @return \f$\mathrm{Cl}_4(\theta)\f$
+!> @return \f$\operatorname{Cl}_4(\theta)\f$
 !> @author Alexander Voigt
 !> Implemented as economized Padé approximation.
 !*********************************************************************

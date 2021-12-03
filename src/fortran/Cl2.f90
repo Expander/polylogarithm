@@ -5,9 +5,9 @@
 !*********************************************************************
 
 !*********************************************************************
-!> @brief Clausen function \f$\mathrm{Cl}_2(\theta) = \mathrm{Im}(\mathrm{Li}_2(e^{i\theta}))\f$
+!> @brief Clausen function \f$\operatorname{Cl}_2(\theta) = \operatorname{Im}(\operatorname{Li}_2(e^{i\theta}))\f$
 !> @param x real angle
-!> @return \f$\mathrm{Cl}_2(\theta)\f$
+!> @return \f$\operatorname{Cl}_2(\theta)\f$
 !> @author Alexander Voigt
 !> Implemented as economized Padé approximation.
 !*********************************************************************
