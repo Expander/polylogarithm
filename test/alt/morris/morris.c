@@ -42,26 +42,23 @@ double morris_dilog(double x)
       +0.10000000000000000000000e1,
    };
 
-   if (x == 0)
-      return 0;
-   if (x == 1)
-      return PI*PI/6;
-   if (x == -1)
-      return -PI*PI/12;
-
    double y = 0, r = 0, s = 1;
 
-   /* transform to [0, 1/2) */
+   /* transform to [0, 1/2] */
    if (x < -1) {
       const double l = log(1 - x);
       y = 1/(1 - x);
       r = -PI*PI/6 + l*(0.5*l - log(-x));
       s = 1;
+   } else if (x == -1) {
+      return -PI*PI/12;
    } else if (x < 0) {
       const double l = log1p(-x);
       y = x/(x - 1);
       r = -0.5*l*l;
       s = -1;
+   } else if (x == 0) {
+      return 0;
    } else if (x < 0.5) {
       y = x;
       r = 0;
@@ -70,6 +67,8 @@ double morris_dilog(double x)
       y = 1 - x;
       r = PI*PI/6 - log(x)*log(1 - x);
       s = -1;
+   } else if (x == 1) {
+      return PI*PI/6;
    } else if (x < 2) {
       const double l = log(x);
       y = 1 - 1/x;
