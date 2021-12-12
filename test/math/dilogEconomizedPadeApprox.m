@@ -26,22 +26,19 @@ PolynomialStandardForm[expr_, x_] :=
            Expand[n/c] / Expand[d/c]
     ];
 
-approx = EconomizedRationalApproximation[Li2x[x], {x, interval, 7, 7}] /. (-half + x) -> y;
+approx = MiniMaxApproximation[Li2x[x], {x, interval, 5, 6}, WorkingPrecision -> 100];
 
-approx = PolynomialStandardForm[approx, y];
+maxErr = Max @ Cases[Abs[Li2x[#] - approx[[2,1]] /. x -> #]& /@ approx[[1]], Except[Indeterminate]];
+
+Print["max error: ", InputForm @ maxErr];
+
+approx = PolynomialStandardForm[approx[[2,1]], x];
 
 FormatCoeffs[expr_, x_, prec_] :=
     N[#, prec]& /@ CoefficientList[expr, x]
 
 Print["Numerator coefficients: ",
-      FormatCoeffs[#,y,outPrec]& @ Numerator[approx]];
+      FormatCoeffs[#,x,outPrec]& @ Numerator[approx]];
 
 Print["Denominator coefficients: ",
-      FormatCoeffs[#,y,outPrec]& @ Denominator[approx]];
-
-(* calculate maximum error *)
-diff = (approx - Li2x[x]) /. y -> x - half;
-
-maxErr = Max @ Abs @ Table[N[diff, outPrec] /. x -> 1/2*n/10, {n, 0, 10}];
-
-Print["max error: ", InputForm @ maxErr];
+      FormatCoeffs[#,x,outPrec]& @ Denominator[approx]];
