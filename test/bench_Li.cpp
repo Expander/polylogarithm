@@ -240,8 +240,8 @@ int main() {
    using polylogarithm::bench::generate_random_complexes;
 
    const std::size_t N = 1000000;
-   const auto min = -5.0;
-   const auto max = 5.0;
+   const auto min = 0.0;
+   const auto max = 0.5;
 
    const auto values_d  = generate_random_scalars<double>(N, min, max);
    const auto values_l  = generate_random_scalars<long double>(N, min, max);
