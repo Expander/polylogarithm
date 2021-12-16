@@ -13,6 +13,10 @@
 #include <random>
 #include <vector>
 
+#ifndef M_PI
+#define M_PI 3.1415926535897932
+#endif
+
 #ifdef ENABLE_GSL
 
 #include <gsl/gsl_sf_dilog.h>
