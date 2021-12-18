@@ -28,9 +28,9 @@ PolynomialStandardForm[expr_, x_] :=
 
 approx = MiniMaxApproximation[Li2x[x], {x, interval, 5, 6}, WorkingPrecision -> 100];
 
-maxErr = Max @ Cases[Abs[Li2x[#] - approx[[2,1]] /. x -> #]& /@ approx[[1]], Except[Indeterminate]];
+maxErr = approx[[2,2]]
 
-Print["max error: ", InputForm @ maxErr];
+Print["max rel. error: ", InputForm @ maxErr];
 
 approx = PolynomialStandardForm[approx[[2,1]], x];
 
