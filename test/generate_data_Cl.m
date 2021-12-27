@@ -22,11 +22,11 @@ ExportData[f_, prec_] :=
            Print["Generating data for " <> ToString[f]];
            data = Join[
                GenerateGridData[f, prec, {0, 2 Pi, 1/100}],
-               GenerateLimitData[f, prec, prec/4, 1/10, 0,    +1],
-               GenerateLimitData[f, prec, prec, 1/10, Pi/2    ],
-               GenerateLimitData[f, prec, prec, 1/10, Pi      ],
-               GenerateLimitData[f, prec, prec, 1/10, 3Pi/2   ],
-               GenerateLimitData[f, prec, prec/4, 1/10, 2Pi,  -1]
+               GenerateLimitData[f, prec, prec  , 1/10, 0,    +1],
+               GenerateLimitData[f, prec, prec  , 1/10, Pi/2    ],
+               GenerateLimitData[f, prec, prec  , 1/10, Pi      ],
+               GenerateLimitData[f, prec, prec  , 1/10, 3Pi/2   ],
+               GenerateLimitData[f, prec, prec-3, 1/10, 2Pi,  -1]
            ];
            filename = ToString[f] <> ".txt";
            Print["Writing data to ", filename];
@@ -37,8 +37,8 @@ ExportData[f_, prec_] :=
 Cl2[x_] := ResourceFunction["ClausenCl"][2, x]
 Cl3[x_] := ResourceFunction["ClausenCl"][3, x]
 Cl4[x_] := ResourceFunction["ClausenCl"][4, x]
-Cl5[x_] := ResourceFunction["ClausenCl"][5, x]
-Cl6[x_] := ResourceFunction["ClausenCl"][6, x]
+Cl5[x_] := ResourceFunction["ClausenCl"][5, N[x,40]]
+Cl6[x_] := ResourceFunction["ClausenCl"][6, N[x,40]]
 
 ExportData[Cl2, 40];
 ExportData[Cl3, 40];
