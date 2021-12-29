@@ -76,9 +76,9 @@ CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
 (* Cl3[x] *)
 
 (* interval = {0, Pi/2}; *)
-fLo[x_] := (Cl[3, x, 100] - Zeta[3])/x^2 - Log[x]/2
+fLo[x_] := Module[{y}, Normal[Series[Expand[(Cl[3, y, nMax] - Zeta[3])/y^2 - Log[y]/2], {y,0,nMax}]] /. y -> x]
 
-CalcPade[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, 3];
+CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl[3, x, 100]
