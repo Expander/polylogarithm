@@ -1,5 +1,5 @@
 (*
-  Approximations of Cl2[2,x] by economized Pade approximations
+  Approximations of Cl2[2,x] by rational function approximations
   on the intervals [0, Pi/2) and [Pi/2, Pi).
  *)
 
@@ -40,13 +40,27 @@ CalcPade[fn_, interval_, nTerms_] :=
            range = Range[interval[[1]] + 10^(-outPrec), interval[[2]], (interval[[2]] - interval[[1]])/100];
            maxErr = Max @ Abs @ N[diff /. x -> #, outPrec]& @ range;
            Print["max error: ", InputForm @ maxErr];
+    ]
+
+CalcMinimax[fn_, interval_, nTerms_] :=
+    Module[{approx, maxErr},
+           approx = MiniMaxApproximation[fn[x], {x, interval, nTerms, nTerms}, WorkingPrecision -> 1000];
+           maxErr = approx[[2,2]];
+           approx = PolynomialStandardForm[approx[[2,1]], x];
+           Print["Approximant for ", InputForm[fn], " on the interval ", InputForm[interval]];
+           Print["Numerator coefficients: ",
+                 FormatCoeffs[#,x,outPrec]& @ Numerator[approx]];
+           Print["Denominator coefficients: ",
+                 FormatCoeffs[#,x,outPrec]& @ Denominator[approx]];
+           (* calculate maximum deviation *)
+           Print["max error: ", InputForm @ N[maxErr,6]];
            approx
     ]
 
 (* interval = {0, Pi/2}; *)
-fLo[x_] := 1/x^2 (Cl2Lo[x, nMax]/x - 1 + Log[x])
+fLo[x_] := Module[{y}, Expand[1/y^2 (Cl2Lo[y, nMax]/y - 1 + Log[y])] /. y -> x]
 
-CalcPade[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, 3];
+CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, 3];
 
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl2Hi[x, nMax]/(Pi - x)
