@@ -19,15 +19,15 @@ double precision function dcl3(x)
   double precision, parameter :: PI2 = 2*PI, PIH = PI/2, PI28 = PI*PI/8
   double precision, parameter :: zeta3 = 1.2020569031595943D0
   double precision, parameter :: cp(4) = (/ &
-     -7.5430148591242361D-1,                &
-      1.6121940167854339D-2,                &
-     -3.7484056212140535D-5,                &
-     -2.5191292110169198D-7                 /)
+     -7.5000000000000001D-1,                &
+      1.5707637881835541D-2,                &
+     -3.5426736843494423D-5,                &
+     -2.4408931585123682D-7                 /)
   double precision, parameter :: cq(4) = (/ &
       1.0000000000000000D+0,                &
-     -2.6015033560727570D-2,                &
-      1.5460630299236049D-4,                &
-     -1.0987530650923219D-7                 /)
+     -2.5573146805410089D-2,                &
+      1.5019774853075050D-4,                &
+     -1.0648552418111624D-7                 /)
   double precision, parameter :: cr(6) = (/ &
      -4.9017024647634973D-1,                &
       4.1559155224660940D-1,                &
@@ -64,10 +64,9 @@ double precision function dcl3(x)
 
   if (x .lt. PIH) then
     y = x*x
-    z = y - PI28
-    z2 = z*z
-    p = cp(1) + z * cp(2) + z2 * (cp(3) + z * cp(4))
-    q = cq(1) + z * cq(2) + z2 * (cq(3) + z * cq(4))
+    z = y*y
+    p = cp(1) + y * cp(2) + z * (cp(3) + y * cp(4))
+    q = cq(1) + y * cq(2) + z * (cq(3) + y * cq(4))
     h = zeta3 + y*(p/q + log(x)/2)
   else
     y = PI - x
