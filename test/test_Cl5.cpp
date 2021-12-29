@@ -2,6 +2,7 @@
 
 #include "doctest.h"
 #include "Cl5.hpp"
+#include "Li5.hpp"
 #include "read_data.hpp"
 #include <cmath>
 #include <complex>
@@ -13,6 +14,16 @@
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
+
+double Cl5_via_Li5(double x) noexcept
+{
+   return std::real(polylogarithm::Li5(std::polar(1.0, x)));
+}
+
+long double Cl5_via_Li5(long double x) noexcept
+{
+   return std::real(polylogarithm::Li5(std::polar(1.0L, x)));
+}
 
 std::vector<double> float_range(
    double start, double stop, std::size_t number_of_steps)
@@ -66,18 +77,24 @@ TEST_CASE("test_real_fixed_values")
       const auto cl128_expected = v.second;
       const auto cl64_expected = static_cast<double>(cl128_expected);
 
+      const auto cl64_li      = Cl5_via_Li5(x64);
       const auto cl64_poly    = polylogarithm::Cl5(x64);
+      const auto cl128_li     = Cl5_via_Li5(x128);
       const auto cl128_poly   = polylogarithm::Cl5(x128);
 
       INFO("x(64)         = " << x64);
       INFO("Cl5(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl5(64)  real = " << cl64_poly      << " (polylogarithm C++)");
+      INFO("Cl5(64)  real = " << cl64_li        << " (via Li5 C++)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
       INFO("Cl5(128) real = " << cl128_expected << " (expected)");
       INFO("Cl5(128) real = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl5(128) real = " << cl128_li       << " (via Li5 C++)");
 
+      CHECK_CLOSE(cl64_li     , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64 );
+      CHECK_CLOSE(cl128_li    , cl128_expected, 4*eps128);
       CHECK_CLOSE(cl128_poly  , cl128_expected, 4*eps128);
    }
 }
