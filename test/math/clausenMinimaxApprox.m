@@ -42,9 +42,9 @@ CalcPade[fn_, interval_, nTerms_] :=
            Print["max error: ", InputForm @ maxErr];
     ]
 
-CalcMinimax[fn_, interval_, nTerms_] :=
+CalcMinimax[fn_, interval_, {numTerms_, denTerms_}] :=
     Module[{approx, maxErr},
-           approx = MiniMaxApproximation[fn[x], {x, interval, nTerms, nTerms}, WorkingPrecision -> 1000];
+           approx = MiniMaxApproximation[fn[x], {x, interval, numTerms, denTerms}, WorkingPrecision -> 1000];
            maxErr = approx[[2,2]];
            approx = PolynomialStandardForm[approx[[2,1]], x];
            Print["Approximant for ", InputForm[fn], " on the interval ", InputForm[interval]];
@@ -60,7 +60,7 @@ CalcMinimax[fn_, interval_, nTerms_] :=
 (* interval = {0, Pi/2}; *)
 fLo[x_] := Module[{y}, Expand[1/y^2 (Cl2Lo[y, nMax]/y - 1 + Log[y])] /. y -> x]
 
-CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, 3];
+CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3, 3}];
 
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl2Hi[x, nMax]/(Pi - x)
