@@ -72,14 +72,14 @@ double li2(double x)
       s = 1;
    } else if (x < 1) {
       y = 1 - x;
-      r = PI*PI/6 - log(x)*log(1 - x);
+      r = PI*PI/6 - log(x)*log(y);
       s = -1;
    } else if (x == 1) {
       return PI*PI/6;
    } else if (x < 2) {
       const double l = log(x);
       y = 1 - 1/x;
-      r = PI*PI/6 - l*(log(1 - 1/x) + 0.5*l);
+      r = PI*PI/6 - l*(log(y) + 0.5*l);
       s = 1;
    } else {
       const double l = log(x);
@@ -200,14 +200,14 @@ long double li2l(long double x)
       s = 1;
    } else if (x < 1) {
       y = 1 - x;
-      r = PI*PI/6 - logl(x)*logl(1 - x);
+      r = PI*PI/6 - logl(x)*logl(y);
       s = -1;
    } else if (x == 1) {
       return PI*PI/6;
    } else if (x < 2) {
       const long double l = logl(x);
       y = 1 - 1/x;
-      r = PI*PI/6 - l*(logl(1 - 1/x) + 0.5L*l);
+      r = PI*PI/6 - l*(logl(y) + 0.5L*l);
       s = 1;
    } else {
       const long double l = logl(x);
