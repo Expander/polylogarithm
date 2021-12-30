@@ -81,18 +81,18 @@ fLo[x_] := Module[{y}, Normal[Series[Expand[(Cl[3, y, nMax] - Zeta[3])/y^2 - Log
 CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 
 (* interval = {Pi/2, Pi}; *)
-fHi[x_] := Cl[3, x, 100]
+fHi[x_] := Cl[3, x, nMax]
 
 CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
 
 (* Cl4[x] *)
 
 (* interval = {0, Pi/2}; *)
-fLo[x_] := Module[{y}, Normal[Series[Expand[(Cl[4, y, 100]/y - Zeta[3])/y^2 - Log[y]/6], {y,0,nMax}]] /. y -> x]
+fLo[x_] := Module[{y}, Normal[Series[Expand[(Cl[4, y, nMax]/y - Zeta[3])/y^2 - Log[y]/6], {y,0,nMax}]] /. y -> x]
 
 CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 
 (* interval = {Pi/2, Pi}; *)
-fHi[x_] := Cl[4, x, 100]/(Pi - x)
+fHi[x_] := Cl[4, x, nMax]/(Pi - x)
 
 CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
