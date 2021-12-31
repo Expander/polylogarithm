@@ -131,4 +131,4 @@ CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl[6, x, nMax]/(Pi - x)
 
-CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, {5,5}];
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, {4,5}];
