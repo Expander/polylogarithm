@@ -57,6 +57,10 @@ CalcMinimax[fn_, interval_, {numTerms_, denTerms_}] :=
            approx
     ]
 
+Print["======================================================="];
+Print[" Cl2 "];
+Print["======================================================="];
+
 (* interval = {0, Pi/2}; *)
 fLo[x_] := Module[{y}, Expand[1/y^2 (Cl2Lo[y, nMax]/y - 1 + Log[y])] /. y -> x]
 
@@ -73,7 +77,9 @@ itrans[x_] := (Pi - x)^2
 
 CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
 
-(* Cl3[x] *)
+Print["======================================================="];
+Print[" Cl3 "];
+Print["======================================================="];
 
 (* interval = {0, Pi/2}; *)
 fLo[x_] := Module[{y}, Normal[Series[Expand[(Cl[3, y, nMax] - Zeta[3])/y^2 - Log[y]/2], {y,0,nMax}]] /. y -> x]
@@ -85,7 +91,9 @@ fHi[x_] := Cl[3, x, nMax]
 
 CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
 
-(* Cl4[x] *)
+Print["======================================================="];
+Print[" Cl4 "];
+Print["======================================================="];
 
 (* interval = {0, Pi/2}; *)
 fLo[x_] := Module[{y}, Normal[Series[Expand[(Cl[4, y, nMax]/y - Zeta[3])/y^2 - Log[y]/6], {y,0,nMax}]] /. y -> x]
@@ -94,5 +102,19 @@ CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl[4, x, nMax]/(Pi - x)
+
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+
+Print["======================================================="];
+Print[" Cl5 "];
+Print["======================================================="];
+
+(* interval = {0, Pi/2}; *)
+fLo[x_] := Module[{y}, Normal[Series[Expand[((Cl[5, y, nMax] - Zeta[5])/y^2 + Zeta[3]/2)/y^2 + Log[y]/24], {y,0,nMax}]] /. y -> x]
+
+CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
+
+(* interval = {Pi/2, Pi}; *)
+fHi[x_] := Cl[5, x, nMax]
 
 CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
