@@ -110,7 +110,7 @@ Print[" Cl5 "];
 Print["======================================================="];
 
 (* interval = {0, Pi/2}; *)
-fLo[x_] := Module[{y}, Normal[Series[Expand[Cl[5, y, nMax] + 12 y^4 Log[y]/288], {y,0,nMax}]] /. y -> x]
+fLo[x_] := Module[{y}, Normal[Series[Expand[Cl[5, y, nMax] + y^4 Log[y]/24], {y,0,nMax}]] /. y -> x]
 
 CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,4}];
 
