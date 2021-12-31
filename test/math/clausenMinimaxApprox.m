@@ -110,9 +110,9 @@ Print[" Cl5 "];
 Print["======================================================="];
 
 (* interval = {0, Pi/2}; *)
-fLo[x_] := Module[{y}, Normal[Series[Expand[((Cl[5, y, nMax] - Zeta[5])/y^2 + Zeta[3]/2)/y^2 + Log[y]/24], {y,0,nMax}]] /. y -> x]
+fLo[x_] := Module[{y}, Normal[Series[Expand[Cl[5, y, nMax] + 12 y^4 Log[y]/288], {y,0,nMax}]] /. y -> x]
 
-CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
+CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,4}];
 
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl[5, x, nMax]
@@ -124,7 +124,7 @@ Print[" Cl6 "];
 Print["======================================================="];
 
 (* interval = {0, Pi/2}; *)
-fLo[x_] := Module[{y}, Normal[Series[Expand[((Cl[6, y, nMax]/y - Zeta[5])/y^2 + Zeta[3]/6)/y^2 + Log[y]/120], {y,0,nMax}]] /. y -> x]
+fLo[x_] := Module[{y}, Normal[Series[Expand[Cl[6, y, nMax]/y + y^4 Log[y]/120], {y,0,nMax}]] /. y -> x]
 
 CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 
