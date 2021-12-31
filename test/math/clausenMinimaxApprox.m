@@ -118,3 +118,17 @@ CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 fHi[x_] := Cl[5, x, nMax]
 
 CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+
+Print["======================================================="];
+Print[" Cl6 "];
+Print["======================================================="];
+
+(* interval = {0, Pi/2}; *)
+fLo[x_] := Module[{y}, Normal[Series[Expand[((Cl[6, y, nMax]/y - Zeta[5])/y^2 + Zeta[3]/6)/y^2 + Log[y]/120], {y,0,nMax}]] /. y -> x]
+
+CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
+
+(* interval = {Pi/2, Pi}; *)
+fHi[x_] := Cl[6, x, nMax]/(Pi - x)
+
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
