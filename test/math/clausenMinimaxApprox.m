@@ -24,10 +24,10 @@ PolynomialStandardForm[expr_, x_] :=
 FormatCoeffs[expr_, x_, prec_] :=
     ScientificForm @ CForm @ N[#, prec]& /@ CoefficientList[expr, x]
 
-CalcPade[fn_, interval_, nTerms_] :=
+CalcPade[fn_, interval_, {numTerms_, denTerms_}] :=
     Module[{half = interval[[1]] + (interval[[2]] - interval[[1]])/2,
             approx, diff, maxErr, y, range},
-           approx = EconomizedRationalApproximation[fn[x], {x, interval, nTerms, nTerms}] /. x -> (y + half);
+           approx = EconomizedRationalApproximation[fn[x], {x, interval, numTerms, denTerms}] /. x -> (y + half);
            approx = PolynomialStandardForm[approx, y];
            Print["Pade approximant for ", InputForm[fn], " on the interval ", InputForm[interval]];
            Print["Numerator coefficients: ",
@@ -75,7 +75,7 @@ trans[x_] := Sqrt[x] + Pi
 (* inverse transformation *)
 itrans[x_] := (Pi - x)^2
 
-CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, {5,5}];
 
 Print["======================================================="];
 Print[" Cl3 "];
@@ -89,7 +89,7 @@ CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl[3, x, nMax]
 
-CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, {5,5}];
 
 Print["======================================================="];
 Print[" Cl4 "];
@@ -103,7 +103,7 @@ CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl[4, x, nMax]/(Pi - x)
 
-CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, {5,5}];
 
 Print["======================================================="];
 Print[" Cl5 "];
@@ -117,7 +117,7 @@ CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl[5, x, nMax]
 
-CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, {5,5}];
 
 Print["======================================================="];
 Print[" Cl6 "];
@@ -131,4 +131,4 @@ CalcMinimax[N[fLo[Sqrt[#]], 10*outPrec]&, {0, (Pi/2)^2}, {3,3}];
 (* interval = {Pi/2, Pi}; *)
 fHi[x_] := Cl[6, x, nMax]/(Pi - x)
 
-CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, 5];
+CalcPade[N[fHi[trans[#]], 10*outPrec]&, itrans /@ {Pi/2, Pi}, {5,5}];
