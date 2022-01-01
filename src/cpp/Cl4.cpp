@@ -58,7 +58,7 @@ double Cl4(double x) noexcept
       const double y2 = y*y;
       const double p = P[0] + y * P[1] + y2 * (P[2] + y * P[3]);
       const double q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
-      h = x*(zeta3 + y*(p/q + std::log(x)/6));
+      h = x*(zeta3 + y*(p/q + 1./6*std::log(x)));
    } else {
       const double P[] = {
          7.6223911686491336e-01, -2.4339587368267260e-01,
@@ -153,7 +153,7 @@ long double Cl4(long double x) noexcept
       const long double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
          z4 * (Q[4] + z * Q[5] + z2 * (Q[6] + z * Q[7])) + z8 * Q[8];
 
-      h = x*(zeta3 + y*(p/q + std::log(x)/6));
+      h = x*(zeta3 + y*(p/q + 1.0L/6*std::log(x)));
    } else {
       const long double P[] = {
          7.622391168649133627869594744879702180493e-01L,
