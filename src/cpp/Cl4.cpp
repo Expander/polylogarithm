@@ -58,7 +58,6 @@ double Cl4(double x) noexcept
       const double y2 = y*y;
       const double p = P[0] + y * P[1] + y2 * (P[2] + y * P[3]);
       const double q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
-
       h = x*(zeta3 + y*(p/q + std::log(x)/6));
    } else {
       const double P[] = {
@@ -79,7 +78,6 @@ double Cl4(double x) noexcept
          z4 * (P[4] + z * P[5]);
       const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
          z4 * (Q[4] + z * Q[5]);
-
       h = y*p/q;
    }
 
