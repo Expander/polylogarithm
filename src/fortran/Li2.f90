@@ -57,7 +57,7 @@ double precision function dli2(x)
       s = 1
    elseif (x .lt. 1) then
       y = 1 - x
-      r = PI**2/6 - log(x)*log(1 - x)
+      r = PI**2/6 - log(x)*log(y)
       s = -1
    elseif (x .eq. 1) then
       dli2 = PI**2/6
@@ -65,7 +65,7 @@ double precision function dli2(x)
    elseif (x .lt. 2) then
       l = log(x)
       y = 1 - 1/x
-      r = PI**2/6 - l*(log(1 - 1/x) + 0.5D0*l)
+      r = PI**2/6 - l*(log(y) + 0.5D0*l)
       s = 1
    else
       y = 1/x

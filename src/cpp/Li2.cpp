@@ -97,14 +97,14 @@ double Li2(double x) noexcept
       s = 1;
    } else if (x < 1) {
       y = 1 - x;
-      r = PI*PI/6 - std::log(x)*std::log(1 - x);
+      r = PI*PI/6 - std::log(x)*std::log(y);
       s = -1;
    } else if (x == 1) {
       return PI*PI/6;
    } else if (x < 2) {
       const double l = std::log(x);
       y = 1 - 1/x;
-      r = PI*PI/6 - l*(std::log(1 - 1/x) + 0.5*l);
+      r = PI*PI/6 - l*(std::log(y) + 0.5*l);
       s = 1;
    } else {
       const double l = std::log(x);
