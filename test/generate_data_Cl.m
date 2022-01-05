@@ -39,6 +39,9 @@ Cl3[x_] := ResourceFunction["ClausenCl"][3, x]
 Cl4[x_] := ResourceFunction["ClausenCl"][4, x]
 Cl5[x_] := ResourceFunction["ClausenCl"][5, N[x,40]]
 Cl6[x_] := ResourceFunction["ClausenCl"][6, N[x,40]]
+Cl7[x_] := ResourceFunction["ClausenCl"][7, N[x,40]]
+Cl8[x_] := ResourceFunction["ClausenCl"][8, N[x,40]]
+Cl9[x_] := ResourceFunction["ClausenCl"][9, N[x,40]]
 Cl10[x_] := ResourceFunction["ClausenCl"][10, N[x,40]]
 Cl11[x_] := ResourceFunction["ClausenCl"][11, N[x,40]]
 Cl12[x_] := ResourceFunction["ClausenCl"][12, N[x,40]]
@@ -55,6 +58,9 @@ ExportData[Cl3, 40];
 ExportData[Cl4, 40];
 ExportData[Cl5, 40];
 ExportData[Cl6, 40];
+ExportData[Cl7, 40];
+ExportData[Cl8, 40];
+ExportData[Cl9, 40];
 ExportData[Cl10, 40];
 ExportData[Cl11, 40];
 ExportData[Cl12, 40];
