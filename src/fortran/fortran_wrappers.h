@@ -15,6 +15,12 @@ void cl3_fortran(const double* x, double* res);
 /** Clausen function with n=4, Fortran implementation */
 void cl4_fortran(const double* x, double* res);
 
+/** Clausen function with n=5, Fortran implementation */
+void cl5_fortran(const double* x, double* res);
+
+/** Clausen function with n=6, Fortran implementation */
+void cl6_fortran(const double* x, double* res);
+
 /** real polylogarithm with n=2 (dilogarithm), Fortran implementation */
 void li2_fortran(const double* x, double* res);
 

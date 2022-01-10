@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "c_wrappers.h"
 #include "Cl6.hpp"
+#include "fortran_wrappers.h"
 #include "Li6.hpp"
 #include "read_data.hpp"
 #include <cmath>
@@ -15,6 +16,16 @@
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
+
+#ifdef ENABLE_FORTRAN
+
+double poly_Cl6_fortran(double x) {
+   double res{};
+   cl6_fortran(&x, &res);
+   return res;
+}
+
+#endif
 
 double Cl6_via_Li6(double x) noexcept
 {
@@ -88,6 +99,9 @@ TEST_CASE("test_real_fixed_values")
       const auto cl64_li      = Cl6_via_Li6(x64);
       const auto cl64_poly    = polylogarithm::Cl6(x64);
       const auto cl64_poly_c  = cl6(x64);
+#ifdef ENABLE_FORTRAN
+      const auto cl64_poly_f  = poly_Cl6_fortran(x64);
+#endif
       const auto cl128_li     = Cl6_via_Li6(x128);
       const auto cl128_poly   = polylogarithm::Cl6(x128);
       const auto cl128_poly_c = cl6l(x128);
@@ -96,6 +110,9 @@ TEST_CASE("test_real_fixed_values")
       INFO("Cl6(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl6(64)  real = " << cl64_poly      << " (polylogarithm C++)");
       INFO("Cl6(64)  real = " << cl64_poly_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+      INFO("Cl6(64)  real = " << cl64_poly_f    << " (polylogarithm Fortran)");
+#endif
       INFO("Cl6(64)  real = " << cl64_li        << " (via Li6 C++)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
@@ -107,6 +124,9 @@ TEST_CASE("test_real_fixed_values")
       CHECK_CLOSE(cl64_li     , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly_c , cl64_expected , 2*eps64 );
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE(cl64_poly_f , cl64_expected , 2*eps64 );
+#endif
       CHECK_CLOSE(cl128_li    , cl128_expected, 4*eps128);
       CHECK_CLOSE(cl128_poly  , cl128_expected, 8*eps128);
       CHECK_CLOSE(cl128_poly_c, cl128_expected, 8*eps128);

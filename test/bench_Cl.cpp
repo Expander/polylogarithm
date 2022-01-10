@@ -41,6 +41,18 @@ double poly_Cl4_fortran(double x) {
    return res;
 }
 
+double poly_Cl5_fortran(double x) {
+   double res{};
+   cl5_fortran(&x, &res);
+   return res;
+}
+
+double poly_Cl6_fortran(double x) {
+   double res{};
+   cl6_fortran(&x, &res);
+   return res;
+}
+
 #endif
 
 double Cl2_via_Li2(double x) noexcept
@@ -248,6 +260,11 @@ void bench(const T& values_d, const U& values_l)
    bench_fn([&](double x) { return cl5(x); }, values_d,
             "polylogarithm C", "double");
 
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](double x) { return poly_Cl5_fortran(x); }, values_d,
+            "polylogarithm Fortran", "double");
+#endif
+
    bench_fn([&](double x) { return Cl5_via_Li5(x); }, values_d,
             "via Li5 C++", "double");
 
@@ -267,6 +284,11 @@ void bench(const T& values_d, const U& values_l)
 
    bench_fn([&](double x) { return cl6(x); }, values_d,
             "polylogarithm C", "double");
+
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](double x) { return poly_Cl6_fortran(x); }, values_d,
+            "polylogarithm Fortran", "double");
+#endif
 
    bench_fn([&](double x) { return Cl6_via_Li6(x); }, values_d,
             "via Li6 C++", "double");
