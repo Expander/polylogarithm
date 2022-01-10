@@ -245,11 +245,17 @@ void bench(const T& values_d, const U& values_l)
    bench_fn([&](double x) { return polylogarithm::Cl5(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return cl5(x); }, values_d,
+            "polylogarithm C", "double");
+
    bench_fn([&](double x) { return Cl5_via_Li5(x); }, values_d,
             "via Li5 C++", "double");
 
    bench_fn([&](long double x) { return polylogarithm::Cl5(x); }, values_l,
             "polylogarithm C++", "long double");
+
+   bench_fn([&](long double x) { return cl5l(x); }, values_l,
+            "polylogarithm C", "long double");
 
    bench_fn([&](long double x) { return Cl5_via_Li5(x); }, values_l,
             "via Li5 C++", "long double");
@@ -259,11 +265,17 @@ void bench(const T& values_d, const U& values_l)
    bench_fn([&](double x) { return polylogarithm::Cl6(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return cl6(x); }, values_d,
+            "polylogarithm C", "double");
+
    bench_fn([&](double x) { return Cl6_via_Li6(x); }, values_d,
             "via Li6 C++", "double");
 
    bench_fn([&](long double x) { return polylogarithm::Cl6(x); }, values_l,
             "polylogarithm C++", "long double");
+
+   bench_fn([&](long double x) { return cl6l(x); }, values_l,
+            "polylogarithm C", "long double");
 
    bench_fn([&](long double x) { return Cl6_via_Li6(x); }, values_l,
             "via Li6 C++", "long double");

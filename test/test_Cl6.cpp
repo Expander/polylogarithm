@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
+#include "c_wrappers.h"
 #include "Cl6.hpp"
 #include "Li6.hpp"
 #include "read_data.hpp"
@@ -86,22 +87,28 @@ TEST_CASE("test_real_fixed_values")
 
       const auto cl64_li      = Cl6_via_Li6(x64);
       const auto cl64_poly    = polylogarithm::Cl6(x64);
+      const auto cl64_poly_c  = cl6(x64);
       const auto cl128_li     = Cl6_via_Li6(x128);
       const auto cl128_poly   = polylogarithm::Cl6(x128);
+      const auto cl128_poly_c = cl6l(x128);
 
       INFO("x(64)         = " << x64);
       INFO("Cl6(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl6(64)  real = " << cl64_poly      << " (polylogarithm C++)");
+      INFO("Cl6(64)  real = " << cl64_poly_c    << " (polylogarithm C)");
       INFO("Cl6(64)  real = " << cl64_li        << " (via Li6 C++)");
       INFO("------------------------------------------------------------");
       INFO("x(128)        = " << x128);
       INFO("Cl6(128) real = " << cl128_expected << " (expected)");
       INFO("Cl6(128) real = " << cl128_poly     << " (polylogarithm C++)");
+      INFO("Cl6(128) real = " << cl128_poly_c   << " (polylogarithm C)");
       INFO("Cl6(128) real = " << cl128_li       << " (via Li6 C++)");
 
       CHECK_CLOSE(cl64_li     , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64 );
+      CHECK_CLOSE(cl64_poly_c , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl128_li    , cl128_expected, 4*eps128);
       CHECK_CLOSE(cl128_poly  , cl128_expected, 8*eps128);
+      CHECK_CLOSE(cl128_poly_c, cl128_expected, 8*eps128);
    }
 }
