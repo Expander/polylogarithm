@@ -11,7 +11,7 @@
  * @param x real angle
  * @return \f$\operatorname{Cl}_4(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 double cl4(double x)
 {
@@ -44,18 +44,17 @@ double cl4(double x)
 
    if (x < PIH) {
       const double P[] = {
-         -3.0641482939025622e-01,  6.1700119337868541e-03,
-         -2.0244370294666391e-05, -3.1997168417491939e-08
+         -3.0555555555555556e-01,  6.0521392328447206e-03,
+         -1.9587493942041528e-05, -3.1137343767030358e-08
       };
       const double Q[] = {
-         1.0000000000000000e+00, -2.2415973860234228e-02,
-         1.1164184654978598e-04, -6.3541742491831717e-08
+         1.0000000000000000e+00, -2.2079728398400851e-02,
+         1.0887447112236682e-04, -6.1847621370547954e-08
       };
       const double y = x*x;
-      const double z = y - PI28;
-      const double z2 = z*z;
-      const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]);
-      const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]);
+      const double y2 = y*y;
+      const double p = P[0] + y * P[1] + y2 * (P[2] + y * P[3]);
+      const double q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
 
       h = x*(zeta3 + y*(p/q + log(x)/6));
    } else {
@@ -89,7 +88,7 @@ double cl4(double x)
  * @param x real angle
  * @return \f$\operatorname{Cl}_4(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 long double cl4l(long double x)
 {

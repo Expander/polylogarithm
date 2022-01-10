@@ -14,7 +14,7 @@ namespace polylogarithm {
  * @param x real angle
  * @return \f$\operatorname{Cl}_4(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 double Cl4(double x) noexcept
 {
@@ -47,20 +47,18 @@ double Cl4(double x) noexcept
 
    if (x < PIH) {
       const double P[] = {
-         -3.0641482939025622e-01,  6.1700119337868541e-03,
-         -2.0244370294666391e-05, -3.1997168417491939e-08
+         -3.0555555555555556e-01,  6.0521392328447206e-03,
+         -1.9587493942041528e-05, -3.1137343767030358e-08
       };
       const double Q[] = {
-         1.0000000000000000e+00, -2.2415973860234228e-02,
-         1.1164184654978598e-04, -6.3541742491831717e-08
+         1.0000000000000000e+00, -2.2079728398400851e-02,
+         1.0887447112236682e-04, -6.1847621370547954e-08
       };
       const double y = x*x;
-      const double z = y - PI28;
-      const double z2 = z*z;
-      const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]);
-      const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]);
-
-      h = x*(zeta3 + y*(p/q + std::log(x)/6));
+      const double y2 = y*y;
+      const double p = P[0] + y * P[1] + y2 * (P[2] + y * P[3]);
+      const double q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
+      h = x*(zeta3 + y*(p/q + 1./6*std::log(x)));
    } else {
       const double P[] = {
          7.6223911686491336e-01, -2.4339587368267260e-01,
@@ -80,7 +78,6 @@ double Cl4(double x) noexcept
          z4 * (P[4] + z * P[5]);
       const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
          z4 * (Q[4] + z * Q[5]);
-
       h = y*p/q;
    }
 
@@ -92,7 +89,7 @@ double Cl4(double x) noexcept
  * @param x real angle
  * @return \f$\operatorname{Cl}_4(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 long double Cl4(long double x) noexcept
 {
@@ -156,7 +153,7 @@ long double Cl4(long double x) noexcept
       const long double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]) +
          z4 * (Q[4] + z * Q[5] + z2 * (Q[6] + z * Q[7])) + z8 * Q[8];
 
-      h = x*(zeta3 + y*(p/q + std::log(x)/6));
+      h = x*(zeta3 + y*(p/q + 1.0L/6*std::log(x)));
    } else {
       const long double P[] = {
          7.622391168649133627869594744879702180493e-01L,

@@ -11,7 +11,7 @@
  * @param x real angle
  * @return \f$\operatorname{Cl}_3(\theta)\f$
  * @author Alexander Voigt
- * @note Implementation as economized Padé approximation.
+ * @note Implementation as rational function approximation.
  */
 double cl3(double x)
 {
@@ -41,18 +41,17 @@ double cl3(double x)
 
    if (x < PIH) {
       const double P[] = {
-         -7.5430148591242361e-01,  1.6121940167854339e-02,
-         -3.7484056212140535e-05, -2.5191292110169198e-07
+         -7.5000000000000001e-01,  1.5707637881835541e-02,
+         -3.5426736843494423e-05, -2.4408931585123682e-07
       };
       const double Q[] = {
-         1.0000000000000000e+00, -2.6015033560727570e-02,
-         1.5460630299236049e-04, -1.0987530650923219e-07
+         1.0000000000000000e+00, -2.5573146805410089e-02,
+         1.5019774853075050e-04, -1.0648552418111624e-07
       };
       const double y = x*x;
-      const double z = y - PI28;
-      const double z2 = z*z;
-      const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]);
-      const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]);
+      const double y2 = y*y;
+      const double p = P[0] + y * P[1] + y2 * (P[2] + y * P[3]);
+      const double q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
       h = zeta3 + y*(p/q + log(x)/2);
    } else {
       const double P[] = {
@@ -84,7 +83,7 @@ double cl3(double x)
  * @param x real angle
  * @return \f$\operatorname{Cl}_3(\theta)\f$
  * @author Alexander Voigt
- * @note Implementation as economized Padé approximation.
+ * @note Implementation as rational function approximation.
  */
 long double cl3l(long double x)
 {

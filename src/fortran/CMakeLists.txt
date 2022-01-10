@@ -5,6 +5,8 @@ if(CMAKE_Fortran_COMPILER)
     Cl2.f90
     Cl3.f90
     Cl4.f90
+    Cl5.f90
+    Cl6.f90
     Li2.f90
     Li3.f90
     Li4.f90

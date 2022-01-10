@@ -14,7 +14,7 @@ namespace polylogarithm {
  * @param x real angle
  * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 double Cl2(double x) noexcept
 {
@@ -46,18 +46,17 @@ double Cl2(double x) noexcept
 
    if (x < PIH) {
       const double P[] = {
-         1.3975782911209635e-02, -4.4432680257270761e-04,
-         3.4141174111242951e-06, -3.7638116201783404e-09
+         1.3888888888888889e-02, -4.3286930203743071e-04,
+         3.2779814789973427e-06, -3.6001540369575084e-09
       };
       const double Q[] = {
-         1.0000000000000000e+00, -3.6904397961160525e-02,
-         3.7342870576106476e-04, -8.7460760866531179e-07
+         1.0000000000000000e+00, -3.6166589746694121e-02,
+         3.6015827281202639e-04, -8.3646182842184428e-07
       };
       const double y = x*x;
-      const double z = y - PI28;
-      const double z2 = z*z;
-      const double p = P[0] + z * P[1] + z2 * (P[2] + z * P[3]);
-      const double q = Q[0] + z * Q[1] + z2 * (Q[2] + z * Q[3]);
+      const double y2 = y*y;
+      const double p = P[0] + y * P[1] + y2 * (P[2] + y * P[3]);
+      const double q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
 
       h = x*(1 - std::log(x) + y*p/q);
    } else {
@@ -92,7 +91,7 @@ double Cl2(double x) noexcept
  * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author Alexander Voigt
  *
- * Implemented as an economized Padé approximation with a maximum
+ * Implemented as an rational function approximation with a maximum
  * error of approximately 3.26e-41 (for long double and quadruple
  * precision).
  */

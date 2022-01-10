@@ -5,43 +5,44 @@
 !*********************************************************************
 
 !*********************************************************************
-!> @brief Clausen function \f$\operatorname{Cl}_3(\theta) = \operatorname{Re}(\operatorname{Li}_3(e^{i\theta}))\f$
+!> @brief Clausen function \f$\operatorname{Cl}_5(\theta) = \operatorname{Re}(\operatorname{Li}_5(e^{i\theta}))\f$
 !> @param x real angle
-!> @return \f$\operatorname{Cl}_3(\theta)\f$
+!> @return \f$\operatorname{Cl}_5(\theta)\f$
 !> @author Alexander Voigt
-!> Implemented as rational function approximation.
+!> Implemented as a rational function approximation.
 !*********************************************************************
 
-double precision function dcl3(x)
+double precision function dcl5(x)
   implicit none
   double precision :: x, y, z, z2, z4, p, q, p0, p1, h
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision, parameter :: PI2 = 2*PI, PIH = PI/2, PI28 = PI*PI/8
-  double precision, parameter :: zeta3 = 1.2020569031595943D0
+  double precision, parameter :: zeta5 = 1.0369277551433699D0
   double precision, parameter :: cp(4) = (/ &
-     -7.5000000000000001D-1,                &
-      1.5707637881835541D-2,                &
-     -3.5426736843494423D-5,                &
-     -2.4408931585123682D-7                 /)
-  double precision, parameter :: cq(4) = (/ &
+      1.0369277551433699D+0,                &
+     -6.1354800479984468D-1,                &
+      9.4076401395712763D-2,                &
+     -9.4056155866704436D-4                 /)
+  double precision, parameter :: cq(5) = (/ &
       1.0000000000000000D+0,                &
-     -2.5573146805410089D-2,                &
-      1.5019774853075050D-4,                &
-     -1.0648552418111624D-7                 /)
+     -1.2073698633244778D-2,                &
+      1.3703409625482991D-5,                &
+     -1.9701280330628469D-9,                &
+      2.1944550184416500D-11                /)
   double precision, parameter :: cr(6) = (/ &
-     -4.9017024647634973D-1,                &
-      4.1559155224660940D-1,                &
-     -7.9425531417806701D-2,                &
-      5.9420152260602943D-3,                &
-     -1.8302227163540190D-4,                &
-      1.8027408929418533D-6                 /)
+     -4.5930112735784898D-1,                &
+      4.3720705508867954D-1,                &
+     -7.5895226486465095D-2,                &
+      5.2244176912488065D-3,                &
+     -1.5677716622013956D-4,                &
+      1.6641624171748576D-6                 /)
   double precision, parameter :: cs(6) = (/ &
       1.0000000000000000D+0,                &
-     -1.9495887541644712D-1,                &
-      1.2059410236484074D-2,                &
-     -2.5235889467301620D-4,                &
-      1.0199322763377861D-6,                &
-      1.9612106499469264D-9                 /)
+     -1.2211486825401188D-1,                &
+      3.8940070749313620D-3,                &
+     -2.2674805547074318D-5,                &
+     -7.4383354448335299D-8,                &
+     -3.4131758392216437D-10                /)
 
   if (x .lt. 0) then
      x = -x
@@ -58,7 +59,7 @@ double precision function dcl3(x)
   endif
 
   if (x .eq. 0) then
-     dcl3 = zeta3
+     dcl5 = zeta5
      return
   endif
 
@@ -66,8 +67,8 @@ double precision function dcl3(x)
     y = x*x
     z = y*y
     p = cp(1) + y * cp(2) + z * (cp(3) + y * cp(4))
-    q = cq(1) + y * cq(2) + z * (cq(3) + y * cq(4))
-    h = zeta3 + y*(p/q + log(x)/2)
+    q = cq(1) + y * cq(2) + z * (cq(3) + y * cq(4) + z * cq(5))
+    h = p/q - 1.0D0/24*z*log(x);
   else
     y = PI - x
     z = y*y - PI28
@@ -80,6 +81,6 @@ double precision function dcl3(x)
     h = p/q
   endif
 
-  dcl3 = h
+  dcl5 = h
 
-end function dcl3
+end function dcl5

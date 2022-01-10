@@ -34,14 +34,42 @@ ExportData[f_, prec_] :=
     ]
 
 
+Cl1[x_] := ResourceFunction["ClausenCl"][1, x]
 Cl2[x_] := ResourceFunction["ClausenCl"][2, x]
 Cl3[x_] := ResourceFunction["ClausenCl"][3, x]
 Cl4[x_] := ResourceFunction["ClausenCl"][4, x]
 Cl5[x_] := ResourceFunction["ClausenCl"][5, N[x,40]]
 Cl6[x_] := ResourceFunction["ClausenCl"][6, N[x,40]]
+Cl7[x_] := ResourceFunction["ClausenCl"][7, N[x,40]]
+Cl8[x_] := ResourceFunction["ClausenCl"][8, N[x,40]]
+Cl9[x_] := ResourceFunction["ClausenCl"][9, N[x,40]]
+Cl10[x_] := ResourceFunction["ClausenCl"][10, N[x,40]]
+Cl11[x_] := ResourceFunction["ClausenCl"][11, N[x,40]]
+Cl12[x_] := ResourceFunction["ClausenCl"][12, N[x,40]]
+Cl13[x_] := ResourceFunction["ClausenCl"][13, N[x,40]]
+Cl14[x_] := ResourceFunction["ClausenCl"][14, N[x,40]]
+Cl15[x_] := ResourceFunction["ClausenCl"][15, N[x,40]]
+Cl16[x_] := ResourceFunction["ClausenCl"][16, N[x,40]]
+Cl1000[x_] := ResourceFunction["ClausenCl"][1000, N[x,40]]
+Cl1001[x_] := ResourceFunction["ClausenCl"][1001, N[x,40]]
+Cl1000000[x_] := ResourceFunction["ClausenCl"][1000000, N[x,40]]
 
+ExportData[Cl1, 40];
 ExportData[Cl2, 40];
 ExportData[Cl3, 40];
 ExportData[Cl4, 40];
 ExportData[Cl5, 40];
 ExportData[Cl6, 40];
+ExportData[Cl7, 40];
+ExportData[Cl8, 40];
+ExportData[Cl9, 40];
+ExportData[Cl10, 40];
+ExportData[Cl11, 40];
+ExportData[Cl12, 40];
+ExportData[Cl13, 40];
+ExportData[Cl14, 40];
+ExportData[Cl15, 40];
+ExportData[Cl16, 40];
+ExportData[Cl1000, 40];
+ExportData[Cl1001, 40];
+ExportData[Cl1000000, 40];

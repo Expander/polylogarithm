@@ -10,6 +10,8 @@
 #include "Li2.hpp"
 #include "Li3.hpp"
 #include "Li4.hpp"
+#include "Li5.hpp"
+#include "Li6.hpp"
 #include <iostream>
 #include <iomanip>
 
@@ -39,6 +41,18 @@ double poly_Cl4_fortran(double x) {
    return res;
 }
 
+double poly_Cl5_fortran(double x) {
+   double res{};
+   cl5_fortran(&x, &res);
+   return res;
+}
+
+double poly_Cl6_fortran(double x) {
+   double res{};
+   cl6_fortran(&x, &res);
+   return res;
+}
+
 #endif
 
 double Cl2_via_Li2(double x) noexcept
@@ -56,6 +70,16 @@ double Cl4_via_Li4(double x) noexcept
    return std::imag(polylogarithm::Li4(std::polar(1.0, x)));
 }
 
+double Cl5_via_Li5(double x) noexcept
+{
+   return std::real(polylogarithm::Li5(std::polar(1.0, x)));
+}
+
+double Cl6_via_Li6(double x) noexcept
+{
+   return std::imag(polylogarithm::Li6(std::polar(1.0, x)));
+}
+
 long double Cl2_via_Li2(long double x) noexcept
 {
    return std::imag(polylogarithm::Li2(std::polar(1.0L, x)));
@@ -69,6 +93,16 @@ long double Cl3_via_Li3(long double x) noexcept
 long double Cl4_via_Li4(long double x) noexcept
 {
    return std::imag(polylogarithm::Li4(std::polar(1.0L, x)));
+}
+
+long double Cl5_via_Li5(long double x) noexcept
+{
+   return std::real(polylogarithm::Li5(std::polar(1.0L, x)));
+}
+
+long double Cl6_via_Li6(long double x) noexcept
+{
+   return std::imag(polylogarithm::Li6(std::polar(1.0L, x)));
 }
 
 } // anonymous namespace
@@ -223,16 +257,50 @@ void bench(const T& values_d, const U& values_l)
    bench_fn([&](double x) { return polylogarithm::Cl5(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return cl5(x); }, values_d,
+            "polylogarithm C", "double");
+
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](double x) { return poly_Cl5_fortran(x); }, values_d,
+            "polylogarithm Fortran", "double");
+#endif
+
+   bench_fn([&](double x) { return Cl5_via_Li5(x); }, values_d,
+            "via Li5 C++", "double");
+
    bench_fn([&](long double x) { return polylogarithm::Cl5(x); }, values_l,
             "polylogarithm C++", "long double");
+
+   bench_fn([&](long double x) { return cl5l(x); }, values_l,
+            "polylogarithm C", "long double");
+
+   bench_fn([&](long double x) { return Cl5_via_Li5(x); }, values_l,
+            "via Li5 C++", "long double");
 
    print_headline_2("Cl6");
 
    bench_fn([&](double x) { return polylogarithm::Cl6(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return cl6(x); }, values_d,
+            "polylogarithm C", "double");
+
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](double x) { return poly_Cl6_fortran(x); }, values_d,
+            "polylogarithm Fortran", "double");
+#endif
+
+   bench_fn([&](double x) { return Cl6_via_Li6(x); }, values_d,
+            "via Li6 C++", "double");
+
    bench_fn([&](long double x) { return polylogarithm::Cl6(x); }, values_l,
             "polylogarithm C++", "long double");
+
+   bench_fn([&](long double x) { return cl6l(x); }, values_l,
+            "polylogarithm C", "long double");
+
+   bench_fn([&](long double x) { return Cl6_via_Li6(x); }, values_l,
+            "via Li6 C++", "long double");
 }
 
 int main()

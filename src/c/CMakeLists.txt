@@ -3,6 +3,8 @@ add_library(polylog_c
   Cl2.c
   Cl3.c
   Cl4.c
+  Cl5.c
+  Cl6.c
   Li2.c
   Li3.c
   Li4.c

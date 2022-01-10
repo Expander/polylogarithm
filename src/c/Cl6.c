@@ -1,13 +1,10 @@
-// ====================================================================
-// This file is part of Polylogarithm.
-//
-// Polylogarithm is licenced under the MIT License.
-// ====================================================================
+/* ====================================================================
+ * This file is part of Polylogarithm.
+ *
+ * Polylogarithm is licenced under the MIT License.
+ * ==================================================================== */
 
-#include "Cl6.hpp"
-#include <cmath>
-
-namespace polylogarithm {
+#include <math.h>
 
 /**
  * @brief Clausen function \f$\operatorname{Cl}_6(\theta) = \operatorname{Im}(\operatorname{Li}_6(e^{i\theta}))\f$
@@ -16,7 +13,7 @@ namespace polylogarithm {
  * @author Alexander Voigt
  * @note Implemented as a rational function approximation.
  */
-double Cl6(double x) noexcept
+double cl6(double x)
 {
    const double PI = 3.14159265358979324;
    const double PI2 = 2*PI, PIH = PI/2, PI28 = PI*PI/8;
@@ -28,7 +25,7 @@ double Cl6(double x) noexcept
    }
 
    if (x >= PI2) {
-      x = std::fmod(x, PI2);
+      x = fmod(x, PI2);
    }
 
    if (x > PI) {
@@ -57,7 +54,7 @@ double Cl6(double x) noexcept
       const double y2 = y*y;
       const double p = P[0] + y * P[1] + y2 * (P[2] + y * P[3]);
       const double q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
-      h = x*(p/q - 1./120*y2*std::log(x));
+      h = x*(p/q - 1./120*y2*log(x));
    } else {
       const double P[] = {
          7.9544504578027050e-01, -1.9255025309738589e-01,
@@ -90,7 +87,7 @@ double Cl6(double x) noexcept
  * @author Alexander Voigt
  * @note Implemented as a rational function approximation.
  */
-long double Cl6(long double x) noexcept
+long double cl6l(long double x)
 {
    const long double PI = 3.14159265358979323846264338327950288L;
    const long double PI2 = 2*PI, PIH = PI/2, PI28 = PI*PI/8;
@@ -102,7 +99,7 @@ long double Cl6(long double x) noexcept
    }
 
    if (x >= PI2) {
-      x = std::fmod(x, PI2);
+      x = fmodl(x, PI2);
    }
 
    if (x > PI) {
@@ -148,7 +145,7 @@ long double Cl6(long double x) noexcept
          y4 * (P[4] + y * P[5] + y2 * (P[6] + y * P[7]));
       const long double q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]) +
          y4 * (Q[4] + y * Q[5] + y2 * (Q[6] + y * Q[7])) + y8 * Q[8];
-      h = x*(p/q - 1.0L/120*y2*std::log(x));
+      h = x*(p/q - 1.0L/120*y2*logl(x));
    } else {
       const long double P[] = {
           7.954450457802705032518570844852029808415e-01L,
@@ -223,5 +220,3 @@ long double Cl6(long double x) noexcept
 
    return sgn*h;
 }
-
-} // namespace polylogarithm
