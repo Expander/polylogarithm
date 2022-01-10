@@ -102,6 +102,6 @@ TEST_CASE("test_real_fixed_values")
       CHECK_CLOSE(cl64_li     , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_poly   , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl128_li    , cl128_expected, 4*eps128);
-      CHECK_CLOSE(cl128_poly  , cl128_expected, 4*eps128);
+      CHECK_CLOSE(cl128_poly  , cl128_expected, 8*eps128);
    }
 }
