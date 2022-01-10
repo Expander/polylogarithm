@@ -11,7 +11,7 @@
  * @param x real angle
  * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 double cl2(double x)
 {
@@ -88,7 +88,7 @@ double cl2(double x)
  * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author Alexander Voigt
  *
- * Implemented as an economized Padé approximation with a maximum
+ * Implemented as an rational function approximation with a maximum
  * error of approximately 3.26e-41 (for long double and quadruple
  * precision).
  */

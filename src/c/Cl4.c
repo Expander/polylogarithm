@@ -11,7 +11,7 @@
  * @param x real angle
  * @return \f$\operatorname{Cl}_4(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 double cl4(double x)
 {
@@ -88,7 +88,7 @@ double cl4(double x)
  * @param x real angle
  * @return \f$\operatorname{Cl}_4(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 long double cl4l(long double x)
 {

@@ -14,7 +14,7 @@ namespace polylogarithm {
  * @param x real angle
  * @return \f$\operatorname{Cl}_4(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 double Cl4(double x) noexcept
 {
@@ -89,7 +89,7 @@ double Cl4(double x) noexcept
  * @param x real angle
  * @return \f$\operatorname{Cl}_4(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 long double Cl4(long double x) noexcept
 {

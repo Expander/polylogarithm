@@ -11,7 +11,7 @@
  * @param x real angle
  * @return \f$\operatorname{Cl}_3(\theta)\f$
  * @author Alexander Voigt
- * @note Implementation as economized Padé approximation.
+ * @note Implementation as rational function approximation.
  */
 double cl3(double x)
 {
@@ -83,7 +83,7 @@ double cl3(double x)
  * @param x real angle
  * @return \f$\operatorname{Cl}_3(\theta)\f$
  * @author Alexander Voigt
- * @note Implementation as economized Padé approximation.
+ * @note Implementation as rational function approximation.
  */
 long double cl3l(long double x)
 {

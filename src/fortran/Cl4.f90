@@ -9,7 +9,7 @@
 !> @param x real angle
 !> @return \f$\operatorname{Cl}_4(\theta)\f$
 !> @author Alexander Voigt
-!> Implemented as economized Padé approximation.
+!> Implemented as rational function approximation.
 !*********************************************************************
 
 double precision function dcl4(x)

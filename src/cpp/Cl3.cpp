@@ -14,7 +14,7 @@ namespace polylogarithm {
  * @param x real angle
  * @return \f$\operatorname{Cl}_3(\theta)\f$
  * @author Alexander Voigt
- * @note Implementation as economized Padé approximation.
+ * @note Implementation as rational function approximation.
  */
 double Cl3(double x) noexcept
 {
@@ -86,7 +86,7 @@ double Cl3(double x) noexcept
  * @param x real angle
  * @return \f$\operatorname{Cl}_3(\theta)\f$
  * @author Alexander Voigt
- * @note Implementation as economized Padé approximation.
+ * @note Implementation as rational function approximation.
  */
 long double Cl3(long double x) noexcept
 {

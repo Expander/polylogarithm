@@ -14,7 +14,7 @@ namespace polylogarithm {
  * @param x real angle
  * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author Alexander Voigt
- * @note Implemented as economized Padé approximation.
+ * @note Implemented as rational function approximation.
  */
 double Cl2(double x) noexcept
 {
@@ -91,7 +91,7 @@ double Cl2(double x) noexcept
  * @return \f$\operatorname{Cl}_2(\theta)\f$
  * @author Alexander Voigt
  *
- * Implemented as an economized Padé approximation with a maximum
+ * Implemented as an rational function approximation with a maximum
  * error of approximately 3.26e-41 (for long double and quadruple
  * precision).
  */
