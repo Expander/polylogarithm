@@ -2,6 +2,7 @@
 
 #include "doctest.h"
 #include "Cl.hpp"
+#include "Cl1.hpp"
 #include "Cl2.hpp"
 #include "Cl3.hpp"
 #include "Cl4.hpp"
@@ -81,6 +82,7 @@ TEST_CASE("test_kummer_relation")
 TEST_CASE("test_fixed_implementations")
 {
    using polylogarithm::Cl;
+   using polylogarithm::Cl1;
    using polylogarithm::Cl2;
    using polylogarithm::Cl3;
    using polylogarithm::Cl4;
@@ -92,12 +94,16 @@ TEST_CASE("test_fixed_implementations")
    const auto thetas = float_range(0., 2*pi, 100);
 
    for (const auto t: thetas) {
+      const auto cl1 = Cl1(t);
       const auto cl2 = Cl2(t);
       const auto cl3 = Cl3(t);
       const auto cl4 = Cl4(t);
       const auto cl5 = Cl5(t);
       const auto cl6 = Cl6(t);
 
+      if (t != 0) {
+         CHECK_CLOSE(cl1, Cl(1,t), eps);
+      }
       CHECK_CLOSE(cl2, Cl(2,t), eps);
       CHECK_CLOSE(cl3, Cl(3,t), eps);
       CHECK_CLOSE(cl4, Cl(4,t), eps);

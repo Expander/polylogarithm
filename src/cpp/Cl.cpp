@@ -5,6 +5,7 @@
 // ====================================================================
 
 #include "Cl.hpp"
+#include "Cl1.hpp"
 #include "Li.hpp"
 #include <complex>
 #include <limits>
@@ -87,6 +88,10 @@ double Cl(int64_t n, double x)
 {
    if (n < 1) {
       return std::numeric_limits<double>::quiet_NaN();
+   }
+
+   if (n == 1) {
+      return Cl1(x);
    }
 
    const auto sgn = range_reduce(n, x);
