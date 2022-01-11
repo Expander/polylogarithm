@@ -1,4 +1,5 @@
 add_library(polylog_cpp
+  Cl.cpp
   Cl2.cpp
   Cl3.cpp
   Cl4.cpp

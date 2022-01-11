@@ -320,23 +320,6 @@ namespace {
 } // anonymous namespace
 
 /**
- * @brief Clausen function \f$\operatorname{Cl}_n(\theta)\f$
- * @param n degree of Clausen function
- * @param x real angle
- * @return \f$\operatorname{Cl}_n(\theta)\f$
- */
-double Cl(int64_t n, double x)
-{
-   const std::complex<double> li = Li(n, std::polar(1.0, x));
-
-   if (is_even(n)) {
-      return std::imag(li);
-   }
-
-   return std::real(li);
-}
-
-/**
  * @brief Complex polylogarithm \f$\operatorname{Li}_n(z)\f$
  * @param n degree of the polylogarithm
  * @param z complex argument
