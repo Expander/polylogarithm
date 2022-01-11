@@ -12,7 +12,66 @@ namespace polylogarithm {
 
 namespace {
 
-bool is_even(int64_t n) { return n % 2 == 0; }
+constexpr double PI = 3.14159265358979324;
+constexpr double PI2 = 2*PI;
+
+bool is_even(int64_t n) noexcept { return n % 2 == 0; }
+
+// range-reduces x in [0,pi] for odd n
+void range_reduce_odd(double& x) noexcept
+{
+   if (x < 0) {
+      x = -x;
+   }
+
+   if (x >= PI2) {
+      x = std::fmod(x, PI2);
+   }
+
+   if (x > PI) {
+      const auto p0 = 6.28125;
+      const auto p1 = 0.0019353071795864769253;
+      x = (p0 - x) + p1;
+   }
+}
+
+// range-reduces x in [0,pi] for even n, retuns sign
+double range_reduce_even(double& x) noexcept
+{
+   double sgn = 1.0;
+
+   if (x < 0) {
+      x = -x;
+      sgn = -1;
+   }
+
+   if (x >= PI2) {
+      x = std::fmod(x, PI2);
+   }
+
+   if (x > PI) {
+      const auto p0 = 6.28125;
+      const auto p1 = 0.0019353071795864769253;
+      x = (p0 - x) + p1;
+      sgn = -sgn;
+   }
+
+   return sgn;
+}
+
+// range-reduces x to be in [0,pi], returns sign
+double range_reduce(int64_t n, double& x) noexcept
+{
+   double sgn = 1.0;
+
+   if (is_even(n)) {
+      sgn = range_reduce_even(x);
+   } else {
+      range_reduce_odd(x);
+   }
+
+   return sgn;
+}
 
 } // anonymous namespace
 
@@ -24,7 +83,9 @@ bool is_even(int64_t n) { return n % 2 == 0; }
  */
 double Cl(int64_t n, double x)
 {
-   const std::complex<double> li = Li(n, std::polar(1.0, x));
+   const auto sgn = range_reduce(n, x);
+
+   const std::complex<double> li = sgn*Li(n, std::polar(1.0, x));
 
    if (is_even(n)) {
       return std::imag(li);
