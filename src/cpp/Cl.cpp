@@ -17,6 +17,11 @@ namespace {
 constexpr double PI = 3.14159265358979324;
 constexpr double PI2 = 2*PI;
 
+// n! for n = 0,...,10
+const int factorial[] = {
+   1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800
+};
+
 bool is_even(int64_t n) noexcept { return n % 2 == 0; }
 
 // range-reduces x in [0,pi] for odd n
