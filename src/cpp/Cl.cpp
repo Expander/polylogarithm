@@ -75,6 +75,14 @@ double range_reduce(int64_t n, double& x) noexcept
    return sgn;
 }
 
+double Cln0(int64_t n) noexcept
+{
+   if (is_even(n)) {
+      return 0;
+   }
+   return std::riemann_zeta(n);
+}
+
 } // anonymous namespace
 
 /**
@@ -95,6 +103,10 @@ double Cl(int64_t n, double x)
    }
 
    const auto sgn = range_reduce(n, x);
+
+   if (x == 0) {
+      return Cln0(n);
+   }
 
    const std::complex<double> li = sgn*Li(n, std::polar(1.0, x));
 
