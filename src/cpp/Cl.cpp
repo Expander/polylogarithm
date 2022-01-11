@@ -4,6 +4,7 @@
 // Polylogarithm is licenced under the MIT License.
 // ====================================================================
 
+#include "Cl.hpp"
 #include "Li.hpp"
 #include <complex>
 
