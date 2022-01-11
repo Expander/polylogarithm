@@ -78,7 +78,7 @@ double range_reduce(int64_t n, double& x) noexcept
 // returns Cl(n,0)
 double Cln0(int64_t n) noexcept
 {
-   // zeta(n) for n = 1,...,10
+   // zeta(n) for n = 2,...,10
    const double zeta[] = {
       1.6449340668482264, 1.2020569031595943, 1.0823232337111382,
       1.0369277551433699, 1.0173430619844491, 1.0083492773819228,
