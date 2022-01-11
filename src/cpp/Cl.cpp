@@ -78,10 +78,18 @@ double range_reduce(int64_t n, double& x) noexcept
 // returns Cl(n,0)
 double Cln0(int64_t n) noexcept
 {
+   // zeta(n) for n = 1,...,10
+   const double zeta[] = {
+      1.6449340668482264, 1.2020569031595943, 1.0823232337111382,
+      1.0369277551433699, 1.0173430619844491, 1.0083492773819228,
+      1.0040773561979443, 1.0020083928260822, 1.0009945751278181
+   };
+
    if (is_even(n)) {
       return 0;
    }
-   return std::riemann_zeta(n);
+
+   return zeta[n - 2];
 }
 
 } // anonymous namespace
@@ -105,8 +113,8 @@ double Cl(int64_t n, double x)
 
    const auto sgn = range_reduce(n, x);
 
-   if (x == 0) {
-      return Cln0(n);
+   if (x == 0 && is_even(n)) {
+      return 0;
    }
 
    const std::complex<double> li = sgn*Li(n, std::polar(1.0, x));
