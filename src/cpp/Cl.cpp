@@ -113,7 +113,7 @@ double Cl(int64_t n, double x)
 
    const auto sgn = range_reduce(n, x);
 
-   if (x == 0 && is_even(n)) {
+   if (is_even(n) && (x == 0 || x == PI)) {
       return 0;
    }
 
