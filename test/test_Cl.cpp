@@ -39,6 +39,17 @@ std::vector<double> float_range(
    return result;
 }
 
+double Cl_via_Li(int64_t n, double x)
+{
+   const std::complex<double> li = polylogarithm::Li(n, std::polar(1.0, x));
+
+   if (n % 2 == 0) {
+      return std::imag(li);
+   }
+
+   return std::real(li);
+}
+
 TEST_CASE("test_special_values")
 {
    using polylogarithm::Cl;
@@ -111,6 +122,7 @@ TEST_CASE("test_fixed_values")
          const auto cl_expected = v.second;
          INFO("n = " << n << ", x = " << x);
          CHECK_CLOSE(polylogarithm::Cl(n, x), cl_expected, 1e-9);
+         CHECK_CLOSE(Cl_via_Li(n, x), cl_expected, 1e-9);
       }
    }
 }
