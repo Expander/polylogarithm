@@ -75,6 +75,7 @@ double range_reduce(int64_t n, double& x) noexcept
    return sgn;
 }
 
+// returns Cl(n,0)
 double Cln0(int64_t n) noexcept
 {
    if (is_even(n)) {
