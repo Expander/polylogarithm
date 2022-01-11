@@ -92,6 +92,21 @@ double Cln0(int64_t n) noexcept
    return zeta[n - 2];
 }
 
+// returns Cl(n,x) using the naive series expansion
+double cl_series(int64_t n, double x)
+{
+    const auto f = [n](double x) { return is_even(n) ? std::sin(x) : std::cos(x); };
+    const auto eps = std::numeric_limits<double>::epsilon();
+    const auto kmax = static_cast<int64_t>(std::ceil(std::pow(eps, -1.0/n)));
+    double sum = f(x);
+
+    for (int64_t k = 2; k <= kmax; ++k) {
+        sum += f(k*x)/std::pow(k, n);
+    }
+
+    return sum;
+}
+
 } // anonymous namespace
 
 /**
@@ -117,13 +132,17 @@ double Cl(int64_t n, double x)
       return 0;
    }
 
-   const std::complex<double> li = sgn*Li(n, std::polar(1.0, x));
+   if (n < 10) {
+      const std::complex<double> li = sgn*Li(n, std::polar(1.0, x));
 
-   if (is_even(n)) {
-      return std::imag(li);
+      if (is_even(n)) {
+         return std::imag(li);
+      }
+
+      return std::real(li);
    }
 
-   return std::real(li);
+   return sgn*cl_series(n, x);
 }
 
 } // namespace polylogarithm
