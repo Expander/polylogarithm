@@ -7,6 +7,7 @@
 #include "Cl.hpp"
 #include "Li.hpp"
 #include <complex>
+#include <limits>
 
 namespace polylogarithm {
 
@@ -76,13 +77,18 @@ double range_reduce(int64_t n, double& x) noexcept
 } // anonymous namespace
 
 /**
- * @brief Clausen function \f$\operatorname{Cl}_n(\theta)\f$
+ * @brief Clausen function \f$\operatorname{Cl}_n(\theta)\f$ for \f$n>0\f$
  * @param n degree of Clausen function
  * @param x real angle
  * @return \f$\operatorname{Cl}_n(\theta)\f$
+ * @author Alexander Voigt
  */
 double Cl(int64_t n, double x)
 {
+   if (n < 1) {
+      return std::numeric_limits<double>::quiet_NaN();
+   }
+
    const auto sgn = range_reduce(n, x);
 
    const std::complex<double> li = sgn*Li(n, std::polar(1.0, x));
