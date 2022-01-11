@@ -8,6 +8,7 @@
 #include "Cl5.hpp"
 #include "Cl6.hpp"
 #include "Li.hpp"
+#include "read_data.hpp"
 #include <cmath>
 #include <complex>
 #include <vector>
@@ -91,6 +92,26 @@ TEST_CASE("test_fixed_implementations")
       CHECK_CLOSE(cl4, Cl(4,t), eps);
       CHECK_CLOSE(cl5, Cl(5,t), eps);
       CHECK_CLOSE(cl6, Cl(6,t), eps);
+   }
+}
+
+TEST_CASE("test_fixed_values")
+{
+   const int ni[] = {
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+      1000, 1001, 1000000
+   };
+
+   for (const auto n: ni) {
+      const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Cl" + std::to_string(n) + ".txt");
+      const auto fixed_values = polylogarithm::test::read_reals_from_file<double>(filename);
+
+      for (const auto v: fixed_values) {
+         const auto x = v.first;
+         const auto cl_expected = v.second;
+         INFO("n = " << n << ", x = " << x);
+         CHECK_CLOSE(polylogarithm::Cl(n, x), cl_expected, 1e-9);
+      }
    }
 }
 
