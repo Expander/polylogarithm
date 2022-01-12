@@ -156,10 +156,10 @@ double pcal(int64_t k, double x) noexcept
 {
    double sum = 0;
    const auto x2 = x*x;
-   const auto fl = std::floor(0.5*k - 0.5);
+   const auto fl = std::floor(0.5*(k - 1));
 
    for (int64_t i = 3; i <= k; i += 2) {
-      sum = x2*sum + std::pow(-1.0, fl + std::floor(0.5*i - 0.5))/factorial[k - i]*Cln0(i);
+      sum = x2*sum + std::pow(-1.0, fl + std::floor(0.5*(i - 1)))/factorial[k - i]*Cln0(i);
    }
 
    if (is_even(k)) {
@@ -266,9 +266,9 @@ double Cl(int64_t n, double x)
 
       // first line in Eq.(2.13)
       const double term1 = x == 0 ? 0
-                                  : std::pow(-1.0, std::floor(0.5 * n + 0.5)) *
-                                       std::pow(x, n - 1) / (fn2 * (n - 1)) *
-                                       std::log(2 * std::sin(x / 2));
+         : std::pow(-1.0, std::floor(0.5*(n + 1))) *
+           std::pow(x, n - 1)/(fn2*(n - 1)) *
+           std::log(2*std::sin(x/2));
 
       const double term2 = pcal(n, x)
          + std::pow(-1.0, std::floor(0.5*n) + 1)/fn2*nsum(n, x);
