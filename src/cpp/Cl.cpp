@@ -265,8 +265,9 @@ double Cl(int64_t n, double x)
            std::pow(x, n - 1)/(fn2*(n - 1)) *
            std::log(2*std::sin(x/2));
 
-      const double term2 = pcal(n, x)
-         - std::pow(-1.0, std::floor(0.5*n))/fn2*nsum(n, x);
+      const double sign2 = is_even(n/2) ? 1.0 : -1.0;
+
+      const double term2 = pcal(n, x) - sign2/fn2*nsum(n, x);
 
       // Eq.(2.13)
       return sgn*(term1 + term2);
