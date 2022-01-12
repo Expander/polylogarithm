@@ -127,7 +127,7 @@ TEST_CASE("test_fixed_values")
          const auto x = v.first;
          const auto cl_expected = v.second;
          INFO("n = " << n << ", x = " << x);
-         CHECK_CLOSE(polylogarithm::Cl(n, x), cl_expected, 1e-14);
+         CHECK_CLOSE(polylogarithm::Cl(n, x), cl_expected, 1e-13);
          CHECK_CLOSE(Cl_via_Li(n, x), cl_expected, 1e-9);
       }
    }
