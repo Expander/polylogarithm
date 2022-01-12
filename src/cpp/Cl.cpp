@@ -16,8 +16,8 @@ constexpr double PI = 3.14159265358979324;
 constexpr double PI2 = 2*PI;
 constexpr int64_t N_THRESH = 9; // threshold to switch between series
 
-// (-1)^k B_{2k}/(2k)! where B_{2k} are the even Bernoulli numbers
-// B(k) = 2*(-1)^(2*k + 1)*SpecialFunctions.zeta(2*k)/(2*pi)^(2*k)
+// (-1)^k B_{2k}/(2k)! = 2*(-1)^(2*k + 1)*Zeta[2*k]/(2*Pi)^(2*k)
+// where B_{2k} are the even Bernoulli numbers
 constexpr double B[] = {
    -8.3333333333333333e-002,-1.3888888888888889e-003,-3.3068783068783069e-005,-8.2671957671957672e-007,
    -2.0876756987868099e-008,-5.2841901386874932e-010,-1.3382536530684679e-011,-3.3896802963225829e-013,
