@@ -36,7 +36,7 @@ double Cl1(double x) noexcept
    }
 
    if (x == 0) {
-      return std::numeric_limits<double>::quiet_NaN();
+      return std::numeric_limits<double>::infinity();
    }
 
    return -std::log(2.0*std::sin(0.5*x));
