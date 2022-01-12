@@ -270,8 +270,11 @@ double Cl(int64_t n, double x)
                                        std::pow(x, n - 1) / (fn2 * (n - 1)) *
                                        std::log(2 * std::sin(x / 2));
 
+      const double term2 = pcal(n, x)
+         + std::pow(-1.0, std::floor(0.5*n) + 1)/fn2*nsum(n, x);
+
       // Eq.(2.13)
-      return sgn*(term1 + std::pow(-1.0, std::floor(0.5*n) + 1)/fn2*nsum(n, x) + pcal(n, x));
+      return sgn*(term1 + term2);
    }
 
    return sgn*cl_series(n, x);
