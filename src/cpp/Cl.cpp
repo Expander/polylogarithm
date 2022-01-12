@@ -188,8 +188,9 @@ double pcal(int64_t k, double x) noexcept
 double ncal(int64_t n, double x) noexcept
 {
    double sum = 0, old_sum = 0;
-   double xn = std::pow(x, n + 3);
+   const double xn1 = std::pow(x, n + 1);
    const auto x2 = x*x;
+   double xn = xn1*x2; // x^(n + 3)
 
    for (int64_t k = 1; k <= sizeof(B)/sizeof(B[0]); ++k) {
       old_sum = sum;
@@ -200,7 +201,7 @@ double ncal(int64_t n, double x) noexcept
       xn *= x2;
    }
 
-   return (std::pow(x, n + 1)/(n + 1) + sum)/(n + 1);
+   return (xn1/(n + 1) + sum)/(n + 1);
 }
 
 // returns sum in Eq.(2.13)
