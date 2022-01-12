@@ -235,11 +235,19 @@ double cl_series(int64_t n, double x) noexcept
 } // anonymous namespace
 
 /**
- * @brief Clausen function \f$\operatorname{Cl}_n(\theta)\f$ for \f$n>0\f$
- * @param n degree of Clausen function
+ * @brief Standard Clausen function \f$\operatorname{Cl}_n(x)\f$ for \f$n>0\f$
+ * @param n degree of Standard Clausen function
  * @param x real angle
- * @return \f$\operatorname{Cl}_n(\theta)\f$
+ * @return \f$\operatorname{Cl}_n(x)\f$
  * @author Alexander Voigt
+ *
+ * Note: \f$\operatorname{Cl}_1(x)\f$ is not defined for \f$x=2n\pi\f$ with
+ * \f$n\in\mathbb{Z}\f$.
+ *
+ * The implementation follows the approach presented in [Jiming Wu,
+ * Xiaoping Zhang, Dongjie Liu, "An efficient calculation of the Clausen
+ * functions Cl_n(0)(n >= 2)", Bit Numer Math 50, 193-206
+ * (2010) https://doi.org/10.1007/s10543-009-0246-8].
  */
 double Cl(int64_t n, double x)
 {
