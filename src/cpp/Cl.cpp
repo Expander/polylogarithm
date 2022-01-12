@@ -154,14 +154,14 @@ double Cln0(int64_t n) noexcept
 }
 
 // returns P_k(x)
-double pcal(int64_t k, double x)
+double pcal(int64_t k, double x) noexcept
 {
    double sum = 0;
    const auto x2 = x*x;
-   const auto fl = std::floor(k/2 - 0.5);
+   const auto fl = std::floor(0.5*k - 0.5);
 
    for (int64_t i = 3; i <= k; i += 2) {
-      sum = x2*sum + std::pow(-1, (fl + std::floor(i/2 - 0.5))/factorial[k - i]*Cln0(i));
+      sum = x2*sum + std::pow(-1.0, fl + std::floor(0.5*i - 0.5))/factorial[k - i]*Cln0(i);
    }
 
    if (is_even(k)) {
@@ -172,7 +172,7 @@ double pcal(int64_t k, double x)
 }
 
 // returns N_n(x) from Eq.(2.11)
-double ncal(int64_t n, double x)
+double ncal(int64_t n, double x) noexcept
 {
    double sum = 0, old_sum = 0;
    double xn = std::pow(x, n + 3);
@@ -188,12 +188,12 @@ double ncal(int64_t n, double x)
       xn *= x2;
    }
 
-   return (std::pow(x, (n + 1)/(n + 1)) + sum)/(n + 1);
+   return (std::pow(x, n + 1)/(n + 1) + sum)/(n + 1);
 }
 
 /// Binomial coefficients
 /// https://www.geeksforgeeks.org/space-and-time-efficient-binomial-coefficient/
-double binomial(int64_t n, int64_t k)
+double binomial(int64_t n, int64_t k) noexcept
 {
    double result = 1.;
 
@@ -211,7 +211,7 @@ double binomial(int64_t n, int64_t k)
 }
 
 // returns sum in Eq.(2.13)
-double nsum(int64_t n, double x)
+double nsum(int64_t n, double x) noexcept
 {
     double sum = 0;
     double xn = 1;
@@ -265,6 +265,17 @@ double Cl(int64_t n, double x)
    }
 
    if (n < 10) {
+      const auto fn2 = factorial[n - 2];
+
+      // first line in Eq.(2.13)
+      const double term1 = x == 0 ? 0
+                                  : std::pow(-1.0, std::floor(0.5 * n + 0.5)) *
+                                       std::pow(x, n - 1) / (fn2 * (n - 1)) *
+                                       std::log(2 * std::sin(x / 2));
+
+      // Eq.(2.13)
+      // return sgn*(term1 + std::pow(-1.0, std::floor(0.5*n) + 1)/fn2*nsum(n, x) + pcal(n, x));
+
       const std::complex<double> li = sgn*Li(n, std::polar(1.0, x));
 
       if (is_even(n)) {
