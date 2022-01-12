@@ -14,6 +14,7 @@ namespace {
 
 constexpr double PI = 3.14159265358979324;
 constexpr double PI2 = 2*PI;
+constexpr int64_t N_THRESH = 9; // threshold to switch between series
 
 // (-1)^k B_{2k}/(2k)! where B_{2k} are the even Bernoulli numbers
 // B(k) = 2*(-1)^(2*k + 1)*SpecialFunctions.zeta(2*k)/(2*pi)^(2*k)
@@ -251,6 +252,11 @@ double cl_series(int64_t n, double x) noexcept
  */
 double Cl(int64_t n, double x)
 {
+   static_assert(N_THRESH - 1 <= sizeof(binomial)/sizeof(binomial[0]));
+   static_assert(N_THRESH - 1 <= sizeof(binomial[0])/sizeof(binomial[0][0]));
+   static_assert(N_THRESH - 1 <= sizeof(factorial)/sizeof(factorial[0]));
+   static_assert(N_THRESH - 1 <= sizeof(zeta)/sizeof(zeta[0]));
+
    if (n < 1) {
       return std::numeric_limits<double>::quiet_NaN();
    }
@@ -265,7 +271,7 @@ double Cl(int64_t n, double x)
       return 0;
    }
 
-   if (n < 10) {
+   if (n <= N_THRESH) {
       const auto fn2 = factorial[n - 2];
 
       const double sign1 = is_even((n + 1)/2) ? 1.0 : -1.0;
