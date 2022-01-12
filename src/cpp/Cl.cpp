@@ -157,16 +157,6 @@ double range_reduce(int64_t n, double& x) noexcept
    return sgn;
 }
 
-// returns Cl(n,0)
-double Cln0(int64_t n) noexcept
-{
-   if (is_even(n)) {
-      return 0;
-   }
-
-   return zeta[n - 2];
-}
-
 // returns P_k(x)
 double pcal(int64_t k, double x) noexcept
 {
@@ -175,7 +165,7 @@ double pcal(int64_t k, double x) noexcept
 
    for (int64_t i = 3; i <= k; i += 2) {
       const double sign = is_even((k - 1)/2 + (i - 1)/2) ? 1.0 : -1.0;
-      sum = x2*sum + sign*Cln0(i)/factorial[k - i];
+      sum = x2*sum + sign*zeta[i - 2]/factorial[k - i];
    }
 
    if (is_even(k)) {
