@@ -269,6 +269,7 @@ double Cl(int64_t n, double x)
 
       const double sign2 = is_even(n/2) ? 1.0 : -1.0;
 
+      // second line in Eq.(2.13)
       const double term2 = pcal(n, x) - sign2/fn2*nsum(n, x);
 
       // Eq.(2.13)
