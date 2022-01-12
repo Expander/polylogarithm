@@ -2,11 +2,13 @@
 #include "bench.hpp"
 #include "c_wrappers.h"
 #include "fortran_wrappers.h"
+#include "Cl.hpp"
 #include "Cl2.hpp"
 #include "Cl3.hpp"
 #include "Cl4.hpp"
 #include "Cl5.hpp"
 #include "Cl6.hpp"
+#include "Li.hpp"
 #include "Li2.hpp"
 #include "Li3.hpp"
 #include "Li4.hpp"
@@ -78,6 +80,17 @@ double Cl5_via_Li5(double x) noexcept
 double Cl6_via_Li6(double x) noexcept
 {
    return std::imag(polylogarithm::Li6(std::polar(1.0, x)));
+}
+
+double Cl_via_Li(int64_t n, double x)
+{
+   const std::complex<double> li = polylogarithm::Li(n, std::polar(1.0, x));
+
+   if (n % 2 == 0) {
+      return std::imag(li);
+   }
+
+   return std::real(li);
 }
 
 long double Cl2_via_Li2(long double x) noexcept
@@ -301,6 +314,23 @@ void bench(const T& values_d, const U& values_l)
 
    bench_fn([&](long double x) { return Cl6_via_Li6(x); }, values_l,
             "via Li6 C++", "long double");
+
+   print_headline_2("Cl(n,x)");
+
+   const int ni[] = {2, 4, 6, 10, 16, 1000};
+
+   auto fewer_values_d = values_d;
+   fewer_values_d.resize(values_d.size()/10);
+
+   for (const auto n: ni) {
+      std::cout << "n = " << n << ":\n";
+
+      bench_fn([&](double x) { return polylogarithm::Cl(n,x); }, fewer_values_d,
+               "polylogarithm C++", "double");
+
+      bench_fn([&](double x) { return Cl_via_Li(n,x); }, fewer_values_d,
+               "via Li", "double");
+   }
 }
 
 int main()
