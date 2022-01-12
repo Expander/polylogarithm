@@ -266,7 +266,7 @@ double Cl(int64_t n, double x)
            std::log(2*std::sin(x/2));
 
       const double term2 = pcal(n, x)
-         + std::pow(-1.0, std::floor(0.5*n) + 1)/fn2*nsum(n, x);
+         - std::pow(-1.0, std::floor(0.5*n))/fn2*nsum(n, x);
 
       // Eq.(2.13)
       return sgn*(term1 + term2);
