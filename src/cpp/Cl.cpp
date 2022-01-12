@@ -222,7 +222,7 @@ double nsum(int64_t n, double x) noexcept
 }
 
 // returns Cl(n,x) using the naive series expansion
-double cl_series(int64_t n, double x)
+double cl_series(int64_t n, double x) noexcept
 {
     const auto f = [n](double x) { return is_even(n) ? std::sin(x) : std::cos(x); };
     const auto eps = std::numeric_limits<double>::epsilon();
