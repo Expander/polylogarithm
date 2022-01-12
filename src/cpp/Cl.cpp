@@ -177,9 +177,8 @@ double ncal(int64_t n, double x) noexcept
    const auto x2 = x*x;
 
    for (int64_t k = 1; k <= sizeof(B)/sizeof(B[0]); ++k) {
-      const double term = B[k - 1]*xn/(2*k + n + 1);
       old_sum = sum;
-      sum += term;
+      sum += B[k - 1]*xn/(2*k + n + 1);
       if (sum == old_sum) {
          break;
       }
