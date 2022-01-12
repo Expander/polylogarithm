@@ -90,7 +90,7 @@ TEST_CASE("test_fixed_implementations")
    using polylogarithm::Cl6;
 
    const double pi = M_PI;
-   const double eps = 1e-10;
+   const double eps = 1e-14;
    const auto thetas = float_range(0., 2*pi, 100);
 
    for (const auto t: thetas) {
@@ -127,7 +127,7 @@ TEST_CASE("test_fixed_values")
          const auto x = v.first;
          const auto cl_expected = v.second;
          INFO("n = " << n << ", x = " << x);
-         CHECK_CLOSE(polylogarithm::Cl(n, x), cl_expected, 1e-9);
+         CHECK_CLOSE(polylogarithm::Cl(n, x), cl_expected, 1e-14);
          CHECK_CLOSE(Cl_via_Li(n, x), cl_expected, 1e-9);
       }
    }
@@ -158,6 +158,6 @@ TEST_CASE("test_roots")
    const double pi  = M_PI;
 
    for (int k = -10; k < 10; k++) {
-      CHECK_SMALL(Cl(2,k*pi), 1e-10);
+      CHECK_SMALL(Cl(2,k*pi), 1e-14);
    }
 }
