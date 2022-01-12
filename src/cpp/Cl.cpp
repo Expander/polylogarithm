@@ -259,10 +259,11 @@ double Cl(int64_t n, double x)
    if (n < 10) {
       const auto fn2 = factorial[n - 2];
 
+      const double sign1 = is_even((n + 1)/2) ? 1.0 : -1.0;
+
       // first line in Eq.(2.13)
       const double term1 = x == 0 ? 0
-         : std::pow(-1.0, std::floor(0.5*(n + 1))) *
-           std::pow(x, n - 1)/(fn2*(n - 1)) *
+         : sign1*std::pow(x, n - 1)/(fn2*(n - 1)) *
            std::log(2*std::sin(x/2));
 
       const double sign2 = is_even(n/2) ? 1.0 : -1.0;
