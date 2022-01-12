@@ -170,7 +170,6 @@ double pcal(int64_t k, double x) noexcept
 {
    double sum = 0;
    const auto x2 = x*x;
-   const auto fl = std::floor(0.5*(k - 1));
 
    for (int64_t i = 3; i <= k; i += 2) {
       const double sign = is_even((k - 1)/2 + (i - 1)/2) ? 1.0 : -1.0;
