@@ -6,6 +6,7 @@
 
 #include "Cl.hpp"
 #include "Cl1.hpp"
+#include <cmath>
 #include <limits>
 
 namespace polylogarithm {
