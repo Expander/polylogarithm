@@ -6,8 +6,6 @@
 
 #include "Cl.hpp"
 #include "Cl1.hpp"
-#include "Li.hpp"
-#include <complex>
 #include <limits>
 
 namespace polylogarithm {
@@ -179,7 +177,7 @@ double ncal(int64_t n, double x) noexcept
    const auto x2 = x*x;
 
    for (int64_t k = 1; k <= sizeof(B)/sizeof(B[0]); ++k) {
-      const double term = B[k]*xn/(2*k + n + 1);
+      const double term = B[k - 1]*xn/(2*k + n + 1);
       old_sum = sum;
       sum += term;
       if (sum == old_sum) {
@@ -274,15 +272,7 @@ double Cl(int64_t n, double x)
                                        std::log(2 * std::sin(x / 2));
 
       // Eq.(2.13)
-      // return sgn*(term1 + std::pow(-1.0, std::floor(0.5*n) + 1)/fn2*nsum(n, x) + pcal(n, x));
-
-      const std::complex<double> li = sgn*Li(n, std::polar(1.0, x));
-
-      if (is_even(n)) {
-         return std::imag(li);
-      }
-
-      return std::real(li);
+      return sgn*(term1 + std::pow(-1.0, std::floor(0.5*n) + 1)/fn2*nsum(n, x) + pcal(n, x));
    }
 
    return sgn*cl_series(n, x);
