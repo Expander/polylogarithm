@@ -96,7 +96,10 @@ constexpr double zeta[] = {
    1.0040773561979443, 1.0020083928260822
 };
 
-bool is_even(int64_t n) noexcept { return n % 2 == 0; }
+constexpr bool is_even(int64_t n) noexcept
+{
+   return n % 2 == 0;
+}
 
 // range-reduces x in [0,pi] for odd n
 void range_reduce_odd(double& x) noexcept
