@@ -71,6 +71,20 @@ const double B[] = {
    -2.7084630535382438e-321,-6.8606170609008831e-323
 };
 
+// Binomial coefficents, [ binomial(n,k) for n=0:9, k=0:9 ]
+const int binomial[10][10] = {
+   {1, 0,  0,  0,   0,   0,  0,  0, 0, 0},
+   {1, 1,  0,  0,   0,   0,  0,  0, 0, 0},
+   {1, 2,  1,  0,   0,   0,  0,  0, 0, 0},
+   {1, 3,  3,  1,   0,   0,  0,  0, 0, 0},
+   {1, 4,  6,  4,   1,   0,  0,  0, 0, 0},
+   {1, 5, 10, 10,   5,   1,  0,  0, 0, 0},
+   {1, 6, 15, 20,  15,   6,  1,  0, 0, 0},
+   {1, 7, 21, 35,  35,  21,  7,  1, 0, 0},
+   {1, 8, 28, 56,  70,  56, 28,  8, 1, 0},
+   {1, 9, 36, 84, 126, 126, 84, 36, 9, 1}
+};
+
 // n! for n = 0,...,10
 const int factorial[] = {
    1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800
@@ -188,25 +202,6 @@ double ncal(int64_t n, double x) noexcept
    return (std::pow(x, n + 1)/(n + 1) + sum)/(n + 1);
 }
 
-/// Binomial coefficients
-/// https://www.geeksforgeeks.org/space-and-time-efficient-binomial-coefficient/
-double binomial(int64_t n, int64_t k) noexcept
-{
-   double result = 1.;
-
-   // (n, k) = (n, n-k)
-   if (k > n - k) {
-      k = n - k;
-   }
-
-   for (int64_t i = 0; i < k; i++) {
-      result *= (n - i);
-      result /= (i + 1);
-   }
-
-   return result;
-}
-
 // returns sum in Eq.(2.13)
 double nsum(int64_t n, double x) noexcept
 {
@@ -214,7 +209,7 @@ double nsum(int64_t n, double x) noexcept
     double xn = 1;
 
     for (int64_t i = 0; i <= n - 2; ++i) {
-       sum += binomial(n - 2, i)*xn*ncal(n - 2 - i, x);
+       sum += binomial[n - 2][i]*xn*ncal(n - 2 - i, x);
        xn *= -x;
     }
 
