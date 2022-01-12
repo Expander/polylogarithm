@@ -173,7 +173,8 @@ double pcal(int64_t k, double x) noexcept
    const auto fl = std::floor(0.5*(k - 1));
 
    for (int64_t i = 3; i <= k; i += 2) {
-      sum = x2*sum + std::pow(-1.0, fl + std::floor(0.5*(i - 1)))/factorial[k - i]*Cln0(i);
+      const double sign = is_even((k - 1)/2 + (i - 1)/2) ? 1.0 : -1.0;
+      sum = x2*sum + sign*Cln0(i)/factorial[k - i];
    }
 
    if (is_even(k)) {
