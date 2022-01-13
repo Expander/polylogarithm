@@ -264,19 +264,17 @@ double Cl(int64_t n, double x)
    }
 
    if (n <= N_THRESH) {
-      const auto fn2 = factorial[n - 2];
-
       const double sign1 = is_even((n + 1)/2) ? 1.0 : -1.0;
 
       // first line in Eq.(2.13)
       const double term1 = x == 0 ? 0
-         : sign1*std::pow(x, n - 1)/(fn2*(n - 1)) *
+         : sign1*std::pow(x, n - 1)/factorial[n - 1] *
            std::log(2*std::sin(x/2));
 
       const double sign2 = is_even(n/2) ? 1.0 : -1.0;
 
       // second line in Eq.(2.13)
-      const double term2 = pcal(n, x) - sign2/fn2*nsum(n, x);
+      const double term2 = pcal(n, x) - sign2/factorial[n - 2]*nsum(n, x);
 
       // Eq.(2.13)
       return sgn*(term1 + term2);
