@@ -158,18 +158,18 @@ double range_reduce(int64_t n, double& x) noexcept
    return sgn;
 }
 
-// returns P_k(x)
-double pcal(int64_t k, double x) noexcept
+// returns P_n(x)
+double pcal(int64_t n, double x) noexcept
 {
    double sum = 0;
    const auto x2 = x*x;
 
-   for (int64_t i = 3; i <= k; i += 2) {
-      const double sign = is_even((k - 1)/2 + (i - 1)/2) ? 1.0 : -1.0;
-      sum = x2*sum + sign*zeta[i - 2]*inverse_factorial[k - i];
+   for (int64_t i = 3; i <= n; i += 2) {
+      const double sign = is_even((n - 1)/2 + (i - 1)/2) ? 1.0 : -1.0;
+      sum = x2*sum + sign*zeta[i - 2]*inverse_factorial[n - i];
    }
 
-   if (is_even(k)) {
+   if (is_even(n)) {
       sum *= x;
    }
 
