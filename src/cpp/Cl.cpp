@@ -218,13 +218,32 @@ double nsum(int64_t n, double x) noexcept
 // returns Cl(n,x) using the naive series expansion
 double cl_series(int64_t n, double x) noexcept
 {
-    const auto f = [n](double x) { return is_even(n) ? std::sin(x) : std::cos(x); };
     const auto eps = std::numeric_limits<double>::epsilon();
     const auto kmax = static_cast<int64_t>(std::ceil(std::pow(eps, -1.0/n)));
-    double sum = f(x);
+    const double co = std::cos(x);
+    double sum = 0;
 
-    for (int64_t k = 2; k <= kmax; ++k) {
-        sum += f(k*x)/std::pow(k, n);
+    if (is_even(n)) {
+       double si = std::sin(x);
+       double si2 = 0;  // sin((n-2)*x)
+       double si1 = si; // sin((n-1)*x)
+       sum = si;
+       for (int64_t k = 2; k <= kmax; ++k) {
+          si = 2*co*si1 - si2; // sin(n*x)
+          si2 = si1;
+          si1 = si;
+          sum += si/std::pow(k, n);
+       }
+    } else {
+       double co2 = 1;  // cos((n-2)*x)
+       double co1 = co; // cos((n-1)*x)
+       sum = co;
+       for (int64_t k = 2; k <= kmax; ++k) {
+          const double con = 2*co*co1 - co2; // cos(n*x)
+          co2 = co1;
+          co1 = con;
+          sum += con/std::pow(k, n);
+       }
     }
 
     return sum;
