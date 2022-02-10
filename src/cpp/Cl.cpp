@@ -6,6 +6,11 @@
 
 #include "Cl.hpp"
 #include "Cl1.hpp"
+#include "Cl2.hpp"
+#include "Cl3.hpp"
+#include "Cl4.hpp"
+#include "Cl5.hpp"
+#include "Cl6.hpp"
 #include <cmath>
 #include <limits>
 
@@ -251,10 +256,18 @@ double Cl(int64_t n, double x)
 
    if (n < 1) {
       return std::numeric_limits<double>::quiet_NaN();
-   }
-
-   if (n == 1) {
+   } else if (n == 1) {
       return Cl1(x);
+   } else if (n == 2) {
+      return Cl2(x);
+   } else if (n == 3) {
+      return Cl3(x);
+   } else if (n == 4) {
+      return Cl4(x);
+   } else if (n == 5) {
+      return Cl5(x);
+   } else if (n == 6) {
+      return Cl6(x);
    }
 
    const auto sgn = range_reduce(n, x);
