@@ -202,12 +202,12 @@ double nsum(int64_t n, double x) noexcept
     double sum = 0;
     double xn = 1;
 
-    for (int64_t i = 0; i <= n - 2; ++i) {
+    for (int64_t i = 0; i <= n - 3; ++i) {
        sum += binomial[n - 2][i]*xn*ncal(n - 2 - i, x);
        xn *= -x;
     }
 
-    return sum;
+    return sum + xn*ncal(0, x);
 }
 
 // returns Cl(n,x) using the naive series expansion
