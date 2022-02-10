@@ -85,9 +85,9 @@ constexpr int binomial[8][8] = {
    {1, 7, 21, 35,  35,  21,  7,  1}
 };
 
-// n! for n = 0,...,8
-constexpr int factorial[] = {
-   1, 1, 2, 6, 24, 120, 720, 5040, 40320
+// 1/n! for n = 0,...,8
+constexpr double inverse_factorial[] = {
+   1.0, 1.0, 1.0/2, 1.0/6, 1.0/24, 1.0/120, 1.0/720, 1.0/5040, 1.0/40320
 };
 
 // zeta(n) for n = 2,...,9
@@ -166,7 +166,7 @@ double pcal(int64_t k, double x) noexcept
 
    for (int64_t i = 3; i <= k; i += 2) {
       const double sign = is_even((k - 1)/2 + (i - 1)/2) ? 1.0 : -1.0;
-      sum = x2*sum + sign*zeta[i - 2]/factorial[k - i];
+      sum = x2*sum + sign*zeta[i - 2]*inverse_factorial[k - i];
    }
 
    if (is_even(k)) {
@@ -246,7 +246,7 @@ double Cl(int64_t n, double x)
 {
    static_assert(N_THRESH - 1 <= sizeof(binomial)/sizeof(binomial[0]));
    static_assert(N_THRESH - 1 <= sizeof(binomial[0])/sizeof(binomial[0][0]));
-   static_assert(N_THRESH - 1 <= sizeof(factorial)/sizeof(factorial[0]));
+   static_assert(N_THRESH - 1 <= sizeof(inverse_factorial)/sizeof(inverse_factorial[0]));
    static_assert(N_THRESH - 1 <= sizeof(zeta)/sizeof(zeta[0]));
 
    if (n < 1) {
@@ -268,13 +268,13 @@ double Cl(int64_t n, double x)
 
       // first line in Eq.(2.13)
       const double term1 = x == 0 ? 0
-         : sign1*std::pow(x, n - 1)/factorial[n - 1] *
+         : sign1*std::pow(x, n - 1)*inverse_factorial[n - 1] *
            std::log(2*std::sin(x/2));
 
       const double sign2 = is_even(n/2) ? 1.0 : -1.0;
 
       // second line in Eq.(2.13)
-      const double term2 = pcal(n, x) - sign2/factorial[n - 2]*nsum(n, x);
+      const double term2 = pcal(n, x) - sign2*inverse_factorial[n - 2]*nsum(n, x);
 
       // Eq.(2.13)
       return sgn*(term1 + term2);
