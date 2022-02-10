@@ -317,7 +317,7 @@ void bench(const T& values_d, const U& values_l)
 
    print_headline_2("Cl(n,x)");
 
-   const int ni[] = {2, 4, 6, 10, 16, 1000};
+   const int ni[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 1000};
 
    auto fewer_values_d = values_d;
    fewer_values_d.resize(values_d.size()/10);
