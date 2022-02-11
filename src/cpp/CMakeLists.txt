@@ -12,5 +12,6 @@ add_library(polylog_cpp
   Li4.cpp
   Li5.cpp
   Li6.cpp
+  Sl.cpp
   )
 target_include_directories(polylog_cpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
