@@ -20,8 +20,8 @@ constexpr bool is_even(int64_t n) noexcept
    return n % 2 == 0;
 }
 
-// range-reduces x in [0,pi] for odd n
-void range_reduce_odd(double& x) noexcept
+// range-reduces x in [0,pi] for even n
+void range_reduce_even(double& x) noexcept
 {
    if (x < 0) {
       x = -x;
@@ -38,8 +38,8 @@ void range_reduce_odd(double& x) noexcept
    }
 }
 
-// range-reduces x in [0,pi] for even n, retuns sign
-double range_reduce_even(double& x) noexcept
+// range-reduces x in [0,pi] for odd n, retuns sign
+double range_reduce_odd(double& x) noexcept
 {
    double sgn = 1.0;
 
@@ -68,9 +68,9 @@ double range_reduce(int64_t n, double& x) noexcept
    double sgn = 1.0;
 
    if (is_even(n)) {
-      sgn = range_reduce_even(x);
+      range_reduce_even(x);
    } else {
-      range_reduce_odd(x);
+      sgn = range_reduce_odd(x);
    }
 
    return sgn;
@@ -128,7 +128,7 @@ double Sl(int64_t n, double x)
       return std::numeric_limits<double>::quiet_NaN();
    }
 
-   const auto sgn = range_reduce(n + 1, x);
+   const auto sgn = range_reduce(n, x);
 
    if (n ==  1 && x == 0) { return 0; }
    if (n ==  1) { return sgn*(PI/2 - 1./2*x); }
