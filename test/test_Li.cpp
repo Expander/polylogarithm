@@ -1,15 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN 1
 
 #include "doctest.h"
-#include "Li2.hpp"
-#include "Li3.hpp"
-#include "Li4.hpp"
-#include "Li5.hpp"
-#include "Li6.hpp"
 #include "Li.hpp"
 #include "read_data.hpp"
-#include <cmath>
-#include <utility>
+#include <complex>
+#include <string>
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 
