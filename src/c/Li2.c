@@ -25,8 +25,9 @@ static long double hornerl(long double x, const long double* c, int len)
  * @return \f$\operatorname{Li}_2(x)\f$
  * @author Alexander Voigt
  *
- * Implemented as an economized Pade approximation with a
- * maximum error of 4.16e-18.
+ * Implemented as a rational function approximation with a maximum
+ * error of 5e-17
+ * [[arXiv:2201.01678](https://arxiv.org/abs/2201.01678)].
  */
 double li2(double x)
 {
