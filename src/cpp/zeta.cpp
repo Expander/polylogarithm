@@ -75,12 +75,12 @@ const double ZETAS_NEG[130] = {
     8.7601563446229215e306
 };
 
-bool is_even(int64_t n) { return n % 2 == 0; }
+constexpr bool is_even(int64_t n) noexcept { return n % 2 == 0; }
 
 } // anonymous namespace
 
 /// Riemann zeta function for integer arguments
-double zeta(int64_t n)
+double zeta(int64_t n) noexcept
 {
     if (n < 0) {
         if (is_even(n)) {

@@ -10,6 +10,6 @@
 namespace polylogarithm {
 
 /// Riemann zeta function for arbitrary integer n
-double zeta(int64_t);
+double zeta(int64_t) noexcept;
 
 } // namespace polylogarithm
