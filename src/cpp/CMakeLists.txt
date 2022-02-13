@@ -8,6 +8,7 @@ add_library(polylog_cpp
   Cl6.cpp
   eta.cpp
   harmonic.cpp
+  inv_fac.cpp
   Li.cpp
   Li2.cpp
   Li3.cpp

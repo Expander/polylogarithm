@@ -7,6 +7,7 @@
 #include "Li.hpp"
 #include "eta.hpp"
 #include "harmonic.hpp"
+#include "inv_fac.hpp"
 #include "zeta.hpp"
 #include <array>
 #include <cmath>
@@ -40,28 +41,6 @@ namespace {
       -1.929657934194006e+16, 0, 8.416930475736827e+17, 0,
       -4.033807185405945e+19, 0, 2.115074863808199e+21, 0,
       -1.208662652229652e+23, 0
-   };
-
-   /// 1/n! for n = 1, ..., 50
-   /// Table[1/Factorial[n], {n,1,50}]
-   const double fac_inv[N] = {
-      1                    , 0.5                  , 1./6.                ,
-      4.166666666666666e-02, 8.333333333333333e-03, 1.388888888888889e-03,
-      1.984126984126984e-04, 2.480158730158730e-05, 2.755731922398589e-06,
-      2.755731922398589e-07, 2.505210838544172e-08, 2.087675698786810e-09,
-      1.605904383682161e-10, 1.147074559772973e-11, 7.647163731819816e-13,
-      4.779477332387385e-14, 2.811457254345521e-15, 1.561920696858623e-16,
-      8.220635246624330e-18, 4.110317623312165e-19, 1.957294106339126e-20,
-      8.896791392450574e-22, 3.868170170630684e-23, 1.611737571096118e-24,
-      6.446950284384474e-26, 2.479596263224797e-27, 9.183689863795546e-29,
-      3.279889237069838e-30, 1.130996288644772e-31, 3.769987628815905e-33,
-      1.216125041553518e-34, 3.800390754854744e-36, 1.151633562077195e-37,
-      3.387157535521162e-39, 9.677592958631890e-41, 2.688220266286636e-42,
-      7.265460179153071e-44, 1.911963205040282e-45, 4.902469756513544e-47,
-      1.225617439128386e-48, 2.989310827142405e-50, 7.117406731291439e-52,
-      1.655210867742195e-53, 3.761842881232262e-55, 8.359650847182804e-57,
-      1.817315401561479e-58, 3.866628513960594e-60, 8.055476070751238e-62,
-      1.643974708316579e-63, 3.287949416633158e-65
    };
 
    bool is_close(double a, double b, double eps)
@@ -137,16 +116,6 @@ namespace {
          result += sum/(n + 1.);
       }
 
-      return result;
-   }
-
-   /// factorial
-   double fac(double n)
-   {
-      double result = 1.;
-      for (int64_t i = 1; i <= n; ++i) {
-         result *= i;
-      }
       return result;
    }
 
@@ -262,12 +231,12 @@ namespace {
             continue;
          }
          sum_old = sum;
-         sum += zeta(n-k)/fac(k)*std::pow(mu,k);
+         sum += zeta(n-k)*inv_fac(k)*std::pow(mu,k);
          k++;
       } while (!is_close(sum, sum_old, eps_d) &&
                k < std::numeric_limits<int64_t>::max() - 2);
 
-      return std::pow(mu, n - 1)/fac(n - 1)*(harmonic(n - 1) - clog(-mu)) + sum;
+      return std::pow(mu, n - 1)*inv_fac(n - 1)*(harmonic(n - 1) - clog(-mu)) + sum;
    }
 
 } // anonymous namespace
@@ -306,12 +275,16 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       const std::complex<double> IPI2(0.,2*PI);
       const std::complex<double> lnz = clog(-z);
       y = 1.0/z;
-      r = -std::pow(IPI2, n)/fac(n)*bernoulli_p(n, 0.5 + lnz/IPI2);
+      r = -std::pow(IPI2, n)*inv_fac(n)*bernoulli_p(n, 0.5 + lnz/IPI2);
       sgn = is_even(n) ? -1. : 1.;
    }
 
    if (n >= 12) {
-      return Li_naive_sum(n, z); // @todo(alex): remove
+      const auto li = Li_naive_sum(n, z);
+      const auto liy = Li_naive_sum(n, y);
+      // std::cout << "n = " << n << ", z = " << z << ", y = " << y << ": Li(n,z) = " << li << ", sgn = " << sgn << ", r = " << r << ", Li(n,y) = " << liy << '\n';
+      // return liy;
+      return li; // @todo(alex): remove
       return sgn*Li_naive_sum(n, y) + r;
    }
 
@@ -324,7 +297,7 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
    std::complex<double> sum(0.0, 0.0);
 
    for (int64_t k = N - 1; k >= 0; k--) {
-      sum = u*(sum + xn[k]*fac_inv[k]);
+      sum = u*(sum + xn[k]*inv_fac(k + 1));
    }
 
    return sgn*sum + r;
