@@ -297,31 +297,31 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return {neg_eta(n), 0.0};
    }
 
-   if (n >= 12) {
-      return Li_naive_sum(n, z);
-   }
+   // transformation z to y in the unit circle
+   std::complex<double> y(z), r(0.0, 0.0);
+   double sgn = 1;
 
-   if (is_close(z, 1., 2e-2)) {
-      return Li_expand_around_unity(n,z);
-   }
-
-   std::complex<double> u(0.,0.), r(0.,0.);
-   double sgn = 1.;
-
-   if (std::abs(z) <= 1.) {
-      u = -clog(1. - z);
-   } else { // az > 1.
+   if (std::norm(z) > 1.0) {
       const double PI = 3.141592653589793;
       const std::complex<double> IPI2(0.,2*PI);
       const std::complex<double> lnz = clog(-z);
-      u = -clog(1. - 1./z);
+      y = 1.0/z;
       r = -std::pow(IPI2, n)/fac(n)*bernoulli_p(n, 0.5 + lnz/IPI2);
       sgn = is_even(n) ? -1. : 1.;
    }
 
-   std::complex<double> sum(0.,0.);
+   if (n >= 12) {
+      return Li_naive_sum(n, z); // @todo(alex): remove
+      return sgn*Li_naive_sum(n, y) + r;
+   }
 
+   if (is_close(y, 1., 2e-2)) {
+      return sgn*Li_expand_around_unity(n, y) + r;
+   }
+
+   const std::complex<double> u = -clog(1. - y);
    const std::array<double,N> xn = Xn(n-2);
+   std::complex<double> sum(0.0, 0.0);
 
    for (int64_t k = N - 1; k >= 0; k--) {
       sum = u*(sum + xn[k]*fac_inv[k]);
