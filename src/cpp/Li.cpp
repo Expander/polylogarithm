@@ -6,6 +6,7 @@
 
 #include "Li.hpp"
 #include "eta.hpp"
+#include "harmonic.hpp"
 #include "zeta.hpp"
 #include <array>
 #include <cmath>
@@ -248,18 +249,6 @@ namespace {
       return sum;
    }
 
-   /// Harmonic number n
-   double H(int64_t n)
-   {
-      double sum = 0.;
-
-      for (int64_t h = 1; h <= n; h++) {
-         sum += 1./h;
-      }
-
-      return sum;
-   }
-
    /// Series expansion of Li_n(z) around z ~ 1, n > 0
    std::complex<double> Li_expand_around_unity(int64_t n, const std::complex<double>& z)
    {
@@ -278,7 +267,7 @@ namespace {
       } while (!is_close(sum, sum_old, eps_d) &&
                k < std::numeric_limits<int64_t>::max() - 2);
 
-      return std::pow(mu,n-1)/fac(n-1)*(H(n-1) - clog(-mu)) + sum;
+      return std::pow(mu, n - 1)/fac(n - 1)*(harmonic(n - 1) - clog(-mu)) + sum;
    }
 
 } // anonymous namespace
