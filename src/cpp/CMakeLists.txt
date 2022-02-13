@@ -6,6 +6,7 @@ add_library(polylog_cpp
   Cl4.cpp
   Cl5.cpp
   Cl6.cpp
+  eta.cpp
   Li.cpp
   Li2.cpp
   Li3.cpp

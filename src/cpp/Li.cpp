@@ -5,6 +5,7 @@
 // ====================================================================
 
 #include "Li.hpp"
+#include "eta.hpp"
 #include "zeta.hpp"
 #include <array>
 #include <cmath>
@@ -146,12 +147,6 @@ namespace {
          result *= i;
       }
       return result;
-   }
-
-   /// Dirichlet eta function
-   double eta(int64_t n)
-   {
-      return (1. - std::pow(2.,1-n))*zeta(n);
    }
 
    /// calculates X(p,n) for all possible n < N, p >= 0
@@ -316,7 +311,7 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return {zeta(n), 0.0};
    }
    if (is_close(z, -1., eps_d)) {
-      return {-eta(n), 0.0};
+      return {neg_eta(n), 0.0};
    }
 
    if (n >= 12) {
