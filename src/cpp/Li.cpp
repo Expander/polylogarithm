@@ -5,6 +5,7 @@
 // ====================================================================
 
 #include "Li.hpp"
+#include "zeta.hpp"
 #include <array>
 #include <cmath>
 #include <complex>
@@ -145,38 +146,6 @@ namespace {
          result *= i;
       }
       return result;
-   }
-
-   /// Riemann zeta function for integer s (positive or negative)
-   double zeta(int64_t s)
-   {
-#if __cpp_lib_math_special_functions >= 201603
-      return std::riemann_zeta(s);
-#else
-      if (s == 1) {
-         return inf;
-      }
-
-      double sum = 0., sum_old = 0.;
-      int64_t n = 0;
-
-      do {
-         sum_old = sum;
-
-         double sub_sum = 0.;
-
-         for (int64_t k = 0; k <= n; k++) {
-            const int64_t sgn = is_even(k) ? 1 : -1;
-            sub_sum += binomial(n,k)*sgn*std::pow(k+1,-s);
-         }
-
-         sum += sub_sum*std::pow(2.,-(n+1));
-         n++;
-      } while (!is_close(sum_old, sum, eps_d) &&
-               n < std::numeric_limits<int64_t>::max() - 2);
-
-      return sum/(1. - std::pow(2.,1-s));
-#endif
    }
 
    /// Dirichlet eta function
