@@ -33,8 +33,6 @@ const double NEG_ETA[54] = {
     -0.9999999999999998 , -0.9999999999999999 , -0.9999999999999999
 };
 
-constexpr bool is_even(int64_t n) noexcept { return n % 2 == 0; }
-
 } // anonymous namespace
 
 /// negative Dirichlet eta function
