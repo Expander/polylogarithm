@@ -9,11 +9,9 @@
 #include "harmonic.hpp"
 #include "inv_fac.hpp"
 #include "zeta.hpp"
-#include <array>
 #include <cmath>
 #include <complex>
 #include <cstdint>
-#include <iostream>
 #include <limits>
 #include <vector>
 
