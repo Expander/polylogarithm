@@ -82,25 +82,25 @@ constexpr bool is_even(int64_t n) noexcept { return n % 2 == 0; }
 /// Riemann zeta function for integer arguments
 double zeta(int64_t n) noexcept
 {
-    if (n < 0) {
-        if (is_even(n)) {
-           return 0.0;
-        } else if (-(1 + n)/2 < sizeof(ZETAS_NEG)/sizeof(ZETAS_NEG[0])) {
-            return ZETAS_NEG[-(1 + n)/2];
-        } else if (is_even((1 - n)/2)) {
-           return std::numeric_limits<double>::infinity();
-        } else {
-           return -std::numeric_limits<double>::infinity();
-        }
-    } else if (n == 0) {
-       return -0.5;
-    } else if (n == 1) {
-       return std::numeric_limits<double>::infinity();
-    } else if ((n - 2) < sizeof(ZETAS_POS)/sizeof(ZETAS_POS[0])) {
-       return ZETAS_POS[n - 2];
-    }
+   if (n < 0) {
+      if (is_even(n)) {
+         return 0.0;
+      } else if (-(1 + n)/2 < sizeof(ZETAS_NEG)/sizeof(ZETAS_NEG[0])) {
+         return ZETAS_NEG[-(1 + n)/2];
+      } else if (is_even((1 - n)/2)) {
+         return std::numeric_limits<double>::infinity();
+      } else {
+         return -std::numeric_limits<double>::infinity();
+      }
+   } else if (n == 0) {
+      return -0.5;
+   } else if (n == 1) {
+      return std::numeric_limits<double>::infinity();
+   } else if ((n - 2) < sizeof(ZETAS_POS)/sizeof(ZETAS_POS[0])) {
+      return ZETAS_POS[n - 2];
+   }
 
-    return 1.0/(1.0 - std::pow(0.5, n));
+   return 1.0/(1.0 - std::pow(0.5, n));
 }
 
 } // namespace polylogarithm
