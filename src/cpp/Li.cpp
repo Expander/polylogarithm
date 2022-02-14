@@ -13,6 +13,7 @@
 #include <cmath>
 #include <complex>
 #include <cstdint>
+#include <iostream>
 #include <limits>
 #include <vector>
 
@@ -96,6 +97,8 @@ namespace {
       return result;
    }
 
+   /*
+
    /// Bernoulli polynomial
    std::complex<double> bernoulli_p(int64_t m, const std::complex<double>& z)
    {
@@ -118,6 +121,8 @@ namespace {
 
       return result;
    }
+
+   */
 
    /// calculates X(p,n) for all possible n < N, p >= 0
    std::array<double,N> Xn(int64_t p)
