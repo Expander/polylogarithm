@@ -246,7 +246,17 @@ namespace {
       const std::complex<double> IPI2(0.,2*PI);
       const std::complex<double> lnz = clog(-z);
 
-      return -std::pow(IPI2, n)*inv_fac(n)*bernoulli_p(n, 0.5 + lnz/IPI2);
+      // return -std::pow(IPI2, n)*inv_fac(n)*bernoulli_p(n, 0.5 + lnz/IPI2);
+
+      std::complex<double> sum(0.0, 0.0);
+
+      for (int64_t k = n/2; k != 0; k--) {
+         const double ifac = inv_fac(n - 2*k);
+         if (ifac == 0) { return 2.0*sum; }
+         sum += neg_eta(2*k)*ifac*std::pow(lnz, n - 2*k);
+      }
+
+      return 2.0*sum - std::pow(lnz, n)*inv_fac(n);
    }
 
 } // anonymous namespace
@@ -276,15 +286,6 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return {neg_eta(n), 0.0};
    }
 
-   if (n >= 12) {
-      const auto li = Li_naive_sum(n, z);
-      // const auto liy = Li_naive_sum(n, y);
-      // std::cout << "n = " << n << ", z = " << z << ", y = " << y << ": Li(n,z) = " << li << ", sgn = " << sgn << ", r = " << r << ", Li(n,y) = " << liy << '\n';
-      // return liy;
-      return li; // @todo(alex): remove
-      // return sgn*Li_naive_sum(n, y) + r;
-   }
-
    // transformation z to y in the unit circle
    std::complex<double> y(z), r(0.0, 0.0);
    double sgn = 1;
@@ -293,6 +294,13 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       y = 1.0/z;
       r = Li_rest(n, z);
       sgn = is_even(n) ? -1. : 1.;
+   }
+
+   if (n >= 12) {
+      // const auto li = Li_naive_sum(n, z);
+      // const auto liy = Li_naive_sum(n, y);
+      // std::cout << "n = " << n << ", z = " << z << ", y = " << y << ": Li(n,z) = " << li << ", sgn = " << sgn << ", r = " << r << ", Li(n,y) = " << liy << '\n';
+      return sgn*Li_naive_sum(n, y) + r;
    }
 
    if (is_close(y, 1., 2e-2)) {
