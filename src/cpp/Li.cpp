@@ -20,6 +20,7 @@ namespace polylogarithm {
 namespace {
    const double eps_d = 10.0*std::numeric_limits<double>::epsilon();
    const double inf = std::numeric_limits<double>::infinity();
+   const double nan = std::numeric_limits<double>::quiet_NaN();
 
    bool is_close(double a, double b, double eps)
    {
@@ -205,7 +206,11 @@ namespace {
  */
 std::complex<double> Li(int64_t n, const std::complex<double>& z)
 {
-   if (z == 0.0) {
+   if (std::isnan(std::real(z)) || std::isnan(std::imag(z))) {
+      return {nan, nan};
+   } else if (std::isinf(std::real(z)) || std::isinf(std::imag(z))) {
+      return {-inf, 0.0};
+   } else if (z == 0.0) {
       return {0.0, 0.0};
    } else if (z == 1.0) {
       return {zeta(n), 0.0};
