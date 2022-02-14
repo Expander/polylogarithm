@@ -109,10 +109,6 @@ namespace {
          result = frac*(result + sum);
       }
 
-      if (is_close(std::imag(z), 0., eps_d)) {
-         result.imag(0.);
-      }
-
       return result;
    }
 
