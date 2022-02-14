@@ -14,18 +14,6 @@
       CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                   \
    } while (0)
 
-TEST_CASE("test_special_values")
-{
-   const double inf = std::numeric_limits<double>::infinity();
-   const double nan = std::numeric_limits<double>::quiet_NaN();
-
-   CHECK(std::isnan(std::real(polylogarithm::Li(10, nan))));
-   CHECK(std::isnan(std::imag(polylogarithm::Li(10, nan))));
-
-   CHECK(std::isinf(std::real(polylogarithm::Li(10, inf))));
-   CHECK(std::imag(polylogarithm::Li(10, inf)) == 0.0);
-}
-
 TEST_CASE("test_complex_fixed_values")
 {
    const auto eps = 1e-13;
