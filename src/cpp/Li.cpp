@@ -248,20 +248,33 @@ namespace {
    std::complex<double> Li_rest(int64_t n, const std::complex<double>& z) noexcept
    {
       const double PI = 3.141592653589793;
-      const std::complex<double> IPI2(0.,2*PI);
       const std::complex<double> lnz = clog(-z);
+      const std::complex<double> lnz2 = lnz*lnz;
 
+      // const std::complex<double> IPI2(0.,2*PI);
       // return -std::pow(IPI2, n)*inv_fac(n)*bernoulli_p(n, 0.5 + lnz/IPI2);
 
       std::complex<double> sum(0.0, 0.0);
+      std::complex<double> p(1.0, 0.0);
 
-      for (int64_t k = n/2; k != 0; k--) {
-         const double ifac = inv_fac(n - 2*k);
-         if (ifac == 0) { return 2.0*sum; }
-         sum += neg_eta(2*k)*ifac*std::pow(lnz, n - 2*k);
+      if (is_even(n)) {
+         for (int64_t k = n/2; k != 0; k--) {
+            const double ifac = inv_fac(n - 2*k);
+            if (ifac == 0) { return 2.0*sum; }
+            sum += neg_eta(2*k)*ifac*p;
+            p *= lnz2;
+         }
+      } else {
+         p = lnz;
+         for (int64_t k = (n - 1)/2; k != 0; k--) {
+            const double ifac = inv_fac(n - 2*k);
+            if (ifac == 0) { return 2.0*sum; }
+            sum += neg_eta(2*k)*ifac*p;
+            p *= lnz2;
+         }
       }
 
-      return 2.0*sum - std::pow(lnz, n)*inv_fac(n);
+      return 2.0*sum - p*inv_fac(n);
    }
 
 } // anonymous namespace
