@@ -239,6 +239,16 @@ namespace {
       return std::pow(mu, n - 1)*inv_fac(n - 1)*(harmonic(n - 1) - clog(-mu)) + sum;
    }
 
+   /// returns remainder from inversion formula
+   std::complex<double> Li_rest(int64_t n, const std::complex<double>& z) noexcept
+   {
+      const double PI = 3.141592653589793;
+      const std::complex<double> IPI2(0.,2*PI);
+      const std::complex<double> lnz = clog(-z);
+
+      return -std::pow(IPI2, n)*inv_fac(n)*bernoulli_p(n, 0.5 + lnz/IPI2);
+   }
+
 } // anonymous namespace
 
 /**
@@ -266,26 +276,23 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return {neg_eta(n), 0.0};
    }
 
+   if (n >= 12) {
+      const auto li = Li_naive_sum(n, z);
+      // const auto liy = Li_naive_sum(n, y);
+      // std::cout << "n = " << n << ", z = " << z << ", y = " << y << ": Li(n,z) = " << li << ", sgn = " << sgn << ", r = " << r << ", Li(n,y) = " << liy << '\n';
+      // return liy;
+      return li; // @todo(alex): remove
+      // return sgn*Li_naive_sum(n, y) + r;
+   }
+
    // transformation z to y in the unit circle
    std::complex<double> y(z), r(0.0, 0.0);
    double sgn = 1;
 
    if (std::norm(z) > 1.0) {
-      const double PI = 3.141592653589793;
-      const std::complex<double> IPI2(0.,2*PI);
-      const std::complex<double> lnz = clog(-z);
       y = 1.0/z;
-      r = -std::pow(IPI2, n)*inv_fac(n)*bernoulli_p(n, 0.5 + lnz/IPI2);
+      r = Li_rest(n, z);
       sgn = is_even(n) ? -1. : 1.;
-   }
-
-   if (n >= 12) {
-      const auto li = Li_naive_sum(n, z);
-      const auto liy = Li_naive_sum(n, y);
-      // std::cout << "n = " << n << ", z = " << z << ", y = " << y << ": Li(n,z) = " << li << ", sgn = " << sgn << ", r = " << r << ", Li(n,y) = " << liy << '\n';
-      // return liy;
-      return li; // @todo(alex): remove
-      return sgn*Li_naive_sum(n, y) + r;
    }
 
    if (is_close(y, 1., 2e-2)) {
