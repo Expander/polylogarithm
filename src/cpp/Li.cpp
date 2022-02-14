@@ -18,30 +18,30 @@
 namespace polylogarithm {
 
 namespace {
-   const double eps_d = 10.0*std::numeric_limits<double>::epsilon();
-   const double inf = std::numeric_limits<double>::infinity();
-   const double nan = std::numeric_limits<double>::quiet_NaN();
+   constexpr double eps_d = 10.0*std::numeric_limits<double>::epsilon();
+   constexpr double inf = std::numeric_limits<double>::infinity();
+   constexpr double nan = std::numeric_limits<double>::quiet_NaN();
 
-   bool is_close(double a, double b, double eps)
+   bool is_close(double a, double b, double eps) noexcept
    {
       return std::abs(a - b) < eps;
    }
 
    bool is_close(const std::complex<double>& a, double b,
-                 double eps)
+                 double eps) noexcept
    {
       return is_close(std::real(a), b, eps) &&
              is_close(std::imag(a), 0.0, eps);
    }
 
    bool is_close(const std::complex<double>& a, const std::complex<double>& b,
-                 double eps)
+                 double eps) noexcept
    {
       return is_close(std::real(a), std::real(b), eps) &&
              is_close(std::imag(a), std::imag(b), eps);
    }
 
-   bool is_even(int64_t n) { return n % 2 == 0; }
+   constexpr bool is_even(int64_t n) noexcept { return n % 2 == 0; }
 
    /// complex logarithm, converts -0.0 to 0.0
    std::complex<double> clog(const std::complex<double>& z) noexcept
@@ -58,7 +58,7 @@ namespace {
 
    /// Binomial coefficients
    /// https://www.geeksforgeeks.org/space-and-time-efficient-binomial-coefficient/
-   double binomial(int64_t n, int64_t k)
+   double binomial(int64_t n, int64_t k) noexcept
    {
       double result = 1.;
 
@@ -76,7 +76,7 @@ namespace {
    }
 
    // n > 0
-   std::vector<double> powers_to(int64_t exponent, int64_t n)
+   std::vector<double> powers_to(int64_t exponent, int64_t n) noexcept
    {
       std::vector<double> powers(n);
       powers[0] = 0.0;
@@ -89,7 +89,7 @@ namespace {
    }
 
    /// series expansion of Li_n(z) for n <= 0
-   std::complex<double> Li_negative(int64_t n, const std::complex<double>& z)
+   std::complex<double> Li_negative(int64_t n, const std::complex<double>& z) noexcept
    {
       if (is_close(z, {1.,0.}, eps_d)) {
          return {inf, inf};
@@ -118,7 +118,7 @@ namespace {
 
    /// Series expansion of Li_n(z) in terms of powers of z.
    /// Fast convergence for large n >= 12.
-   std::complex<double> Li_naive_sum(int64_t n, const std::complex<double>& z)
+   std::complex<double> Li_naive_sum(int64_t n, const std::complex<double>& z) noexcept
    {
       std::complex<double> sum(0.,0.), sum_old(0.,0.);
       std::complex<double> pz(1.,0.);
@@ -136,7 +136,7 @@ namespace {
    }
 
    /// Series expansion of Li_n(z) around z ~ 1, n > 0
-   std::complex<double> Li_expand_around_unity(int64_t n, const std::complex<double>& z)
+   std::complex<double> Li_expand_around_unity(int64_t n, const std::complex<double>& z) noexcept
    {
       const std::complex<double> lnz = clog(z);
       const std::complex<double> lnz2 = lnz*lnz;
