@@ -205,7 +205,13 @@ namespace {
  */
 std::complex<double> Li(int64_t n, const std::complex<double>& z)
 {
-   if (n < 0) {
+   if (z == 0.0) {
+      return {0.0, 0.0};
+   } else if (z == 1.0) {
+      return {zeta(n), 0.0};
+   } else if (z == -1.0) {
+      return {neg_eta(n), 0.0};
+   } else if (n < 0) {
       return Li_negative(n,z);
    } else if (n == 0) {
       if (is_close(z, {1.0, 0.0}, eps_d)) {
@@ -214,12 +220,6 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return z/(1.0 - z);
    } else if (n == 1) {
       return -clog(1.0 - z);
-   } else if (z == 0.0) {
-      return {0.0, 0.0};
-   } else if (z == 1.0) {
-      return {zeta(n), 0.0};
-   } else if (z == -1.0) {
-      return {neg_eta(n), 0.0};
    } else if (std::abs(z) <= 0.75) {
       return Li_naive_sum(n, z);
    } else if (std::abs(z) >= 1.4) {
