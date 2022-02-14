@@ -214,9 +214,6 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
    } else if (n < 0) {
       return Li_negative(n,z);
    } else if (n == 0) {
-      if (is_close(z, {1.0, 0.0}, eps_d)) {
-         return {inf, inf};
-      }
       return z/(1.0 - z);
    } else if (n == 1) {
       return -clog(1.0 - z);
