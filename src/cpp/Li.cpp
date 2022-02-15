@@ -37,7 +37,7 @@ namespace {
 
    /// Series expansion of Li_n(z) in terms of powers of z.
    /// Fast convergence for large n >= 12.
-   std::complex<double> Li_naive_sum(int64_t n, const std::complex<double>& z) noexcept
+   std::complex<double> Li_series(int64_t n, const std::complex<double>& z) noexcept
    {
       std::complex<double> sum(0.0, 0.0), sum_old(0.0, 0.0), p(1.0, 0.0);
       int64_t k = 0;
@@ -165,10 +165,10 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
    } else if (n == 1) {
       return -clog(1.0 - z);
    } else if (std::abs(z) <= 0.75) {
-      return Li_naive_sum(n, z);
+      return Li_series(n, z);
    } else if (std::abs(z) >= 1.4) {
       const double sgn = is_even(n) ? -1.0 : 1.0;
-      return sgn*Li_naive_sum(n, 1.0/z) + Li_rest(n, z);
+      return sgn*Li_series(n, 1.0/z) + Li_rest(n, z);
    } else if (n < 0) {
       return Li_unity_neg(n, z);
    }
