@@ -165,6 +165,10 @@ namespace {
    /// returns remainder from inversion formula
    std::complex<double> Li_rest(int64_t n, const std::complex<double>& z) noexcept
    {
+      if (n < 0) {
+         return 0.0;
+      }
+
       const double PI = 3.141592653589793;
       const std::complex<double> lnz = clog(-z);
       const std::complex<double> lnz2 = lnz*lnz;
