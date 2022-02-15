@@ -6,6 +6,7 @@
 
 #pragma once
 #include <complex>
+#include <cstdint>
 
 namespace polylogarithm {
 
