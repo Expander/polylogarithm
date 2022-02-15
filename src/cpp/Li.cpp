@@ -35,38 +35,6 @@ namespace {
       return { 0.5*std::log(n), a };
    }
 
-   /// Series expansion of Li_n(z) around z ~ 1, n < 0
-   std::complex<double> Li_unity_neg(int64_t n, const std::complex<double>& z) noexcept
-   {
-      if (z == 1.0) {
-         return {inf, inf};
-      }
-
-      const std::complex<double> lnz = clog(z);
-      const std::complex<double> lnz2 = lnz*lnz;
-      std::complex<double> sum = std::tgamma(1 - n)*std::pow(-lnz, n - 1);
-      std::complex<double> lnzk, sum_old;
-      int64_t k;
-
-      if (is_even(n)) {
-         lnzk = lnz;
-         k = 1;
-      } else {
-         lnzk = lnz2;
-         sum += zeta(n);
-         k = 2;
-      }
-
-      do {
-         sum_old = sum;
-         sum += zeta(n - k)*inv_fac(k)*lnzk;
-         lnzk *= lnz2;
-         k += 2;
-      } while (sum != sum_old);
-
-      return sum;
-   }
-
    /// Series expansion of Li_n(z) in terms of powers of z.
    /// Fast convergence for large n >= 12.
    std::complex<double> Li_naive_sum(int64_t n, const std::complex<double>& z) noexcept
@@ -116,6 +84,34 @@ namespace {
       return sum;
    }
 
+   /// Series expansion of Li_n(z) around z ~ 1, n < 0
+   std::complex<double> Li_unity_neg(int64_t n, const std::complex<double>& z) noexcept
+   {
+      const std::complex<double> lnz = clog(z);
+      const std::complex<double> lnz2 = lnz*lnz;
+      std::complex<double> sum = std::tgamma(1 - n)*std::pow(-lnz, n - 1);
+      std::complex<double> lnzk, sum_old;
+      int64_t k;
+
+      if (is_even(n)) {
+         lnzk = lnz;
+         k = 1;
+      } else {
+         lnzk = lnz2;
+         sum += zeta(n);
+         k = 2;
+      }
+
+      do {
+         sum_old = sum;
+         sum += zeta(n - k)*inv_fac(k)*lnzk;
+         lnzk *= lnz2;
+         k += 2;
+      } while (sum != sum_old);
+
+      return sum;
+   }
+
    /// returns remainder from inversion formula
    std::complex<double> Li_rest(int64_t n, const std::complex<double>& z) noexcept
    {
@@ -156,6 +152,9 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
    } else if (z == 0.0) {
       return {0.0, 0.0};
    } else if (z == 1.0) {
+      if (n <= 0) {
+         return {inf, inf};
+      }
       return {zeta(n), 0.0};
    } else if (z == -1.0) {
       return {neg_eta(n), 0.0};
