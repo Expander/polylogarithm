@@ -4,7 +4,7 @@
 // Polylogarithm is licenced under the MIT License.
 // ====================================================================
 
-#include "inv_fac.hpp"
+#include "factorial.hpp"
 #include <limits>
 
 namespace polylogarithm {

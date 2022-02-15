@@ -7,7 +7,7 @@
 #include "Li.hpp"
 #include "eta.hpp"
 #include "harmonic.hpp"
-#include "inv_fac.hpp"
+#include "factorial.hpp"
 #include "zeta.hpp"
 #include <cmath>
 #include <complex>
