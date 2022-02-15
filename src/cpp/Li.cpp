@@ -6,8 +6,8 @@
 
 #include "Li.hpp"
 #include "eta.hpp"
-#include "harmonic.hpp"
 #include "factorial.hpp"
+#include "harmonic.hpp"
 #include "zeta.hpp"
 #include <cmath>
 #include <complex>
