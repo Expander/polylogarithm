@@ -124,7 +124,7 @@ namespace {
          k++;
          pz *= z;
          sum_old = sum;
-         sum += pz/std::pow(k,n);
+         sum += pz*std::pow(k, -n);
       } while (!is_close(sum, sum_old, eps_d) &&
                k < std::numeric_limits<int64_t>::max() - 2);
 
