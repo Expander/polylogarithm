@@ -35,8 +35,8 @@ namespace {
       return { 0.5*std::log(n), a };
    }
 
-   /// series expansion of Li_n(z) for n <= 0
-   std::complex<double> Li_expand_around_unity_neg(int64_t n, const std::complex<double>& z) noexcept
+   /// Series expansion of Li_n(z) around z ~ 1, n < 0
+   std::complex<double> Li_unity_neg(int64_t n, const std::complex<double>& z) noexcept
    {
       if (z == 1.0) {
          return {inf, inf};
@@ -62,7 +62,7 @@ namespace {
          sum += zeta(n - k)*inv_fac(k)*lnzk;
          lnzk *= lnz2;
          k += 2;
-      } while(sum != sum_old);
+      } while (sum != sum_old);
 
       return sum;
    }
@@ -71,15 +71,14 @@ namespace {
    /// Fast convergence for large n >= 12.
    std::complex<double> Li_naive_sum(int64_t n, const std::complex<double>& z) noexcept
    {
-      std::complex<double> sum(0.,0.), sum_old(0.,0.);
-      std::complex<double> pz(1.,0.);
+      std::complex<double> sum(0.0, 0.0), sum_old(0.0, 0.0), p(1.0, 0.0);
       int64_t k = 0;
 
       do {
          k++;
-         pz *= z;
+         p *= z;
          sum_old = sum;
-         sum += pz*std::pow(k, -n);
+         sum += p*std::pow(k, -n);
       } while (sum != sum_old &&
                k < std::numeric_limits<int64_t>::max() - 2);
 
@@ -87,7 +86,7 @@ namespace {
    }
 
    /// Series expansion of Li_n(z) around z ~ 1, n > 0
-   std::complex<double> Li_expand_around_unity(int64_t n, const std::complex<double>& z) noexcept
+   std::complex<double> Li_unity_pos(int64_t n, const std::complex<double>& z) noexcept
    {
       const std::complex<double> lnz = clog(z);
       const std::complex<double> lnz2 = lnz*lnz;
@@ -127,8 +126,7 @@ namespace {
       const std::complex<double> lnz = clog(-z);
       const std::complex<double> lnz2 = lnz*lnz;
 
-      std::complex<double> sum(0.0, 0.0);
-      std::complex<double> p(1.0, 0.0);
+      std::complex<double> sum(0.0, 0.0), p(1.0, 0.0);
 
       if (is_even(n)) {
          for (int64_t k = n/2; k != 0; k--) {
@@ -182,9 +180,9 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       const double sgn = is_even(n) ? -1.0 : 1.0;
       return sgn*Li_naive_sum(n, 1.0/z) + Li_rest(n, z);
    } else if (n < 0) {
-      return Li_expand_around_unity_neg(n, z);
+      return Li_unity_neg(n, z);
    }
-   return Li_expand_around_unity(n, z);
+   return Li_unity_pos(n, z);
 }
 
 } // namespace polylogarithm
