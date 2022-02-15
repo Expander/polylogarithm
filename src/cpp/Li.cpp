@@ -216,8 +216,6 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return {zeta(n), 0.0};
    } else if (z == -1.0) {
       return {neg_eta(n), 0.0};
-   } else if (n < 0) {
-      return Li_negative(n,z);
    } else if (n == 0) {
       return z/(1.0 - z);
    } else if (n == 1) {
@@ -227,6 +225,8 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
    } else if (std::abs(z) >= 1.4) {
       const double sgn = is_even(n) ? -1.0 : 1.0;
       return sgn*Li_naive_sum(n, 1.0/z) + Li_rest(n, z);
+   } else if (n < 0) {
+      return Li_negative(n, z);
    }
    return Li_expand_around_unity(n, z);
 }
