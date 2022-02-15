@@ -7,8 +7,8 @@ add_library(polylog_cpp
   Cl5.cpp
   Cl6.cpp
   eta.cpp
-  harmonic.cpp
   factorial.cpp
+  harmonic.cpp
   Li.cpp
   Li2.cpp
   Li3.cpp
