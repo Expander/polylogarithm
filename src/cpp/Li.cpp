@@ -13,33 +13,12 @@
 #include <complex>
 #include <cstdint>
 #include <limits>
-#include <vector>
 
 namespace polylogarithm {
 
 namespace {
-   constexpr double eps_d = 10.0*std::numeric_limits<double>::epsilon();
    constexpr double inf = std::numeric_limits<double>::infinity();
    constexpr double nan = std::numeric_limits<double>::quiet_NaN();
-
-   bool is_close(double a, double b, double eps) noexcept
-   {
-      return std::abs(a - b) < eps;
-   }
-
-   bool is_close(const std::complex<double>& a, double b,
-                 double eps) noexcept
-   {
-      return is_close(std::real(a), b, eps) &&
-             is_close(std::imag(a), 0.0, eps);
-   }
-
-   bool is_close(const std::complex<double>& a, const std::complex<double>& b,
-                 double eps) noexcept
-   {
-      return is_close(std::real(a), std::real(b), eps) &&
-             is_close(std::imag(a), std::imag(b), eps);
-   }
 
    constexpr bool is_even(int64_t n) noexcept { return n % 2 == 0; }
 
@@ -56,66 +35,10 @@ namespace {
       return { 0.5*std::log(n), a };
    }
 
-   /// Binomial coefficients
-   /// https://www.geeksforgeeks.org/space-and-time-efficient-binomial-coefficient/
-   double binomial(int64_t n, int64_t k) noexcept
-   {
-      double result = 1.;
-
-      // (n, k) = (n, n-k)
-      if (k > n - k) {
-         k = n - k;
-      }
-
-      for (int64_t i = 0; i < k; i++) {
-         result *= (n - i);
-         result /= (i + 1);
-      }
-
-      return result;
-   }
-
-   // n > 0
-   std::vector<double> powers_to(int64_t exponent, int64_t n) noexcept
-   {
-      std::vector<double> powers(n);
-      powers[0] = 0.0;
-
-      for (int64_t k = 1; k < n; k++) {
-         powers[k] = std::pow(k, exponent);
-      }
-
-      return powers;
-   }
-
-   /// series expansion of Li_n(z) for n <= 0
-   std::complex<double> Li_negative(int64_t n, const std::complex<double>& z) noexcept
-   {
-      if (is_close(z, {1.,0.}, eps_d)) {
-         return {inf, inf};
-      }
-
-      const std::complex<double> frac = -z/(1. - z);
-      const std::vector<double> powers = powers_to(-n, -n + 2);
-      std::complex<double> result(0.,0.);
-
-      for (int64_t k = -n; k >= 0; k--) {
-         double sum = 0.;
-         for (int64_t j = 0; j <= k; j++) {
-            const int64_t sgn = is_even(j) ? -1 : 1;
-            sum += sgn*binomial(k,j)*powers[j+1];
-         }
-
-         result = frac*(result + sum);
-      }
-
-      return result;
-   }
-
    /// series expansion of Li_n(z) for n <= 0
    std::complex<double> Li_expand_around_unity_neg(int64_t n, const std::complex<double>& z) noexcept
    {
-      if (is_close(z, {1.0, 0.0}, eps_d)) {
+      if (z == 1.0) {
          return {inf, inf};
       }
 
@@ -157,7 +80,7 @@ namespace {
          pz *= z;
          sum_old = sum;
          sum += pz*std::pow(k, -n);
-      } while (!is_close(sum, sum_old, eps_d) &&
+      } while (sum != sum_old &&
                k < std::numeric_limits<int64_t>::max() - 2);
 
       return sum;
@@ -201,7 +124,6 @@ namespace {
          return 0.0;
       }
 
-      const double PI = 3.141592653589793;
       const std::complex<double> lnz = clog(-z);
       const std::complex<double> lnz2 = lnz*lnz;
 
