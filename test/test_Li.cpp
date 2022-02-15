@@ -16,7 +16,7 @@
 
 TEST_CASE("test_complex_fixed_values")
 {
-   const auto eps = 1e-13;
+   const auto eps = 1e-12;
    const int ni[] = {-2, -1, 0, 1, 2, 3, 4, 5, 6, 100};
 
    for (const auto n: ni) {

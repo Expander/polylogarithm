@@ -112,6 +112,38 @@ namespace {
       return result;
    }
 
+   /// series expansion of Li_n(z) for n <= 0
+   std::complex<double> Li_expand_around_unity_neg(int64_t n, const std::complex<double>& z) noexcept
+   {
+      if (is_close(z, {1.0, 0.0}, eps_d)) {
+         return {inf, inf};
+      }
+
+      const std::complex<double> lnz = clog(z);
+      const std::complex<double> lnz2 = lnz*lnz;
+      std::complex<double> sum = std::tgamma(1 - n)*std::pow(-lnz, n - 1);
+      std::complex<double> lnzk, sum_old;
+      int64_t k;
+
+      if (is_even(n)) {
+         lnzk = lnz;
+         k = 1;
+      } else {
+         lnzk = lnz2;
+         sum += zeta(n);
+         k = 2;
+      }
+
+      do {
+         sum_old = sum;
+         sum += zeta(n - k)*inv_fac(k)*lnzk;
+         lnzk *= lnz2;
+         k += 2;
+      } while(sum != sum_old);
+
+      return sum;
+   }
+
    /// Series expansion of Li_n(z) in terms of powers of z.
    /// Fast convergence for large n >= 12.
    std::complex<double> Li_naive_sum(int64_t n, const std::complex<double>& z) noexcept
@@ -216,6 +248,8 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return {zeta(n), 0.0};
    } else if (z == -1.0) {
       return {neg_eta(n), 0.0};
+   } else if (n == -1) {
+      return z/((1.0 - z)*(1.0 - z));
    } else if (n == 0) {
       return z/(1.0 - z);
    } else if (n == 1) {
@@ -226,7 +260,7 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       const double sgn = is_even(n) ? -1.0 : 1.0;
       return sgn*Li_naive_sum(n, 1.0/z) + Li_rest(n, z);
    } else if (n < 0) {
-      return Li_negative(n, z);
+      return Li_expand_around_unity_neg(n, z);
    }
    return Li_expand_around_unity(n, z);
 }
