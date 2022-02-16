@@ -39,14 +39,14 @@ namespace {
    /// Fast convergence for large n >= 12.
    std::complex<double> Li_series(int64_t n, const std::complex<double>& z) noexcept
    {
-      std::complex<double> sum(0.0, 0.0), sum_old(0.0, 0.0), p(1.0, 0.0);
+      std::complex<double> sum(0.0, 0.0), sum_old(0.0, 0.0), p = z;
       int64_t k = 0;
 
       do {
          k++;
-         p *= z;
          sum_old = sum;
-         sum += p*std::pow(k, -n);
+         sum += p;
+         p *= z*std::pow(k/(1.0 + k), n);
       } while (sum != sum_old &&
                k < std::numeric_limits<int64_t>::max() - 2);
 
