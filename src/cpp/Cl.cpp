@@ -268,10 +268,14 @@ double cl_series(int64_t n, double x) noexcept
  */
 double Cl(int64_t n, double x)
 {
-   static_assert(N_THRESH - 1 <= sizeof(binomial)/sizeof(binomial[0]));
-   static_assert(N_THRESH - 1 <= sizeof(binomial[0])/sizeof(binomial[0][0]));
-   static_assert(N_THRESH - 1 <= sizeof(inverse_factorial)/sizeof(inverse_factorial[0]));
-   static_assert(N_THRESH - 1 <= sizeof(zeta)/sizeof(zeta[0]));
+   static_assert(N_THRESH - 1 <= sizeof(binomial)/sizeof(binomial[0]),
+                 "not enough pre-computed binomial numbers");
+   static_assert(N_THRESH - 1 <= sizeof(binomial[0])/sizeof(binomial[0][0]),
+                 "not enough pre-computed binomial numbers");
+   static_assert(N_THRESH - 1 <= sizeof(inverse_factorial)/sizeof(inverse_factorial[0]),
+                 "not enough pre-computed inverse factorials");
+   static_assert(N_THRESH - 1 <= sizeof(zeta)/sizeof(zeta[0]),
+                 "not enough pre-computed zeta values");
 
    if (n < 1) {
       return std::numeric_limits<double>::quiet_NaN();
