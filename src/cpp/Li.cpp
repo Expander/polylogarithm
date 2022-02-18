@@ -165,7 +165,7 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return z/(1.0 - z);
    } else if (n == 1) {
       return -clog(1.0 - z);
-   } else if (n < 0 && std::abs(clog(z)) < 0.512*2*PI) {
+   } else if (n < 0 && std::norm(clog(z)) < 0.512*0.512*4*PI*PI) {
       return Li_unity_neg(n, z);
    } else if (std::abs(z) <= 0.75) {
       return Li_series(n, z);
