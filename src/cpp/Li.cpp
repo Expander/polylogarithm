@@ -140,10 +140,6 @@ namespace {
    /// returns remainder from inversion formula
    std::complex<double> Li_rest(int64_t n, const std::complex<double>& z) noexcept
    {
-      if (n < 0) {
-         return 0.0;
-      }
-
       const std::complex<double> lnz = clog(-z);
       const std::complex<double> lnz2 = lnz*lnz;
       const int64_t kmax = is_even(n) ? n/2 : (n - 1)/2;
