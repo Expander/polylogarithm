@@ -17,6 +17,52 @@ individual source code files can be easily extracted and incorporated
 into existing projects.
 
 
+Example
+-------
+
+```.cpp
+#include "Li.hpp"
+#include "Li2.hpp"
+#include "Li3.hpp"
+#include "Li4.hpp"
+#include "Li5.hpp"
+#include "Li6.hpp"
+#include <iostream>
+
+int main() {
+   using namespace polylogarithm;
+
+   const double x = 1.0;
+   const std::complex<double> z(1.0, 1.0);
+
+   // real polylogarithms for real arguments
+   std::cout << "Li_2(" << x << ") = " << Li2(x) << '\n';
+
+   // complex polylogarithms for complex arguments
+   std::cout
+      << "Li_2(" << z << ") = " << Li2(z) << '\n'
+      << "Li_3(" << z << ") = " << Li3(z) << '\n'
+      << "Li_4(" << z << ") = " << Li4(z) << '\n'
+      << "Li_5(" << z << ") = " << Li5(z) << '\n'
+      << "Li_6(" << z << ") = " << Li6(z) << '\n'
+      << "Li_10(" << z << ") = " << Li(10,z) << '\n'
+      ;
+}
+```
+
+Output:
+
+```
+Li_2(1) = 1.64493
+Li_2((1,1)) = (0.61685,1.46036)
+Li_3((1,1)) = (0.871159,1.26708)
+Li_4((1,1)) = (0.959319,1.13804)
+Li_5((1,1)) = (0.987467,1.06844)
+Li_6((1,1)) = (0.99615,1.03355)
+Li_10((1,1)) = (0.999962,1.00199)
+```
+
+
 Notes
 -----
 
@@ -27,7 +73,7 @@ implementation in [SPheno](https://spheno.hepforge.org/).
 Citation
 --------
 
-~~~
+```.bibtex
 @software{polylogarithm,
     author       = {{Alexander Voigt}},
     title        = {{Polylogarithm}},
@@ -36,7 +82,7 @@ Citation
     url          = {https://github.com/Expander/polylogarithm},
     note         = {[License: MIT]}
 }
-~~~
+```
 
 
 Copying
