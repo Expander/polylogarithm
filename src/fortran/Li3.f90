@@ -22,9 +22,9 @@ double precision function dli3_neg(x)
   x2 = x*x
   x4 = x2*x2
   p = cp(1) + x*cp(2) + x2*(cp(3) + x*cp(4)) +             &
-       x4*(cp(5) + x*cp(6))
+      x4*(cp(5) + x*cp(6))
   q = cq(1) + x*cq(2) + x2*(cq(3) + x*cq(4)) +             &
-       x4*(cq(5) + x*cq(6) + x2*cq(7))
+      x4*(cq(5) + x*cq(6) + x2*cq(7))
 
   dli3_neg = x*p/q
 
@@ -48,9 +48,9 @@ double precision function dli3_pos(x)
   x2 = x*x
   x4 = x2*x2
   p = cp(1) + x*cp(2) + x2*(cp(3) + x*cp(4)) +             &
-       x4*(cp(5) + x*cp(6))
+      x4*(cp(5) + x*cp(6))
   q = cq(1) + x*cq(2) + x2*(cq(3) + x*cq(4)) +             &
-       x4*(cq(5) + x*cq(6) + x2*cq(7))
+      x4*(cq(5) + x*cq(6) + x2*cq(7))
 
   dli3_pos = x*p/q
 
