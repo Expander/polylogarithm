@@ -9,7 +9,7 @@
 
 namespace polylogarithm {
 
-/// Clausen function for arbitrary integer n
+/// Standard Clausen function for arbitrary integer n
 double Cl(int64_t, double);
 
 } // namespace polylogarithm

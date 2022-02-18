@@ -5,9 +5,9 @@ Polylogarithm
 
 The Polylogarithm package provides C, C++ and Fortran implementations
 of various polylogarithms, including the real and complex dilogarithm,
-trilogarithm, and standard Clausen functions.  The implementations
-have been fully tested against the literature and many other
-implementations and are highly optimized for fast numerical
+trilogarithm, and (Standard and Glaisher) Clausen functions.  The
+implementations have been fully tested against the literature and many
+other implementations and are highly optimized for fast numerical
 evaluation.
 
 The package has no external dependencies, except for the C/C++/Fortran
