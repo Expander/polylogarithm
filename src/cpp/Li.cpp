@@ -90,7 +90,10 @@ namespace {
    {
       const std::complex<double> lnz = clog(z);
       const std::complex<double> lnz2 = lnz*lnz;
-      std::complex<double> sum = std::tgamma(1 - n)*std::pow(-lnz, n - 1);
+      const std::complex<double> lnzn = std::imag(lnz) == 0
+                                           ? std::pow(-std::real(lnz), n - 1)
+                                           : std::pow(-lnz, n - 1);
+      std::complex<double> sum = std::tgamma(1 - n)*lnzn;
       std::complex<double> lnzk, sum_old;
       int64_t k;
 
