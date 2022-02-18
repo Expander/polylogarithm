@@ -151,13 +151,16 @@ TEST_CASE("test_real_fixed_values")
       const auto li64_expected = static_cast<double>(li128_expected);
 
       if (std::imag(z128) == 0.0L) {
-         const auto li64_poly = polylogarithm::Li3(x64);
+         const auto li64_poly   = polylogarithm::Li3(x64);
+         const auto li64_poly_c = li3(x64);
 
          INFO("x(64)         = " << x64);
          INFO("Li3(64)  real = " << li64_expected  << " (expected)");
          INFO("Li3(64)  real = " << li64_poly      << " (polylogarithm C++)");
+         INFO("Li3(64)  real = " << li64_poly_c    << " (polylogarithm C)");
 
-         CHECK_CLOSE(li64_poly, li64_expected, eps64);
+         CHECK_CLOSE(li64_poly  , li64_expected, eps64);
+         CHECK_CLOSE(li64_poly_c, li64_expected, eps64);
       }
    }
 }
