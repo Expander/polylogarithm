@@ -163,6 +163,11 @@ namespace {
  * @param n degree of the polylogarithm
  * @param z complex argument
  * @return \f$\operatorname{Li}_n(z)\f$
+ * @author Alexander Voigt
+ *
+ * For n < 0 the implementation follows the approach presented in
+ * [Matthew Roughan: "The Polylogarithm Function in Julia",
+ * arXiv:2010.09860].
  */
 std::complex<double> Li(int64_t n, const std::complex<double>& z)
 {
