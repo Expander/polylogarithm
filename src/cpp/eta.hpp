@@ -5,12 +5,11 @@
 // ====================================================================
 
 #pragma once
-#include <complex>
 #include <cstdint>
 
 namespace polylogarithm {
 
-/// complex polylogarithm for arbitrary integer n
-std::complex<double> Li(int64_t n, const std::complex<double>&) noexcept;
+/// negative Dirichlet eta function for arbitrary integer n
+double neg_eta(int64_t) noexcept;
 
 } // namespace polylogarithm

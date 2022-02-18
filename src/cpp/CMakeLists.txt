@@ -6,6 +6,9 @@ add_library(polylog_cpp
   Cl4.cpp
   Cl5.cpp
   Cl6.cpp
+  eta.cpp
+  factorial.cpp
+  harmonic.cpp
   Li.cpp
   Li2.cpp
   Li3.cpp
@@ -13,5 +16,6 @@ add_library(polylog_cpp
   Li5.cpp
   Li6.cpp
   Sl.cpp
+  zeta.cpp
   )
 target_include_directories(polylog_cpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

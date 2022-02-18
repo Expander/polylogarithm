@@ -5,12 +5,11 @@
 // ====================================================================
 
 #pragma once
-#include <complex>
 #include <cstdint>
 
 namespace polylogarithm {
 
-/// complex polylogarithm for arbitrary integer n
-std::complex<double> Li(int64_t n, const std::complex<double>&) noexcept;
+/// Riemann zeta function for arbitrary integer n
+double zeta(int64_t) noexcept;
 
 } // namespace polylogarithm
