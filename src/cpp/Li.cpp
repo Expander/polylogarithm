@@ -183,9 +183,7 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return {zeta(n), 0.0};
    } else if (z == -1.0) {
       return {neg_eta(n), 0.0};
-   } else if (n == -1) {
-      return z/((1.0 - z)*(1.0 - z));
-   } else if (n < 0) {
+   } else if (n < -1) {
       // arXiv:2010.09860
       const double nz = std::norm(z);
       const double nl = std::norm(clog(z));
@@ -196,6 +194,8 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       }
       const auto sqrtz = std::sqrt(z);
       return std::pow(2.0, n - 1)*(Li(n, sqrtz) + Li(n, -sqrtz));
+   } else if (n == -1) {
+      return z/((1.0 - z)*(1.0 - z));
    } else if (n == 0) {
       return z/(1.0 - z);
    } else if (n == 1) {
