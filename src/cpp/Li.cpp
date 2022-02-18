@@ -85,15 +85,31 @@ namespace {
       return sum;
    }
 
+   /// returns z^n, treating Re(z) == 0 and Im(z) == 0 in a stable way
+   std::complex<double> stable_pow(const std::complex<double>& z, int64_t n) noexcept
+   {
+      if (std::imag(z) == 0) {
+         return { std::pow(std::real(z), n), 0.0 };
+      } else if (std::real(z) == 0) {
+         const double p = std::pow(std::imag(z), n);
+         if (n % 4 == 0) {
+            return { p, 0.0 };
+         } else if (n % 2 == 0) {
+            return { -p, 0.0 };
+         } else if ((n - 1) % 4 == 0) {
+            return { 0.0, p };
+         }
+         return { 0.0, -p };
+      }
+      return std::pow(z, n);
+   }
+
    /// Series expansion of Li_n(z) around z ~ 1, n < 0
    std::complex<double> Li_unity_neg(int64_t n, const std::complex<double>& z) noexcept
    {
       const std::complex<double> lnz = clog(z);
       const std::complex<double> lnz2 = lnz*lnz;
-      const std::complex<double> lnzn = std::imag(lnz) == 0
-                                           ? std::pow(-std::real(lnz), n - 1)
-                                           : std::pow(-lnz, n - 1);
-      std::complex<double> sum = std::tgamma(1 - n)*lnzn;
+      std::complex<double> sum = std::tgamma(1 - n)*stable_pow(-lnz, n - 1);
       std::complex<double> lnzk, sum_old;
       int64_t k;
 
