@@ -165,15 +165,22 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return z/(1.0 - z);
    } else if (n == 1) {
       return -clog(1.0 - z);
-   } else if (n < 0 && std::norm(clog(z)) < 0.512*0.512*4*PI*PI) {
-      return Li_unity_neg(n, z);
-   } else if (std::abs(z) <= 0.75) {
+   } else if (n < 0) {
+      // arXiv:2010.09860
+      const double nz = std::norm(z);
+      const double nl = std::norm(clog(z));
+      if (nz <= 0.25 && 4*PI*PI*nz < nl) {
+         return Li_series(n, z);
+      } else if (nl < 0.512*0.512*4*PI*PI) {
+         return Li_unity_neg(n, z);
+      }
+      const auto sqrtz = std::sqrt(z);
+      return std::pow(2.0, n - 1)*(Li(n, sqrtz) + Li(n, -sqrtz));
+   } else if (std::norm(z) <= 0.75*0.75) {
       return Li_series(n, z);
-   } else if (std::abs(z) >= 1.4) {
+   } else if (std::norm(z) >= 1.4*1.4) {
       const double sgn = is_even(n) ? -1.0 : 1.0;
       return sgn*Li_series(n, 1.0/z) + Li_rest(n, z);
-   } else if (n < 0) {
-      return Li_unity_neg(n, z);
    }
    return Li_unity_pos(n, z);
 }
