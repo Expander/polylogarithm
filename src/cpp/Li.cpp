@@ -5,6 +5,11 @@
 // ====================================================================
 
 #include "Li.hpp"
+#include "Li2.hpp"
+#include "Li3.hpp"
+#include "Li4.hpp"
+#include "Li5.hpp"
+#include "Li6.hpp"
 #include "eta.hpp"
 #include "factorial.hpp"
 #include "harmonic.hpp"
@@ -180,10 +185,6 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return {neg_eta(n), 0.0};
    } else if (n == -1) {
       return z/((1.0 - z)*(1.0 - z));
-   } else if (n == 0) {
-      return z/(1.0 - z);
-   } else if (n == 1) {
-      return -clog(1.0 - z);
    } else if (n < 0) {
       // arXiv:2010.09860
       const double nz = std::norm(z);
@@ -195,6 +196,20 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       }
       const auto sqrtz = std::sqrt(z);
       return std::pow(2.0, n - 1)*(Li(n, sqrtz) + Li(n, -sqrtz));
+   } else if (n == 0) {
+      return z/(1.0 - z);
+   } else if (n == 1) {
+      return -clog(1.0 - z);
+   } else if (n == 2) {
+      return Li2(z);
+   } else if (n == 3) {
+      return Li3(z);
+   } else if (n == 4) {
+      return Li4(z);
+   } else if (n == 5) {
+      return Li5(z);
+   } else if (n == 6) {
+      return Li6(z);
    } else if (std::norm(z) <= 0.75*0.75) {
       return Li_series(n, z);
    } else if (std::norm(z) >= 1.4*1.4) {
