@@ -19,6 +19,7 @@ namespace polylogarithm {
 namespace {
    constexpr double inf = std::numeric_limits<double>::infinity();
    constexpr double nan = std::numeric_limits<double>::quiet_NaN();
+   constexpr double PI = 3.1415926535897932;
 
    constexpr bool is_even(int64_t n) noexcept { return n % 2 == 0; }
 
@@ -164,6 +165,8 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z)
       return z/(1.0 - z);
    } else if (n == 1) {
       return -clog(1.0 - z);
+   } else if (n < 0 && std::abs(clog(z)) < 0.512*2*PI) {
+      return Li_unity_neg(n, z);
    } else if (std::abs(z) <= 0.75) {
       return Li_series(n, z);
    } else if (std::abs(z) >= 1.4) {
