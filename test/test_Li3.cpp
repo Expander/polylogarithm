@@ -159,17 +159,23 @@ TEST_CASE("test_real_fixed_values")
       if (std::imag(z128) == 0.0L) {
          const auto li64_poly   = polylogarithm::Li3(x64);
          const auto li64_poly_c = li3(x64);
+#ifdef ENABLE_FORTRAN
          const auto li64_poly_f = poly_Li3_fortran(x64);
+#endif
 
          INFO("x(64)         = " << x64);
          INFO("Li3(64)  real = " << li64_expected  << " (expected)");
          INFO("Li3(64)  real = " << li64_poly      << " (polylogarithm C++)");
          INFO("Li3(64)  real = " << li64_poly_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
          INFO("Li3(64)  real = " << li64_poly_f    << " (polylogarithm Fortran)");
+#endif
 
          CHECK_CLOSE(li64_poly  , li64_expected, eps64);
          CHECK_CLOSE(li64_poly_c, li64_expected, eps64);
+#ifdef ENABLE_FORTRAN
          CHECK_CLOSE(li64_poly_f, li64_expected, eps64);
+#endif
       }
    }
 }
