@@ -65,6 +65,16 @@ subroutine li2_fortran(x, res) bind(C)
 end subroutine li2_fortran
 
 
+subroutine li3_fortran(x, res) bind(C)
+  use, intrinsic :: iso_c_binding
+  implicit none
+  real(c_double), intent(in)  :: x
+  real(c_double), intent(out) :: res
+  double precision dli3
+  res = dli3(x)
+end subroutine li3_fortran
+
+
 subroutine cli2_fortran(re, im, res_re, res_im) bind(C)
   use, intrinsic :: iso_c_binding
   implicit none

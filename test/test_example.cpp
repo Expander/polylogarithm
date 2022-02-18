@@ -13,7 +13,9 @@ int main() {
    const std::complex<double> z(1.0, 1.0);
 
    // real polylogarithms for real arguments
-   std::cout << "Li_2(" << x << ") = " << Li2(x) << '\n';
+   std::cout
+      << "Li_2(" << x << ") = " << Li2(x) << '\n'
+      << "Li_3(" << x << ") = " << Li3(x) << '\n';
 
    // complex polylogarithms for complex arguments
    std::cout
@@ -22,6 +24,5 @@ int main() {
       << "Li_4(" << z << ") = " << Li4(z) << '\n'
       << "Li_5(" << z << ") = " << Li5(z) << '\n'
       << "Li_6(" << z << ") = " << Li6(z) << '\n'
-      << "Li_10(" << z << ") = " << Li(10,z) << '\n'
-      ;
+      << "Li_10(" << z << ") = " << Li(10,z) << '\n';
 }

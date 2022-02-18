@@ -46,6 +46,12 @@ std::complex<double> poly_Li3(std::complex<double> z) {
 
 #ifdef ENABLE_FORTRAN
 
+double poly_Li3_fortran(double x) {
+   double res{};
+   li3_fortran(&x, &res);
+   return res;
+}
+
 std::complex<double> poly_Li3_fortran(std::complex<double> z) {
    const double re = std::real(z);
    const double im = std::imag(z);
@@ -136,7 +142,45 @@ TEST_CASE("test_special_values")
    CHECK_CLOSE_COMPLEX(Li3(gr), 4./5.*zeta3 + 2./3.*pow3(std::log(phi)) - 2./15.*pi2*std::log(phi), eps);
 }
 
-TEST_CASE("test_fixed_values")
+TEST_CASE("test_real_fixed_values")
+{
+   const auto eps64 = std::pow(10.0 , -std::numeric_limits<double>::digits10);
+
+   const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li3.txt");
+   const auto fixed_values = polylogarithm::test::read_from_file<long double>(filename);
+
+   for (auto v: fixed_values) {
+      const auto z128 = v.first;
+      const auto z64 = to_c64(z128);
+      const auto x64 = std::real(z64);
+      const auto li128_expected = std::real(v.second);
+      const auto li64_expected = static_cast<double>(li128_expected);
+
+      if (std::imag(z128) == 0.0L) {
+         const auto li64_poly   = polylogarithm::Li3(x64);
+         const auto li64_poly_c = li3(x64);
+#ifdef ENABLE_FORTRAN
+         const auto li64_poly_f = poly_Li3_fortran(x64);
+#endif
+
+         INFO("x(64)         = " << x64);
+         INFO("Li3(64)  real = " << li64_expected  << " (expected)");
+         INFO("Li3(64)  real = " << li64_poly      << " (polylogarithm C++)");
+         INFO("Li3(64)  real = " << li64_poly_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+         INFO("Li3(64)  real = " << li64_poly_f    << " (polylogarithm Fortran)");
+#endif
+
+         CHECK_CLOSE(li64_poly  , li64_expected, eps64);
+         CHECK_CLOSE(li64_poly_c, li64_expected, eps64);
+#ifdef ENABLE_FORTRAN
+         CHECK_CLOSE(li64_poly_f, li64_expected, eps64);
+#endif
+      }
+   }
+}
+
+TEST_CASE("test_complex_fixed_values")
 {
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);

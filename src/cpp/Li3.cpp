@@ -31,7 +31,117 @@ namespace {
       return Complex<T>(z.re*a + b, z.im*a);
    }
 
+   /// Li_3(x) for x in [-1,0]
+   double li3_neg(double x) noexcept
+   {
+      const double cp[] = {
+         0.9999999999999999795e+0, -2.0281801754117129576e+0,
+         1.4364029887561718540e+0, -4.2240680435713030268e-1,
+         4.7296746450884096877e-2, -1.3453536579918419568e-3
+      };
+      const double cq[] = {
+         1.0000000000000000000e+0, -2.1531801754117049035e+0,
+         1.6685134736461140517e+0, -5.6684857464584544310e-1,
+         8.1999463370623961084e-2, -4.0756048502924149389e-3,
+         3.4316398489103212699e-5
+      };
+
+      const double x2 = x*x;
+      const double x4 = x2*x2;
+      const double p = cp[0] + x*cp[1] + x2*(cp[2] + x*cp[3]) +
+         x4*(cp[4] + x*cp[5]);
+      const double q = cq[0] + x*cq[1] + x2*(cq[2] + x*cq[3]) +
+         x4*(cq[4] + x*cq[5] + x2*cq[6]);
+
+      return x*p/q;
+   }
+
+    /// Li_3(x) for x in [0,1/2]
+    double li3_pos(double x) noexcept
+    {
+       const double cp[] = {
+          0.9999999999999999893e+0, -2.5224717303769789628e+0,
+          2.3204919140887894133e+0, -9.3980973288965037869e-1,
+          1.5728950200990509052e-1, -7.5485193983677071129e-3
+       };
+       const double cq[] = {
+          1.0000000000000000000e+0, -2.6474717303769836244e+0,
+          2.6143888433492184741e+0, -1.1841788297857667038e+0,
+          2.4184938524793651120e-1, -1.8220900115898156346e-2,
+          2.4927971540017376759e-4
+       };
+
+       const double x2 = x*x;
+       const double x4 = x2*x2;
+       const double p = cp[0] + x*cp[1] + x2*(cp[2] + x*cp[3]) +
+          x4*(cp[4] + x*cp[5]);
+       const double q = cq[0] + x*cq[1] + x2*(cq[2] + x*cq[3]) +
+          x4*(cq[4] + x*cq[5] + x2*cq[6]);
+
+       return x*p/q;
+   }
+
 } // anonymous namespace
+
+/**
+ * @brief Real trilogarithm \f$\operatorname{Li}_3(x)\f$
+ * @param x real argument
+ * @return \f$\operatorname{Li}_3(x)\f$
+ * @author Alexander Voigt
+ */
+double Li3(double x) noexcept
+{
+   const double zeta2 = 1.6449340668482264;
+   const double zeta3 = 1.2020569031595943;
+   double neg = 0, pos = 0, sgn = 0, rest = 0;
+
+   // transformation to [-1,0] and [0,1/2]
+   if (x < -1) {
+      const double l = std::log(-x);
+      neg = li3_neg(1/x);
+      pos = 0;
+      sgn = 1;
+      rest = -l*(zeta2 + 1.0/6*l*l);
+   } else if (x == -1) {
+      return -0.75*zeta3;
+   } else if (x < 0) {
+      neg = li3_neg(x);
+      pos = 0;
+      sgn = 1;
+      rest = 0;
+   } else if (x == 0) {
+      return 0;
+   } else if (x < 0.5) {
+      neg = 0;
+      pos = li3_pos(x);
+      sgn = 1;
+      rest = 0;
+   } else if (x == 0.5) {
+      return 0.53721319360804020;
+   } else if (x < 1) {
+      const double l = std::log(x);
+      neg = li3_neg((x - 1)/x);
+      pos = li3_pos(1 - x);
+      sgn = -1;
+      rest = zeta3 + l*(zeta2 + l*(-0.5*std::log(1 - x) + 1.0/6*l));
+   } else if (x == 1) {
+      return zeta3;
+   } else if (x < 2) {
+      const double l = std::log(x);
+      neg = li3_neg(1 - x);
+      pos = li3_pos((x - 1)/x);
+      sgn = -1;
+      rest = zeta3 + l*(zeta2 + l*(-0.5*std::log(x - 1) + 1.0/6*l));
+   } else { // x >= 2.0
+      const double l = std::log(x);
+      neg = 0;
+      pos = li3_pos(1/x);
+      sgn = 1;
+      rest = l*(2*zeta2 - 1.0/6*l*l);
+   }
+
+   return rest + sgn*(neg + pos);
+}
 
 /**
  * @brief Complex trilogarithm \f$\operatorname{Li}_3(z)\f$

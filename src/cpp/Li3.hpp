@@ -9,6 +9,9 @@
 
 namespace polylogarithm {
 
+/// real polylogarithm with n=3 (trilogarithm)
+double Li3(double) noexcept;
+
 /// complex polylogarithm with n=3 (trilogarithm)
 std::complex<double> Li3(const std::complex<double>&) noexcept;
 
