@@ -11,6 +11,6 @@
 namespace polylogarithm {
 
 /// complex polylogarithm for arbitrary integer n
-std::complex<double> Li(int64_t n, const std::complex<double>&);
+std::complex<double> Li(int64_t n, const std::complex<double>&) noexcept;
 
 } // namespace polylogarithm

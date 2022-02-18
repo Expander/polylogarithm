@@ -169,7 +169,7 @@ namespace {
  * [Matthew Roughan: "The Polylogarithm Function in Julia",
  * arXiv:2010.09860].
  */
-std::complex<double> Li(int64_t n, const std::complex<double>& z)
+std::complex<double> Li(int64_t n, const std::complex<double>& z) noexcept
 {
    if (std::isnan(std::real(z)) || std::isnan(std::imag(z))) {
       return {nan, nan};
