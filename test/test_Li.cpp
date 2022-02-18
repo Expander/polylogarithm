@@ -30,22 +30,41 @@ TEST_CASE("test_infinite_values")
 
 TEST_CASE("test_complex_fixed_values")
 {
-   const auto eps = 1e-12;
-   const int ni[] = {
-      // -100, -10, -9, -8, -7, -6, -5, -4, -3,
-      -2, -1, 0, 1, 2, 3, 4, 5, 6, 100
+   const struct {
+      int n;
+      double eps;
+   } nis[] = {
+      // { -100, 1e-05 },
+      {  -10, 1e-05 },
+      {   -9, 1e-07 },
+      {   -8, 1e-08 },
+      {   -7, 1e-10 },
+      {   -6, 1e-10 },
+      {   -5, 1e-10 },
+      {   -4, 1e-13 },
+      {   -3, 1e-13 },
+      {   -2, 1e-13 },
+      {   -1, 1e-14 },
+      {    0, 1e-14 },
+      {    1, 1e-14 },
+      {    2, 1e-14 },
+      {    3, 1e-14 },
+      {    4, 1e-14 },
+      {    5, 1e-14 },
+      {    6, 1e-14 },
+      {  100, 1e-14 }
    };
 
-   for (const auto n: ni) {
-      const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li" + std::to_string(n) + ".txt");
+   for (const auto ni: nis) {
+      const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Li" + std::to_string(ni.n) + ".txt");
       const auto values = polylogarithm::test::read_from_file<double>(filename);
 
       for (auto v: values) {
          const auto z = v.first;
          const auto li_expected = v.second;
-         const auto li = polylogarithm::Li(n,z);
-         INFO("n = " << n << ", z = " << z);
-         CHECK_CLOSE_COMPLEX(li, li_expected, eps);
+         const auto li = polylogarithm::Li(ni.n, z);
+         INFO("n = " << ni.n << ", z = " << z);
+         CHECK_CLOSE_COMPLEX(li, li_expected, ni.eps);
       }
    }
 }
