@@ -5,6 +5,125 @@
 !*********************************************************************
 
 
+! Li_3(x) for x in [-1,0]
+double precision function dli3_neg(x)
+  implicit none
+  double precision :: x, x2, x4, p, q
+  double precision, parameter :: cp(6) = (/                &
+      0.9999999999999999795D+0, -2.0281801754117129576D+0, &
+      1.4364029887561718540D+0, -4.2240680435713030268D-1, &
+      4.7296746450884096877D-2, -1.3453536579918419568D-3 /)
+  double precision, parameter :: cq(7) = (/                &
+      1.0000000000000000000D+0, -2.1531801754117049035D+0, &
+      1.6685134736461140517D+0, -5.6684857464584544310D-1, &
+      8.1999463370623961084D-2, -4.0756048502924149389D-3, &
+      3.4316398489103212699D-5                            /)
+
+  x2 = x*x
+  x4 = x2*x2
+  p = cp(1) + x*cp(2) + x2*(cp(3) + x*cp(4)) +             &
+       x4*(cp(5) + x*cp(6))
+  q = cq(1) + x*cq(2) + x2*(cq(3) + x*cq(4)) +             &
+       x4*(cq(5) + x*cq(6) + x2*cq(7))
+
+  dli3_neg = x*p/q
+
+end function dli3_neg
+
+
+! Li_3(x) for x in [0,1/2]
+double precision function dli3_pos(x)
+  implicit none
+  double precision :: x, x2, x4, p, q
+  double precision, parameter :: cp(6) = (/                &
+      0.9999999999999999893D+0, -2.5224717303769789628D+0, &
+      2.3204919140887894133D+0, -9.3980973288965037869D-1, &
+      1.5728950200990509052D-1, -7.5485193983677071129D-3 /)
+  double precision, parameter :: cq(7) = (/                &
+      1.0000000000000000000D+0, -2.6474717303769836244D+0, &
+      2.6143888433492184741D+0, -1.1841788297857667038D+0, &
+      2.4184938524793651120D-1, -1.8220900115898156346D-2, &
+      2.4927971540017376759D-4                            /)
+
+  x2 = x*x
+  x4 = x2*x2
+  p = cp(1) + x*cp(2) + x2*(cp(3) + x*cp(4)) +             &
+       x4*(cp(5) + x*cp(6))
+  q = cq(1) + x*cq(2) + x2*(cq(3) + x*cq(4)) +             &
+       x4*(cq(5) + x*cq(6) + x2*cq(7))
+
+  dli3_pos = x*p/q
+
+end function dli3_pos
+
+
+!*********************************************************************
+!> @brief Real trilogarithm \f$\operatorname{Li}_3(x)\f$
+!> @param x real argument
+!> @return \f$\operatorname{Li}_3(x)\f$
+!> @author Alexander Voigt
+!*********************************************************************
+double precision function dli3(x)
+  implicit none
+  double precision :: x, neg, pos, rest, sgn, l
+  double precision :: dli3_neg, dli3_pos
+  double precision, parameter :: zeta2 = 1.6449340668482264D0
+  double precision, parameter :: zeta3 = 1.2020569031595943D0
+
+  ! transformation to [-1,0] and [0,1/2]
+  if (x .lt. -1) then
+     l = log(-x)
+     neg = dli3_neg(1/x)
+     pos = 0
+     sgn = 1
+     rest = -l*(zeta2 + 1.0D0/6*l**2)
+  elseif (x .eq. -1) then
+     dli3 = -0.75D0*zeta3
+     return
+  elseif (x .lt. 0) then
+     neg = dli3_neg(x)
+     pos = 0
+     sgn = 1
+     rest = 0
+  elseif (x .eq. 0) then
+     dli3 = 0
+     return
+  elseif (x .lt. 0.5D0) then
+     neg = 0
+     pos = dli3_pos(x)
+     sgn = 1
+     rest = 0
+  elseif (x .eq. 0.5D0) then
+     dli3 = 0.53721319360804020D0
+     return
+  elseif (x .lt. 1) then
+     l = log(x)
+     neg = dli3_neg((x - 1)/x)
+     pos = dli3_pos(1 - x)
+     sgn = -1
+     rest = zeta3 + l*(zeta2 + l*(-0.5D0*log(1 - x) + 1.0D0/6*l))
+  elseif (x .eq. 1) then
+     dli3 = zeta3
+     return
+  elseif (x .lt. 2) then
+     l = log(x)
+     neg = dli3_neg(1 - x)
+     pos = dli3_pos((x - 1)/x)
+     sgn = -1
+     rest = zeta3 + l*(zeta2 + l*(-0.5D0*log(x - 1) + 1.0D0/6*l))
+  else ! x >= 2.0D0
+     l = log(x)
+     neg = 0
+     pos = dli3_pos(1/x)
+     sgn = 1
+     rest = l*(2*zeta2 - 1.0D0/6*l**2)
+  endif
+
+  dli3 = rest + sgn*(neg + pos)
+
+end function dli3
+
+
 !*********************************************************************
 !> @brief Complex trilogarithm \f$\operatorname{Li}_3(z)\f$
 !> @param z complex argument

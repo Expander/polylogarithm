@@ -24,6 +24,9 @@ void cl6_fortran(const double* x, double* res);
 /** real polylogarithm with n=2 (dilogarithm), Fortran implementation */
 void li2_fortran(const double* x, double* res);
 
+/** real polylogarithm with n=3 (trilogarithm), Fortran implementation */
+void li3_fortran(const double* x, double* res);
+
 /** complex polylogarithm with n=2 (dilogarithm), Fortran implementation */
 void cli2_fortran(const double* re, const double* im, double* res_re, double* res_im);
 
