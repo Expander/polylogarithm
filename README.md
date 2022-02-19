@@ -17,8 +17,8 @@ individual source code files can be easily extracted and incorporated
 into existing projects.
 
 
-Example
--------
+Example in C++
+--------------
 
 ```.cpp
 #include "Li.hpp"
