@@ -18,6 +18,40 @@ double precision function dli4(x)
   double precision, parameter :: zeta2 = 1.6449340668482264D0
   double precision, parameter :: zeta4 = 1.0823232337111382D0
 
+  ! transform x to [-1,1]
+  if (x .lt. -1) then
+     l = log(-x)
+     l2 = l*l
+     x = 1/x
+     rest = -7.0/4*zeta4 + l2*(-0.5*zeta2 - 1.0/24*l2)
+     sgn = -1
+  elseif (x .eq. -1) then
+     dli4 = -7.0/8*zeta4
+     return
+  elseif (x .lt. 1) then
+     rest = 0
+     sgn = 1
+  elseif (x .eq. 1) then
+     dli4 = zeta4
+     return
+  else ! x > 1
+     l = log(x)
+     l2 = l*l
+     x = 1/x
+     rest = 2*zeta4 + l2*(zeta2 - 1.0/24*l2)
+     sgn = -1
+  endif
+
+  if (x .lt. 0) then
+     app = dli4_neg(x)
+  elseif (x .lt. 0.5) then
+     app = dli4_half(x)
+  elseif (x .lt. 0.8) then
+     app = dli4_mid(x)
+  else ! x <= 1
+     app = dli4_one(x)
+  endif
+
   dli4 = rest + sgn*app
 
 end function dli4
