@@ -9,6 +9,147 @@
 #include <math.h>
 #include "fast_clog.h"
 
+/// Li_4(x) for x in [-1,0]
+static double li4_neg(double x)
+{
+   const double cp[] = {
+      0.9999999999999999952e+0, -1.8532099956062184217e+0,
+      1.1937642574034898249e+0, -3.1817912243893560382e-1,
+      3.2268284189261624841e-2, -8.3773570305913850724e-4
+   };
+   const double cq[] = {
+      1.0000000000000000000e+0, -1.9157099956062165688e+0,
+      1.3011504531166486419e+0, -3.7975653506939627186e-1,
+      4.5822723996558783670e-2, -1.8023912938765272341e-3,
+      1.0199621542882314929e-5
+   };
+
+   const double x2 = x*x;
+   const double x4 = x2*x2;
+   const double p = cp[0] + x*cp[1] + x2*(cp[2] + x*cp[3]) +
+      x4*(cp[4] + x*cp[5]);
+   const double q = cq[0] + x*cq[1] + x2*(cq[2] + x*cq[3]) +
+      x4*(cq[4] + x*cq[5] + x2*cq[6]);
+
+   return x*p/q;
+}
+
+/// Li_4(x) for x in [0,1/2]
+static double li4_half(double x)
+{
+   const double cp[] = {
+      1.0000000000000000414e+0, -2.0588072418045364525e+0,
+      1.4713328756794826579e+0, -4.2608608613069811474e-1,
+      4.2975084278851543150e-2, -6.8314031819918920802e-4
+   };
+   const double cq[] = {
+      1.0000000000000000000e+0, -2.1213072418045207223e+0,
+      1.5915688992789175941e+0, -5.0327641401677265813e-1,
+      6.1467217495127095177e-2, -1.9061294280193280330e-3
+   };
+
+   const double x2 = x*x;
+   const double x4 = x2*x2;
+   const double p = cp[0] + x*cp[1] + x2*(cp[2] + x*cp[3]) +
+      x4*(cp[4] + x*cp[5]);
+   const double q = cq[0] + x*cq[1] + x2*(cq[2] + x*cq[3]) +
+      x4*(cq[4] + x*cq[5]);
+
+   return x*p/q;
+}
+
+/// Li_4(x) for x in [1/2,8/10]
+static double li4_mid(double x)
+{
+   const double cp[] = {
+       3.2009826406098890447e-9, 9.9999994634837574160e-1,
+      -2.9144851228299341318e+0, 3.1891031447462342009e+0,
+      -1.6009125158511117090e+0, 3.5397747039432351193e-1,
+      -2.5230024124741454735e-2
+   };
+   const double cq[] = {
+      1.0000000000000000000e+0, -2.9769855248411488460e+0,
+      3.3628208295110572579e+0, -1.7782471949702788393e+0,
+      4.3364007973198649921e-1, -3.9535592340362510549e-2,
+      5.7373431535336755591e-4
+   };
+
+   const double x2 = x*x;
+   const double x4 = x2*x2;
+   const double p = cp[0] + x*cp[1] + x2*(cp[2] + x*cp[3]) +
+      x4*(cp[4] + x*cp[5] + x2*cp[6]);
+   const double q = cq[0] + x*cq[1] + x2*(cq[2] + x*cq[3]) +
+      x4*(cq[4] + x*cq[5] + x2*cq[6]);
+
+   return p/q;
+}
+
+/// Li_4(x) for x in [8/10,1]
+static double li4_one(double x)
+{
+   const double zeta2 = 1.6449340668482264;
+   const double zeta3 = 1.2020569031595943;
+   const double zeta4 = 1.0823232337111382;
+   const double l = log(x);
+   const double l2 = l*l;
+
+   return zeta4 +
+      l*(zeta3 +
+      l*(0.5*zeta2 +
+      l*(11.0/36 - 1.0/6*log(fabs(l)) +
+      l*(-1.0/48 +
+      l*(-1.0/1440 +
+      l2*(1.0/604800 - 1.0/91445760*l2))))));
+}
+
+/**
+ * @brief Real 4-th order polylogarithm \f$\operatorname{Li}_4(x)\f$
+ * @param x real argument
+ * @return \f$\operatorname{Li}_4(x)\f$
+ * @author Alexander Voigt
+ */
+double li4(double x)
+{
+   const double zeta2 = 1.6449340668482264;
+   const double zeta4 = 1.0823232337111382;
+
+   double app = 0, rest = 0, sgn = 1;
+
+   // transform x to [-1,1]
+   if (x < -1) {
+      const double l = log(-x);
+      const double l2 = l*l;
+      x = 1/x;
+      rest = -7.0/4*zeta4 + l2*(-0.5*zeta2 - 1.0/24*l2);
+      sgn = -1;
+   } else if (x == -1) {
+      return -7.0/8*zeta4;
+   } else if (x < 1) {
+      rest = 0;
+      sgn = 1;
+   } else if (x == 1) {
+      return zeta4;
+   } else { // x > 1
+      const double l = log(x);
+      const double l2 = l*l;
+      x = 1/x;
+      rest = 2*zeta4 + l2*(zeta2 - 1.0/24*l2);
+      sgn = -1;
+   };
+
+   if (x < 0) {
+      app = li4_neg(x);
+   } else if (x < 0.5) {
+      app = li4_half(x);
+   } else if (x < 0.8) {
+      app = li4_mid(x);
+   } else { // x <= 1
+      app = li4_one(x);
+   };
+
+   return rest + sgn*app;
+}
+
 
 /**
  * @brief Complex polylogarithm \f$\operatorname{Li}_4(z)\f$

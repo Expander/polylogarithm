@@ -87,12 +87,15 @@ TEST_CASE("test_real_fixed_values")
 
       if (std::imag(z128) == 0.0L) {
          const auto li64_poly   = polylogarithm::Li4(x64);
+         const auto li64_poly_c = li4(x64);
 
          INFO("x(64)         = " << x64);
          INFO("Li4(64)  real = " << li64_expected  << " (expected)");
          INFO("Li4(64)  real = " << li64_poly      << " (polylogarithm C++)");
+         INFO("Li4(64)  real = " << li64_poly_c    << " (polylogarithm C)");
 
          CHECK_CLOSE(li64_poly  , li64_expected, 5*eps64);
+         CHECK_CLOSE(li64_poly_c, li64_expected, 5*eps64);
       }
    }
 }
