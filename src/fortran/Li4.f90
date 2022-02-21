@@ -21,7 +21,7 @@ double precision function dli4(x)
   ! transform x to [-1,1]
   if (x .lt. -1) then
      l = log(-x)
-     l2 = l*l
+     l2 = l**2
      x = 1/x
      rest = -7.0/4*zeta4 + l2*(-0.5*zeta2 - 1.0/24*l2)
      sgn = -1
@@ -36,7 +36,7 @@ double precision function dli4(x)
      return
   else ! x > 1
      l = log(x)
-     l2 = l*l
+     l2 = l**2
      x = 1/x
      rest = 2*zeta4 + l2*(zeta2 - 1.0/24*l2)
      sgn = -1
