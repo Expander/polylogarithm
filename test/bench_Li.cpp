@@ -371,6 +371,11 @@ int main() {
    bench_fn([&](std::complex<long double> z) { return tsil_Li3(z); },
             values_cl, "TSIL", "long double");
 
+   print_headline("Li4 (real)");
+
+   bench_fn([&](double x) { return polylogarithm::Li4(x); }, values_d,
+            "polylogarithm C++", "double");
+
    print_headline("Li4 (complex)");
 
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li4(z); },

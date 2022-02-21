@@ -34,6 +34,17 @@ namespace {
 } // anonymous namespace
 
 /**
+ * @brief Real 4-th order polylogarithm \f$\operatorname{Li}_4(x)\f$
+ * @param x real argument
+ * @return \f$\operatorname{Li}_4(x)\f$
+ * @author Alexander Voigt
+ */
+double Li4(double x) noexcept
+{
+   return 0;
+}
+
+/**
  * @brief Complex polylogarithm \f$\operatorname{Li}_4(z)\f$
  * @param z_ complex argument
  * @return \f$\operatorname{Li}_4(z)\f$
