@@ -5,6 +5,46 @@
 !*********************************************************************
 
 
+! Li_4(x) for x in [-1,0]
+double precision function dli4_neg(x)
+  implicit none
+  double precision :: x
+
+  dli4_neg = 0
+
+end function dli4_neg
+
+
+! Li_4(x) for x in [0,1/2]
+double precision function dli4_half(x)
+  implicit none
+  double precision :: x
+
+  dli4_half = 0
+
+end function dli4_half
+
+
+! Li_4(x) for x in [1/2,8/10]
+double precision function dli4_mid(x)
+  implicit none
+  double precision :: x
+
+  dli4_mid = 0
+
+end function dli4_mid
+
+
+! Li_4(x) for x in [8/10,1]
+double precision function dli4_one(x)
+  implicit none
+  double precision :: x
+
+  dli4_one = 0
+
+end function dli4_one
+
+
 !*********************************************************************
 !> @brief Real 4-th order polylogarithm \f$\operatorname{Li}_4(x)\f$
 !> @param x real argument
