@@ -92,7 +92,7 @@ TEST_CASE("test_real_fixed_values")
          INFO("Li4(64)  real = " << li64_expected  << " (expected)");
          INFO("Li4(64)  real = " << li64_poly      << " (polylogarithm C++)");
 
-         CHECK_CLOSE(li64_poly  , li64_expected, eps64);
+         CHECK_CLOSE(li64_poly  , li64_expected, 5*eps64);
       }
    }
 }
