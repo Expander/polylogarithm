@@ -37,6 +37,12 @@ std::complex<double> poly_Li4(std::complex<double> z) {
 
 #ifdef ENABLE_FORTRAN
 
+double poly_Li4_fortran(double x) {
+   double res{};
+   li4_fortran(&x, &res);
+   return res;
+}
+
 std::complex<double> poly_Li4_fortran(std::complex<double> z) {
    const double re = std::real(z);
    const double im = std::imag(z);
@@ -88,14 +94,23 @@ TEST_CASE("test_real_fixed_values")
       if (std::imag(z128) == 0.0L) {
          const auto li64_poly   = polylogarithm::Li4(x64);
          const auto li64_poly_c = li4(x64);
+#ifdef ENABLE_FORTRAN
+         const auto li64_poly_f = poly_Li4_fortran(x64);
+#endif
 
          INFO("x(64)         = " << x64);
          INFO("Li4(64)  real = " << li64_expected  << " (expected)");
          INFO("Li4(64)  real = " << li64_poly      << " (polylogarithm C++)");
          INFO("Li4(64)  real = " << li64_poly_c    << " (polylogarithm C)");
+#ifdef ENABLE_FORTRAN
+         INFO("Li4(64)  real = " << li64_poly_f    << " (polylogarithm Fortran)");
+#endif
 
          CHECK_CLOSE(li64_poly  , li64_expected, 5*eps64);
          CHECK_CLOSE(li64_poly_c, li64_expected, 5*eps64);
+#ifdef ENABLE_FORTRAN
+         CHECK_CLOSE(li64_poly_f, li64_expected, 5*eps64);
+#endif
       }
    }
 }

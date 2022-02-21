@@ -6,6 +6,24 @@
 
 
 !*********************************************************************
+!> @brief Real 4-th order polylogarithm \f$\operatorname{Li}_4(x)\f$
+!> @param x real argument
+!> @return \f$\operatorname{Li}_4(x)\f$
+!> @author Alexander Voigt
+!*********************************************************************
+double precision function dli4(x)
+  implicit none
+  double precision :: x, app, rest, sgn, l, l2
+  double precision :: dli4_neg, dli4_half, dli4_mid, dli4_one
+  double precision, parameter :: zeta2 = 1.6449340668482264D0
+  double precision, parameter :: zeta4 = 1.0823232337111382D0
+
+  dli4 = rest + sgn*app
+
+end function dli4
+
+
+!*********************************************************************
 !> @brief Complex polylogarithm \f$\operatorname{Li}_4(z)\f$
 !> @param z complex argument
 !> @return \f$\operatorname{Li}_4(z)\f$
