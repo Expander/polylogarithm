@@ -52,7 +52,19 @@ namespace {
    /// Li_4(x) for x in [8/10,1]
    double li4_one(double x) noexcept
    {
-      return 0;
+      const double zeta2 = 1.6449340668482264;
+      const double zeta3 = 1.2020569031595943;
+      const double zeta4 = 1.0823232337111382;
+      const double l = std::log(x);
+      const double l2 = l*l;
+
+      return zeta4 +
+         l*(zeta3 +
+         l*(0.5*zeta2 +
+         l*(11.0/36 - 1.0/6*std::log(std::abs(l)) +
+         l*(-1.0/48 +
+         l*(-1.0/1440 +
+         l2*(1.0/604800 - 1.0/91445760*l2))))));
    }
 
 } // anonymous namespace
