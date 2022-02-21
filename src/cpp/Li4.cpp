@@ -31,6 +31,30 @@ namespace {
       return Complex<T>(z.re*a + b, z.im*a);
    }
 
+   /// Li_4(x) for x in [-1,0]
+   double li4_neg(double x) noexcept
+   {
+      return 0;
+   }
+
+   /// Li_4(x) for x in [0,1/2]
+   double li4_half(double x) noexcept
+   {
+      return 0;
+   }
+
+   /// Li_4(x) for x in [1/2,8/10]
+   double li4_mid(double x) noexcept
+   {
+      return 0;
+   }
+
+   /// Li_4(x) for x in [8/10,1]
+   double li4_one(double x) noexcept
+   {
+      return 0;
+   }
+
 } // anonymous namespace
 
 /**
@@ -41,7 +65,44 @@ namespace {
  */
 double Li4(double x) noexcept
 {
-   return 0;
+   const double zeta2 = 1.6449340668482264;
+   const double zeta4 = 1.0823232337111382;
+
+   double app = 0, rest = 0, sgn = 1;
+
+   // transform x to [-1,1]
+   if (x < -1) {
+      const double l = std::log(-x);
+      const double l2 = l*l;
+      x = 1/x;
+      rest = -7.0/4*zeta4 + l2*(-0.5*zeta2 - 1.0/24*l2);
+      sgn = -1;
+   } else if (x == -1) {
+      return -7.0/8*zeta4;
+   } else if (x < 1) {
+      rest = 0;
+      sgn = 1;
+   } else if (x == 1) {
+      return zeta4;
+   } else { // x > 1
+      const double l = std::log(x);
+      const double l2 = l*l;
+      x = 1/x;
+      rest = 2*zeta4 + l2*(zeta2 - 1.0/24*l2);
+      sgn = -1;
+   };
+
+   if (x < 0) {
+      app = li4_neg(x);
+   } else if (x < 0.5) {
+      app = li4_half(x);
+   } else if (x < 0.8) {
+      app = li4_mid(x);
+   } else { // x <= 1
+      app = li4_one(x);
+   };
+
+   return rest + sgn*app;
 }
 
 /**
