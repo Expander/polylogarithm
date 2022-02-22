@@ -55,9 +55,17 @@ end function dli4_mid
 ! Li_4(x) for x in [8/10,1]
 double precision function dli4_one(x)
   implicit none
-  double precision :: x
+  double precision :: x, l, l2
+  double precision, parameter :: zeta2 = 1.6449340668482264D0
+  double precision, parameter :: zeta3 = 1.2020569031595943D0
+  double precision, parameter :: zeta4 = 1.0823232337111382D0
 
-  dli4_one = 0
+  l = log(x)
+  l2 = l**2
+
+  dli4_one = zeta4 + l*(zeta3 + l*(0.5D0*zeta2 + l*(11.0D0/36 &
+     - 1.0D0/6*log(abs(l)) + l*(-1.0D0/48 + l*(-1.0D0/1440    &
+     + l2*(1.0D0/604800 - 1.0D0/91445760*l2))))))
 
 end function dli4_one
 
