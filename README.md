@@ -38,7 +38,8 @@ int main() {
    // real polylogarithms for real arguments
    std::cout
       << "Li_2(" << x << ") = " << Li2(x) << '\n'
-      << "Li_3(" << x << ") = " << Li3(x) << '\n';
+      << "Li_3(" << x << ") = " << Li3(x) << '\n'
+      << "Li_4(" << x << ") = " << Li4(x) << '\n';
 
    // complex polylogarithms for complex arguments
    std::cout
@@ -56,6 +57,7 @@ Output:
 ```
 Li_2(1) = 1.64493
 Li_3(1) = 1.20206
+Li_4(1) = 1.08232
 Li_2((1,1)) = (0.61685,1.46036)
 Li_3((1,1)) = (0.871159,1.26708)
 Li_4((1,1)) = (0.959319,1.13804)

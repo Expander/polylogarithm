@@ -81,6 +81,18 @@ double poly_Li2_fortran(double x) {
    return res;
 }
 
+double poly_Li3_fortran(double x) {
+   double res{};
+   li3_fortran(&x, &res);
+   return res;
+}
+
+double poly_Li4_fortran(double x) {
+   double res{};
+   li4_fortran(&x, &res);
+   return res;
+}
+
 std::complex<double> poly_Li2_fortran(std::complex<double> z) {
    const double re = std::real(z);
    const double im = std::imag(z);
@@ -349,6 +361,14 @@ int main() {
    bench_fn([&](double x) { return polylogarithm::Li3(x); }, values_d,
             "polylogarithm C++", "double");
 
+   bench_fn([&](double x) { return li3(x); }, values_d,
+            "polylogarithm C", "double");
+
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](double x) { return poly_Li3_fortran(x); }, values_d,
+            "polylogarithm Fortran", "double");
+#endif
+
    print_headline("Li3 (complex)");
 
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li3(z); },
@@ -370,6 +390,19 @@ int main() {
 
    bench_fn([&](std::complex<long double> z) { return tsil_Li3(z); },
             values_cl, "TSIL", "long double");
+
+   print_headline("Li4 (real)");
+
+   bench_fn([&](double x) { return polylogarithm::Li4(x); }, values_d,
+            "polylogarithm C++", "double");
+
+   bench_fn([&](double x) { return li4(x); }, values_d,
+            "polylogarithm C", "double");
+
+#ifdef ENABLE_FORTRAN
+   bench_fn([&](double x) { return poly_Li4_fortran(x); }, values_d,
+            "polylogarithm Fortran", "double");
+#endif
 
    print_headline("Li4 (complex)");
 

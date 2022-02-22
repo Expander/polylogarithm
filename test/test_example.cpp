@@ -15,7 +15,8 @@ int main() {
    // real polylogarithms for real arguments
    std::cout
       << "Li_2(" << x << ") = " << Li2(x) << '\n'
-      << "Li_3(" << x << ") = " << Li3(x) << '\n';
+      << "Li_3(" << x << ") = " << Li3(x) << '\n'
+      << "Li_4(" << x << ") = " << Li4(x) << '\n';
 
    // complex polylogarithms for complex arguments
    std::cout
