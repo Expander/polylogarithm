@@ -63,10 +63,10 @@ double precision function dli4(x)
      l = log(-x)
      l2 = l**2
      x = 1/x
-     rest = -7.0/4*zeta4 + l2*(-0.5*zeta2 - 1.0/24*l2)
+     rest = -7.0D0/4*zeta4 + l2*(-0.5D0*zeta2 - 1.0D0/24*l2)
      sgn = -1
   elseif (x .eq. -1) then
-     dli4 = -7.0/8*zeta4
+     dli4 = -7.0D0/8*zeta4
      return
   elseif (x .lt. 1) then
      rest = 0
@@ -78,15 +78,15 @@ double precision function dli4(x)
      l = log(x)
      l2 = l**2
      x = 1/x
-     rest = 2*zeta4 + l2*(zeta2 - 1.0/24*l2)
+     rest = 2*zeta4 + l2*(zeta2 - 1.0D0/24*l2)
      sgn = -1
   endif
 
   if (x .lt. 0) then
      app = dli4_neg(x)
-  elseif (x .lt. 0.5) then
+  elseif (x .lt. 0.5D0) then
      app = dli4_half(x)
-  elseif (x .lt. 0.8) then
+  elseif (x .lt. 0.8D0) then
      app = dli4_mid(x)
   else ! x <= 1
      app = dli4_one(x)
