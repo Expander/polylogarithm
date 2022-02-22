@@ -84,7 +84,7 @@ Citation
     author       = {{Alexander Voigt}},
     title        = {{Polylogarithm}},
     year         = {2022},
-    version      = {6.9.0},
+    version      = {6.10.0},
     url          = {https://github.com/Expander/polylogarithm},
     note         = {[License: MIT]}
 }
