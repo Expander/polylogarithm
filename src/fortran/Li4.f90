@@ -8,9 +8,25 @@
 ! Li_4(x) for x in [-1,0]
 double precision function dli4_neg(x)
   implicit none
-  double precision :: x
+  double precision :: x, x2, x4, p, q
+  double precision, parameter :: cp(6) = (/                &
+      0.9999999999999999952D+0, -1.8532099956062184217D+0, &
+      1.1937642574034898249D+0, -3.1817912243893560382D-1, &
+      3.2268284189261624841D-2, -8.3773570305913850724D-4 /)
+  double precision, parameter :: cq(7) = (/                &
+      1.0000000000000000000D+0, -1.9157099956062165688D+0, &
+      1.3011504531166486419D+0, -3.7975653506939627186D-1, &
+      4.5822723996558783670D-2, -1.8023912938765272341D-3, &
+      1.0199621542882314929D-5                            /)
 
-  dli4_neg = 0
+  x2 = x*x
+  x4 = x2*x2
+  p = cp(1) + x*cp(2) + x2*(cp(3) + x*cp(4)) +             &
+      x4*(cp(5) + x*cp(6))
+  q = cq(1) + x*cq(2) + x2*(cq(3) + x*cq(4)) +             &
+      x4*(cq(5) + x*cq(6) + x2*cq(7))
+
+  dli4_neg = x*p/q
 
 end function dli4_neg
 
