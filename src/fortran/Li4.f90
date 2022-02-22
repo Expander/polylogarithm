@@ -28,9 +28,26 @@ end function dli4_half
 ! Li_4(x) for x in [1/2,8/10]
 double precision function dli4_mid(x)
   implicit none
-  double precision :: x
+  double precision :: x, x2, x4, p, q
+  double precision, parameter :: cp(7) = (/                &
+       3.2009826406098890447D-9, 9.9999994634837574160D-1, &
+      -2.9144851228299341318D+0, 3.1891031447462342009D+0, &
+      -1.6009125158511117090D+0, 3.5397747039432351193D-1, &
+      -2.5230024124741454735D-2                           /)
+  double precision, parameter :: cq(7) = (/                &
+      1.0000000000000000000D+0, -2.9769855248411488460D+0, &
+      3.3628208295110572579D+0, -1.7782471949702788393D+0, &
+      4.3364007973198649921D-1, -3.9535592340362510549D-2, &
+      5.7373431535336755591D-4                            /)
 
-  dli4_mid = 0
+  x2 = x*x
+  x4 = x2*x2
+  p = cp(1) + x*cp(2) + x2*(cp(3) + x*cp(4)) +             &
+      x4*(cp(5) + x*cp(6) + x2*cp(7))
+  q = cq(1) + x*cq(2) + x2*(cq(3) + x*cq(4)) +             &
+      x4*(cq(5) + x*cq(6) + x2*cq(7))
+
+  dli4_mid = p/q
 
 end function dli4_mid
 
