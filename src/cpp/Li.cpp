@@ -28,6 +28,11 @@ namespace {
 
    constexpr bool is_even(int64_t n) noexcept { return n % 2 == 0; }
 
+   constexpr bool is_finite(const std::complex<double>& z) noexcept
+   {
+      return std::isfinite(std::real(z)) && std::isfinite(std::imag(z));
+   }
+
    /// complex logarithm, converts -0.0 to 0.0
    std::complex<double> clog(const std::complex<double>& z) noexcept
    {
@@ -53,6 +58,7 @@ namespace {
          sum_old = sum;
          sum += p;
          p *= z*std::pow(k/(1.0 + k), n);
+         if (!is_finite(p)) { break; }
       } while (sum != sum_old &&
                k < std::numeric_limits<int64_t>::max() - 2);
 
@@ -115,7 +121,7 @@ namespace {
       const std::complex<double> lnz = clog(z);
       const std::complex<double> lnz2 = lnz*lnz;
       std::complex<double> sum = std::tgamma(1 - n)*stable_pow(-lnz, n - 1);
-      std::complex<double> lnzk, sum_old;
+      std::complex<double> lnzk, sum_old, term;
       int64_t k;
 
       if (is_even(n)) {
@@ -128,8 +134,10 @@ namespace {
       }
 
       do {
+         term = zeta(n - k)*inv_fac(k)*lnzk;
+         if (!is_finite(term)) { break; }
          sum_old = sum;
-         sum += zeta(n - k)*inv_fac(k)*lnzk;
+         sum += term;
          lnzk *= lnz2;
          k += 2;
       } while (sum != sum_old);

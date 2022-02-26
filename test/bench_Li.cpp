@@ -465,6 +465,9 @@ int main() {
 
    const auto values_cd_small = generate_random_complexes<double>(N/10, min, max);
 
+   bench_fn([&](std::complex<double> z) { return polylogarithm::Li(-1000,z); },
+            values_cd_small, "n=-1000 polylogarithm", "double");
+
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li(-100,z); },
             values_cd_small, "n=-100 polylogarithm", "double");
 
