@@ -188,7 +188,7 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z) noexcept
       // arXiv:2010.09860
       const double nz = std::norm(z);
       const double nl = std::norm(clog(z));
-      if (nz <= 0.25 && 4*PI*PI*nz < nl) {
+      if (4*PI*PI*nz < nl) {
          return Li_series(n, z);
       } else if (nl < 0.512*0.512*4*PI*PI) {
          return Li_unity_neg(n, z);

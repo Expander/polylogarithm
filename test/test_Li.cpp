@@ -67,4 +67,7 @@ TEST_CASE("test_complex_fixed_values")
          CHECK_CLOSE_COMPLEX(li, li_expected, ni.eps);
       }
    }
+
+   // value close to boundary between series 1 and 2 in arXiv:2010.09860
+   CHECK_CLOSE_COMPLEX(polylogarithm::Li(-2, -0.50001), -0.074072592582716422, 1e-14);
 }
