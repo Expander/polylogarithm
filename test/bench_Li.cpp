@@ -486,5 +486,8 @@ int main() {
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li(100,z); },
             values_cd_small, "n=100  polylogarithm", "double");
 
+   bench_fn([&](std::complex<double> z) { return polylogarithm::Li(100,z); },
+            values_cd_small, "n=1000  polylogarithm", "double");
+
    return 0;
 }
