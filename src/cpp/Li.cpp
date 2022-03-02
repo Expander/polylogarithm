@@ -152,13 +152,14 @@ namespace {
       const std::complex<double> lnz2 = lnz*lnz;
       const int64_t kmax = is_even(n) ? n/2 : (n - 1)/2;
       std::complex<double> p = is_even(n) ? 1.0 : lnz;
-      std::complex<double> sum(0.0, 0.0);
+      std::complex<double> sum(0.0, 0.0), old_sum;
 
       for (int64_t k = kmax; k != 0; --k) {
          const double ifac = inv_fac(n - 2*k);
          if (ifac == 0) { return 2.0*sum; }
          sum += neg_eta(2*k)*ifac*p;
          p *= lnz2;
+         if (sum == old_sum) { break; }
       }
 
       return 2.0*sum - p*inv_fac(n);
