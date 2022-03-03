@@ -70,11 +70,14 @@ Li_10((1,1)) = (0.999962,1.00199)
 Notes
 -----
 
+The implementation of the real dilogarithm is an adaption of
+[[arXiv:2201.01678](https://arxiv.org/abs/2201.01678)].
+
 The implementation of the complex dilogarithm is inspired by the
 implementation in [SPheno](https://spheno.hepforge.org/).
 
-The implementation of the general n-th order complex polylogarithm is
-inspired by [[arXiv:2010.09860](https://arxiv.org/abs/2010.09860)].
+The implementation of the general n-th order complex polylogarithm an
+adaption of [[arXiv:2010.09860](https://arxiv.org/abs/2010.09860)].
 
 Citation
 --------
