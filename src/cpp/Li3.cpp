@@ -169,17 +169,11 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
    const Complex<double> z = { std::real(z_), std::imag(z_) };
 
    if (z.im == 0) {
-      if (z.re == 0) {
-         return 0.0;
-      }
-      if (z.re == 1) {
-         return zeta3;
-      }
-      if (z.re == -1) {
-         return -0.75*zeta3;
-      }
-      if (z.re == 0.5) {
-         return 0.53721319360804020;
+      if (z.re <= 1) {
+         return Li3(z.re);
+      } else {
+         const double l = std::log(z.re);
+         return std::complex<double>(Li3(z.re), -0.5*PI*l*l);
       }
    }
 

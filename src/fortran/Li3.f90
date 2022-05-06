@@ -133,7 +133,7 @@ end function dli3
 double complex function cdli3(z)
   implicit none
   double complex :: z, u, u2, u4, u8, c0, c1, lmz, rest, fast_pos_cdlog
-  double precision :: rz, iz, nz, pz, lnz, arg
+  double precision :: rz, iz, nz, pz, lnz, arg, dli3
   double precision, parameter :: PI    = 3.1415926535897932D0
   double precision, parameter :: zeta2 = 1.6449340668482264D0
   double precision, parameter :: zeta3 = 1.2020569031595943D0
@@ -157,20 +157,12 @@ double complex function cdli3(z)
   iz = aimag(z)
 
    if (iz .eq. 0) then
-      if (rz .eq. 0) then
-         cdli3 = 0
+      if (rz .le. 1) then
+         cdli3 = dli3(rz)
          return
-      endif
-      if (rz .eq. 1) then
-         cdli3 = zeta3
-         return
-      endif
-      if (rz .eq. -1) then
-         cdli3 = -0.75D0*zeta3
-         return
-      endif
-      if (rz .eq. 0.5D0) then
-         cdli3 = 0.53721319360804020D0
+      else
+         lnz = log(rz)
+         cdli3 = dcmplx(dli3(rz), -0.5D0*PI*lnz**2)
          return
       endif
    endif

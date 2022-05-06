@@ -201,14 +201,11 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
    const Complex<double> z = { std::real(z_), std::imag(z_) };
 
    if (z.im == 0) {
-      if (z.re == 0) {
-         return 0.0;
-      }
-      if (z.re == 1) {
-         return zeta4;
-      }
-      if (z.re == -1) {
-         return -7.0*PI4/720.0;
+      if (z.re <= 1) {
+         return Li4(z.re);
+      } else {
+         const double l = std::log(z.re);
+         return std::complex<double>(Li4(z.re), -1.0/6*PI*l*l*l);
       }
    }
 

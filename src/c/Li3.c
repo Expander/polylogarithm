@@ -146,17 +146,11 @@ double _Complex cli3(double _Complex z)
    const double iz  = cimag(z);
 
    if (iz == 0) {
-      if (rz == 0) {
-         return 0.0;
-      }
-      if (rz == 1) {
-         return zeta3;
-      }
-      if (rz == -1) {
-         return -0.75*zeta3;
-      }
-      if (rz == 0.5) {
-         return 0.53721319360804020;
+      if (rz <= 1) {
+         return li3(rz);
+      } else {
+         const double l = log(rz);
+         return li3(rz) - 0.5*PI*l*l*I;
       }
    }
 

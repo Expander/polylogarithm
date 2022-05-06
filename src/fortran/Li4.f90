@@ -162,7 +162,7 @@ end function dli4
 double complex function cdli4(z)
   implicit none
   double complex :: z, u, u2, u4, u8, c3, lmz, r, fast_pos_cdlog
-  double precision :: rz, iz, nz, pz, lnz, arg, sgn
+  double precision :: rz, iz, nz, pz, lnz, arg, sgn, dli4
   double precision, parameter :: PI    = 3.1415926535897932D0
   double precision, parameter :: PI2   = 9.8696044010893586D0
   double precision, parameter :: PI4   = 97.409091034002437D0
@@ -190,16 +190,12 @@ double complex function cdli4(z)
   iz = aimag(z)
 
    if (iz .eq. 0) then
-      if (rz .eq. 0) then
-         cdli4 = 0
+      if (rz .le. 1) then
+         cdli4 = dli4(rz)
          return
-      endif
-      if (rz .eq. 1) then
-         cdli4 = zeta4
-         return
-      endif
-      if (rz .eq. -1) then
-         cdli4 = -7*PI4/720
+      else
+         lnz = log(rz)
+         cdli4 = dcmplx(dli4(rz), -1D0/6D0*PI*lnz**3)
          return
       endif
    endif

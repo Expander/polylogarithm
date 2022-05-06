@@ -179,14 +179,11 @@ double _Complex cli4(double _Complex z)
    const double iz  = cimag(z);
 
    if (iz == 0) {
-      if (rz == 0) {
-         return 0.0;
-      }
-      if (rz == 1) {
-         return zeta4;
-      }
-      if (rz == -1.0) {
-         return -7.0*PI4/720.0;
+      if (rz <= 1) {
+         return li4(rz);
+      } else {
+         const double l = log(rz);
+         return li4(rz) - 1.0/6*PI*l*l*l*I;
       }
    }
 
