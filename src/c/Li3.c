@@ -69,54 +69,35 @@ double li3(double x)
 {
    const double zeta2 = 1.6449340668482264;
    const double zeta3 = 1.2020569031595943;
-   double neg = 0, pos = 0, sgn = 0, rest = 0;
 
    // transformation to [-1,0] and [0,1/2]
    if (x < -1) {
       const double l = log(-x);
-      neg = li3_neg(1/x);
-      pos = 0;
-      sgn = 1;
-      rest = -l*(zeta2 + 1.0/6*l*l);
+      return li3_neg(1/x) - l*(zeta2 + 1.0/6*l*l);
    } else if (x == -1) {
       return -0.75*zeta3;
    } else if (x < 0) {
-      neg = li3_neg(x);
-      pos = 0;
-      sgn = 1;
-      rest = 0;
+      return li3_neg(x);
    } else if (x == 0) {
       return 0;
    } else if (x < 0.5) {
-      neg = 0;
-      pos = li3_pos(x);
-      sgn = 1;
-      rest = 0;
+      return li3_pos(x);
    } else if (x == 0.5) {
       return 0.53721319360804020;
    } else if (x < 1) {
       const double l = log(x);
-      neg = li3_neg((x - 1)/x);
-      pos = li3_pos(1 - x);
-      sgn = -1;
-      rest = zeta3 + l*(zeta2 + l*(-0.5*log(1 - x) + 1.0/6*l));
+      return -li3_neg(1 - 1/x) - li3_pos(1 - x)
+         + zeta3 + l*(zeta2 + l*(-0.5*log(1 - x) + 1.0/6*l));
    } else if (x == 1) {
       return zeta3;
    } else if (x < 2) {
       const double l = log(x);
-      neg = li3_neg(1 - x);
-      pos = li3_pos((x - 1)/x);
-      sgn = -1;
-      rest = zeta3 + l*(zeta2 + l*(-0.5*log(x - 1) + 1.0/6*l));
+      return -li3_neg(1 - x) - li3_pos(1 - 1/x)
+         + zeta3 + l*(zeta2 + l*(-0.5*log(x - 1) + 1.0/6*l));
    } else { // x >= 2.0
       const double l = log(x);
-      neg = 0;
-      pos = li3_pos(1/x);
-      sgn = 1;
-      rest = l*(2*zeta2 - 1.0/6*l*l);
+      return li3_pos(1/x) + l*(2*zeta2 - 1.0/6*l*l);
    }
-
-   return rest + sgn*(neg + pos);
 }
 
 /**

@@ -65,61 +65,38 @@ end function dli3_pos
 !*********************************************************************
 double precision function dli3(x)
   implicit none
-  double precision :: x, neg, pos, rest, sgn, l
-  double precision :: dli3_neg, dli3_pos
+  double precision :: x, l, dli3_neg, dli3_pos
   double precision, parameter :: zeta2 = 1.6449340668482264D0
   double precision, parameter :: zeta3 = 1.2020569031595943D0
 
   ! transformation to [-1,0] and [0,1/2]
   if (x .lt. -1) then
      l = log(-x)
-     neg = dli3_neg(1/x)
-     pos = 0
-     sgn = 1
-     rest = -l*(zeta2 + 1.0D0/6*l**2)
+     dli3 = dli3_neg(1/x) - l*(zeta2 + 1.0D0/6*l**2)
   elseif (x .eq. -1) then
      dli3 = -0.75D0*zeta3
-     return
   elseif (x .lt. 0) then
-     neg = dli3_neg(x)
-     pos = 0
-     sgn = 1
-     rest = 0
+     dli3 = dli3_neg(x)
   elseif (x .eq. 0) then
      dli3 = 0
-     return
   elseif (x .lt. 0.5D0) then
-     neg = 0
-     pos = dli3_pos(x)
-     sgn = 1
-     rest = 0
+     dli3 = dli3_pos(x)
   elseif (x .eq. 0.5D0) then
      dli3 = 0.53721319360804020D0
-     return
   elseif (x .lt. 1) then
      l = log(x)
-     neg = dli3_neg((x - 1)/x)
-     pos = dli3_pos(1 - x)
-     sgn = -1
-     rest = zeta3 + l*(zeta2 + l*(-0.5D0*log(1 - x) + 1.0D0/6*l))
+     dli3 = -dli3_neg(1 - 1/x) - dli3_pos(1 - x) + &
+          zeta3 + l*(zeta2 + l*(-0.5D0*log(1 - x) + 1.0D0/6*l))
   elseif (x .eq. 1) then
      dli3 = zeta3
-     return
   elseif (x .lt. 2) then
      l = log(x)
-     neg = dli3_neg(1 - x)
-     pos = dli3_pos((x - 1)/x)
-     sgn = -1
-     rest = zeta3 + l*(zeta2 + l*(-0.5D0*log(x - 1) + 1.0D0/6*l))
+     dli3 = -dli3_neg(1 - x) - dli3_pos(1 - 1/x) + &
+          zeta3 + l*(zeta2 + l*(-0.5D0*log(x - 1) + 1.0D0/6*l))
   else ! x >= 2.0D0
      l = log(x)
-     neg = 0
-     pos = dli3_pos(1/x)
-     sgn = 1
-     rest = l*(2*zeta2 - 1.0D0/6*l**2)
+     dli3 = dli3_pos(1/x) + l*(2*zeta2 - 1.0D0/6*l**2)
   endif
-
-  dli3 = rest + sgn*(neg + pos)
 
 end function dli3
 
