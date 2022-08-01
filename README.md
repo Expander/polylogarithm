@@ -79,20 +79,6 @@ implementation in [SPheno](https://spheno.hepforge.org/).
 The implementation of the general n-th order complex polylogarithm an
 adaptation of [[arXiv:2010.09860](https://arxiv.org/abs/2010.09860)].
 
-Citation
---------
-
-```.bibtex
-@software{polylogarithm,
-    author  = {{Alexander Voigt}},
-    title   = {{Polylogarithm}},
-    year    = {2022},
-    version = {6.12.0},
-    url     = {https://github.com/Expander/polylogarithm},
-    note    = {[License: MIT]}
-}
-```
-
 
 Copying
 -------
