@@ -159,7 +159,7 @@ double Li4(double x) noexcept
       x = 1/x;
       rest = 2*zeta4 + l2*(zeta2 - 1.0/24*l2);
       sgn = -1;
-   };
+   }
 
    if (x < 0) {
       app = li4_neg(x);
@@ -169,7 +169,7 @@ double Li4(double x) noexcept
       app = li4_mid(x);
    } else { // x <= 1
       app = li4_one(x);
-   };
+   }
 
    return rest + sgn*app;
 }
