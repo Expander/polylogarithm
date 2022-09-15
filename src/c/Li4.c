@@ -96,7 +96,7 @@ static double li4_one(double x)
    return zeta4 +
       l*(zeta3 +
       l*(0.5*zeta2 +
-      l*(11.0/36 - 1.0/6*log(fabs(l)) +
+      l*(11.0/36 - 1.0/6*log(-l) +
       l*(-1.0/48 +
       l*(-1.0/1440 +
       l2*(1.0/604800 - 1.0/91445760*l2))))));
