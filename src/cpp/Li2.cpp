@@ -98,7 +98,7 @@ double Li2(double x) noexcept
       s = 1;
    } else if (x < 1) {
       y = 1 - x;
-      r = PI*PI/6 - std::log(x)*std::log(y);
+      r = PI*PI/6 - std::log(x)*std::log1p(-x);
       s = -1;
    } else if (x == 1) {
       return PI*PI/6;
@@ -225,7 +225,7 @@ long double Li2(long double x) noexcept
       s = 1;
    } else if (x < 1) {
       y = 1 - x;
-      r = PI*PI/6 - std::log(x)*std::log(y);
+      r = PI*PI/6 - std::log(x)*std::log1p(-x);
       s = -1;
    } else if (x == 1) {
       return PI*PI/6;

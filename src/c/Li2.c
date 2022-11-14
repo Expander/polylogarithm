@@ -73,7 +73,7 @@ double li2(double x)
       s = 1;
    } else if (x < 1) {
       y = 1 - x;
-      r = PI*PI/6 - log(x)*log(y);
+      r = PI*PI/6 - log(x)*log1p(-x);
       s = -1;
    } else if (x == 1) {
       return PI*PI/6;
@@ -201,7 +201,7 @@ long double li2l(long double x)
       s = 1;
    } else if (x < 1) {
       y = 1 - x;
-      r = PI*PI/6 - logl(x)*logl(y);
+      r = PI*PI/6 - logl(x)*log1pl(-x);
       s = -1;
    } else if (x == 1) {
       return PI*PI/6;
