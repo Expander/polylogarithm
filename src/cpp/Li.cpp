@@ -203,7 +203,7 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z) noexcept
          return Li_unity_neg(n, z);
       }
       const auto sqrtz = std::sqrt(z);
-      return std::pow(2.0, n - 1)*(Li(n, sqrtz) + Li(n, -sqrtz));
+      return std::exp2(n - 1)*(Li(n, sqrtz) + Li(n, -sqrtz));
    } else if (n == -1) {
       return z/((1.0 - z)*(1.0 - z));
    } else if (n == 0) {
