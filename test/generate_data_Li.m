@@ -47,37 +47,45 @@ ExportData[s_, prec_] :=
            Print["Generating data for Li" <> ToString[s]];
            data = Join[
                GenerateGridData[s, prec, {-5, 5, 1/10}],
-               GenerateUnitData[s, prec, prec, 1/10, -1],
-               GenerateUnitData[s, prec, prec, 1/10, +1],
-               GenerateLimitData[s, prec, prec, 1/10, {+1, 0}],
-               GenerateLimitData[s, prec, prec, 1/10, { 0, 0}],
-               GenerateLimitData[s, prec, prec, 1/10, {-1, 0}],
-               Join @@@ {
-                   GeneratePoint[s, prec,  0  , 0],
-                   GeneratePoint[s, prec,  1/2, 0],
-                   GeneratePoint[s, prec,  1  , 0],
-                   GeneratePoint[s, prec,  3/2, 0],
-                   GeneratePoint[s, prec, -0  , 0],
-                   GeneratePoint[s, prec, -1/2, 0],
-                   GeneratePoint[s, prec, -1  , 0],
-                   GeneratePoint[s, prec, -3/2, 0],
-                   GeneratePoint[s, prec, -(Sqrt[5] - 1)/2, 0],
-                   GeneratePoint[s, prec, -(Sqrt[5] + 1)/2, 0],
-                   GeneratePoint[s, prec,  (Sqrt[5] + 1)/2, 0],
-                   GeneratePoint[s, prec,  (Sqrt[5] + 3)/2, 0],
-                   GeneratePoint[s, prec, omega, 0],
-                   GeneratePoint[s, prec, omega^2, 0],
-                   GeneratePoint[s, prec, 1 + omega, 0],
-                   GeneratePoint[s, prec, 1/(1 + omega), 0]
-               }
+               GenerateGridData[s, prec, {-10, 30, 4/10}],
+               GenerateGridData[s, prec, {-1000, 1000, 100}]
+               (* GenerateUnitData[s, prec, prec, 1/10, -1], *)
+               (* GenerateUnitData[s, prec, prec, 1/10, +1], *)
+               (* GenerateLimitData[s, prec, prec, 1/10, {+1, 0}], *)
+               (* GenerateLimitData[s, prec, prec, 1/10, { 0, 0}], *)
+               (* GenerateLimitData[s, prec, prec, 1/10, {-1, 0}], *)
+               (* Join @@@ { *)
+               (*     GeneratePoint[s, prec,  0  , 0], *)
+               (*     GeneratePoint[s, prec,  1/2, 0], *)
+               (*     GeneratePoint[s, prec,  1  , 0], *)
+               (*     GeneratePoint[s, prec,  3/2, 0], *)
+               (*     GeneratePoint[s, prec, -0  , 0], *)
+               (*     GeneratePoint[s, prec, -1/2, 0], *)
+               (*     GeneratePoint[s, prec, -1  , 0], *)
+               (*     GeneratePoint[s, prec, -3/2, 0], *)
+               (*     GeneratePoint[s, prec, -(Sqrt[5] - 1)/2, 0], *)
+               (*     GeneratePoint[s, prec, -(Sqrt[5] + 1)/2, 0], *)
+               (*     GeneratePoint[s, prec,  (Sqrt[5] + 1)/2, 0], *)
+               (*     GeneratePoint[s, prec,  (Sqrt[5] + 3)/2, 0], *)
+               (*     GeneratePoint[s, prec, omega, 0], *)
+               (*     GeneratePoint[s, prec, omega^2, 0], *)
+               (*     GeneratePoint[s, prec, 1 + omega, 0], *)
+               (*     GeneratePoint[s, prec, 1/(1 + omega), 0] *)
+               (* } *)
            ];
-           filename = "Li" <> ToString[s] <> ".txt";
+           filename = "Li" <> ToString[2*s] <> "half.txt";
            Print["Writing data to ", filename];
            Export[filename, data, "Table"];
     ]
 
-ExportData[2, 40];
-ExportData[3, 40];
-ExportData[4, 40];
-ExportData[5, 40];
-ExportData[6, 40];
+(* ExportData[2, 40]; *)
+(* ExportData[3, 40]; *)
+(* ExportData[4, 40]; *)
+(* ExportData[5, 40]; *)
+(* ExportData[6, 40]; *)
+
+(* ExportData[1/2, 40]; *)
+(* ExportData[3/2, 40]; *)
+(* ExportData[5/2, 40]; *)
+(* ExportData[21/2, 40]; *)
+ExportData[41/2, 40];
