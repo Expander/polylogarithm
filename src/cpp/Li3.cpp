@@ -111,7 +111,7 @@ double Li3(double x) noexcept
    } else if (x < 1) {
       const double l = std::log(x);
       return -li3_neg(1 - 1/x) - li3_pos(1 - x)
-         + zeta3 + l*(zeta2 + l*(-0.5*std::log(1 - x) + 1.0/6*l));
+         + zeta3 + l*(zeta2 + l*(-0.5*std::log1p(-x) + 1.0/6*l));
    } else if (x == 1) {
       return zeta3;
    } else if (x < 2) {
