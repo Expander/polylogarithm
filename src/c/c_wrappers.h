@@ -41,6 +41,9 @@ long double cl5l(long double x);
 long double cl6l(long double x);
 
 /** real polylogarithm with n=2 (dilogarithm) */
+float li2f(float x);
+
+/** real polylogarithm with n=2 (dilogarithm) */
 double li2(double x);
 
 /** real polylogarithm with n=3 (trilogarithm) */

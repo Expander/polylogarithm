@@ -53,6 +53,10 @@ std::complex<double> hollik_Li2(std::complex<double> z) {
    return { li2_re, li2_im };
 }
 
+inline float poly_Li2(float z) {
+   return li2f(z);
+}
+
 inline double poly_Li2(double z) {
    return li2(z);
 }
@@ -265,6 +269,9 @@ int main() {
 
    bench_fn([&](float x) { return polylogarithm::Li2(x); }, values_f,
             "polylogarithm C++", "float");
+
+   bench_fn([&](float x) { return poly_Li2(x); }, values_f,
+            "polylogarithm C", "float");
 
    bench_fn([&](double x) { return polylogarithm::Li2(x); }, values_d,
             "polylogarithm C++", "double");

@@ -108,6 +108,10 @@ std::complex<long double> lt_Li2(std::complex<long double> z) {
    return { re, im };
 }
 
+inline float poly_Li2(float z) {
+   return li2f(z);
+}
+
 inline double poly_Li2(double z) {
    return li2(z);
 }
@@ -362,6 +366,7 @@ TEST_CASE("test_real_fixed_values")
          const auto li32_poly     = polylogarithm::Li2(x32);
          const auto li64_poly     = polylogarithm::Li2(x64);
          const auto li128_poly    = polylogarithm::Li2(x128);
+         const auto li32_poly_c   = poly_Li2(x32);
          const auto li64_poly_c   = poly_Li2(x64);
          const auto li128_poly_c  = poly_Li2(x128);
 #ifdef ENABLE_FORTRAN
@@ -371,6 +376,7 @@ TEST_CASE("test_real_fixed_values")
          INFO("x(32)         = " << x32);
          INFO("Li2(32)  real = " << li32_expected  << " (expected)");
          INFO("Li2(32)  real = " << li32_poly      << " (polylogarithm C++)");
+         INFO("Li2(32)  real = " << li32_poly_c    << " (polylogarithm C)");
          INFO("------------------------------------------------------------");
          INFO("x(64)         = " << x64);
          INFO("Li2(64)  real = " << li64_expected  << " (expected)");
@@ -398,6 +404,7 @@ TEST_CASE("test_real_fixed_values")
          INFO("Li2(128) real = " << li128_koelbig  << " (koelbig)");
 
          CHECK_CLOSE(li32_poly    , std::real(li32_expected) , 2*eps32);
+         CHECK_CLOSE(li32_poly_c  , std::real(li32_expected) , 2*eps32);
          CHECK_CLOSE(li64_327     , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_490     , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_babar   , std::real(li64_expected) , 100*eps64);

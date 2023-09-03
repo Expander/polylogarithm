@@ -26,6 +26,76 @@ static long double hornerl(long double x, const long double* c, int len)
  * @author Alexander Voigt
  *
  * Implemented as a rational function approximation with a maximum
+ * error of 8e-9.
+ */
+float li2f(float x)
+{
+   const float PI = 3.14159265f;
+   const float P[] = {
+      9.99999992e-1f,
+     -1.07392585e+0f,
+      2.29935934e-1f
+   };
+   const float Q[] = {
+      1.00000000e+0f,
+     -1.32392672e+0f,
+      4.49822034e-1f,
+     -2.79507771e-2f
+   };
+
+   float y = 0, r = 0, s = 1;
+
+   /* transform to [0, 1/2] */
+   if (x < -1) {
+      const float l = logf(1 - x);
+      y = 1/(1 - x);
+      r = -PI*PI/6 + l*(0.5f*l - logf(-x));
+      s = 1;
+   } else if (x == -1) {
+      return -PI*PI/12;
+   } else if (x < 0) {
+      const float l = log1pf(-x);
+      y = x/(x - 1);
+      r = -0.5f*l*l;
+      s = -1;
+   } else if (x == 0) {
+      return 0;
+   } else if (x < 0.5f) {
+      y = x;
+      r = 0;
+      s = 1;
+   } else if (x < 1) {
+      y = 1 - x;
+      r = PI*PI/6 - logf(x)*log1pf(-x);
+      s = -1;
+   } else if (x == 1) {
+      return PI*PI/6;
+   } else if (x < 2) {
+      const float l = logf(x);
+      y = 1 - 1/x;
+      r = PI*PI/6 - l*(logf(y) + 0.5f*l);
+      s = 1;
+   } else {
+      const float l = logf(x);
+      y = 1/x;
+      r = PI*PI/3 - 0.5f*l*l;
+      s = -1;
+   }
+
+   const float y2 = y*y;
+   const float p = P[0] + y * P[1] + y2 * P[2];
+   const float q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
+
+   return r + s*y*p/q;
+}
+
+/**
+ * @brief Real dilogarithm \f$\operatorname{Li}_2(x)\f$
+ * @param x real argument
+ * @return \f$\operatorname{Li}_2(x)\f$
+ * @author Alexander Voigt
+ *
+ * Implemented as a rational function approximation with a maximum
  * error of 5e-17
  * [[arXiv:2201.01678](https://arxiv.org/abs/2201.01678)].
  */
