@@ -255,12 +255,16 @@ int main() {
    const auto min = 0.0;
    const auto max = 0.5;
 
+   const auto values_f  = generate_random_scalars<float>(N, min, max);
    const auto values_d  = generate_random_scalars<double>(N, min, max);
    const auto values_l  = generate_random_scalars<long double>(N, min, max);
    const auto values_cd = generate_random_complexes<double>(N, min, max);
    const auto values_cl = generate_random_complexes<long double>(N, min, max);
 
    print_headline("Li2 (real)");
+
+   bench_fn([&](float x) { return polylogarithm::Li2(x); }, values_f,
+            "polylogarithm C++", "float");
 
    bench_fn([&](double x) { return polylogarithm::Li2(x); }, values_d,
             "polylogarithm C++", "double");

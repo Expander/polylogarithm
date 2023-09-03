@@ -80,6 +80,11 @@ std::complex<double> clog(std::complex<double> z) {
    return std::log(zf);
 }
 
+std::complex<float> to_c32(std::complex<long double> z)
+{
+   return std::complex<float>(std::real(z), std::imag(z));
+}
+
 std::complex<double> to_c64(std::complex<long double> z)
 {
    return std::complex<double>(std::real(z), std::imag(z));
@@ -323,6 +328,7 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_real_fixed_values")
 {
+   const auto eps32  = std::pow(10.0f, -std::numeric_limits<float>::digits10);
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
 
@@ -331,10 +337,13 @@ TEST_CASE("test_real_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
+      const auto z32 = to_c32(z128);
       const auto z64 = to_c64(z128);
+      const auto x32 = std::real(z32);
       const auto x64 = std::real(z64);
       const auto x128 = std::real(z128);
       const auto li128_expected = std::real(v.second);
+      const auto li32_expected = static_cast<float>(li128_expected);
       const auto li64_expected = static_cast<double>(li128_expected);
 
       if (std::imag(z128) == 0.0L) {
@@ -350,6 +359,7 @@ TEST_CASE("test_real_fixed_values")
 #ifdef ENABLE_GSL
          const auto li64_gsl      = gsl_Li2(x64);
 #endif
+         const auto li32_poly     = polylogarithm::Li2(x32);
          const auto li64_poly     = polylogarithm::Li2(x64);
          const auto li128_poly    = polylogarithm::Li2(x128);
          const auto li64_poly_c   = poly_Li2(x64);
@@ -358,6 +368,10 @@ TEST_CASE("test_real_fixed_values")
          const auto li64_poly_f   = poly_Li2_fortran(x64);
 #endif
 
+         INFO("x(32)         = " << x32);
+         INFO("Li2(32)  real = " << li32_expected  << " (expected)");
+         INFO("Li2(32)  real = " << li32_poly      << " (polylogarithm C++)");
+         INFO("------------------------------------------------------------");
          INFO("x(64)         = " << x64);
          INFO("Li2(64)  real = " << li64_expected  << " (expected)");
          INFO("Li2(64)  real = " << li64_327       << " (algorithm 327)");
@@ -383,6 +397,7 @@ TEST_CASE("test_real_fixed_values")
          INFO("Li2(128) real = " << li128_poly_c   << " (polylogarithm C)");
          INFO("Li2(128) real = " << li128_koelbig  << " (koelbig)");
 
+         CHECK_CLOSE(li32_poly    , std::real(li32_expected) , 2*eps32);
          CHECK_CLOSE(li64_327     , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_490     , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_babar   , std::real(li64_expected) , 100*eps64);

@@ -9,7 +9,10 @@
 
 namespace polylogarithm {
 
-/// real polylogarithm with n=2 (dilogarithm)
+/// real polylogarithm with n=2 (dilogarithm) with single precision
+float Li2(float) noexcept;
+
+/// real polylogarithm with n=2 (dilogarithm) with double precision
 double Li2(double) noexcept;
 
 /// real polylogarithm with n=2 (dilogarithm) with long double precision
