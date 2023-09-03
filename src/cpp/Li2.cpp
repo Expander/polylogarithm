@@ -51,27 +51,21 @@ namespace {
  * @author Alexander Voigt
  *
  * Implemented as a rational function approximation with a maximum
- * error of 5e-17.
+ * error of 8e-9.
  */
 float Li2(float x) noexcept
 {
    const float PI = 3.14159265f;
    const float P[] = {
-      0.9999999999999999502e+0f,
-     -2.6883926818565423430e+0f,
-      2.6477222699473109692e+0f,
-     -1.1538559607887416355e+0f,
-      2.0886077795020607837e-1f,
-     -1.0859777134152463084e-2f
+      9.9999999206112548048e-1f,
+     -1.0739258530754697287e+0f,
+      2.2993593428535427556e-1f
    };
    const float Q[] = {
       1.0000000000000000000e+0f,
-     -2.9383926818565635485e+0f,
-      3.2712093293018635389e+0f,
-     -1.7076702173954289421e+0f,
-      4.1596017228400603836e-1f,
-     -3.9801343754084482956e-2f,
-      8.2743668974466659035e-4f
+     -1.3239267190545658873e+0f,
+      4.4982203414828778456e-1f,
+     -2.7950777066307786728e-2f
    };
 
    float y = 0, r = 0, s = 1;
@@ -114,11 +108,8 @@ float Li2(float x) noexcept
    }
 
    const float y2 = y*y;
-   const float y4 = y2*y2;
-   const float p = P[0] + y * P[1] + y2 * (P[2] + y * P[3]) +
-                   y4 * (P[4] + y * P[5]);
-   const float q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]) +
-                   y4 * (Q[4] + y * Q[5] + y2 * Q[6]);
+   const float p = P[0] + y * P[1] + y2 * P[2];
+   const float q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
 
    return r + s*y*p/q;
 }
