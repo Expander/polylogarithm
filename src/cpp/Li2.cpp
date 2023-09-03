@@ -51,22 +51,13 @@ namespace {
  * @author Alexander Voigt
  *
  * Implemented as a rational function approximation with a maximum
- * error of 8e-9.
+ * error of 2e-7.
  */
 float Li2(float x) noexcept
 {
    const float PI = 3.14159265f;
-   const float P[] = {
-      9.99999992e-1f,
-     -1.07392585e+0f,
-      2.29935934e-1f
-   };
-   const float Q[] = {
-      1.00000000e+0f,
-     -1.32392672e+0f,
-      4.49822034e-1f,
-     -2.79507771e-2f
-   };
+   const float P[] = { 1.00000020f, -0.780790946f, 0.0648256871f };
+   const float Q[] = { 1.00000000f, -1.03077545f, 0.211216710f };
 
    float y = 0, r = 0, s = 1;
 
@@ -109,7 +100,7 @@ float Li2(float x) noexcept
 
    const float y2 = y*y;
    const float p = P[0] + y * P[1] + y2 * P[2];
-   const float q = Q[0] + y * Q[1] + y2 * (Q[2] + y * Q[3]);
+   const float q = Q[0] + y * Q[1] + y2 * Q[2];
 
    return r + s*y*p/q;
 }
