@@ -262,6 +262,7 @@ int main() {
    const auto values_f  = generate_random_scalars<float>(N, min, max);
    const auto values_d  = generate_random_scalars<double>(N, min, max);
    const auto values_l  = generate_random_scalars<long double>(N, min, max);
+   const auto values_cf = generate_random_complexes<float>(N, min, max);
    const auto values_cd = generate_random_complexes<double>(N, min, max);
    const auto values_cl = generate_random_complexes<long double>(N, min, max);
 
@@ -326,6 +327,9 @@ int main() {
             "TSIL", "long double");
 
    print_headline("Li2 (complex)");
+
+   bench_fn([&](std::complex<float> z) { return polylogarithm::Li2(z); },
+            values_cf, "polylogarithm C++", "float");
 
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li2(z); },
             values_cd, "polylogarithm C++", "double");
