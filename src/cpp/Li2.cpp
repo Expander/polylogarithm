@@ -344,7 +344,7 @@ std::complex<float> Li2(const std::complex<float>& z) noexcept
 
    const auto log = [](const std::complex<float>& z) {
       const std::complex<float> ln = std::log(z);
-      float a = imag(ln);
+      float a = std::imag(ln);
 
       if (std::imag(z) == 0.0f && a < 0.0f) {
          a = -a;
