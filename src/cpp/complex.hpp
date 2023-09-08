@@ -40,7 +40,7 @@ Complex<T> log(const Complex<T>& z) noexcept
       a = -a;
    }
 
-   return { 0.5*std::log(norm_sqr(z)), a };
+   return { T(1)/2*std::log(norm_sqr(z)), a };
 }
 
 template <typename T>
