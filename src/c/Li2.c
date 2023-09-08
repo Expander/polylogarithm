@@ -295,6 +295,81 @@ long double li2l(long double x)
  * @author Werner Porod
  * @note translated to C++ by Alexander Voigt
  */
+float _Complex cli2f(float _Complex z)
+{
+   const float PI = 3.14159265f;
+
+   /* bf[1..N-1] are the even Bernoulli numbers / (2 n + 1)! */
+   const float bf[] = {
+      - 1.0f/4,
+      + 1.0f/36,
+      - 1.0f/3600,
+      + 1.0f/211680
+   };
+
+   const float rz = crealf(z);
+   const float iz = cimagf(z);
+
+   /* special cases */
+   if (iz == 0.0f) {
+      if (rz <= 1.0f) {
+         return li2f(rz);
+      }
+      // rz > 1.0
+      return li2f(rz) - PI*logf(rz)*I;
+   }
+
+   const float nz = rz*rz + iz*iz;
+
+   if (nz < FLT_EPSILON) {
+      return z*(1.0f + 0.25f*z);
+   }
+
+   float _Complex u = 0.0f, rest = 0.0f;
+   int sgn = 1;
+
+   /* transformation to |z|<1, Re(z)<=0.5f */
+   if (rz <= 0.5f) {
+      if (nz > 1.0f) {
+         const float _Complex lz = fast_clogf(-z);
+         u = -fast_clogf(1.0f - 1.0f / z);
+         rest = -0.5f*lz*lz - PI*PI/6;
+         sgn = -1;
+      } else { /* nz <= 1 */
+         u = -fast_clogf(1.0f - z);
+         rest = 0;
+         sgn = 1;
+      }
+   } else { /* rz > 0.5f */
+      if (nz <= 2*rz) {
+         u = -fast_clogf(z);
+         rest = u*fast_clogf(1.0f - z) + PI*PI/6;
+         sgn = -1;
+      } else { /* nz > 2*rz */
+         const float _Complex lz = fast_clogf(-z);
+         u = -fast_clogf(1.0f - 1.0f / z);
+         rest = -0.5f*lz*lz - PI*PI/6;
+         sgn = -1;
+      }
+   }
+
+   const float _Complex u2 = u*u;
+   const float _Complex u4 = u2*u2;
+   const float _Complex sum =
+      u + u2*(bf[0] + u*(bf[1] + u2*(bf[2] + u2*bf[3])));
+
+   return (float)sgn * sum + rest;
+}
+
+
+/**
+ * @brief Complex dilogarithm \f$\operatorname{Li}_2(z)\f$
+ * @param z complex argument
+ * @return \f$\operatorname{Li}_2(z)\f$
+ * @note Implementation translated from SPheno to C++
+ * @author Werner Porod
+ * @note translated to C++ by Alexander Voigt
+ */
 double _Complex cli2(double _Complex z)
 {
    const double PI = 3.1415926535897932;

@@ -120,6 +120,12 @@ inline long double poly_Li2(long double z) {
    return li2l(z);
 }
 
+std::complex<float> poly_Li2(std::complex<float> z) {
+   float re{}, im{};
+   cli2f_c(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<double> poly_Li2(std::complex<double> z) {
    double re{}, im{};
    cli2_c(std::real(z), std::imag(z), &re, &im);
@@ -448,6 +454,7 @@ TEST_CASE("test_complex_fixed_values")
       const auto li32_poly   = polylogarithm::Li2(z32);
       const auto li64_poly   = polylogarithm::Li2(z64);
       const auto li128_poly  = polylogarithm::Li2(z128);
+      const auto li32_poly_c = poly_Li2(z32);
       const auto li64_poly_c = poly_Li2(z64);
       const auto li128_poly_c= poly_Li2(z128);
 #ifdef ENABLE_FORTRAN
@@ -466,6 +473,7 @@ TEST_CASE("test_complex_fixed_values")
       INFO("z(32)         = " << z32);
       INFO("Li2(32)  cmpl = " << li32_expected  << " (expected)");
       INFO("Li2(32)  cmpl = " << li32_poly      << " (polylogarithm C++)");
+      INFO("Li2(32)  cmpl = " << li32_poly_c    << " (polylogarithm C)");
       INFO("------------------------------------------------------------");
       INFO("z(64)         = " << z64);
       INFO("Li2(64)  cmpl = " << li64_expected  << " (expected)");
@@ -493,7 +501,8 @@ TEST_CASE("test_complex_fixed_values")
       // from zero. In this case the sign of Im(z) cannot be
       // determined.
       if (std::abs(std::imag(z64)) > std::numeric_limits<float>::min()) {
-         CHECK_CLOSE_COMPLEX(li32_poly, li32_expected , 2*eps32);
+         CHECK_CLOSE_COMPLEX(li32_poly  , li32_expected , 2*eps32);
+         CHECK_CLOSE_COMPLEX(li32_poly_c, li32_expected , 2*eps32);
       }
       CHECK_CLOSE_COMPLEX(li64_poly   , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_poly_c , li64_expected , 2*eps64);

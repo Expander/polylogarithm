@@ -65,6 +65,12 @@ inline long double poly_Li2(long double z) {
    return li2l(z);
 }
 
+std::complex<float> poly_Li2(std::complex<float> z) {
+   float re{}, im{};
+   cli2f_c(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
+}
+
 std::complex<double> poly_Li2(std::complex<double> z) {
    double re{}, im{};
    cli2_c(std::real(z), std::imag(z), &re, &im);
@@ -330,6 +336,9 @@ int main() {
 
    bench_fn([&](std::complex<float> z) { return polylogarithm::Li2(z); },
             values_cf, "polylogarithm C++", "float");
+
+   bench_fn([&](std::complex<float> z) { return poly_Li2(z); },
+            values_cf, "polylogarithm C", "float");
 
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li2(z); },
             values_cd, "polylogarithm C++", "double");

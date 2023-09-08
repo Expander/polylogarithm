@@ -10,6 +10,15 @@
 #include <math.h>
 
 
+static inline float _Complex fast_clogf(float _Complex z)
+{
+   const float rz = crealf(z);
+   const float iz = cimagf(z);
+
+   return logf(hypotf(rz, iz)) + I*atan2f(iz, rz);
+}
+
+
 static inline double _Complex fast_clog(double _Complex z)
 {
    const double rz = creal(z);
