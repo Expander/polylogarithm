@@ -489,8 +489,11 @@ TEST_CASE("test_complex_fixed_values")
       INFO("Li2(128) cmpl = " << li128_lt       << " (LoopTools)");
       INFO("Li2(128) cmpl = " << li128_tsil     << " (TSIL)");
 
-      if (!(std::real(z32) == 1 && std::imag(z32) < 1e-23)) {
-         CHECK_CLOSE_COMPLEX(li32_poly   , li32_expected , 2*eps32);
+      // Too small imaginary parts |Im(z)| cannot be distinguished
+      // from zero. In this case the sign of Im(z) cannot be
+      // determined.
+      if (std::abs(std::imag(z64)) > std::numeric_limits<float>::min()) {
+         CHECK_CLOSE_COMPLEX(li32_poly, li32_expected , 2*eps32);
       }
       CHECK_CLOSE_COMPLEX(li64_poly   , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_poly_c , li64_expected , 2*eps64);
