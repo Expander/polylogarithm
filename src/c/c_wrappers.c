@@ -21,7 +21,7 @@ long double _Complex cli4l(long double _Complex);
 long double _Complex cli5l(long double _Complex);
 long double _Complex cli6l(long double _Complex);
 
-/** C++ wrapper for cli2 */
+/** C++ wrapper for cli2f */
 void cli2f_c(float re, float im, float* res_re, float* res_im)
 {
    const float _Complex result = cli2f(re + I*im);
