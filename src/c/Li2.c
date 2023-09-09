@@ -26,6 +26,67 @@ static long double hornerl(long double x, const long double* c, int len)
  * @author Alexander Voigt
  *
  * Implemented as a rational function approximation with a maximum
+ * error of 2e-7.
+ */
+float li2f(float x)
+{
+   const float PI = 3.14159265f;
+   const float P[] = { 1.00000020f, -0.780790946f, 0.0648256871f };
+   const float Q[] = { 1.00000000f, -1.03077545f, 0.211216710f };
+
+   float y = 0, r = 0, s = 1;
+
+   /* transform to [0, 1/2] */
+   if (x < -1) {
+      const float l = logf(1 - x);
+      y = 1/(1 - x);
+      r = -PI*PI/6 + l*(0.5f*l - logf(-x));
+      s = 1;
+   } else if (x == -1) {
+      return -PI*PI/12;
+   } else if (x < 0) {
+      const float l = log1pf(-x);
+      y = x/(x - 1);
+      r = -0.5f*l*l;
+      s = -1;
+   } else if (x == 0) {
+      return 0;
+   } else if (x < 0.5f) {
+      y = x;
+      r = 0;
+      s = 1;
+   } else if (x < 1) {
+      y = 1 - x;
+      r = PI*PI/6 - logf(x)*log1pf(-x);
+      s = -1;
+   } else if (x == 1) {
+      return PI*PI/6;
+   } else if (x < 2) {
+      const float l = logf(x);
+      y = 1 - 1/x;
+      r = PI*PI/6 - l*(logf(y) + 0.5f*l);
+      s = 1;
+   } else {
+      const float l = logf(x);
+      y = 1/x;
+      r = PI*PI/3 - 0.5f*l*l;
+      s = -1;
+   }
+
+   const float y2 = y*y;
+   const float p = P[0] + y * P[1] + y2 * P[2];
+   const float q = Q[0] + y * Q[1] + y2 * Q[2];
+
+   return r + s*y*p/q;
+}
+
+/**
+ * @brief Real dilogarithm \f$\operatorname{Li}_2(x)\f$
+ * @param x real argument
+ * @return \f$\operatorname{Li}_2(x)\f$
+ * @author Alexander Voigt
+ *
+ * Implemented as a rational function approximation with a maximum
  * error of 5e-17
  * [[arXiv:2201.01678](https://arxiv.org/abs/2201.01678)].
  */
@@ -234,6 +295,80 @@ long double li2l(long double x)
  * @author Werner Porod
  * @note translated to C++ by Alexander Voigt
  */
+float _Complex cli2f(float _Complex z)
+{
+   const float PI = 3.14159265f;
+
+   /* bf[1..N-1] are the even Bernoulli numbers / (2 n + 1)! */
+   const float bf[] = {
+      - 1.0f/4,
+      + 1.0f/36,
+      - 1.0f/3600,
+      + 1.0f/211680
+   };
+
+   const float rz = crealf(z);
+   const float iz = cimagf(z);
+
+   /* special cases */
+   if (iz == 0.0f) {
+      if (rz <= 1.0f) {
+         return li2f(rz);
+      }
+      // rz > 1.0
+      return li2f(rz) - PI*logf(rz)*I;
+   }
+
+   const float nz = rz*rz + iz*iz;
+
+   if (nz < FLT_EPSILON) {
+      return z*(1.0f + 0.25f*z);
+   }
+
+   float _Complex u = 0.0f, rest = 0.0f;
+   float sgn = 1;
+
+   /* transformation to |z|<1, Re(z)<=0.5f */
+   if (rz <= 0.5f) {
+      if (nz > 1.0f) {
+         const float _Complex lz = fast_clogf(-z);
+         u = -fast_clogf(1.0f - 1.0f / z);
+         rest = -0.5f*lz*lz - PI*PI/6;
+         sgn = -1;
+      } else { /* nz <= 1 */
+         u = -fast_clogf(1.0f - z);
+         rest = 0;
+         sgn = 1;
+      }
+   } else { /* rz > 0.5f */
+      if (nz <= 2*rz) {
+         u = -fast_clogf(z);
+         rest = u*fast_clogf(1.0f - z) + PI*PI/6;
+         sgn = -1;
+      } else { /* nz > 2*rz */
+         const float _Complex lz = fast_clogf(-z);
+         u = -fast_clogf(1.0f - 1.0f / z);
+         rest = -0.5f*lz*lz - PI*PI/6;
+         sgn = -1;
+      }
+   }
+
+   const float _Complex u2 = u*u;
+   const float _Complex sum =
+      u + u2*(bf[0] + u*(bf[1] + u2*(bf[2] + u2*bf[3])));
+
+   return sgn * sum + rest;
+}
+
+
+/**
+ * @brief Complex dilogarithm \f$\operatorname{Li}_2(z)\f$
+ * @param z complex argument
+ * @return \f$\operatorname{Li}_2(z)\f$
+ * @note Implementation translated from SPheno to C++
+ * @author Werner Porod
+ * @note translated to C++ by Alexander Voigt
+ */
 double _Complex cli2(double _Complex z)
 {
    const double PI = 3.1415926535897932;
@@ -272,7 +407,7 @@ double _Complex cli2(double _Complex z)
    }
 
    double _Complex u = 0.0, rest = 0.0;
-   int sgn = 1;
+   double sgn = 1;
 
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5) {
@@ -312,7 +447,7 @@ double _Complex cli2(double _Complex z)
           u4*u4*(bf[6] + u2*bf[7] + u4*(bf[8] + u2*bf[9]))
       )));
 
-   return (double)sgn * sum + rest;
+   return sgn * sum + rest;
 }
 
 

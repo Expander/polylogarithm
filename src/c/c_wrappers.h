@@ -40,6 +40,9 @@ long double cl5l(long double x);
 /** Clausen function with n=6 with long double precision */
 long double cl6l(long double x);
 
+/** real polylogarithm with n=2 (dilogarithm) with single precision */
+float li2f(float x);
+
 /** real polylogarithm with n=2 (dilogarithm) */
 double li2(double x);
 
@@ -52,7 +55,10 @@ double li4(double x);
 /** real polylogarithm with n=2 (dilogarithm) with long double precision */
 long double li2l(long double x);
 
-/** complex polylogarithm with n=2 (dilogarithm) */
+/** complex polylogarithm with n=2 (dilogarithm) with single precision */
+void cli2f_c(float re, float im, float* res_re, float* res_im);
+
+/** complex polylogarithm with n=2 (dilogarithm) with double precision */
 void cli2_c(double re, double im, double* res_re, double* res_im);
 
 /** complex polylogarithm with n=2 (dilogarithm) with long double precision */

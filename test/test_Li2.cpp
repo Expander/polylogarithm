@@ -80,6 +80,11 @@ std::complex<double> clog(std::complex<double> z) {
    return std::log(zf);
 }
 
+std::complex<float> to_c32(std::complex<long double> z)
+{
+   return std::complex<float>(std::real(z), std::imag(z));
+}
+
 std::complex<double> to_c64(std::complex<long double> z)
 {
    return std::complex<double>(std::real(z), std::imag(z));
@@ -103,12 +108,22 @@ std::complex<long double> lt_Li2(std::complex<long double> z) {
    return { re, im };
 }
 
+inline float poly_Li2(float z) {
+   return li2f(z);
+}
+
 inline double poly_Li2(double z) {
    return li2(z);
 }
 
 inline long double poly_Li2(long double z) {
    return li2l(z);
+}
+
+std::complex<float> poly_Li2(std::complex<float> z) {
+   float re{}, im{};
+   cli2f_c(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 std::complex<double> poly_Li2(std::complex<double> z) {
@@ -323,6 +338,7 @@ TEST_CASE("test_special_values")
 
 TEST_CASE("test_real_fixed_values")
 {
+   const auto eps32  = std::pow(10.0f, -std::numeric_limits<float>::digits10);
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
 
@@ -331,10 +347,13 @@ TEST_CASE("test_real_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
+      const auto z32 = to_c32(z128);
       const auto z64 = to_c64(z128);
+      const auto x32 = std::real(z32);
       const auto x64 = std::real(z64);
       const auto x128 = std::real(z128);
       const auto li128_expected = std::real(v.second);
+      const auto li32_expected = static_cast<float>(li128_expected);
       const auto li64_expected = static_cast<double>(li128_expected);
 
       if (std::imag(z128) == 0.0L) {
@@ -350,14 +369,21 @@ TEST_CASE("test_real_fixed_values")
 #ifdef ENABLE_GSL
          const auto li64_gsl      = gsl_Li2(x64);
 #endif
+         const auto li32_poly     = polylogarithm::Li2(x32);
          const auto li64_poly     = polylogarithm::Li2(x64);
          const auto li128_poly    = polylogarithm::Li2(x128);
+         const auto li32_poly_c   = poly_Li2(x32);
          const auto li64_poly_c   = poly_Li2(x64);
          const auto li128_poly_c  = poly_Li2(x128);
 #ifdef ENABLE_FORTRAN
          const auto li64_poly_f   = poly_Li2_fortran(x64);
 #endif
 
+         INFO("x(32)         = " << x32);
+         INFO("Li2(32)  real = " << li32_expected  << " (expected)");
+         INFO("Li2(32)  real = " << li32_poly      << " (polylogarithm C++)");
+         INFO("Li2(32)  real = " << li32_poly_c    << " (polylogarithm C)");
+         INFO("------------------------------------------------------------");
          INFO("x(64)         = " << x64);
          INFO("Li2(64)  real = " << li64_expected  << " (expected)");
          INFO("Li2(64)  real = " << li64_327       << " (algorithm 327)");
@@ -383,6 +409,8 @@ TEST_CASE("test_real_fixed_values")
          INFO("Li2(128) real = " << li128_poly_c   << " (polylogarithm C)");
          INFO("Li2(128) real = " << li128_koelbig  << " (koelbig)");
 
+         CHECK_CLOSE(li32_poly    , std::real(li32_expected) , 2*eps32);
+         CHECK_CLOSE(li32_poly_c  , std::real(li32_expected) , 2*eps32);
          CHECK_CLOSE(li64_327     , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_490     , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_babar   , std::real(li64_expected) , 100*eps64);
@@ -408,6 +436,7 @@ TEST_CASE("test_real_fixed_values")
 
 TEST_CASE("test_complex_fixed_values")
 {
+   const auto eps32  = std::pow(10.0f, -std::numeric_limits<float>::digits10);
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
    const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
 
@@ -416,12 +445,16 @@ TEST_CASE("test_complex_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
+      const auto z32 = to_c32(z128);
       const auto z64 = to_c64(z128);
       const auto li128_expected = v.second;
+      const auto li32_expected = to_c32(li128_expected);
       const auto li64_expected = to_c64(li128_expected);
 
+      const auto li32_poly   = polylogarithm::Li2(z32);
       const auto li64_poly   = polylogarithm::Li2(z64);
       const auto li128_poly  = polylogarithm::Li2(z128);
+      const auto li32_poly_c = poly_Li2(z32);
       const auto li64_poly_c = poly_Li2(z64);
       const auto li128_poly_c= poly_Li2(z128);
 #ifdef ENABLE_FORTRAN
@@ -437,6 +470,11 @@ TEST_CASE("test_complex_fixed_values")
       const auto li64_sherpa = sherpa_Li2(z64);
       const auto li64_spheno = spheno_Li2(z64);
 
+      INFO("z(32)         = " << z32);
+      INFO("Li2(32)  cmpl = " << li32_expected  << " (expected)");
+      INFO("Li2(32)  cmpl = " << li32_poly      << " (polylogarithm C++)");
+      INFO("Li2(32)  cmpl = " << li32_poly_c    << " (polylogarithm C)");
+      INFO("------------------------------------------------------------");
       INFO("z(64)         = " << z64);
       INFO("Li2(64)  cmpl = " << li64_expected  << " (expected)");
 #ifdef ENABLE_GSL
@@ -459,6 +497,13 @@ TEST_CASE("test_complex_fixed_values")
       INFO("Li2(128) cmpl = " << li128_lt       << " (LoopTools)");
       INFO("Li2(128) cmpl = " << li128_tsil     << " (TSIL)");
 
+      // Too small imaginary parts |Im(z)| cannot be distinguished
+      // from zero. In this case the sign of Im(z) cannot be
+      // determined.
+      if (std::abs(std::imag(z64)) > std::numeric_limits<float>::min()) {
+         CHECK_CLOSE_COMPLEX(li32_poly  , li32_expected , 2*eps32);
+         CHECK_CLOSE_COMPLEX(li32_poly_c, li32_expected , 2*eps32);
+      }
       CHECK_CLOSE_COMPLEX(li64_poly   , li64_expected , 2*eps64);
       CHECK_CLOSE_COMPLEX(li64_poly_c , li64_expected , 2*eps64);
 #ifdef ENABLE_FORTRAN

@@ -53,12 +53,22 @@ std::complex<double> hollik_Li2(std::complex<double> z) {
    return { li2_re, li2_im };
 }
 
+inline float poly_Li2(float z) {
+   return li2f(z);
+}
+
 inline double poly_Li2(double z) {
    return li2(z);
 }
 
 inline long double poly_Li2(long double z) {
    return li2l(z);
+}
+
+std::complex<float> poly_Li2(std::complex<float> z) {
+   float re{}, im{};
+   cli2f_c(std::real(z), std::imag(z), &re, &im);
+   return { re, im };
 }
 
 std::complex<double> poly_Li2(std::complex<double> z) {
@@ -255,12 +265,20 @@ int main() {
    const auto min = 0.0;
    const auto max = 0.5;
 
+   const auto values_f  = generate_random_scalars<float>(N, min, max);
    const auto values_d  = generate_random_scalars<double>(N, min, max);
    const auto values_l  = generate_random_scalars<long double>(N, min, max);
+   const auto values_cf = generate_random_complexes<float>(N, min, max);
    const auto values_cd = generate_random_complexes<double>(N, min, max);
    const auto values_cl = generate_random_complexes<long double>(N, min, max);
 
    print_headline("Li2 (real)");
+
+   bench_fn([&](float x) { return polylogarithm::Li2(x); }, values_f,
+            "polylogarithm C++", "float");
+
+   bench_fn([&](float x) { return poly_Li2(x); }, values_f,
+            "polylogarithm C", "float");
 
    bench_fn([&](double x) { return polylogarithm::Li2(x); }, values_d,
             "polylogarithm C++", "double");
@@ -315,6 +333,12 @@ int main() {
             "TSIL", "long double");
 
    print_headline("Li2 (complex)");
+
+   bench_fn([&](std::complex<float> z) { return polylogarithm::Li2(z); },
+            values_cf, "polylogarithm C++", "float");
+
+   bench_fn([&](std::complex<float> z) { return poly_Li2(z); },
+            values_cf, "polylogarithm C", "float");
 
    bench_fn([&](std::complex<double> z) { return polylogarithm::Li2(z); },
             values_cd, "polylogarithm C++", "double");

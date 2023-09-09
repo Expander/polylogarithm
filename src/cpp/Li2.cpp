@@ -51,6 +51,67 @@ namespace {
  * @author Alexander Voigt
  *
  * Implemented as a rational function approximation with a maximum
+ * error of 2e-7.
+ */
+float Li2(float x) noexcept
+{
+   const float PI = 3.14159265f;
+   const float P[] = { 1.00000020f, -0.780790946f, 0.0648256871f };
+   const float Q[] = { 1.00000000f, -1.03077545f, 0.211216710f };
+
+   float y = 0, r = 0, s = 1;
+
+   // transform to [0, 1/2]
+   if (x < -1) {
+      const float l = std::log(1 - x);
+      y = 1/(1 - x);
+      r = -PI*PI/6 + l*(0.5f*l - std::log(-x));
+      s = 1;
+   } else if (x == -1) {
+      return -PI*PI/12;
+   } else if (x < 0) {
+      const float l = std::log1p(-x);
+      y = x/(x - 1);
+      r = -0.5f*l*l;
+      s = -1;
+   } else if (x == 0) {
+      return 0;
+   } else if (x < 0.5f) {
+      y = x;
+      r = 0;
+      s = 1;
+   } else if (x < 1) {
+      y = 1 - x;
+      r = PI*PI/6 - std::log(x)*std::log1p(-x);
+      s = -1;
+   } else if (x == 1) {
+      return PI*PI/6;
+   } else if (x < 2) {
+      const float l = std::log(x);
+      y = 1 - 1/x;
+      r = PI*PI/6 - l*(std::log(y) + 0.5f*l);
+      s = 1;
+   } else {
+      const float l = std::log(x);
+      y = 1/x;
+      r = PI*PI/3 - 0.5f*l*l;
+      s = -1;
+   }
+
+   const float y2 = y*y;
+   const float p = P[0] + y * P[1] + y2 * P[2];
+   const float q = Q[0] + y * Q[1] + y2 * Q[2];
+
+   return r + s*y*p/q;
+}
+
+/**
+ * @brief Real dilogarithm \f$\operatorname{Li}_2(x)\f$
+ * @param x real argument
+ * @return \f$\operatorname{Li}_2(x)\f$
+ * @author Alexander Voigt
+ *
+ * Implemented as a rational function approximation with a maximum
  * error of 5e-17
  * [[arXiv:2201.01678](https://arxiv.org/abs/2201.01678)].
  */
@@ -247,6 +308,75 @@ long double Li2(long double x) noexcept
    const long double q = horner(z, Q);
 
    return r + s*y*p/q;
+}
+
+/**
+ * @brief Complex dilogarithm \f$\operatorname{Li}_2(z)\f$
+ * @param z_ complex argument
+ * @return \f$\operatorname{Li}_2(z)\f$
+ * @note Implementation translated from SPheno to C++
+ * @author Werner Porod
+ * @note translated to C++ by Alexander Voigt
+ */
+std::complex<float> Li2(const std::complex<float>& z_) noexcept
+{
+   const float PI = 3.14159265f;
+   const Complex<float> z = { std::real(z_), std::imag(z_) };
+
+   // bf[1..N-1] are the even Bernoulli numbers / (2 n + 1)!
+   const float bf[] = {
+      - 1.0f/4,
+      + 1.0f/36,
+      - 1.0f/3600,
+      + 1.0f/211680
+   };
+
+   // special cases
+   if (z.im == 0) {
+      if (z.re <= 1) {
+         return Li2(z.re);
+      }
+      // z.re > 1
+      return { Li2(z.re), -PI*std::log(z.re) };
+   }
+
+   const float nz = norm_sqr(z);
+
+   if (nz < std::numeric_limits<float>::epsilon()) {
+      return z*(1.0f + 0.25f*z);
+   }
+
+   Complex<float> u(0.0f, 0.0f), rest(0.0f, 0.0f);
+   float sgn = 1;
+
+   // transformation to |z|<1, Re(z)<=0.5
+   if (z.re <= 0.5f) {
+      if (nz > 1) {
+         const Complex<float> lz = log(-z);
+         u = -log(1.0f - 1.0f / z);
+         rest = -0.5f*lz*lz - PI*PI/6;
+         sgn = -1;
+      } else { // nz <= 1
+         u = -log(1.0f - z);
+         rest = 0;
+         sgn = 1;
+      }
+   } else { // z.re > 0.5
+      if (nz <= 2*z.re) {
+         u = -log(z);
+         rest = u*log(1.0f - z) + PI*PI/6;
+         sgn = -1;
+      } else { // nz > 2*z.re
+         const Complex<float> lz = log(-z);
+         u = -log(1.0f - 1.0f / z);
+         rest = -0.5f*lz*lz - PI*PI/6;
+         sgn = -1;
+      }
+   }
+
+   const Complex<float> u2(u*u);
+
+   return sgn*(u + u2*(bf[0] + u*horner<1>(u2, bf))) + rest;
 }
 
 /**

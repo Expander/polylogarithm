@@ -7,6 +7,8 @@
 #include "c_wrappers.h"
 #include <complex.h>
 
+float _Complex cli2f(float _Complex);
+
 double _Complex cli2(double _Complex);
 double _Complex cli3(double _Complex);
 double _Complex cli4(double _Complex);
@@ -18,6 +20,14 @@ long double _Complex cli3l(long double _Complex);
 long double _Complex cli4l(long double _Complex);
 long double _Complex cli5l(long double _Complex);
 long double _Complex cli6l(long double _Complex);
+
+/** C++ wrapper for cli2f */
+void cli2f_c(float re, float im, float* res_re, float* res_im)
+{
+   const float _Complex result = cli2f(re + I*im);
+   *res_re = crealf(result);
+   *res_im = cimagf(result);
+}
 
 /** C++ wrapper for cli2 */
 void cli2_c(double re, double im, double* res_re, double* res_im)
