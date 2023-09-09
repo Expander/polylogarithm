@@ -34,8 +34,9 @@ static inline double _Complex fast_pos_clog(double _Complex z)
    const double iz = cimag(z);
    double arg = atan2(iz, rz);
 
-   if (iz == 0.0 && arg < 0.0)
+   if (iz == 0.0 && arg < 0.0) {
       arg = -arg;
+   }
 
    return 0.5*log(rz*rz + iz*iz) + I*arg;
 }
@@ -56,8 +57,9 @@ static inline long double _Complex fast_pos_clogl(long double _Complex z)
    const long double iz = cimagl(z);
    long double arg = atan2l(iz, rz);
 
-   if (iz == 0.0L && arg < 0.0L)
+   if (iz == 0.0L && arg < 0.0L) {
       arg = -arg;
+   }
 
    return 0.5L*logl(rz*rz + iz*iz) + I*arg;
 }
