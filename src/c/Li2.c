@@ -354,7 +354,6 @@ float _Complex cli2f(float _Complex z)
    }
 
    const float _Complex u2 = u*u;
-   const float _Complex u4 = u2*u2;
    const float _Complex sum =
       u + u2*(bf[0] + u*(bf[1] + u2*(bf[2] + u2*bf[3])));
 
