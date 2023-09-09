@@ -38,7 +38,7 @@ TEST_CASE("test_fixed_values")
       const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Sl" + std::to_string(n) + ".txt");
       const auto fixed_values = polylogarithm::test::read_reals_from_file<double>(filename);
 
-      for (const auto v: fixed_values) {
+      for (const auto& v: fixed_values) {
          const auto x = v.first;
          const auto cl_expected = v.second;
          INFO("n = " << n << ", x = " << x);
