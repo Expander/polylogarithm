@@ -80,14 +80,10 @@ std::complex<double> clog(std::complex<double> z) {
    return std::log(zf);
 }
 
-std::complex<float> to_c32(std::complex<long double> z)
+template <typename T, typename U>
+std::complex<T> to(std::complex<U> z)
 {
-   return std::complex<float>(std::real(z), std::imag(z));
-}
-
-std::complex<double> to_c64(std::complex<long double> z)
-{
-   return std::complex<double>(std::real(z), std::imag(z));
+   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
 }
 
 std::complex<double> hdecay_Li2(std::complex<double> z) {
@@ -347,8 +343,8 @@ TEST_CASE("test_real_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
-      const auto z32 = to_c32(z128);
-      const auto z64 = to_c64(z128);
+      const auto z32 = to<float>(z128);
+      const auto z64 = to<double>(z128);
       const auto x32 = std::real(z32);
       const auto x64 = std::real(z64);
       const auto x128 = std::real(z128);
@@ -445,11 +441,11 @@ TEST_CASE("test_complex_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
-      const auto z32 = to_c32(z128);
-      const auto z64 = to_c64(z128);
+      const auto z32 = to<float>(z128);
+      const auto z64 = to<double>(z128);
       const auto li128_expected = v.second;
-      const auto li32_expected = to_c32(li128_expected);
-      const auto li64_expected = to_c64(li128_expected);
+      const auto li32_expected = to<float>(li128_expected);
+      const auto li64_expected = to<double>(li128_expected);
 
       const auto li32_poly   = polylogarithm::Li2(z32);
       const auto li64_poly   = polylogarithm::Li2(z64);
@@ -604,8 +600,8 @@ TEST_CASE("test_complex_random_values")
       const std::complex<double> li2_hollik = hollik_Li2(v);
       const std::complex<double> li2_sherpa = sherpa_Li2(v);
       const std::complex<double> li2_spheno = spheno_Li2(v);
-      const std::complex<double> li2_tsil = to_c64(tsil_Li2(v));
-      const std::complex<double> li2_lt   = to_c64(lt_Li2(v));
+      const std::complex<double> li2_tsil = to<double>(tsil_Li2(v));
+      const std::complex<double> li2_lt   = to<double>(lt_Li2(v));
 
       INFO("z = " << v);
       INFO("Li2(64) cmpl = " << li2        << " (polylogarithm C++)");

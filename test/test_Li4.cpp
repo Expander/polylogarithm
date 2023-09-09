@@ -24,9 +24,10 @@
 template <class T> T sqr(T x) { return x*x; }
 template <class T> T pow4(T x) { return x*x*x*x; }
 
-std::complex<double> to_c64(std::complex<long double> z)
+template <typename T, typename U>
+std::complex<T> to(std::complex<U> z)
 {
-   return std::complex<double>(std::real(z), std::imag(z));
+   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
 }
 
 std::complex<double> poly_Li4(std::complex<double> z) {
@@ -86,7 +87,7 @@ TEST_CASE("test_real_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
-      const auto z64 = to_c64(z128);
+      const auto z64 = to<double>(z128);
       const auto x64 = std::real(z64);
       const auto li128_expected = std::real(v.second);
       const auto li64_expected = static_cast<double>(li128_expected);
@@ -125,9 +126,9 @@ TEST_CASE("test_complex_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
-      const auto z64 = to_c64(z128);
+      const auto z64 = to<double>(z128);
       const auto li128_expected = v.second;
-      const auto li64_expected = to_c64(li128_expected);
+      const auto li64_expected = to<double>(li128_expected);
 
       const auto li64_cmpl    = polylogarithm::Li4(z64);
       const auto li128_cmpl   = polylogarithm::Li4(z128);

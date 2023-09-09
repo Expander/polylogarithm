@@ -17,9 +17,10 @@
    } while (0)
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
 
-std::complex<double> to_c64(std::complex<long double> z)
+template <typename T, typename U>
+std::complex<T> to(std::complex<U> z)
 {
-   return std::complex<double>(std::real(z), std::imag(z));
+   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
 }
 
 std::complex<double> poly_Li5(std::complex<double> z) {
@@ -73,9 +74,9 @@ TEST_CASE("test_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
-      const auto z64 = to_c64(z128);
+      const auto z64 = to<double>(z128);
       const auto li128_expected = v.second;
-      const auto li64_expected = to_c64(li128_expected);
+      const auto li64_expected = to<double>(li128_expected);
 
       const auto li64_cmpl  = polylogarithm::Li5(z64);
       const auto li128_cmpl = polylogarithm::Li5(z128);

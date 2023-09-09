@@ -33,9 +33,10 @@ std::complex<double> clog(std::complex<double> z) {
    return std::log(zf);
 }
 
-std::complex<double> to_c64(std::complex<long double> z)
+template <typename T, typename U>
+std::complex<T> to(std::complex<U> z)
 {
-   return std::complex<double>(std::real(z), std::imag(z));
+   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
 }
 
 std::complex<double> poly_Li3(std::complex<double> z) {
@@ -151,7 +152,7 @@ TEST_CASE("test_real_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
-      const auto z64 = to_c64(z128);
+      const auto z64 = to<double>(z128);
       const auto x64 = std::real(z64);
       const auto li128_expected = std::real(v.second);
       const auto li64_expected = static_cast<double>(li128_expected);
@@ -190,9 +191,9 @@ TEST_CASE("test_complex_fixed_values")
 
    for (auto v: fixed_values) {
       const auto z128 = v.first;
-      const auto z64 = to_c64(z128);
+      const auto z64 = to<double>(z128);
       const auto li128_expected = v.second;
-      const auto li64_expected = to_c64(li128_expected);
+      const auto li64_expected = to<double>(li128_expected);
 
       const auto li64_cmpl    = polylogarithm::Li3(z64);
       const auto li64_cmpl_c  = poly_Li3(z64);
@@ -254,7 +255,7 @@ TEST_CASE("test_complex_random_values")
 #ifdef ENABLE_FORTRAN
       const std::complex<double> li3_f = poly_Li3_fortran(v);
 #endif
-      const std::complex<double> li3_tsil = to_c64(tsil_Li3(v));
+      const std::complex<double> li3_tsil = to<double>(tsil_Li3(v));
 
       CHECK_CLOSE_COMPLEX(li3, li3_tsil, 10*eps);
       CHECK_CLOSE_COMPLEX(li3, li3_c   , 10*eps);
