@@ -10,7 +10,6 @@
 TEST_CASE("test_real_fixed_values")
 {
    const auto eps64  = std::pow(10.0 , -std::numeric_limits<double>::digits10);
-   const auto eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
    const std::string filename(std::string(TEST_DATA_DIR) + PATH_SEPARATOR + "Cl1.txt");
    const auto fixed_values = polylogarithm::test::read_reals_from_file<long double>(filename);
 
