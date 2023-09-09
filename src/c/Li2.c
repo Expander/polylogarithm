@@ -326,7 +326,7 @@ float _Complex cli2f(float _Complex z)
    }
 
    float _Complex u = 0.0f, rest = 0.0f;
-   int sgn = 1;
+   float sgn = 1;
 
    /* transformation to |z|<1, Re(z)<=0.5f */
    if (rz <= 0.5f) {
@@ -357,7 +357,7 @@ float _Complex cli2f(float _Complex z)
    const float _Complex sum =
       u + u2*(bf[0] + u*(bf[1] + u2*(bf[2] + u2*bf[3])));
 
-   return (float)sgn * sum + rest;
+   return sgn * sum + rest;
 }
 
 
@@ -407,7 +407,7 @@ double _Complex cli2(double _Complex z)
    }
 
    double _Complex u = 0.0, rest = 0.0;
-   int sgn = 1;
+   double sgn = 1;
 
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5) {
@@ -447,7 +447,7 @@ double _Complex cli2(double _Complex z)
           u4*u4*(bf[6] + u2*bf[7] + u4*(bf[8] + u2*bf[9]))
       )));
 
-   return (double)sgn * sum + rest;
+   return sgn * sum + rest;
 }
 
 
