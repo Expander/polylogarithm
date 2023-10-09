@@ -330,6 +330,14 @@ TEST_CASE("test_special_values")
       CHECK_CLOSE_COMPLEX(sherpa_Li2(z0), li0, 2*eps);
       CHECK_CLOSE_COMPLEX(spheno_Li2(z0), li0, eps);
    }
+
+   {
+      // value that causes overflow if squared
+      const std::complex<double> z(1e300, 1.0);
+      CHECK_CLOSE(std::real(Li2(z)), -238582.12510339421, eps);
+      CHECK_CLOSE(std::real(poly_Li2(z)), -238582.12510339421, eps);
+      CHECK_CLOSE(std::real(poly_Li2_fortran(z)), -238582.12510339421, eps);
+   }
 }
 
 TEST_CASE("test_real_fixed_values")

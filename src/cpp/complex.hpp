@@ -40,19 +40,13 @@ Complex<T> log(const Complex<T>& z) noexcept
       a = -a;
    }
 
-   return { T(1)/2*std::log(norm_sqr(z)), a };
+   return { std::log(norm(z)), a };
 }
 
-template <>
-inline Complex<float> log(const Complex<float>& z) noexcept
+template <typename T>
+constexpr T norm(const Complex<T>& z) noexcept
 {
-   float a = arg(z);
-
-   if (z.im == 0.0f && a < 0.0f) {
-      a = -a;
-   }
-
-   return { std::log(std::hypot(z.re, z.im)), a };
+   return std::hypot(z.re, z.im);
 }
 
 template <typename T>
