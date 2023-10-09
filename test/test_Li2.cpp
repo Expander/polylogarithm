@@ -336,7 +336,9 @@ TEST_CASE("test_special_values")
       const std::complex<double> z(1e300, 1.0);
       CHECK_CLOSE(std::real(Li2(z)), -238582.12510339421, eps);
       CHECK_CLOSE(std::real(poly_Li2(z)), -238582.12510339421, eps);
+#ifdef ENABLE_FORTRAN
       CHECK_CLOSE(std::real(poly_Li2_fortran(z)), -238582.12510339421, eps);
+#endif
    }
 }
 
