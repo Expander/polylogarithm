@@ -1,9 +1,11 @@
+NEval[x_, prec_] := N[x, 3 prec]
+
 (* calculate polylogarithm of order s with precision prec *)
 GeneratePoint[s_, prec_, re_, im_] :=
     Module[{val = PolyLog[s, re + I im]},
            {
-               N[#, prec]& @ {re, im},
-               {Re[N[val, prec]], Im[N[val, prec]]}
+               NEval[#, prec]& @ {re, im},
+               {Re[NEval[val, prec]], Im[NEval[val, prec]]}
            }
     ]
 
@@ -48,12 +50,12 @@ ExportData[s_, prec_] :=
            data = Join[
                GenerateGridData[s, prec, {-5, 5, 1/10}],
                GenerateGridData[s, prec, {-10, 30, 4/10}],
-               GenerateGridData[s, prec, {-1000, 1000, 100}]
-               (* GenerateUnitData[s, prec, prec, 1/10, -1], *)
-               (* GenerateUnitData[s, prec, prec, 1/10, +1], *)
-               (* GenerateLimitData[s, prec, prec, 1/10, {+1, 0}], *)
-               (* GenerateLimitData[s, prec, prec, 1/10, { 0, 0}], *)
-               (* GenerateLimitData[s, prec, prec, 1/10, {-1, 0}], *)
+               GenerateGridData[s, prec, {-1000, 1000, 100}],
+               GenerateUnitData[s, prec, prec, 1/10, -1],
+               GenerateUnitData[s, prec, prec, 1/10, +1],
+               GenerateLimitData[s, prec, prec, 1/10, {+1, 0}],
+               GenerateLimitData[s, prec, prec, 1/10, { 0, 0}],
+               GenerateLimitData[s, prec, prec, 1/10, {-1, 0}]
                (* Join @@@ { *)
                (*     GeneratePoint[s, prec,  0  , 0], *)
                (*     GeneratePoint[s, prec,  1/2, 0], *)
@@ -73,19 +75,19 @@ ExportData[s_, prec_] :=
                (*     GeneratePoint[s, prec, 1/(1 + omega), 0] *)
                (* } *)
            ];
-           filename = "Li" <> ToString[2*s] <> "half.txt";
+           filename = "Li" <> ToString[s] <> ".txt";
            Print["Writing data to ", filename];
            Export[filename, data, "Table"];
     ]
 
-(* ExportData[2, 40]; *)
-(* ExportData[3, 40]; *)
-(* ExportData[4, 40]; *)
-(* ExportData[5, 40]; *)
-(* ExportData[6, 40]; *)
+ExportData[2, 40];
+ExportData[3, 40];
+ExportData[4, 40];
+ExportData[5, 40];
+ExportData[6, 40];
 
-(* ExportData[1/2, 40]; *)
-(* ExportData[3/2, 40]; *)
-(* ExportData[5/2, 40]; *)
-(* ExportData[21/2, 40]; *)
+ExportData[1/2, 40];
+ExportData[3/2, 40];
+ExportData[5/2, 40];
+ExportData[21/2, 40];
 ExportData[41/2, 40];
