@@ -76,6 +76,9 @@ The implementation of the real dilogarithm is an adaptation of
 The implementation of the complex dilogarithm is inspired by the
 implementation in [SPheno](https://spheno.hepforge.org/).
 
+The implementation of the real trilogarithm is an adaptation of
+[[arXiv:2308.11619](https://arxiv.org/abs/2308.11619)].
+
 The implementation of the general n-th order complex polylogarithm an
 adaptation of [[arXiv:2010.09860](https://arxiv.org/abs/2010.09860)].
 
