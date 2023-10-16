@@ -332,12 +332,24 @@ TEST_CASE("test_special_values")
    }
 
    {
-      // value that causes overflow if squared
+      // value that cause overflow when squared
       const std::complex<double> z(1e300, 1.0);
-      CHECK_CLOSE(std::real(Li2(z)), -238582.12510339421, eps);
-      CHECK_CLOSE(std::real(poly_Li2(z)), -238582.12510339421, eps);
+      const std::complex<double> ze(-238582.12510339421, -2170.13532372464);
+      CHECK_CLOSE(std::real(Li2(z)), std::real(ze), eps);
+      CHECK_CLOSE(std::real(poly_Li2(z)), std::real(ze), eps);
 #ifdef ENABLE_FORTRAN
-      CHECK_CLOSE(std::real(poly_Li2_fortran(z)), -238582.12510339421, eps);
+      CHECK_CLOSE(std::real(poly_Li2_fortran(z)), std::real(ze), eps);
+#endif
+   }
+
+   {
+      // values that cause overflow when squared
+      const std::complex<double> z(1.0, 1e300);
+      const std::complex<double> ze(-238585.82620504462, 1085.06766186232);
+      CHECK_CLOSE(std::real(Li2(z)), std::real(ze), eps);
+      CHECK_CLOSE(std::real(poly_Li2(z)), std::real(ze), eps);
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE(std::real(poly_Li2_fortran(z)), std::real(ze), eps);
 #endif
    }
 }
