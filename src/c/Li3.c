@@ -135,9 +135,9 @@ double _Complex cli3(double _Complex z)
       }
    }
 
-   const double nz  = rz*rz + iz*iz;
+   const double nz  = hypot(rz, iz);
    const double pz  = atan2(iz, rz);
-   const double lnz = 0.5*log(nz);
+   const double lnz = log(nz);
 
    if (lnz*lnz + pz*pz < 1.0) { // |log(z)| < 1
       const double _Complex u  = lnz + pz*I; // clog(z)
@@ -267,9 +267,9 @@ long double _Complex cli3l(long double _Complex z)
       }
    }
 
-   const long double nz  = rz*rz + iz*iz;
+   const long double nz  = hypotl(rz, iz);
    const long double pz  = atan2l(iz, rz);
-   const long double lnz = 0.5L*logl(nz);
+   const long double lnz = logl(nz);
 
    if (lnz*lnz + pz*pz < 1.0L) { // |log(z)| < 1
       const long double _Complex u  = lnz + pz*I; // clog(z)

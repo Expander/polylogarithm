@@ -62,6 +62,37 @@ TEST_CASE("test_special_values")
    CHECK_CLOSE_COMPLEX(Li5(one), zeta5, eps);
    CHECK_CLOSE_COMPLEX(Li5(mone), -15.*zeta5/16., eps);
    CHECK_CLOSE_COMPLEX(Li5(half), 0.5084005792422687, eps);
+
+   {
+      // value that cause overflow when squared
+      const std::complex<double> z(1e300, 1.0);
+      const std::complex<double> ze(-1.3105197831948743e12, -2.980481322754618e10);
+      CHECK_CLOSE(std::real(Li5(z)), std::real(ze), eps);
+      CHECK_CLOSE(std::real(poly_Li5(z)), std::real(ze), eps);
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE(std::real(poly_Li5_fortran(z)), std::real(ze), eps);
+#endif
+   }
+
+   {
+      // values that cause overflow when squared
+      const std::complex<double> z(1.0, 1e300);
+      const std::complex<double> ze(-1.31072310968392418e12, 1.490286896860219e10);
+      CHECK_CLOSE(std::real(Li5(z)), std::real(ze), eps);
+      CHECK_CLOSE(std::real(poly_Li5(z)), std::real(ze), eps);
+#ifdef ENABLE_FORTRAN
+      CHECK_CLOSE(std::real(poly_Li5_fortran(z)), std::real(ze), eps);
+#endif
+   }
+
+   {
+      // value that cause overflow when squared
+      const std::complex<long double> z(1e4000L, 1.0L);
+      const std::complex<long double> ze(-5.523276910915025884712078063195501148879e17L, -9.419792822533112833122424859594537172e14L);
+      const auto eps = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+      CHECK_CLOSE(std::real(Li5(z)), std::real(ze), eps);
+      CHECK_CLOSE(std::real(poly_Li5(z)), std::real(ze), eps);
+   }
 }
 
 TEST_CASE("test_fixed_values")

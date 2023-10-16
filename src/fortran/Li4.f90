@@ -200,9 +200,9 @@ double complex function cdli4(z)
       endif
    endif
 
-   nz  = rz**2 + iz**2
+   nz  = hypot(rz, iz)
    pz  = datan2(iz, rz)
-   lnz = 0.5D0*log(nz)
+   lnz = log(nz)
 
    if (lnz**2 + pz**2 .lt. 1) then ! |log(z)| < 1
       u = dcmplx(lnz, pz) ! log(z)

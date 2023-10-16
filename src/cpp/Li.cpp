@@ -36,14 +36,14 @@ namespace {
    /// complex logarithm, converts -0.0 to 0.0
    std::complex<double> clog(const std::complex<double>& z) noexcept
    {
-      const double n = std::imag(z)*std::imag(z) + std::real(z)*std::real(z);
+      const double n = std::hypot(std::real(z), std::imag(z));
       double a = std::arg(z);
 
       if (std::imag(z) == 0.0 && a < 0.0) {
          a = -a;
       }
 
-      return { 0.5*std::log(n), a };
+      return { std::log(n), a };
    }
 
    /// Series expansion of Li_n(z) in terms of powers of z.

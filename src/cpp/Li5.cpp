@@ -72,9 +72,9 @@ std::complex<double> Li5(const std::complex<double>& z_) noexcept
       }
    }
 
-   const double nz  = norm_sqr(z);
+   const double nz  = norm(z);
    const double pz  = arg(z);
-   const double lnz = 0.5*std::log(nz);
+   const double lnz = std::log(nz);
 
    if (lnz*lnz + pz*pz < 1) { // |log(z)| < 1
       const Complex<double> u(lnz, pz); // log(z)
@@ -200,9 +200,9 @@ std::complex<long double> Li5(const std::complex<long double>& z_) noexcept
       }
    }
 
-   const long double nz  = norm_sqr(z);
+   const long double nz  = norm(z);
    const long double pz  = arg(z);
-   const long double lnz = 0.5L*std::log(nz);
+   const long double lnz = std::log(nz);
 
    if (lnz*lnz + pz*pz < 1) { // |log(z)| < 1
       const Complex<long double> u(lnz, pz); // log(z)
