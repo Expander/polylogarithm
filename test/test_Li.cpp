@@ -80,9 +80,9 @@ TEST_CASE("test_complex_fixed_values")
    {
       // value that cause overflow when squared
       const std::complex<double> z(1e300, 1.0);
-      const std::complex<double> ze(-1.4886831990993457e16, -4.74066248802866e14);
+      const std::complex<double> ze(-1.4886831990993457e16, 4.74066248802866e14);
       const double eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
-      CHECK_CLOSE(std::real(Li(7, z)), std::real(ze), eps);
+      CHECK_CLOSE_COMPLEX(Li(7, z), ze, eps);
    }
 
    {
@@ -90,6 +90,6 @@ TEST_CASE("test_complex_fixed_values")
       const std::complex<double> z(1.0, 1e300);
       const std::complex<double> ze(-1.489168315226607e16, 2.3705150998401e14);
       const double eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
-      CHECK_CLOSE(std::real(Li(7, z)), std::real(ze), eps);
+      CHECK_CLOSE_COMPLEX(Li(7, z), ze, eps);
    }
 }

@@ -66,32 +66,32 @@ TEST_CASE("test_special_values")
    {
       // value that cause overflow when squared
       const std::complex<double> z(1e300, 1.0);
-      const std::complex<double> ze(-1.5086876165613597e14, -4.11768711823317e12);
-      CHECK_CLOSE(std::real(Li6(z)), std::real(ze), eps);
-      CHECK_CLOSE(std::real(poly_Li6(z)), std::real(ze), eps);
+      const std::complex<double> ze(-1.5086876165613597e14, 4.11768711823317e12);
+      CHECK_CLOSE_COMPLEX(Li6(z), ze, eps);
+      CHECK_CLOSE_COMPLEX(poly_Li6(z), ze, eps);
 #ifdef ENABLE_FORTRAN
-      CHECK_CLOSE(std::real(poly_Li6_fortran(z)), std::real(ze), eps);
+      CHECK_CLOSE_COMPLEX(poly_Li6_fortran(z), ze, eps);
 #endif
    }
 
    {
       // values that cause overflow when squared
       const std::complex<double> z(1.0, 1e300);
-      const std::complex<double> ze(-1.5090387516918862e14, 2.0589500211678e12);
-      CHECK_CLOSE(std::real(Li6(z)), std::real(ze), eps);
-      CHECK_CLOSE(std::real(poly_Li6(z)), std::real(ze), eps);
+      const std::complex<double> ze(-1.5090387516918862e14, 2058950021167.7976);
+      CHECK_CLOSE_COMPLEX(Li6(z), ze, eps);
+      CHECK_CLOSE_COMPLEX(poly_Li6(z), ze, eps);
 #ifdef ENABLE_FORTRAN
-      CHECK_CLOSE(std::real(poly_Li6_fortran(z)), std::real(ze), eps);
+      CHECK_CLOSE_COMPLEX(poly_Li6_fortran(z), ze, eps);
 #endif
    }
 
    {
       // value that cause overflow when squared
       const std::complex<long double> z(1e4000L, 1.0L);
-      const std::complex<long double> ze(-8.478540098238822566033321355282680660651e20L, -1.7351899625805641348387419061716509476e18L);
+      const std::complex<long double> ze(-8.478540098238822566033321355282680660651e20L, 1.7351899625805641348387419061716509476e18L);
       const auto eps = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
-      CHECK_CLOSE(std::real(Li6(z)), std::real(ze), eps);
-      CHECK_CLOSE(std::real(poly_Li6(z)), std::real(ze), eps);
+      CHECK_CLOSE_COMPLEX(Li6(z), ze, eps);
+      CHECK_CLOSE_COMPLEX(poly_Li6(z), ze, eps);
    }
 }
 
