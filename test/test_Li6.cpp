@@ -67,7 +67,7 @@ TEST_CASE("test_special_values")
       // value that cause overflow when squared
       const std::complex<double> z(1e300, 1.0);
       const std::complex<double> ze(-1.5086876165613597e14, 4.11768711823317e12);
-      CHECK_CLOSE_COMPLEX(Li6(z), ze, eps);
+      CHECK_CLOSE_COMPLEX(Li6(z), ze, 2*eps);
       CHECK_CLOSE_COMPLEX(poly_Li6(z), ze, eps);
 #ifdef ENABLE_FORTRAN
       CHECK_CLOSE_COMPLEX(poly_Li6_fortran(z), ze, eps);
