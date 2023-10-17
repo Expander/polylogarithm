@@ -76,11 +76,17 @@ TEST_CASE("test_special_values")
    CHECK_CLOSE_COMPLEX(Li4(one), zeta4, eps);
    CHECK_CLOSE_COMPLEX(Li4(mone), -7.*pow4(pi)/720, eps);
    CHECK_CLOSE_COMPLEX(Li4(half), 0.5174790616738994, eps);
+}
+
+TEST_CASE("test_overflow")
+{
+   using polylogarithm::Li4;
 
    {
       // value that cause overflow when squared
       const std::complex<double> z(1e300, 1.0);
       const std::complex<double> ze(-9.4863817894708364e9, 1.725875455850714e8);
+      const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
       CHECK_CLOSE_COMPLEX(Li4(z), ze, eps);
       CHECK_CLOSE_COMPLEX(poly_Li4(z), ze, eps);
 #ifdef ENABLE_FORTRAN
@@ -92,6 +98,7 @@ TEST_CASE("test_special_values")
       // values that cause overflow when squared
       const std::complex<double> z(1.0, 1e300);
       const std::complex<double> ze(-9.4872648206269765e9, 8.62951114411071e7);
+      const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
       CHECK_CLOSE_COMPLEX(Li4(z), ze, eps);
       CHECK_CLOSE_COMPLEX(poly_Li4(z), ze, eps);
 #ifdef ENABLE_FORTRAN

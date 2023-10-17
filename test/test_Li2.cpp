@@ -330,11 +330,17 @@ TEST_CASE("test_special_values")
       CHECK_CLOSE_COMPLEX(sherpa_Li2(z0), li0, 2*eps);
       CHECK_CLOSE_COMPLEX(spheno_Li2(z0), li0, eps);
    }
+}
+
+TEST_CASE("test_overflow")
+{
+   using polylogarithm::Li2;
 
    {
       // value that cause overflow when squared
       const std::complex<double> z(1e300, 1.0);
       const std::complex<double> ze(-238582.12510339421, 2170.13532372464);
+      const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
       CHECK_CLOSE_COMPLEX(Li2(z), ze, eps);
       CHECK_CLOSE_COMPLEX(poly_Li2(z), ze, eps);
 #ifdef ENABLE_FORTRAN
@@ -346,6 +352,7 @@ TEST_CASE("test_special_values")
       // values that cause overflow when squared
       const std::complex<double> z(1.0, 1e300);
       const std::complex<double> ze(-238585.82620504462, 1085.06766186232);
+      const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
       CHECK_CLOSE_COMPLEX(Li2(z), ze, eps);
       CHECK_CLOSE_COMPLEX(poly_Li2(z), ze, eps);
 #ifdef ENABLE_FORTRAN

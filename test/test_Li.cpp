@@ -76,6 +76,11 @@ TEST_CASE("test_complex_fixed_values")
    const auto z = std::complex<double>(1.5, 0.0);
    CHECK_CLOSE_COMPLEX(Li(10, z), std::complex<double>(1.5022603281703005298, -2.56429642116111388671e-9), 1e-14);
    CHECK_CLOSE_COMPLEX(Li(10, -z), std::complex<double>(-1.4978556954869267594, 0.0), 1e-14);
+}
+
+TEST_CASE("test_overflow")
+{
+   using polylogarithm::Li;
 
    {
       // value that cause overflow when squared
