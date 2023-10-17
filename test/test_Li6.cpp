@@ -64,41 +64,40 @@ TEST_CASE("test_special_values")
    CHECK_CLOSE_COMPLEX(Li6(half), 0.5040953978039886, eps);
 }
 
+template<typename T>
+struct Data {
+   std::complex<T> z;
+   std::complex<T> li_expected;
+   T eps;
+};
+
 TEST_CASE("test_overflow")
 {
    using polylogarithm::Li6;
 
-   {
-      // value that cause overflow when squared
-      const std::complex<double> z(1e300, 1.0);
-      const std::complex<double> ze(-1.5086876165613597e14, 4.11768711823317e12);
-      const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
-      CHECK_CLOSE_COMPLEX(Li6(z), ze, 2*eps);
-      CHECK_CLOSE_COMPLEX(poly_Li6(z), ze, eps);
+   const double eps64 = std::pow(10.0, -std::numeric_limits<double>::digits10);
+   const long double eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+
+   const Data<double> data64[] = {
+      {{1e300, 1.0}, {-1.5086876165613597e14, 4.11768711823317e12}, 2*eps64},
+      {{1.0, 1e300}, {-1.5090387516918862e14, 2058950021167.7976}, eps64}
+   };
+
+   for (const auto& d : data64) {
+      CHECK_CLOSE_COMPLEX(Li6(d.z), d.li_expected, d.eps);
+      CHECK_CLOSE_COMPLEX(poly_Li6(d.z), d.li_expected, d.eps);
 #ifdef ENABLE_FORTRAN
-      CHECK_CLOSE_COMPLEX(poly_Li6_fortran(z), ze, eps);
+      CHECK_CLOSE_COMPLEX(poly_Li6_fortran(d.z), d.li_expected, d.eps);
 #endif
    }
 
-   {
-      // values that cause overflow when squared
-      const std::complex<double> z(1.0, 1e300);
-      const std::complex<double> ze(-1.5090387516918862e14, 2058950021167.7976);
-      const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
-      CHECK_CLOSE_COMPLEX(Li6(z), ze, eps);
-      CHECK_CLOSE_COMPLEX(poly_Li6(z), ze, eps);
-#ifdef ENABLE_FORTRAN
-      CHECK_CLOSE_COMPLEX(poly_Li6_fortran(z), ze, eps);
-#endif
-   }
+   const Data<long double> data128[] = {
+      {{1e4000L, 1.0L}, {-8.478540098238822566033321355282680660651e20L, 1.7351899625805641348387419061716509476e18L}, eps128}
+   };
 
-   {
-      // value that cause overflow when squared
-      const std::complex<long double> z(1e4000L, 1.0L);
-      const std::complex<long double> ze(-8.478540098238822566033321355282680660651e20L, 1.7351899625805641348387419061716509476e18L);
-      const auto eps = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
-      CHECK_CLOSE_COMPLEX(Li6(z), ze, eps);
-      CHECK_CLOSE_COMPLEX(poly_Li6(z), ze, eps);
+   for (const auto& d : data128) {
+      CHECK_CLOSE_COMPLEX(Li6(d.z), d.li_expected, d.eps);
+      CHECK_CLOSE_COMPLEX(poly_Li6(d.z), d.li_expected, d.eps);
    }
 }
 
