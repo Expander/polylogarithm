@@ -143,41 +143,40 @@ TEST_CASE("test_special_values")
    CHECK_CLOSE_COMPLEX(Li3(gr), 4./5.*zeta3 + 2./3.*pow3(std::log(phi)) - 2./15.*pi2*std::log(phi), eps);
 }
 
+template<typename T>
+struct Data {
+   std::complex<T> z;
+   std::complex<T> li_expected;
+   T eps;
+};
+
 TEST_CASE("test_overflow")
 {
    using polylogarithm::Li3;
 
-   {
-      // value that cause overflow when squared
-      const std::complex<double> z(1e300, 1.0);
-      const std::complex<double> ze(-5.4934049431527088e7, 749538.186928224);
-      const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
-      CHECK_CLOSE_COMPLEX(Li3(z), ze, eps);
-      CHECK_CLOSE_COMPLEX(poly_Li3(z), ze, eps);
+   const double eps64 = std::pow(10.0, -std::numeric_limits<double>::digits10);
+   const long double eps128 = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
+
+   const Data<double> data64[] = {
+      {{1e300, 1.0}, {-5.4934049431527088e7, 749538.186928224}, eps64},
+      {{1.0, 1e300}, {-5.4936606061973454e7, 374771.031356405}, eps64}
+   };
+
+   for (const auto& d : data64) {
+      CHECK_CLOSE_COMPLEX(Li3(d.z), d.li_expected, d.eps);
+      CHECK_CLOSE_COMPLEX(poly_Li3(d.z), d.li_expected, d.eps);
 #ifdef ENABLE_FORTRAN
-      CHECK_CLOSE_COMPLEX(poly_Li3_fortran(z), ze, eps);
+      CHECK_CLOSE_COMPLEX(poly_Li3_fortran(d.z), d.li_expected, d.eps);
 #endif
    }
 
-   {
-      // values that cause overflow when squared
-      const std::complex<double> z(1.0, 1e300);
-      const std::complex<double> ze(-5.4936606061973454e7, 374771.031356405);
-      const auto eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
-      CHECK_CLOSE_COMPLEX(Li3(z), ze, eps);
-      CHECK_CLOSE_COMPLEX(poly_Li3(z), ze, eps);
-#ifdef ENABLE_FORTRAN
-      CHECK_CLOSE_COMPLEX(poly_Li3_fortran(z), ze, eps);
-#endif
-   }
+   const Data<long double> data128[] = {
+      {{1e4000L, 1.0L}, {-1.3021939960597718633480560501920418668419e11L, 1.3325123323168432929414697360944689612e8L}, eps128}
+   };
 
-   {
-      // value that cause overflow when squared
-      const std::complex<long double> z(1e4000L, 1.0L);
-      const std::complex<long double> ze(-1.3021939960597718633480560501920418668419e11L, 1.3325123323168432929414697360944689612e8L);
-      const auto eps = std::pow(10.0L, -std::numeric_limits<long double>::digits10);
-      CHECK_CLOSE_COMPLEX(Li3(z), ze, eps);
-      CHECK_CLOSE_COMPLEX(poly_Li3(z), ze, eps);
+   for (const auto& d : data128) {
+      CHECK_CLOSE_COMPLEX(Li3(d.z), d.li_expected, d.eps);
+      CHECK_CLOSE_COMPLEX(poly_Li3(d.z), d.li_expected, d.eps);
    }
 }
 

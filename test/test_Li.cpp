@@ -78,23 +78,26 @@ TEST_CASE("test_complex_fixed_values")
    CHECK_CLOSE_COMPLEX(Li(10, -z), std::complex<double>(-1.4978556954869267594, 0.0), 1e-14);
 }
 
+template<typename T>
+struct Data {
+   int n;
+   std::complex<T> z;
+   std::complex<T> li_expected;
+   T eps;
+};
+
 TEST_CASE("test_overflow")
 {
    using polylogarithm::Li;
 
-   {
-      // value that cause overflow when squared
-      const std::complex<double> z(1e300, 1.0);
-      const std::complex<double> ze(-1.4886831990993457e16, 4.74066248802866e14);
-      const double eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
-      CHECK_CLOSE_COMPLEX(Li(7, z), ze, eps);
-   }
+   const double eps64 = std::pow(10.0, -std::numeric_limits<double>::digits10);
 
-   {
-      // values that cause overflow when squared
-      const std::complex<double> z(1.0, 1e300);
-      const std::complex<double> ze(-1.489168315226607e16, 2.3705150998401e14);
-      const double eps = std::pow(10.0, -std::numeric_limits<double>::digits10);
-      CHECK_CLOSE_COMPLEX(Li(7, z), ze, eps);
+   const Data<double> data64[] = {
+      {7, {1e300, 1.0}, {-1.4886831990993457e16, 4.74066248802866e14}, eps64},
+      {7, {1.0, 1e300}, {-1.489168315226607e16, 2.3705150998401e14}, eps64}
+   };
+
+   for (const auto& d : data64) {
+      CHECK_CLOSE_COMPLEX(Li(d.n, d.z), d.li_expected, d.eps);
    }
 }
