@@ -1,4 +1,4 @@
-add_library(polylog_cpp
+add_library(polylogarithm_cpp
   Cl.cpp
   Cl1.cpp
   Cl2.cpp
@@ -18,4 +18,6 @@ add_library(polylog_cpp
   Sl.cpp
   zeta.cpp
   )
-target_include_directories(polylog_cpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(polylogarithm_cpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+FILE(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp)
+set_target_properties(polylogarithm_cpp PROPERTIES PUBLIC_HEADER "${HEADERS}")
