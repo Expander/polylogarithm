@@ -1,6 +1,6 @@
 ! Compile as:
 !
-! gfortran example.F90 -I<install-directory>>/include <install-directory>/lib/libpolylogarithm_fortran.a
+! gfortran example.F90 -I<install-directory>/include <install-directory>/lib/libpolylogarithm_fortran.a
 
 program example
   implicit none
