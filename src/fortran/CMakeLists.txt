@@ -14,8 +14,6 @@ if(CMAKE_Fortran_COMPILER)
     Li6.f90
     )
   target_include_directories(polylogarithm_fortran PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-  FILE(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp)
-  set_target_properties(polylogarithm_fortran PROPERTIES PUBLIC_HEADER "${HEADERS}")
 else()
   add_library(polylogarithm_fortran INTERFACE)
 endif()
