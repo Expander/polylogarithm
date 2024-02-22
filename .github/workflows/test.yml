@@ -26,3 +26,5 @@ jobs:
       run: ctest
       env:
         CTEST_OUTPUT_ON_FAILURE: 1
+    - name: cmake install
+      run: cmake --install . --prefix $PWD/install

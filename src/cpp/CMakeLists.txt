@@ -1,4 +1,4 @@
-add_library(polylog_cpp
+add_library(polylogarithm_cpp
   Cl.cpp
   Cl1.cpp
   Cl2.cpp
@@ -18,4 +18,26 @@ add_library(polylog_cpp
   Sl.cpp
   zeta.cpp
   )
-target_include_directories(polylog_cpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(polylogarithm_cpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+SET(CXX_HEADERS
+  ${CMAKE_CURRENT_SOURCE_DIR}/Cl.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Cl1.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Cl2.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Cl3.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Cl4.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Cl5.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Cl6.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/complex.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/eta.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/factorial.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/harmonic.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li2.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li3.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li4.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li5.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li6.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Sl.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/zeta.hpp
+)
+set_target_properties(polylogarithm_cpp PROPERTIES PUBLIC_HEADER "${CXX_HEADERS}")
