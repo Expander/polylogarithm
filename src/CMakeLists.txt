@@ -16,12 +16,16 @@ target_link_libraries(polylogarithm
     polylogarithm_cpp
     polylogarithm_fortran
 )
-
-
-FILE(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp)
-set_target_properties(polylogarithm PROPERTIES PUBLIC_HEADER "${HEADERS}")
-include(GNUInstallDirs)
-install(TARGETS polylogarithm polylogarithm_c polylogarithm_cpp polylogarithm_fortran
+set(HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/version.h)
+set_target_properties(polylogarithm
+  PROPERTIES PUBLIC_HEADER "${HEADERS}")
+install(
+  TARGETS
+    polylogarithm
+    polylogarithm_c
+    polylogarithm_cpp
+    polylogarithm_fortran
   PUBLIC_HEADER 
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/polylogarithm
+  DESTINATION
+    ${CMAKE_INSTALL_INCLUDEDIR}/polylogarithm
 )

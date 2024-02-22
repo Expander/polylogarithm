@@ -13,6 +13,7 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED YES)
 set(CMAKE_C_EXTENSIONS OFF)
 
+include(GNUInstallDirs)
 include(CheckLanguage)
 check_language(Fortran)
 
