@@ -19,7 +19,7 @@ add_library(polylogarithm_cpp
   zeta.cpp
   )
 target_include_directories(polylogarithm_cpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-SET(CXX_HEADERS
+set(CXX_HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/Cl.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Cl1.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/Cl2.hpp

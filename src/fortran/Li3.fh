@@ -1,0 +1,11 @@
+!*********************************************************************
+! This file is part of Polylogarithm.
+!
+! Polylogarithm is licenced under the MIT License.
+!*********************************************************************
+
+! real polylogarithm with n=3 (trilogarithm) with double precision
+  double precision :: dli3
+
+! complex polylogarithm with n=3 (trilogarithm) with double precision
+  double complex :: cdli3

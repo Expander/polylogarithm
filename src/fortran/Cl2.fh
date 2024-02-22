@@ -1,0 +1,8 @@
+!*********************************************************************
+! This file is part of Polylogarithm.
+!
+! Polylogarithm is licenced under the MIT License.
+!*********************************************************************
+
+! real Clausen function Cl_2 with double precision
+  double precision :: dcl2
