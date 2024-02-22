@@ -15,5 +15,10 @@ add_library(polylogarithm_c
 target_include_directories(polylogarithm_c PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 SET(C_HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/fast_clog.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li2.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li3.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li4.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li5.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Li6.h
 )
 set_target_properties(polylogarithm_c PROPERTIES PUBLIC_HEADER "${C_HEADERS}")
