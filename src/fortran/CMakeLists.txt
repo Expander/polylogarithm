@@ -1,6 +1,5 @@
 if(CMAKE_Fortran_COMPILER)
   add_library(polylogarithm_fortran
-    fortran_wrappers.f90
     fast_clog.f90
     Cl2.f90
     Cl3.f90

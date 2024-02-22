@@ -9,9 +9,14 @@ add_definitions(-DTEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
 
 add_subdirectory(alt)
 
+add_library(polylogarithm_test
+    c_wrappers.c
+    fortran_wrappers.f90
+  )
+
 function(add_polylogarithm_exec name)
   add_executable(${name} ${name}.cpp)
-  target_link_libraries(${name} alt polylogarithm ${ARGN})
+  target_link_libraries(${name} alt polylogarithm polylogarithm_test ${ARGN})
 endfunction()
 
 function(add_polylogarithm_benc name)

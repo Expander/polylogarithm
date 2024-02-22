@@ -1,5 +1,4 @@
 add_library(polylogarithm_c
-  c_wrappers.c
   Cl2.c
   Cl3.c
   Cl4.c
