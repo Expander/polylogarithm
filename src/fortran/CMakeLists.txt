@@ -25,7 +25,7 @@ if(CMAKE_Fortran_COMPILER)
     ${CMAKE_CURRENT_SOURCE_DIR}/Li5.fh
     ${CMAKE_CURRENT_SOURCE_DIR}/Li6.fh
     )
-  set_target_properties(polylogarithm_c PROPERTIES PUBLIC_HEADER "${FORTRAN_HEADERS}")
+  set_target_properties(polylogarithm_fortran PROPERTIES PUBLIC_HEADER "${FORTRAN_HEADERS}")
 else()
   add_library(polylogarithm_fortran INTERFACE)
 endif()
