@@ -1,0 +1,11 @@
+!*********************************************************************
+! This file is part of Polylogarithm.
+!
+! Polylogarithm is licenced under the MIT License.
+!*********************************************************************
+
+! real polylogarithm with n=2 (dilogarithm) with double precision
+  double precision :: dli2
+
+! complex polylogarithm with n=2 (dilogarithm) with double precision
+  double complex :: cdli2

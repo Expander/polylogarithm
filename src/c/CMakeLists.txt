@@ -13,7 +13,7 @@ add_library(polylogarithm_c
 )
 
 target_include_directories(polylogarithm_c PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-SET(C_HEADERS
+set(C_HEADERS
   ${CMAKE_CURRENT_SOURCE_DIR}/Cl2.h
   ${CMAKE_CURRENT_SOURCE_DIR}/Cl3.h
   ${CMAKE_CURRENT_SOURCE_DIR}/Cl4.h
