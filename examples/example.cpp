@@ -2,7 +2,6 @@
 //
 // g++ examples/example.cpp -I<install-directory>/include <install-directory>/lib/libpolylogarithm_cpp.a
 
-
 #include <complex>
 #include <iostream>
 #include "polylogarithm/Cl.hpp"
