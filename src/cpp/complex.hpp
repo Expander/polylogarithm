@@ -34,13 +34,12 @@ constexpr Complex<T> conj(const Complex<T>& z) noexcept
 template <typename T>
 Complex<T> log(const Complex<T>& z) noexcept
 {
-   T a = arg(z);
-
-   if (z.im == T(0) && a < T(0)) {
-      a = -a;
+   if (z.im == T(0) && z.re > T(0)) {
+      return { std::log(z.re), T(0) };
+   } else if (z.im == T(0)) {
+      return { std::log(-z.re), 4*std::atan(T(1)) };
    }
-
-   return { std::log(norm(z)), a };
+   return { std::log(norm(z)), arg(z) };
 }
 
 template <typename T>

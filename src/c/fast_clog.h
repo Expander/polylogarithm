@@ -15,6 +15,12 @@ static inline float _Complex fast_clogf(float _Complex z)
    const float rz = crealf(z);
    const float iz = cimagf(z);
 
+   if (iz == 0.0f && rz > 0.0f) {
+      return logf(rz);
+   } else if (iz == 0.0f) {
+      return logf(-rz) + I*3.14159265f;
+   }
+
    return logf(hypotf(rz, iz)) + I*atan2f(iz, rz);
 }
 
@@ -32,13 +38,14 @@ static inline double _Complex fast_pos_clog(double _Complex z)
 {
    const double rz = creal(z);
    const double iz = cimag(z);
-   double arg = atan2(iz, rz);
 
-   if (iz == 0.0 && arg < 0.0) {
-      arg = -arg;
+   if (iz == 0.0 && rz > 0.0) {
+      return log(rz);
+   } else if (iz == 0.0) {
+      return log(-rz) + I*3.1415926535897932;
    }
 
-   return log(hypot(rz, iz)) + I*arg;
+   return log(hypot(rz, iz)) + I*atan2(iz, rz);
 }
 
 
@@ -55,11 +62,12 @@ static inline long double _Complex fast_pos_clogl(long double _Complex z)
 {
    const long double rz = creall(z);
    const long double iz = cimagl(z);
-   long double arg = atan2l(iz, rz);
 
-   if (iz == 0.0L && arg < 0.0L) {
-      arg = -arg;
+   if (iz == 0.0L && rz > 0.0L) {
+      return logl(rz);
+   } else if (iz == 0.0L) {
+      return logl(-rz) + I*3.14159265358979323846264338327950288L;
    }
 
-   return logl(hypotl(rz, iz)) + I*arg;
+   return logl(hypotl(rz, iz)) + I*atan2l(iz, rz);
 }
