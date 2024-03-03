@@ -50,7 +50,7 @@ float li2f(float x)
       r = -0.5f*l*l;
       s = -1;
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5f) {
       y = x;
       r = 0;
@@ -127,7 +127,7 @@ double li2(double x)
       r = -0.5*l*l;
       s = -1;
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5) {
       y = x;
       r = 0;
@@ -255,7 +255,7 @@ long double li2l(long double x)
       r = -0.5L*l*l;
       s = -1;
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5L) {
       y = x;
       r = 0;
@@ -313,10 +313,10 @@ float _Complex cli2f(float _Complex z)
    /* special cases */
    if (iz == 0.0f) {
       if (rz <= 1.0f) {
-         return li2f(rz);
+         return CMPLXF(li2f(rz), iz);
       }
       // rz > 1.0
-      return li2f(rz) - PI*logf(rz)*I;
+      return CMPLXF(li2f(rz), -PI*logf(rz));
    }
 
    const float nz = rz*rz + iz*iz;
@@ -394,10 +394,10 @@ double _Complex cli2(double _Complex z)
    /* special cases */
    if (iz == 0.0) {
       if (rz <= 1.0) {
-         return li2(rz);
+         return CMPLX(li2(rz), iz);
       }
       // rz > 1.0
-      return li2(rz) - PI*log(rz)*I;
+      return CMPLX(li2(rz), -PI*log(rz));
    }
 
    const double nz = rz*rz + iz*iz;
@@ -499,10 +499,10 @@ long double _Complex cli2l(long double _Complex z)
    /* special cases */
    if (iz == 0) {
       if (rz <= 1) {
-         return li2l(rz);
+         return CMPLXL(li2l(rz), iz);
       }
       // rz > 1
-      return li2l(rz) - PI*logl(rz)*I;
+      return CMPLXL(li2l(rz), -PI*logl(rz));
    }
 
    const long double nz = rz*rz + iz*iz;
