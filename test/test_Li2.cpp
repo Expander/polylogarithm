@@ -36,16 +36,33 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 #endif
 
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
+
 #define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
       CHECK_CLOSE(std::real(a), std::real(b), (eps));                   \
       CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                   \
    } while (0)
+
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
+
+#define CHECK_CLOSE_REL(a,b,eps) do {                                   \
+      const bool pred = is_close_rel((a), (b), (eps));                  \
+      INFO("Comparing numbers " << std::setprecision(17) << (a) << " =?= " << (b) << " with relative precision " << (eps)); \
+      CHECK(pred);                                                      \
+   } while (0)
 
 const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
 const std::complex<double> zero(0.,0.);
 
 template <class T> T sqr(T x) { return x*x; }
+
+bool is_close_rel(double x, double y, double eps)
+{
+   const double ma = std::max(std::abs(x), std::abs(y));
+   if (ma == 0.0) {
+      return true;
+   }
+   return std::abs(x - y)/ma < std::abs(eps);
+}
 
 bool is_unity(std::complex<long double> z, long double eps)
 {
@@ -329,6 +346,14 @@ TEST_CASE("test_special_values")
       CHECK_CLOSE_COMPLEX(tsil_Li2(z0)  , li0, eps);
       CHECK_CLOSE_COMPLEX(sherpa_Li2(z0), li0, 2*eps);
       CHECK_CLOSE_COMPLEX(spheno_Li2(z0), li0, eps);
+   }
+
+   {
+      // special point with small real part
+      const std::complex<double> z(4.831285545908206e-6, 0.004396919500211628);
+      const std::complex<double> expected(-1.94166578202937687444628936853e-9, 0.00439692067657240512726530759719387623);
+      CHECK_CLOSE_REL(std::real(Li2(z)), std::real(expected), 1e-12);
+      CHECK_CLOSE_REL(std::imag(Li2(z)), std::imag(expected), 1e-14);
    }
 }
 
