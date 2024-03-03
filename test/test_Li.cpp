@@ -3,6 +3,7 @@
 #include "doctest.h"
 #include "Li.hpp"
 #include "read_data.hpp"
+#include "test.hpp"
 #include <cmath>
 #include <complex>
 #include <string>
@@ -82,7 +83,7 @@ TEST_CASE("test_complex_fixed_values")
 TEST_CASE("test_signed_zero")
 {
    // skip test if platform does not supprt signed zero
-   if (!std::signbit(-0.0)) {
+   if (!has_signed_zero()) {
       return;
    }
 

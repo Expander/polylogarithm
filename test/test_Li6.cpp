@@ -6,6 +6,7 @@
 #include "fortran_wrappers.h"
 #include "Li6.hpp"
 #include "read_data.hpp"
+#include "test.hpp"
 #include <cmath>
 #include <limits>
 #include <utility>
@@ -68,7 +69,7 @@ TEST_CASE("test_special_values")
 TEST_CASE("test_signed_zero")
 {
    // skip test if platform does not supprt signed zero
-   if (!std::signbit(-0.0)) {
+   if (!has_signed_zero()) {
       return;
    }
 
