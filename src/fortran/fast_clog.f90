@@ -36,10 +36,13 @@ double complex function fast_pos_cdlog(z)
 
   re = real(z)
   im = aimag(z)
-  arg = datan2(im, re)
 
-  if (im .eq. 0 .and. arg .lt. 0) arg = -arg
-
-  fast_pos_cdlog = dcmplx(log(hypot(re, im)), arg)
+  if (im .eq. 0 .and. re .gt. 0) then
+     fast_pos_cdlog = dcmplx(log(re), 0.0D0)
+  elseif (im .eq. 0) then
+     fast_pos_cdlog = dcmplx(log(-re), 3.14159265358979324D0)
+  else
+     fast_pos_cdlog = dcmplx(log(hypot(re, im)), datan2(im, re))
+  endif
 
 end function fast_pos_cdlog
