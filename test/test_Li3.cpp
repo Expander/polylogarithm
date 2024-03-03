@@ -167,8 +167,10 @@ TEST_CASE("test_signed_zero")
    CHECK(!std::signbit(Li3(pz64)));
    CHECK( std::signbit(poly_Li3(nz64)));
    CHECK(!std::signbit(poly_Li3(pz64)));
+#ifdef ENABLE_FORTRAN
    CHECK( std::signbit(poly_Li3_fortran(nz64)));
    CHECK(!std::signbit(poly_Li3_fortran(pz64)));
+#endif
 
    // complex Li3
    CHECK( std::signbit(std::real(Li3(std::complex<double>(nz64, nz64)))));
@@ -189,6 +191,7 @@ TEST_CASE("test_signed_zero")
    CHECK(!std::signbit(std::real(poly_Li3(std::complex<double>(pz64, pz64)))));
    CHECK(!std::signbit(std::imag(poly_Li3(std::complex<double>(pz64, pz64)))));
 
+#ifdef ENABLE_FORTRAN
    CHECK( std::signbit(std::real(poly_Li3_fortran(std::complex<double>(nz64, nz64)))));
    CHECK( std::signbit(std::imag(poly_Li3_fortran(std::complex<double>(nz64, nz64)))));
    CHECK(!std::signbit(std::real(poly_Li3_fortran(std::complex<double>(pz64, nz64)))));
@@ -197,6 +200,7 @@ TEST_CASE("test_signed_zero")
    CHECK(!std::signbit(std::imag(poly_Li3_fortran(std::complex<double>(nz64, pz64)))));
    CHECK(!std::signbit(std::real(poly_Li3_fortran(std::complex<double>(pz64, pz64)))));
    CHECK(!std::signbit(std::imag(poly_Li3_fortran(std::complex<double>(pz64, pz64)))));
+#endif
 
    CHECK( std::signbit(std::real(Li3(std::complex<long double>(nz128, nz128)))));
    CHECK( std::signbit(std::imag(Li3(std::complex<long double>(nz128, nz128)))));
