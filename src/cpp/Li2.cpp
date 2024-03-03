@@ -75,7 +75,7 @@ float Li2(float x) noexcept
       r = -0.5f*l*l;
       s = -1;
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5f) {
       y = x;
       r = 0;
@@ -152,7 +152,7 @@ double Li2(double x) noexcept
       r = -0.5*l*l;
       s = -1;
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5) {
       y = x;
       r = 0;
@@ -279,7 +279,7 @@ long double Li2(long double x) noexcept
       r = -0.5L*l*l;
       s = -1;
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5L) {
       y = x;
       r = 0;

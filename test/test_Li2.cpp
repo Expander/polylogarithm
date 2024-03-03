@@ -332,6 +332,54 @@ TEST_CASE("test_special_values")
    }
 }
 
+// tests signbit for 0.0 and -0.0 arguments
+TEST_CASE("test_signed_zero")
+{
+   using polylogarithm::Li2;
+
+   const float  pz32 = 0.0f, nz32 = -0.0f;
+   const double pz64 = 0.0, nz64 = -0.0;
+   const long double pz128 = 0.0L, nz128 = -0.0L;
+
+   // real Li2
+   CHECK( std::signbit(Li2(nz32)));
+   CHECK(!std::signbit(Li2( 0.0f)));
+
+   CHECK( std::signbit(Li2(-0.0 )));
+   CHECK(!std::signbit(Li2( 0.0 )));
+
+   CHECK( std::signbit(Li2(nz128)));
+   CHECK(!std::signbit(Li2( 0.0L)));
+
+   // complex Li2
+   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz32, nz32)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz32, nz32)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz32, nz32)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz32, nz32)))));
+   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz32, pz32)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz32, pz32)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz32, pz32)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz32, pz32)))));
+
+   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz64, nz64)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz64, pz64)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz64, pz64)))));
+
+   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz128, nz128)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz128, nz128)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz128, nz128)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz128, nz128)))));
+   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz128, pz128)))));
+}
+
 template<typename T>
 struct Data {
    std::complex<T> z;
