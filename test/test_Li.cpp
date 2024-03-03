@@ -81,6 +81,11 @@ TEST_CASE("test_complex_fixed_values")
 // tests signbit for 0.0 and -0.0 arguments
 TEST_CASE("test_signed_zero")
 {
+   // skip test if platform does not supprt signed zero
+   if (!std::signbit(-0.0)) {
+      return;
+   }
+
    using polylogarithm::Li;
 
    const float  pz32 = 0.0f, nz32 = -0.0f;
