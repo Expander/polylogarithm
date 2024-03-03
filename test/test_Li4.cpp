@@ -78,6 +78,39 @@ TEST_CASE("test_special_values")
    CHECK_CLOSE_COMPLEX(Li4(half), 0.5174790616738994, eps);
 }
 
+// tests signbit for 0.0 and -0.0 arguments
+TEST_CASE("test_signed_zero")
+{
+   using polylogarithm::Li4;
+
+   const float  pz32 = 0.0f, nz32 = -0.0f;
+   const double pz64 = 0.0, nz64 = -0.0;
+   const long double pz128 = 0.0L, nz128 = -0.0L;
+
+   // real Li4
+   CHECK( std::signbit(Li4(nz64)));
+   CHECK(!std::signbit(Li4(pz64)));
+
+   // complex Li4
+   CHECK( std::signbit(std::real(Li4(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::imag(Li4(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::real(Li4(std::complex<double>(pz64, nz64)))));
+   CHECK(!std::signbit(std::imag(Li4(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::real(Li4(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::imag(Li4(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::real(Li4(std::complex<double>(pz64, pz64)))));
+   CHECK(!std::signbit(std::imag(Li4(std::complex<double>(pz64, pz64)))));
+
+   CHECK( std::signbit(std::real(Li4(std::complex<double>(nz128, nz128)))));
+   CHECK(!std::signbit(std::imag(Li4(std::complex<double>(nz128, nz128)))));
+   CHECK(!std::signbit(std::real(Li4(std::complex<double>(pz128, nz128)))));
+   CHECK(!std::signbit(std::imag(Li4(std::complex<double>(pz128, nz128)))));
+   CHECK( std::signbit(std::real(Li4(std::complex<double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li4(std::complex<double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::real(Li4(std::complex<double>(pz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li4(std::complex<double>(pz128, pz128)))));
+}
+
 template<typename T>
 struct Data {
    std::complex<T> z;

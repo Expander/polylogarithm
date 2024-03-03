@@ -148,6 +148,8 @@ double Li4(double x) noexcept
       sgn = -1;
    } else if (x == -1) {
       return -7.0/8*zeta4;
+   } else if (x == 0) {
+      return x;
    } else if (x < 1) {
       rest = 0;
       sgn = 1;
