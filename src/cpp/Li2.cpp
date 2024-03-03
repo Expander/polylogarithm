@@ -334,7 +334,7 @@ std::complex<float> Li2(const std::complex<float>& z_) noexcept
    // special cases
    if (z.im == 0) {
       if (z.re <= 1) {
-         return Li2(z.re);
+         return { Li2(z.re), z.im };
       }
       // z.re > 1
       return { Li2(z.re), -PI*std::log(z.re) };
@@ -410,7 +410,7 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
    // special cases
    if (z.im == 0) {
       if (z.re <= 1) {
-         return Li2(z.re);
+         return { Li2(z.re), z.im };
       }
       // z.re > 1
       return { Li2(z.re), -PI*std::log(z.re) };
@@ -501,7 +501,7 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
    // special cases
    if (z.im == 0) {
       if (z.re <= 1) {
-         return Li2(z.re);
+         return { Li2(z.re), z.im };
       }
       // z.re > 1
       return { Li2(z.re), -PI*std::log(z.re) };

@@ -183,7 +183,7 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z) noexcept
    } else if (std::isinf(std::real(z)) || std::isinf(std::imag(z))) {
       return {-inf, 0.0};
    } else if (z == 0.0) {
-      return {0.0, 0.0};
+      return z;
    } else if (z == 1.0) {
       if (n <= 0) {
          return {inf, inf};

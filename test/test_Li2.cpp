@@ -352,32 +352,32 @@ TEST_CASE("test_signed_zero")
    CHECK(!std::signbit(Li2(pz128)));
 
    // complex Li2
-   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz32, nz32)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz32, nz32)))));
-   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz32, nz32)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz32, nz32)))));
-   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz32, pz32)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz32, pz32)))));
-   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz32, pz32)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz32, pz32)))));
+   CHECK( std::signbit(std::real(Li2(std::complex<float>(nz32, nz32)))));
+   CHECK( std::signbit(std::imag(Li2(std::complex<float>(nz32, nz32)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<float>(pz32, nz32)))));
+   CHECK( std::signbit(std::imag(Li2(std::complex<float>(pz32, nz32)))));
+   CHECK( std::signbit(std::real(Li2(std::complex<float>(nz32, pz32)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<float>(nz32, pz32)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<float>(pz32, pz32)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<float>(pz32, pz32)))));
 
    CHECK( std::signbit(std::real(Li2(std::complex<double>(nz64, nz64)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz64, nz64)))));
+   CHECK( std::signbit(std::imag(Li2(std::complex<double>(nz64, nz64)))));
    CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz64, nz64)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::imag(Li2(std::complex<double>(pz64, nz64)))));
    CHECK( std::signbit(std::real(Li2(std::complex<double>(nz64, pz64)))));
    CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz64, pz64)))));
    CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz64, pz64)))));
    CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz64, pz64)))));
 
-   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz128, nz128)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz128, nz128)))));
-   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz128, nz128)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz128, nz128)))));
-   CHECK( std::signbit(std::real(Li2(std::complex<double>(nz128, pz128)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(nz128, pz128)))));
-   CHECK(!std::signbit(std::real(Li2(std::complex<double>(pz128, pz128)))));
-   CHECK(!std::signbit(std::imag(Li2(std::complex<double>(pz128, pz128)))));
+   CHECK( std::signbit(std::real(Li2(std::complex<long double>(nz128, nz128)))));
+   CHECK( std::signbit(std::imag(Li2(std::complex<long double>(nz128, nz128)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::imag(Li2(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::real(Li2(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::real(Li2(std::complex<long double>(pz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li2(std::complex<long double>(pz128, pz128)))));
 }
 
 template<typename T>

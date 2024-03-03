@@ -78,6 +78,28 @@ TEST_CASE("test_complex_fixed_values")
    CHECK_CLOSE_COMPLEX(Li(10, -z), std::complex<double>(-1.4978556954869267594, 0.0), 1e-14);
 }
 
+// tests signbit for 0.0 and -0.0 arguments
+TEST_CASE("test_signed_zero")
+{
+   using polylogarithm::Li;
+
+   const float  pz32 = 0.0f, nz32 = -0.0f;
+   const double pz64 = 0.0, nz64 = -0.0;
+   const long double pz128 = 0.0L, nz128 = -0.0L;
+
+   // complex Li
+   for (int n = -20; n <= 20; ++n) {
+      CHECK( std::signbit(std::real(Li(n, std::complex<double>(nz64, nz64)))));
+      CHECK( std::signbit(std::imag(Li(n, std::complex<double>(nz64, nz64)))));
+      CHECK(!std::signbit(std::real(Li(n, std::complex<double>(pz64, nz64)))));
+      CHECK( std::signbit(std::imag(Li(n, std::complex<double>(pz64, nz64)))));
+      CHECK( std::signbit(std::real(Li(n, std::complex<double>(nz64, pz64)))));
+      CHECK(!std::signbit(std::imag(Li(n, std::complex<double>(nz64, pz64)))));
+      CHECK(!std::signbit(std::real(Li(n, std::complex<double>(pz64, pz64)))));
+      CHECK(!std::signbit(std::imag(Li(n, std::complex<double>(pz64, pz64)))));
+   }
+}
+
 template<typename T>
 struct Data {
    int n;

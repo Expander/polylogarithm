@@ -158,22 +158,22 @@ TEST_CASE("test_signed_zero")
 
    // complex Li3
    CHECK( std::signbit(std::real(Li3(std::complex<double>(nz64, nz64)))));
-   CHECK(!std::signbit(std::imag(Li3(std::complex<double>(nz64, nz64)))));
+   CHECK( std::signbit(std::imag(Li3(std::complex<double>(nz64, nz64)))));
    CHECK(!std::signbit(std::real(Li3(std::complex<double>(pz64, nz64)))));
-   CHECK(!std::signbit(std::imag(Li3(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::imag(Li3(std::complex<double>(pz64, nz64)))));
    CHECK( std::signbit(std::real(Li3(std::complex<double>(nz64, pz64)))));
    CHECK(!std::signbit(std::imag(Li3(std::complex<double>(nz64, pz64)))));
    CHECK(!std::signbit(std::real(Li3(std::complex<double>(pz64, pz64)))));
    CHECK(!std::signbit(std::imag(Li3(std::complex<double>(pz64, pz64)))));
 
-   CHECK( std::signbit(std::real(Li3(std::complex<double>(nz128, nz128)))));
-   CHECK(!std::signbit(std::imag(Li3(std::complex<double>(nz128, nz128)))));
-   CHECK(!std::signbit(std::real(Li3(std::complex<double>(pz128, nz128)))));
-   CHECK(!std::signbit(std::imag(Li3(std::complex<double>(pz128, nz128)))));
-   CHECK( std::signbit(std::real(Li3(std::complex<double>(nz128, pz128)))));
-   CHECK(!std::signbit(std::imag(Li3(std::complex<double>(nz128, pz128)))));
-   CHECK(!std::signbit(std::real(Li3(std::complex<double>(pz128, pz128)))));
-   CHECK(!std::signbit(std::imag(Li3(std::complex<double>(pz128, pz128)))));
+   CHECK( std::signbit(std::real(Li3(std::complex<long double>(nz128, nz128)))));
+   CHECK( std::signbit(std::imag(Li3(std::complex<long double>(nz128, nz128)))));
+   CHECK(!std::signbit(std::real(Li3(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::imag(Li3(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::real(Li3(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li3(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::real(Li3(std::complex<long double>(pz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li3(std::complex<long double>(pz128, pz128)))));
 }
 
 template<typename T>
