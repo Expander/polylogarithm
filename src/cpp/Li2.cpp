@@ -353,22 +353,22 @@ std::complex<float> Li2(const std::complex<float>& z_) noexcept
    if (z.re <= 0.5f) {
       if (nz > 1) {
          const Complex<float> lz = log(-z);
-         u = -log(1.0f - 1.0f / z);
+         u = -log1p(-1.0f/z);
          rest = -0.5f*lz*lz - PI*PI/6;
          sgn = -1;
       } else { // nz <= 1
-         u = -log(1.0f - z);
+         u = -log1p(-z);
          rest = 0;
          sgn = 1;
       }
    } else { // z.re > 0.5
       if (nz <= 2*z.re) {
          u = -log(z);
-         rest = u*log(1.0f - z) + PI*PI/6;
+         rest = u*log1p(-z) + PI*PI/6;
          sgn = -1;
       } else { // nz > 2*z.re
          const Complex<float> lz = log(-z);
-         u = -log(1.0f - 1.0f / z);
+         u = -log1p(-1.0f/z);
          rest = -0.5f*lz*lz - PI*PI/6;
          sgn = -1;
       }
@@ -429,22 +429,22 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
    if (z.re <= 0.5) {
       if (nz > 1) {
          const Complex<double> lz = log(-z);
-         u = -log(1.0 - 1.0 / z);
+         u = -log1p(-1.0/z);
          rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       } else { // nz <= 1
-         u = -log(1.0 - z);
+         u = -log1p(-z);
          rest = 0;
          sgn = 1;
       }
    } else { // z.re > 0.5
       if (nz <= 2*z.re) {
          u = -log(z);
-         rest = u*log(1.0 - z) + PI*PI/6;
+         rest = u*log1p(-z) + PI*PI/6;
          sgn = -1;
       } else { // nz > 2*z.re
          const Complex<double> lz = log(-z);
-         u = -log(1.0 - 1.0 / z);
+         u = -log1p(-1.0/z);
          rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       }
@@ -520,22 +520,22 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
    if (z.re <= 0.5L) {
       if (nz > 1) {
          const Complex<long double> lz = log(-z);
-         u = -log(1.0L - 1.0L/z);
+         u = -log1p(-1.0L/z);
          rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       } else { // nz <= 1
-         u = -log(1.0L - z);
+         u = -log1p(-z);
          rest = 0;
          sgn = 1;
       }
    } else { // z.re > 0.5L
       if (nz <= 2*z.re) {
          u = -log(z);
-         rest = u*log(1.0L - z) + PI*PI/6;
+         rest = u*log1p(-z) + PI*PI/6;
          sgn = -1;
       } else { // nz > 2*z.re
          const Complex<long double> lz = log(-z);
-         u = -log(1.0L - 1.0L/z);
+         u = -log1p(-1.0L/z);
          rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       }

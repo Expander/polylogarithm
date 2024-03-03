@@ -44,6 +44,12 @@ Complex<T> log(const Complex<T>& z) noexcept
 }
 
 template <typename T>
+Complex<T> log1p(const Complex<T>& z) noexcept
+{
+   return log(T(1) + z);
+}
+
+template <typename T>
 constexpr T norm(const Complex<T>& z) noexcept
 {
    return std::hypot(z.re, z.im);

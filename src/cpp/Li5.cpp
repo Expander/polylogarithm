@@ -101,12 +101,12 @@ std::complex<double> Li5(const std::complex<double>& z_) noexcept
    Complex<double> u(0.0, 0.0), rest(0.0, 0.0);
 
    if (nz <= 1) {
-      u = -log(1.0 - z);
+      u = -log1p(-z);
    } else { // nz > 1
       const double arg = pz > 0.0 ? pz - PI : pz + PI;
       const Complex<double> lmz(lnz, arg); // log(-z)
       const Complex<double> lmz2 = lmz*lmz;
-      u = -log(1.0 - 1.0/z);
+      u = -log1p(-1.0/z);
       rest = -1.0/360.0*lmz*(7*PI4 + lmz2*(10.0*PI2 + 3.0*lmz2));
    }
 
@@ -246,12 +246,12 @@ std::complex<long double> Li5(const std::complex<long double>& z_) noexcept
    Complex<long double> u(0.0L, 0.0L), rest(0.0L, 0.0L);
 
    if (nz <= 1) {
-      u = -log(1.0L - z);
+      u = -log1p(-z);
    } else { // nz > 1
       const long double arg = pz > 0.0 ? pz - PI : pz + PI;
       const Complex<long double> lmz(lnz, arg); // log(-z)
       const Complex<long double> lmz2 = lmz*lmz;
-      u = -log(1.0L - 1.0L/z);
+      u = -log1p(-1.0L/z);
       rest = -1.0L/360.0L*lmz*(7*PI4 + lmz2*(10.0L*PI2 + 3.0L*lmz2));
    }
 

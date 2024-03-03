@@ -236,12 +236,12 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
    double sgn = 1;
 
    if (nz <= 1) {
-      u = -log(1.0 - z);
+      u = -log1p(-z);
    } else { // nz > 1
       const double arg = pz > 0.0 ? pz - PI : pz + PI;
       const Complex<double> lmz(lnz, arg); // log(-z)
       const Complex<double> lmz2 = lmz*lmz;
-      u = -log(1.0 - 1.0/z);
+      u = -log1p(-1.0/z);
       rest = 1.0/360.0*(-7*PI4 + lmz2*(-30.0*PI2 - 15.0*lmz2));
       sgn = -1;
    }
@@ -381,12 +381,12 @@ std::complex<long double> Li4(const std::complex<long double>& z_) noexcept
    long double sgn = 1;
 
    if (nz <= 1) {
-      u = -log(1.0L - z);
+      u = -log1p(-z);
    } else { // nz > 1
       const long double arg = pz > 0.0 ? pz - PI : pz + PI;
       const Complex<long double> lmz(lnz, arg); // log(-z)
       const Complex<long double> lmz2 = lmz*lmz;
-      u = -log(1.0L - 1.0L/z);
+      u = -log1p(-1.0L/z);
       rest = 1.0L/360.0L*(-7*PI4 + lmz2*(-30.0L*PI2 - 15.0L*lmz2));
       sgn = -1;
    }
