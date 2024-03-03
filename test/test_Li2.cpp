@@ -400,6 +400,15 @@ TEST_CASE("test_signed_zero")
    CHECK(!std::signbit(std::real(poly_Li2(std::complex<double>(pz64, pz64)))));
    CHECK(!std::signbit(std::imag(poly_Li2(std::complex<double>(pz64, pz64)))));
 
+   CHECK( std::signbit(std::real(poly_Li2_fortran(std::complex<double>(nz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li2_fortran(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::real(poly_Li2_fortran(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li2_fortran(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::real(poly_Li2_fortran(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li2_fortran(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::real(poly_Li2_fortran(std::complex<double>(pz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li2_fortran(std::complex<double>(pz64, pz64)))));
+
    CHECK( std::signbit(std::real(Li2(std::complex<long double>(nz128, nz128)))));
    CHECK( std::signbit(std::imag(Li2(std::complex<long double>(nz128, nz128)))));
    CHECK(!std::signbit(std::real(Li2(std::complex<long double>(pz128, nz128)))));
