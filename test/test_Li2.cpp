@@ -357,6 +357,8 @@ TEST_CASE("test_signed_zero")
    CHECK(!std::signbit(Li2(pz64)));
    CHECK( std::signbit(poly_Li2(nz64)));
    CHECK(!std::signbit(poly_Li2(pz64)));
+   CHECK( std::signbit(poly_Li2_fortran(nz64)));
+   CHECK(!std::signbit(poly_Li2_fortran(pz64)));
 
    CHECK( std::signbit(Li2(nz128)));
    CHECK(!std::signbit(Li2(pz128)));

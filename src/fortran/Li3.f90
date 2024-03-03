@@ -78,7 +78,7 @@ double precision function dli3(x)
   elseif (x .lt. 0) then
      dli3 = dli3_neg(x)
   elseif (x .eq. 0) then
-     dli3 = 0
+     dli3 = x
   elseif (x .lt. 0.5D0) then
      dli3 = dli3_pos(x)
   elseif (x .eq. 0.5D0) then
@@ -135,7 +135,7 @@ double complex function cdli3(z)
 
    if (iz .eq. 0) then
       if (rz .le. 1) then
-         cdli3 = dli3(rz)
+         cdli3 = dcmplx(dli3(rz), iz)
          return
       else
          lnz = log(rz)

@@ -79,7 +79,7 @@ double li3(double x)
    } else if (x < 0) {
       return li3_neg(x);
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5) {
       return li3_pos(x);
    } else if (x == 0.5) {
@@ -128,10 +128,10 @@ double _Complex cli3(double _Complex z)
 
    if (iz == 0) {
       if (rz <= 1) {
-         return li3(rz);
+         return CMPLX(li3(rz), iz);
       } else {
          const double l = log(rz);
-         return li3(rz) - 0.5*PI*l*l*I;
+         return CMPLX(li3(rz), -0.5*PI*l*l);
       }
    }
 
@@ -254,7 +254,7 @@ long double _Complex cli3l(long double _Complex z)
 
    if (iz == 0) {
       if (rz == 0) {
-         return 0.0L;
+         return CMPLXL(rz, iz);
       }
       if (rz == 1) {
          return zeta3;
