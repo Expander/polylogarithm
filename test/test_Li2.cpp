@@ -343,13 +343,13 @@ TEST_CASE("test_signed_zero")
 
    // real Li2
    CHECK( std::signbit(Li2(nz32)));
-   CHECK(!std::signbit(Li2( 0.0f)));
+   CHECK(!std::signbit(Li2(pz32)));
 
-   CHECK( std::signbit(Li2(-0.0 )));
-   CHECK(!std::signbit(Li2( 0.0 )));
+   CHECK( std::signbit(Li2(nz64)));
+   CHECK(!std::signbit(Li2(pz64)));
 
    CHECK( std::signbit(Li2(nz128)));
-   CHECK(!std::signbit(Li2( 0.0L)));
+   CHECK(!std::signbit(Li2(pz128)));
 
    // complex Li2
    CHECK( std::signbit(std::real(Li2(std::complex<double>(nz32, nz32)))));

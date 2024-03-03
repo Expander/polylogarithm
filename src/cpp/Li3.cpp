@@ -103,7 +103,7 @@ double Li3(double x) noexcept
    } else if (x < 0) {
       return li3_neg(x);
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5) {
       return li3_pos(x);
    } else if (x == 0.5) {
