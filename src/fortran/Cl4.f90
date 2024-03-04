@@ -61,7 +61,12 @@ double precision function dcl4(x)
      sgn = -sgn
   endif
 
-  if (x .eq. 0 .or. x .eq. PI) then
+  if (x .eq. 0) then
+     dcl4 = x
+     return
+  endif
+
+  if (x .eq. PI) then
      dcl4 = 0
      return
   endif
