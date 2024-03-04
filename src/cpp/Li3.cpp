@@ -278,13 +278,13 @@ std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
          return { z.re, z.im };
       }
       if (z.re == 1) {
-         return zeta3;
+         return { zeta3, z.im };
       }
       if (z.re == -1) {
-         return -0.75L*zeta3;
+         return { -0.75L*zeta3, z.im };
       }
       if (z.re == 0.5L) {
-         return 0.537213193608040200940623225594965827L;
+         return { 0.537213193608040200940623225594965827L, z.im };
       }
    }
 

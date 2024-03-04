@@ -31,6 +31,10 @@ std::complex<T> to(std::complex<U> z)
    return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
 }
 
+double poly_Li4(double z) {
+   return li4(z);
+}
+
 std::complex<double> poly_Li4(std::complex<double> z) {
    double re{}, im{};
    cli4_c(std::real(z), std::imag(z), &re, &im);
@@ -96,6 +100,12 @@ TEST_CASE("test_signed_zero")
    // real Li4
    CHECK( std::signbit(Li4(nz64)));
    CHECK(!std::signbit(Li4(pz64)));
+   CHECK( std::signbit(poly_Li4(nz64)));
+   CHECK(!std::signbit(poly_Li4(pz64)));
+#ifdef ENABLE_FORTRAN
+   CHECK( std::signbit(poly_Li4_fortran(nz64)));
+   CHECK(!std::signbit(poly_Li4_fortran(pz64)));
+#endif
 
    // complex Li4
    CHECK( std::signbit(std::real(Li4(std::complex<double>(nz64, nz64)))));
@@ -107,6 +117,26 @@ TEST_CASE("test_signed_zero")
    CHECK(!std::signbit(std::real(Li4(std::complex<double>(pz64, pz64)))));
    CHECK(!std::signbit(std::imag(Li4(std::complex<double>(pz64, pz64)))));
 
+   CHECK( std::signbit(std::real(poly_Li4(std::complex<double>(nz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li4(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::real(poly_Li4(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li4(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::real(poly_Li4(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li4(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::real(poly_Li4(std::complex<double>(pz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li4(std::complex<double>(pz64, pz64)))));
+
+#ifdef ENABLE_FORTRAN
+   CHECK( std::signbit(std::real(poly_Li4_fortran(std::complex<double>(nz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li4_fortran(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::real(poly_Li4_fortran(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li4_fortran(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::real(poly_Li4_fortran(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li4_fortran(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::real(poly_Li4_fortran(std::complex<double>(pz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li4_fortran(std::complex<double>(pz64, pz64)))));
+#endif
+
    CHECK( std::signbit(std::real(Li4(std::complex<long double>(nz128, nz128)))));
    CHECK( std::signbit(std::imag(Li4(std::complex<long double>(nz128, nz128)))));
    CHECK(!std::signbit(std::real(Li4(std::complex<long double>(pz128, nz128)))));
@@ -115,6 +145,15 @@ TEST_CASE("test_signed_zero")
    CHECK(!std::signbit(std::imag(Li4(std::complex<long double>(nz128, pz128)))));
    CHECK(!std::signbit(std::real(Li4(std::complex<long double>(pz128, pz128)))));
    CHECK(!std::signbit(std::imag(Li4(std::complex<long double>(pz128, pz128)))));
+
+   CHECK( std::signbit(std::real(poly_Li4(std::complex<long double>(nz128, nz128)))));
+   CHECK( std::signbit(std::imag(poly_Li4(std::complex<long double>(nz128, nz128)))));
+   CHECK(!std::signbit(std::real(poly_Li4(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::imag(poly_Li4(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::real(poly_Li4(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::imag(poly_Li4(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::real(poly_Li4(std::complex<long double>(pz128, pz128)))));
+   CHECK(!std::signbit(std::imag(poly_Li4(std::complex<long double>(pz128, pz128)))));
 }
 
 template<typename T>

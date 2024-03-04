@@ -204,10 +204,10 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
 
    if (z.im == 0) {
       if (z.re <= 1) {
-         return std::complex<double>(Li4(z.re), z.im);
+         return { Li4(z.re), z.im };
       } else {
          const double l = std::log(z.re);
-         return std::complex<double>(Li4(z.re), -1.0/6*PI*l*l*l);
+         return { Li4(z.re), -1.0/6*PI*l*l*l };
       }
    }
 
@@ -332,10 +332,10 @@ std::complex<long double> Li4(const std::complex<long double>& z_) noexcept
          return { z.re, z.im };
       }
       if (z.re == 1) {
-         return zeta4;
+         return { zeta4, z.im };
       }
       if (z.re == -1) {
-         return -7.0L*PI4/720.0L;
+         return { -7.0L*PI4/720.0L, z.im };
       }
    }
 
