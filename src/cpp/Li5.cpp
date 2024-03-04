@@ -65,10 +65,10 @@ std::complex<double> Li5(const std::complex<double>& z_) noexcept
          return { z.re, z.im };
       }
       if (z.re == 1) {
-         return zeta5;
+         return { zeta5, z.im };
       }
       if (z.re == -1) {
-         return -15.0*zeta5/16.0;
+         return { -15.0*zeta5/16.0, z.im };
       }
    }
 
@@ -193,10 +193,10 @@ std::complex<long double> Li5(const std::complex<long double>& z_) noexcept
          return { z.re, z.im };
       }
       if (z.re == 1) {
-         return zeta5;
+         return { zeta5, z.im };
       }
       if (z.re == -1) {
-         return -15.0L*zeta5/16.0L;
+         return { -15.0L*zeta5/16.0L, z.im };
       }
    }
 

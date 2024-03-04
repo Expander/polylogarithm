@@ -44,15 +44,15 @@ double complex function cdli5(z)
 
    if (iz .eq. 0) then
       if (rz .eq. 0) then
-         cdli5 = 0
+         cdli5 = dcmplx(rz, iz)
          return
       endif
       if (rz .eq. 1) then
-         cdli5 = zeta5
+         cdli5 = dcmplx(zeta5, iz)
          return
       endif
       if (rz .eq. -1) then
-         cdli5 = -15*zeta5/16
+         cdli5 = dcmplx(-15*zeta5/16, iz)
          return
       endif
    endif
