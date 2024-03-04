@@ -60,7 +60,12 @@ double precision function dcl2(x)
      sgn = -sgn
   endif
 
-  if (x .eq. 0 .or. x .eq. PI) then
+  if (x .eq. 0) then
+     dcl2 = x
+     return
+  endif
+
+  if (x .eq. PI) then
      dcl2 = 0
      return
   endif

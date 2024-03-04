@@ -7,6 +7,7 @@
 #include "Cl2.hpp"
 #include "Li2.hpp"
 #include "read_data.hpp"
+#include "test.hpp"
 #include <cmath>
 #include <complex>
 #include <limits>
@@ -24,6 +25,14 @@
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
 
 namespace {
+
+double poly_Cl2(double x) {
+   return cl2(x);
+}
+
+long double poly_Cl2(long double x) {
+   return cl2l(x);
+}
 
 #ifdef ENABLE_FORTRAN
 
@@ -97,6 +106,40 @@ TEST_CASE("test_roots")
    for (int k = -10; k < 10; k++) {
       CHECK_SMALL(Cl2(k*pi), 1e-10);
    }
+}
+
+// tests signbit for 0.0 and -0.0 arguments
+TEST_CASE("test_signed_zero")
+{
+   // skip test if platform does not supprt signed zero
+   if (!has_signed_zero()) {
+      return;
+   }
+
+   using polylogarithm::Cl2;
+
+   const float  pz32 = 0.0f, nz32 = -0.0f;
+   const double pz64 = 0.0, nz64 = -0.0;
+   const long double pz128 = 0.0L, nz128 = -0.0L;
+
+   CHECK( std::signbit(Cl2(nz32)));
+   CHECK(!std::signbit(Cl2(pz32)));
+   CHECK( std::signbit(poly_Cl2(nz32)));
+   CHECK(!std::signbit(poly_Cl2(pz32)));
+
+   CHECK( std::signbit(Cl2(nz64)));
+   CHECK(!std::signbit(Cl2(pz64)));
+   CHECK( std::signbit(poly_Cl2(nz64)));
+   CHECK(!std::signbit(poly_Cl2(pz64)));
+#ifdef ENABLE_FORTRAN
+   CHECK( std::signbit(poly_Cl2_fortran(nz64)));
+   CHECK(!std::signbit(poly_Cl2_fortran(pz64)));
+#endif
+
+   CHECK( std::signbit(Cl2(nz128)));
+   CHECK(!std::signbit(Cl2(pz128)));
+   CHECK( std::signbit(poly_Cl2(nz128)));
+   CHECK(!std::signbit(poly_Cl2(pz128)));
 }
 
 TEST_CASE("test_real_fixed_values")
