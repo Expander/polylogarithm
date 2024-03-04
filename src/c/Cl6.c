@@ -35,7 +35,11 @@ double cl6(double x)
       sgn = -sgn;
    }
 
-   if (x == 0 || x == PI) {
+   if (x == 0) {
+      return x;
+   }
+
+   if (x == PI) {
       return 0;
    }
 
@@ -109,7 +113,11 @@ long double cl6l(long double x)
       sgn = -sgn;
    }
 
-   if (x == 0 || x == PI) {
+   if (x == 0) {
+      return x;
+   }
+
+   if (x == PI) {
       return 0;
    }
 
