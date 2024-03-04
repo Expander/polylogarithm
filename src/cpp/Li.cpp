@@ -188,9 +188,9 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z) noexcept
       if (n <= 0) {
          return {inf, inf};
       }
-      return {zeta(n), 0.0};
+      return {zeta(n), std::imag(z)};
    } else if (z == -1.0) {
-      return {neg_eta(n), 0.0};
+      return {neg_eta(n), std::imag(z)};
    } else if (n < -1) {
       // arXiv:2010.09860
       const double nz = std::norm(z);
