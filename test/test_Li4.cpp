@@ -11,9 +11,6 @@
 #include <limits>
 #include <utility>
 
-template <class T> T sqr(T x) { return x*x; }
-template <class T> T pow4(T x) { return x*x*x*x; }
-
 double poly_Li4(double z) {
    return li4(z);
 }

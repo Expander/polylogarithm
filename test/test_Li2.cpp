@@ -35,8 +35,6 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
 const std::complex<double> zero(0.,0.);
 
-template <class T> T sqr(T x) { return x*x; }
-
 bool is_unity(std::complex<long double> z, long double eps)
 {
    return std::abs(std::real(z) - 1.0L) <= eps && std::imag(z) == 0.0L;

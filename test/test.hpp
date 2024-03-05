@@ -33,6 +33,21 @@ inline bool has_signed_zero() noexcept
 }
 
 
+template <class T> T sqr(T x) {
+   return x*x;
+}
+
+
+template <class T> T pow3(T x) {
+   return x*x*x;
+}
+
+
+template <class T> T pow4(T x) {
+   return sqr(sqr(x));
+}
+
+
 template <typename T, typename U>
 std::complex<T> to(std::complex<U> z)
 {

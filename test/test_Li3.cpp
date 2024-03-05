@@ -12,9 +12,6 @@
 #include <limits>
 #include <utility>
 
-template <class T> T sqr(T x) { return x*x; }
-template <class T> T pow3(T x) { return x*x*x; }
-
 std::complex<double> clog(std::complex<double> z) {
    std::complex<double> zf(z);
    // convert -0.0 to 0.0
