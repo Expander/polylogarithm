@@ -12,10 +12,6 @@
 #include <limits>
 #include <utility>
 
-#ifndef M_PI
-#define M_PI 3.1415926535897932
-#endif
-
 #define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 #define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
       CHECK_CLOSE(std::real(a), std::real(b), (eps));                   \
