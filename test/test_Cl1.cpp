@@ -17,13 +17,15 @@ TEST_CASE("test_real_fixed_values")
       const auto x64 = static_cast<double>(x128);
       const auto cl128_expected = v.second;
       const auto cl64_expected = static_cast<double>(cl128_expected);
-
-      const auto cl64_poly    = polylogarithm::Cl1(x64);
+      const auto cl64_poly = polylogarithm::Cl1(x64);
 
       INFO("x(64)         = " << x64);
       INFO("Cl1(64)  real = " << cl64_expected  << " (expected)");
       INFO("Cl1(64)  real = " << cl64_poly      << " (polylogarithm C++)");
 
       CHECK_CLOSE(cl64_poly, cl64_expected, 4*eps64);
+      CHECK_CLOSE(polylogarithm::Cl1(-x64), cl64_expected, 4*eps64);
+      CHECK_CLOSE(polylogarithm::Cl1(x64 + 2*M_PI), cl64_expected, 10*eps64);
+      CHECK_CLOSE(polylogarithm::Cl1(x64 - 2*M_PI), cl64_expected, 10*eps64);
    }
 }
