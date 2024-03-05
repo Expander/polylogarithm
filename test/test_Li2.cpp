@@ -81,12 +81,6 @@ std::complex<double> clog(std::complex<double> z) {
    return std::log(zf);
 }
 
-template <typename T, typename U>
-std::complex<T> to(std::complex<U> z)
-{
-   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
-}
-
 std::complex<double> hdecay_Li2(std::complex<double> z) {
    double li2_re{}, li2_im{};
    hdecay_dilog(std::real(z), std::imag(z), &li2_re, &li2_im);

@@ -25,12 +25,6 @@
 template <class T> T sqr(T x) { return x*x; }
 template <class T> T pow4(T x) { return x*x*x*x; }
 
-template <typename T, typename U>
-std::complex<T> to(std::complex<U> z)
-{
-   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
-}
-
 double poly_Li4(double z) {
    return li4(z);
 }

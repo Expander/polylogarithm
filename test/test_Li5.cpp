@@ -18,12 +18,6 @@
    } while (0)
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
 
-template <typename T, typename U>
-std::complex<T> to(std::complex<U> z)
-{
-   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
-}
-
 std::complex<double> poly_Li5(std::complex<double> z) {
    double re{}, im{};
    cli5_c(std::real(z), std::imag(z), &re, &im);

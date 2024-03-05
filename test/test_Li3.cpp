@@ -34,12 +34,6 @@ std::complex<double> clog(std::complex<double> z) {
    return std::log(zf);
 }
 
-template <typename T, typename U>
-std::complex<T> to(std::complex<U> z)
-{
-   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
-}
-
 double poly_Li3(double z) {
    return li3(z);
 }
