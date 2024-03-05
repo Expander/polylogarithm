@@ -11,13 +11,6 @@
 #include <complex>
 #include <vector>
 
-#ifndef M_PI
-#define M_PI 3.1415926535897932
-#endif
-
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-#define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
-
 std::vector<double> float_range(
    double start, double stop, std::size_t number_of_steps)
 {

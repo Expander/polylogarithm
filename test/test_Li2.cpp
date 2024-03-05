@@ -14,10 +14,6 @@
 #include <random>
 #include <vector>
 
-#ifndef M_PI
-#define M_PI 3.1415926535897932
-#endif
-
 #ifdef ENABLE_GSL
 
 #include <gsl/gsl_sf_dilog.h>
@@ -35,40 +31,6 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 }
 
 #endif
-
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-
-#define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
-      CHECK_CLOSE(std::real(a), std::real(b), (eps));                   \
-      CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                   \
-   } while (0)
-
-#define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
-
-#define CHECK_CLOSE_REL(a,b,eps) do {                                   \
-      const bool pred = is_close_rel((a), (b), (eps));                  \
-      INFO("Comparing numbers " << std::setprecision(17) << (a) << " =?= " << (b) << " with relative precision " << (eps)); \
-      CHECK(pred);                                                      \
-   } while (0)
-
-const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
-const std::complex<double> zero(0.,0.);
-
-template <class T> T sqr(T x) { return x*x; }
-
-bool is_close_rel(double x, double y, double eps)
-{
-   const double ma = std::max(std::abs(x), std::abs(y));
-   if (ma == 0.0) {
-      return true;
-   }
-   return std::abs(x - y)/ma < std::abs(eps);
-}
-
-bool is_unity(std::complex<long double> z, long double eps)
-{
-   return std::abs(std::real(z) - 1.0L) <= eps && std::imag(z) == 0.0L;
-}
 
 /// special values to be checked
 const std::vector<std::complex<double>> special_values = {
@@ -96,12 +58,6 @@ std::complex<double> clog(std::complex<double> z) {
    if (std::real(zf) == 0.0) { zf.real(0.0); }
    if (std::imag(zf) == 0.0) { zf.imag(0.0); }
    return std::log(zf);
-}
-
-template <typename T, typename U>
-std::complex<T> to(std::complex<U> z)
-{
-   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
 }
 
 std::complex<double> hdecay_Li2(std::complex<double> z) {
@@ -197,7 +153,7 @@ const auto Relation_2 = [](std::complex<double> z) {
    using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10 || std::real(z) < 0.) {
-      return zero;
+      return std::complex<double>(0.0, 0.0);
    }
 
    return Li2(1.-z) + Li2(1.-1./z) + clog(z)*clog(z)/2.;
@@ -207,7 +163,7 @@ const auto Relation_3 = [](std::complex<double> z) {
    using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10 || std::abs(std::real(z) - 1.) < 1e-10) {
-      return zero;
+      return std::complex<double>(0.0, 0.0);
    }
 
    return Li2(z) + Li2(1.-z)
@@ -219,7 +175,7 @@ const auto Relation_4 = [](std::complex<double> z) {
 
    if (std::abs(z) < 1e-10 || std::abs(std::real(z) + 1.) < 1e-10
        || std::real(z) < 0. || std::imag(z) < 0.) {
-      return zero;
+      return std::complex<double>(0.0, 0.0);
    }
 
    return Li2(-z) - Li2(1.-z) + Li2(1.-z*z)/2.
@@ -231,7 +187,7 @@ const auto Relation_5 = [](std::complex<double> z) {
 
    if (std::abs(z) < 1e-10
        || (std::real(z) > 0. && std::real(z) < 1.)) {
-      return zero;
+      return std::complex<double>(0.0, 0.0);
    }
 
    return Li2(z) + Li2(1./z)

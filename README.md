@@ -2,6 +2,7 @@ Polylogarithm
 =============
 
 [![Build Status](https://github.com/Expander/polylogarithm/workflows/test/badge.svg)](https://github.com/Expander/polylogarithm/actions)
+[![Coverage Status](https://coveralls.io/repos/github/Expander/polylogarithm/badge.svg)](https://coveralls.io/github/Expander/polylogarithm)
 
 The Polylogarithm package provides C, C++ and Fortran implementations
 of various polylogarithms, including the real and complex dilogarithm,

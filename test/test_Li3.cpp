@@ -12,32 +12,12 @@
 #include <limits>
 #include <utility>
 
-#ifndef M_PI
-#define M_PI 3.1415926535897932
-#endif
-
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-#define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
-      CHECK_CLOSE(std::real(a), std::real(b), (eps));                   \
-      CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                   \
-   } while (0)
-#define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
-
-template <class T> T sqr(T x) { return x*x; }
-template <class T> T pow3(T x) { return x*x*x; }
-
 std::complex<double> clog(std::complex<double> z) {
    std::complex<double> zf(z);
    // convert -0.0 to 0.0
    if (std::real(zf) == 0.0) { zf.real(0.0); }
    if (std::imag(zf) == 0.0) { zf.imag(0.0); }
    return std::log(zf);
-}
-
-template <typename T, typename U>
-std::complex<T> to(std::complex<U> z)
-{
-   return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
 }
 
 double poly_Li3(double z) {

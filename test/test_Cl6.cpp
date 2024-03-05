@@ -11,13 +11,6 @@
 #include <complex>
 #include <vector>
 
-#ifndef M_PI
-#define M_PI 3.1415926535897932
-#endif
-
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-#define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
-
 double poly_Cl6(double x) {
    return cl6(x);
 }
