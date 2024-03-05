@@ -8,13 +8,6 @@
 #include <cmath>
 #include <complex>
 
-#define CHECK_CLOSE(a,b,eps) do {                       \
-      if (std::isinf(a) && std::isinf(b))               \
-         CHECK(true);                                   \
-      else                                              \
-         CHECK((a) == doctest::Approx(b).epsilon(eps)); \
-   } while (0);
-
 double Sl_via_Li(int64_t n, double x)
 {
    const std::complex<double> li = polylogarithm::Li(n, std::polar(1.0, x));

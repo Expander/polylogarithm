@@ -2,8 +2,7 @@
 
 #include "doctest.h"
 #include "harmonic.hpp"
-
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
+#include "test.hpp"
 
 TEST_CASE("test_fixed_values")
 {

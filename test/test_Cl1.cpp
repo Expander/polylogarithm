@@ -3,9 +3,8 @@
 #include "doctest.h"
 #include "Cl1.hpp"
 #include "read_data.hpp"
+#include "test.hpp"
 #include <cmath>
-
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
 
 TEST_CASE("test_real_fixed_values")
 {
