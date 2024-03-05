@@ -33,12 +33,6 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 #endif
 
 const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
-const std::complex<double> zero(0.,0.);
-
-bool is_unity(std::complex<long double> z, long double eps)
-{
-   return std::abs(std::real(z) - 1.0L) <= eps && std::imag(z) == 0.0L;
-}
 
 /// special values to be checked
 const std::vector<std::complex<double>> special_values = {
@@ -161,7 +155,7 @@ const auto Relation_2 = [](std::complex<double> z) {
    using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10 || std::real(z) < 0.) {
-      return zero;
+      return std::complex<double>(0.0, 0.0);
    }
 
    return Li2(1.-z) + Li2(1.-1./z) + clog(z)*clog(z)/2.;
@@ -171,7 +165,7 @@ const auto Relation_3 = [](std::complex<double> z) {
    using polylogarithm::Li2;
 
    if (std::abs(z) < 1e-10 || std::abs(std::real(z) - 1.) < 1e-10) {
-      return zero;
+      return std::complex<double>(0.0, 0.0);
    }
 
    return Li2(z) + Li2(1.-z)
@@ -183,7 +177,7 @@ const auto Relation_4 = [](std::complex<double> z) {
 
    if (std::abs(z) < 1e-10 || std::abs(std::real(z) + 1.) < 1e-10
        || std::real(z) < 0. || std::imag(z) < 0.) {
-      return zero;
+      return std::complex<double>(0.0, 0.0);
    }
 
    return Li2(-z) - Li2(1.-z) + Li2(1.-z*z)/2.
@@ -195,7 +189,7 @@ const auto Relation_5 = [](std::complex<double> z) {
 
    if (std::abs(z) < 1e-10
        || (std::real(z) > 0. && std::real(z) < 1.)) {
-      return zero;
+      return std::complex<double>(0.0, 0.0);
    }
 
    return Li2(z) + Li2(1./z)
