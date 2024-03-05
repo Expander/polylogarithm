@@ -45,7 +45,15 @@ Complex<T> log(const Complex<T>& z) noexcept
 template <typename T>
 Complex<T> log1p(const Complex<T>& z) noexcept
 {
-   return log(T(1) + z);
+   const Complex<T> u = T(1) + z;
+
+   if (u.re == T(1) && u.im == T(0)) {
+      return z;
+   } else if (u.re <= T(0)) {
+      return log(u);
+   }
+
+   return log(u)*(z/(u - T(1)));
 }
 
 template <typename T>
@@ -130,6 +138,23 @@ template <typename T>
 constexpr Complex<T> operator/(const Complex<T>& z, T x) noexcept
 {
    return { z.re/x, z.im/x };
+}
+
+template <typename T>
+Complex<T> operator/(const Complex<T>& z, const Complex<T>& w) noexcept
+{
+   const T a = z.re, b = z.im, c = w.re, d = w.im;
+
+   if (std::abs(c) >= std::abs(d)) {
+      const T r = d/c;
+      const T den = c + d*r;
+      return { (a + b*r)/den, (b - a*r)/den };
+   }
+
+   const T r = c/d;
+   const T den = c*r + d;
+
+   return { (a*r + b)/den, (b*r - a)/den };
 }
 
 } // namespace polylogarithm
