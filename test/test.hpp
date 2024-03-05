@@ -9,6 +9,23 @@
 #endif
 
 
+#define CHECK_CLOSE(a,b,eps) do {                       \
+      if (std::isinf(a) && std::isinf(b))               \
+         CHECK(true);                                   \
+      else                                              \
+         CHECK((a) == doctest::Approx(b).epsilon(eps)); \
+   } while (0);
+
+
+#define CHECK_CLOSE_COMPLEX(a,b,eps) do {               \
+      CHECK_CLOSE(std::real(a), std::real(b), (eps));   \
+      CHECK_CLOSE(std::imag(a), std::imag(b), (eps));   \
+   } while (0)
+
+
+#define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
+
+
 inline bool has_signed_zero() noexcept
 {
    const auto fn = [] (double x) { return x == 0.0 ? x : x; };

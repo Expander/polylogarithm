@@ -11,13 +11,6 @@
 #include <limits>
 #include <utility>
 
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-#define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
-      CHECK_CLOSE(std::real(a), std::real(b), (eps));                   \
-      CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                   \
-   } while (0)
-#define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
-
 template <class T> T sqr(T x) { return x*x; }
 template <class T> T pow4(T x) { return x*x*x*x; }
 

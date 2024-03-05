@@ -8,13 +8,6 @@
 #include <complex>
 #include <string>
 
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-
-#define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
-      CHECK_CLOSE(std::real(a), std::real(b), (eps));                   \
-      CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                   \
-   } while (0)
-
 /*
 
 TEST_CASE("test_infinite_values")

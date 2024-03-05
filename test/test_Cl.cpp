@@ -15,14 +15,6 @@
 #include <complex>
 #include <vector>
 
-#define CHECK_CLOSE(a,b,eps) do {                       \
-      if (std::isinf(a) && std::isinf(b))               \
-         CHECK(true);                                   \
-      else                                              \
-         CHECK((a) == doctest::Approx(b).epsilon(eps)); \
-   } while (0);
-#define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
-
 std::vector<double> float_range(
    double start, double stop, std::size_t number_of_steps)
 {

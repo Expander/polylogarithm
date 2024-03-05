@@ -32,13 +32,6 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 
 #endif
 
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-#define CHECK_CLOSE_COMPLEX(a,b,eps) do {                               \
-      CHECK_CLOSE(std::real(a), std::real(b), (eps));                   \
-      CHECK_CLOSE(std::imag(a), std::imag(b), (eps));                   \
-   } while (0)
-#define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
-
 const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
 const std::complex<double> zero(0.,0.);
 

@@ -11,9 +11,6 @@
 #include <complex>
 #include <vector>
 
-#define CHECK_CLOSE(a,b,eps) CHECK((a) == doctest::Approx(b).epsilon(eps))
-#define CHECK_SMALL(a,eps) CHECK(std::abs(a) <= (eps))
-
 double poly_Cl6(double x) {
    return cl6(x);
 }
