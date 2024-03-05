@@ -8,10 +8,12 @@
 #include <complex>
 #include <string>
 
-/*
-
 TEST_CASE("test_infinite_values")
 {
+   if (!has_inf()) {
+      return;
+   }
+
    using polylogarithm::Li;
 
    for (int n = -10; n <= 0; ++n) {
@@ -19,8 +21,6 @@ TEST_CASE("test_infinite_values")
       CHECK(std::isinf(std::imag(Li(n, 1.0))));
    }
 }
-
-*/
 
 TEST_CASE("test_complex_fixed_values")
 {

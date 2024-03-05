@@ -9,11 +9,13 @@
 #endif
 
 
-#define CHECK_CLOSE(a,b,eps) do {                       \
-      if (std::isinf(a) && std::isinf(b))               \
+#define CHECK_CLOSE(a,b,eps)                            \
+   do {                                                 \
+      if (std::isinf(a) && std::isinf(b)) {             \
          CHECK(true);                                   \
-      else                                              \
+      } else {                                          \
          CHECK((a) == doctest::Approx(b).epsilon(eps)); \
+      }                                                 \
    } while (0);
 
 
@@ -24,6 +26,12 @@
 
 
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
+
+
+inline bool has_inf() noexcept
+{
+   return std::isinf(std::numeric_limits<double>::max() + 1.0);
+}
 
 
 inline bool has_signed_zero() noexcept
