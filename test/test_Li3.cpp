@@ -7,6 +7,7 @@
 #include "Li3.hpp"
 #include "bench.hpp"
 #include "read_data.hpp"
+#include "test.hpp"
 #include <cmath>
 #include <limits>
 #include <utility>
@@ -37,6 +38,10 @@ template <typename T, typename U>
 std::complex<T> to(std::complex<U> z)
 {
    return std::complex<T>(static_cast<T>(std::real(z)), static_cast<T>(std::imag(z)));
+}
+
+double poly_Li3(double z) {
+   return li3(z);
 }
 
 std::complex<double> poly_Li3(std::complex<double> z) {
@@ -141,6 +146,79 @@ TEST_CASE("test_special_values")
 
    const std::complex<double> gr(1/sqr(phi), 0.0);
    CHECK_CLOSE_COMPLEX(Li3(gr), 4./5.*zeta3 + 2./3.*pow3(std::log(phi)) - 2./15.*pi2*std::log(phi), eps);
+}
+
+// tests signbit for 0.0 and -0.0 arguments
+TEST_CASE("test_signed_zero")
+{
+   // skip test if platform does not supprt signed zero
+   if (!has_signed_zero()) {
+      return;
+   }
+
+   using polylogarithm::Li3;
+
+   const float  pz32 = 0.0f, nz32 = -0.0f;
+   const double pz64 = 0.0, nz64 = -0.0;
+   const long double pz128 = 0.0L, nz128 = -0.0L;
+
+   // real Li3
+   CHECK( std::signbit(Li3(nz64)));
+   CHECK(!std::signbit(Li3(pz64)));
+   CHECK( std::signbit(poly_Li3(nz64)));
+   CHECK(!std::signbit(poly_Li3(pz64)));
+#ifdef ENABLE_FORTRAN
+   CHECK( std::signbit(poly_Li3_fortran(nz64)));
+   CHECK(!std::signbit(poly_Li3_fortran(pz64)));
+#endif
+
+   // complex Li3
+   CHECK( std::signbit(std::real(Li3(std::complex<double>(nz64, nz64)))));
+   CHECK( std::signbit(std::imag(Li3(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::real(Li3(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::imag(Li3(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::real(Li3(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::imag(Li3(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::real(Li3(std::complex<double>(pz64, pz64)))));
+   CHECK(!std::signbit(std::imag(Li3(std::complex<double>(pz64, pz64)))));
+
+   CHECK( std::signbit(std::real(poly_Li3(std::complex<double>(nz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li3(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::real(poly_Li3(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li3(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::real(poly_Li3(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li3(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::real(poly_Li3(std::complex<double>(pz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li3(std::complex<double>(pz64, pz64)))));
+
+#ifdef ENABLE_FORTRAN
+   CHECK( std::signbit(std::real(poly_Li3_fortran(std::complex<double>(nz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li3_fortran(std::complex<double>(nz64, nz64)))));
+   CHECK(!std::signbit(std::real(poly_Li3_fortran(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::imag(poly_Li3_fortran(std::complex<double>(pz64, nz64)))));
+   CHECK( std::signbit(std::real(poly_Li3_fortran(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li3_fortran(std::complex<double>(nz64, pz64)))));
+   CHECK(!std::signbit(std::real(poly_Li3_fortran(std::complex<double>(pz64, pz64)))));
+   CHECK(!std::signbit(std::imag(poly_Li3_fortran(std::complex<double>(pz64, pz64)))));
+#endif
+
+   CHECK( std::signbit(std::real(Li3(std::complex<long double>(nz128, nz128)))));
+   CHECK( std::signbit(std::imag(Li3(std::complex<long double>(nz128, nz128)))));
+   CHECK(!std::signbit(std::real(Li3(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::imag(Li3(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::real(Li3(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li3(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::real(Li3(std::complex<long double>(pz128, pz128)))));
+   CHECK(!std::signbit(std::imag(Li3(std::complex<long double>(pz128, pz128)))));
+
+   CHECK( std::signbit(std::real(poly_Li3(std::complex<long double>(nz128, nz128)))));
+   CHECK( std::signbit(std::imag(poly_Li3(std::complex<long double>(nz128, nz128)))));
+   CHECK(!std::signbit(std::real(poly_Li3(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::imag(poly_Li3(std::complex<long double>(pz128, nz128)))));
+   CHECK( std::signbit(std::real(poly_Li3(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::imag(poly_Li3(std::complex<long double>(nz128, pz128)))));
+   CHECK(!std::signbit(std::real(poly_Li3(std::complex<long double>(pz128, pz128)))));
+   CHECK(!std::signbit(std::imag(poly_Li3(std::complex<long double>(pz128, pz128)))));
 }
 
 template<typename T>

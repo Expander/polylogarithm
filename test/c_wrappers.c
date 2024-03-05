@@ -24,7 +24,7 @@ long double _Complex cli6l(long double _Complex);
 /** C++ wrapper for cli2f */
 void cli2f_c(float re, float im, float* res_re, float* res_im)
 {
-   const float _Complex result = cli2f(re + I*im);
+   const float _Complex result = cli2f(CMPLXF(re, im));
    *res_re = crealf(result);
    *res_im = cimagf(result);
 }
@@ -32,7 +32,7 @@ void cli2f_c(float re, float im, float* res_re, float* res_im)
 /** C++ wrapper for cli2 */
 void cli2_c(double re, double im, double* res_re, double* res_im)
 {
-   const double _Complex result = cli2(re + I*im);
+   const double _Complex result = cli2(CMPLX(re, im));
    *res_re = creal(result);
    *res_im = cimag(result);
 }
@@ -40,7 +40,7 @@ void cli2_c(double re, double im, double* res_re, double* res_im)
 /** C++ wrapper for cli2l */
 void cli2l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
-   const long double _Complex result = cli2l(re + I*im);
+   const long double _Complex result = cli2l(CMPLXL(re, im));
    *res_re = creall(result);
    *res_im = cimagl(result);
 }
@@ -48,7 +48,7 @@ void cli2l_c(long double re, long double im, long double* res_re, long double* r
 /** C++ wrapper for cli3 */
 void cli3_c(double re, double im, double* res_re, double* res_im)
 {
-   const double _Complex result = cli3(re + I*im);
+   const double _Complex result = cli3(CMPLX(re, im));
    *res_re = creal(result);
    *res_im = cimag(result);
 }
@@ -56,7 +56,7 @@ void cli3_c(double re, double im, double* res_re, double* res_im)
 /** C++ wrapper for cli3l */
 void cli3l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
-   const long double _Complex result = cli3l(re + I*im);
+   const long double _Complex result = cli3l(CMPLXL(re, im));
    *res_re = creall(result);
    *res_im = cimagl(result);
 }
@@ -64,7 +64,7 @@ void cli3l_c(long double re, long double im, long double* res_re, long double* r
 /** C++ wrapper for cli4 */
 void cli4_c(double re, double im, double* res_re, double* res_im)
 {
-   const double _Complex result = cli4(re + I*im);
+   const double _Complex result = cli4(CMPLX(re, im));
    *res_re = creal(result);
    *res_im = cimag(result);
 }
@@ -72,7 +72,7 @@ void cli4_c(double re, double im, double* res_re, double* res_im)
 /** C++ wrapper for cli4l */
 void cli4l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
-   const long double _Complex result = cli4l(re + I*im);
+   const long double _Complex result = cli4l(CMPLXL(re, im));
    *res_re = creall(result);
    *res_im = cimagl(result);
 }
@@ -80,7 +80,7 @@ void cli4l_c(long double re, long double im, long double* res_re, long double* r
 /** C++ wrapper for cli5 */
 void cli5_c(double re, double im, double* res_re, double* res_im)
 {
-   const double _Complex result = cli5(re + I*im);
+   const double _Complex result = cli5(CMPLX(re, im));
    *res_re = creal(result);
    *res_im = cimag(result);
 }
@@ -88,7 +88,7 @@ void cli5_c(double re, double im, double* res_re, double* res_im)
 /** C++ wrapper for cli5l */
 void cli5l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
-   const long double _Complex result = cli5l(re + I*im);
+   const long double _Complex result = cli5l(CMPLXL(re, im));
    *res_re = creall(result);
    *res_im = cimagl(result);
 }
@@ -96,7 +96,7 @@ void cli5l_c(long double re, long double im, long double* res_re, long double* r
 /** C++ wrapper for cli6 */
 void cli6_c(double re, double im, double* res_re, double* res_im)
 {
-   const double _Complex result = cli6(re + I*im);
+   const double _Complex result = cli6(CMPLX(re, im));
    *res_re = creal(result);
    *res_im = cimag(result);
 }
@@ -104,7 +104,7 @@ void cli6_c(double re, double im, double* res_re, double* res_im)
 /** C++ wrapper for cli6l */
 void cli6l_c(long double re, long double im, long double* res_re, long double* res_im)
 {
-   const long double _Complex result = cli6l(re + I*im);
+   const long double _Complex result = cli6l(CMPLXL(re, im));
    *res_re = creall(result);
    *res_im = cimagl(result);
 }

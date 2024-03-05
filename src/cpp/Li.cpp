@@ -36,14 +36,12 @@ namespace {
    /// complex logarithm, converts -0.0 to 0.0
    std::complex<double> clog(const std::complex<double>& z) noexcept
    {
-      const double n = std::hypot(std::real(z), std::imag(z));
-      double a = std::arg(z);
-
-      if (std::imag(z) == 0.0 && a < 0.0) {
-         a = -a;
+      if (std::imag(z) == 0.0 && std::real(z) > 0.0) {
+         return { std::log(std::real(z)), 0.0 };
+      } else if (std::imag(z) == 0.0) {
+         return { std::log(-std::real(z)), 4*std::atan(1.0) };
       }
-
-      return { std::log(n), a };
+      return { std::log(std::hypot(std::real(z), std::imag(z))), std::arg(z) };
    }
 
    /// Series expansion of Li_n(z) in terms of powers of z.
@@ -185,14 +183,14 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z) noexcept
    } else if (std::isinf(std::real(z)) || std::isinf(std::imag(z))) {
       return {-inf, 0.0};
    } else if (z == 0.0) {
-      return {0.0, 0.0};
+      return z;
    } else if (z == 1.0) {
       if (n <= 0) {
          return {inf, inf};
       }
-      return {zeta(n), 0.0};
+      return {zeta(n), std::imag(z)};
    } else if (z == -1.0) {
-      return {neg_eta(n), 0.0};
+      return {neg_eta(n), std::imag(z)};
    } else if (n < -1) {
       // arXiv:2010.09860
       const double nz = std::norm(z);

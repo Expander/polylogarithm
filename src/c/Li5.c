@@ -40,13 +40,13 @@ double _Complex cli5(double _Complex z)
 
    if (iz == 0) {
       if (rz == 0) {
-         return 0.0;
+         return CMPLX(rz, iz);
       }
       if (rz == 1) {
-         return zeta5;
+         return CMPLX(zeta5, iz);
       }
       if (rz == -1) {
-         return -15.0*zeta5/16.0;
+         return CMPLX(-15.0*zeta5/16.0, iz);
       }
    }
 
@@ -175,13 +175,13 @@ long double _Complex cli5l(long double _Complex z)
 
    if (iz == 0) {
       if (rz == 0) {
-         return 0.0L;
+         return CMPLXL(rz, iz);
       }
       if (rz == 1) {
-         return zeta5;
+         return CMPLXL(zeta5, iz);
       }
       if (rz == -1) {
-         return -15.0L*zeta5/16.0L;
+         return CMPLXL(-15.0L*zeta5/16.0L, iz);
       }
    }
 

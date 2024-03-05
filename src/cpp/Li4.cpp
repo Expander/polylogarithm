@@ -148,6 +148,8 @@ double Li4(double x) noexcept
       sgn = -1;
    } else if (x == -1) {
       return -7.0/8*zeta4;
+   } else if (x == 0) {
+      return x;
    } else if (x < 1) {
       rest = 0;
       sgn = 1;
@@ -202,10 +204,10 @@ std::complex<double> Li4(const std::complex<double>& z_) noexcept
 
    if (z.im == 0) {
       if (z.re <= 1) {
-         return Li4(z.re);
+         return { Li4(z.re), z.im };
       } else {
          const double l = std::log(z.re);
-         return std::complex<double>(Li4(z.re), -1.0/6*PI*l*l*l);
+         return { Li4(z.re), -1.0/6*PI*l*l*l };
       }
    }
 
@@ -327,13 +329,13 @@ std::complex<long double> Li4(const std::complex<long double>& z_) noexcept
 
    if (z.im == 0) {
       if (z.re == 0) {
-         return 0.0L;
+         return { z.re, z.im };
       }
       if (z.re == 1) {
-         return zeta4;
+         return { zeta4, z.im };
       }
       if (z.re == -1) {
-         return -7.0L*PI4/720.0L;
+         return { -7.0L*PI4/720.0L, z.im };
       }
    }
 

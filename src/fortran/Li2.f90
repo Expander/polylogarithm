@@ -50,7 +50,7 @@ double precision function dli2(x)
       r = -0.5D0*log(1 - x)**2
       s = -1
    elseif (x .eq. 0) then
-      dli2 = 0
+      dli2 = x
       return
    elseif (x .lt. 0.5D0) then
       y = x
@@ -115,7 +115,7 @@ double complex function cdli2(z)
 
   ! special cases
   if (iz .eq. 0) then
-     if (rz .le. 1) cdli2 = dcmplx(dli2(rz), 0)
+     if (rz .le. 1) cdli2 = dcmplx(dli2(rz), iz)
      if (rz .gt. 1) cdli2 = dcmplx(dli2(rz), -PI*log(rz))
      return
   endif

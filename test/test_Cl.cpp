@@ -10,6 +10,7 @@
 #include "Cl6.hpp"
 #include "Li.hpp"
 #include "read_data.hpp"
+#include "test.hpp"
 #include <cmath>
 #include <complex>
 #include <vector>
@@ -109,6 +110,25 @@ TEST_CASE("test_fixed_implementations")
       CHECK_CLOSE(cl4, Cl(4,t), eps);
       CHECK_CLOSE(cl5, Cl(5,t), eps);
       CHECK_CLOSE(cl6, Cl(6,t), eps);
+   }
+}
+
+// tests signbit for 0.0 and -0.0 arguments
+TEST_CASE("test_signed_zero")
+{
+   // skip test if platform does not supprt signed zero
+   if (!has_signed_zero()) {
+      return;
+   }
+
+   using polylogarithm::Cl;
+
+   const double pz64 = 0.0, nz64 = -0.0;
+
+   for (int64_t n = 1; n <= 100; n++) {
+      INFO("2*n = " << 2*n);
+      CHECK( std::signbit(Cl(2*n, nz64)));
+      CHECK(!std::signbit(Cl(2*n, pz64)));
    }
 }
 

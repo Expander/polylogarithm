@@ -14,7 +14,7 @@
 
 double precision function dcl6(x)
   implicit none
-  double precision :: x, y, z, z2, z4, p, q, p0, p1, h, sgn
+  double precision :: x, y, z, z2, z4, p, q, p0, p1, sgn
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision, parameter :: PI2 = 2*PI, PIH = PI/2, PI28 = PI*PI/8
   double precision, parameter :: zeta3 = 1.2020569031595943D0
@@ -60,29 +60,26 @@ double precision function dcl6(x)
      sgn = -sgn
   endif
 
-  if (x .eq. 0 .or. x .eq. PI) then
+  if (x .eq. 0) then
+     dcl6 = x
+  elseif (x .eq. PI) then
      dcl6 = 0
-     return
-  endif
-
-  if (x .lt. PIH) then
-    y = x*x
-    z = y*y
-    p = cp(1) + y * cp(2) + z * (cp(3) + y * cp(4))
-    q = cq(1) + y * cq(2) + z * (cq(3) + y * cq(4))
-    h = x*(p/q - 1.0D0/120*z*log(x))
+  elseif (x .lt. PIH) then
+     y = x*x
+     z = y*y
+     p = cp(1) + y * cp(2) + z * (cp(3) + y * cp(4))
+     q = cq(1) + y * cq(2) + z * (cq(3) + y * cq(4))
+     dcl6 = sgn*x*(p/q - 1.0D0/120*z*log(x))
   else
-    y = PI - x
-    z = y*y - PI28
-    z2 = z*z
-    z4 = z2*z2
-    p = cr(1) + z * cr(2) + z2 * (cr(3) + z * cr(4)) + &
-        z4 * cr(5)
-    q = cs(1) + z * cs(2) + z2 * (cs(3) + z * cs(4)) + &
-        z4 * (cs(5) + z * cs(6))
-    h = y*p/q
+     y = PI - x
+     z = y*y - PI28
+     z2 = z*z
+     z4 = z2*z2
+     p = cr(1) + z * cr(2) + z2 * (cr(3) + z * cr(4)) + &
+         z4 * cr(5)
+     q = cs(1) + z * cs(2) + z2 * (cs(3) + z * cs(4)) + &
+         z4 * (cs(5) + z * cs(6))
+     dcl6 = sgn*y*p/q
   endif
-
-  dcl6 = sgn*h
 
 end function dcl6

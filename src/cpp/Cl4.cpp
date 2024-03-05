@@ -39,7 +39,9 @@ double Cl4(double x) noexcept
       sgn = -sgn;
    }
 
-   if (x == 0 || x == PI) {
+   if (x == 0) {
+      return x;
+   } else if (x == PI) {
       return 0;
    }
 
@@ -114,7 +116,9 @@ long double Cl4(long double x) noexcept
       sgn = -sgn;
    }
 
-   if (x == 0 || x == PI) {
+   if (x == 0) {
+      return x;
+   } else if (x == PI) {
       return 0;
    }
 

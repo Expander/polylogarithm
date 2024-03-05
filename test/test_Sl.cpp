@@ -4,6 +4,7 @@
 #include "Sl.hpp"
 #include "Li.hpp"
 #include "read_data.hpp"
+#include "test.hpp"
 #include <cmath>
 #include <complex>
 
@@ -23,6 +24,25 @@ double Sl_via_Li(int64_t n, double x)
    }
 
    return std::imag(li);
+}
+
+// tests signbit for 0.0 and -0.0 arguments
+TEST_CASE("test_signed_zero")
+{
+   // skip test if platform does not supprt signed zero
+   if (!has_signed_zero()) {
+      return;
+   }
+
+   using polylogarithm::Sl;
+
+   const double pz64 = 0.0, nz64 = -0.0;
+
+   for (int64_t n = 0; n <= 100; n++) {
+      INFO("2*n + 1 = " << 2*n + 1);
+      CHECK( std::signbit(Sl(2*n + 1, nz64)));
+      CHECK(!std::signbit(Sl(2*n + 1, pz64)));
+   }
 }
 
 TEST_CASE("test_fixed_values")

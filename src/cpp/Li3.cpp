@@ -103,7 +103,7 @@ double Li3(double x) noexcept
    } else if (x < 0) {
       return li3_neg(x);
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5) {
       return li3_pos(x);
    } else if (x == 0.5) {
@@ -151,10 +151,10 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
 
    if (z.im == 0) {
       if (z.re <= 1) {
-         return Li3(z.re);
+         return { Li3(z.re), z.im };
       } else {
          const double l = std::log(z.re);
-         return std::complex<double>(Li3(z.re), -0.5*PI*l*l);
+         return { Li3(z.re), -0.5*PI*l*l };
       }
    }
 
@@ -275,16 +275,16 @@ std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
 
    if (z.im == 0) {
       if (z.re == 0) {
-         return 0.0L;
+         return { z.re, z.im };
       }
       if (z.re == 1) {
-         return zeta3;
+         return { zeta3, z.im };
       }
       if (z.re == -1) {
-         return -0.75L*zeta3;
+         return { -0.75L*zeta3, z.im };
       }
       if (z.re == 0.5L) {
-         return 0.537213193608040200940623225594965827L;
+         return { 0.537213193608040200940623225594965827L, z.im };
       }
    }
 

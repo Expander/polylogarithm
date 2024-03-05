@@ -130,7 +130,10 @@ double Sl(int64_t n, double x)
 
    const auto sgn = range_reduce(n, x);
 
-   if (n ==  1 && x == 0) { return 0; }
+   if (!is_even(n) && x == 0) {
+      return x;
+   }
+
    if (n ==  1) { return sgn*(PI/2 - 1./2*x); }
    if (n ==  2) { return sgn*(PI2/6 + (-1./2*PI + 1./4*x)*x); }
    if (n ==  3) { return sgn*(x*(PI2/6 + (-1./4*PI + 1./12*x)*x)); }
