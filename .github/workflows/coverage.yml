@@ -12,6 +12,8 @@ jobs:
       CFLAGS: --coverage
       CXX: g++
       CXXFLAGS: --coverage
+      FC: gfortran
+      FCFLAGS: --coverage
     steps:
     - name: checkout
       uses: actions/checkout@v1
