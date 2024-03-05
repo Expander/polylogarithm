@@ -1,0 +1,33 @@
+name: coverage
+
+on: [push, pull_request]
+
+jobs:
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    env:
+      BUILD_TYPE: Release
+      CC: gcc
+      CFLAGS: --coverage
+      CXX: g++
+      CXXFLAGS: --coverage
+    steps:
+    - name: checkout
+      uses: actions/checkout@v1
+    - name: install dependencies
+      run: sudo apt-get install lcov
+    - name: cmake
+      run: cmake . -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+    - name: cmake build
+      run: cmake --build . --config ${{ env.BUILD_TYPE }}
+    - name: ctest
+      run: ctest -T Test -T Coverage -C ${{ env.BUILD_TYPE }}
+      env:
+        CTEST_OUTPUT_ON_FAILURE: 1
+    - name: Lcov
+      run: lcov --directory . --capture --exclude '/usr/*' --exclude '*/test/*' --output-file=coverage.lcov
+    - name: Coveralls
+      uses: coverallsapp/github-action@v2
+      with:
+        file: coverage.lcov
