@@ -38,9 +38,7 @@ double cl4(double x)
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 
@@ -119,9 +117,7 @@ long double cl4l(long double x)
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 

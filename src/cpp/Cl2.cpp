@@ -40,9 +40,7 @@ double Cl2(double x) noexcept
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 
@@ -123,9 +121,7 @@ long double Cl2(long double x) noexcept
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 

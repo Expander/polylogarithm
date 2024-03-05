@@ -37,9 +37,7 @@ double cl2(double x)
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 
@@ -120,9 +118,7 @@ long double cl2l(long double x)
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 

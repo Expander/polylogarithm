@@ -63,9 +63,7 @@ double precision function dcl6(x)
   if (x .eq. 0) then
      dcl6 = x
      return
-  endif
-
-  if (x .eq. PI) then
+  elseif (x .eq. PI) then
      dcl6 = 0
      return
   endif

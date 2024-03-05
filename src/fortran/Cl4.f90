@@ -64,9 +64,7 @@ double precision function dcl4(x)
   if (x .eq. 0) then
      dcl4 = x
      return
-  endif
-
-  if (x .eq. PI) then
+  elseif (x .eq. PI) then
      dcl4 = 0
      return
   endif

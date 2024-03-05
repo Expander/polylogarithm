@@ -41,9 +41,7 @@ double Cl4(double x) noexcept
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 
@@ -120,9 +118,7 @@ long double Cl4(long double x) noexcept
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 

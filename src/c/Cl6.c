@@ -37,9 +37,7 @@ double cl6(double x)
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 
@@ -115,9 +113,7 @@ long double cl6l(long double x)
 
    if (x == 0) {
       return x;
-   }
-
-   if (x == PI) {
+   } else if (x == PI) {
       return 0;
    }
 
