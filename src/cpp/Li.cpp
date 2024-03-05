@@ -183,14 +183,14 @@ std::complex<double> Li(int64_t n, const std::complex<double>& z) noexcept
    } else if (std::isinf(std::real(z)) || std::isinf(std::imag(z))) {
       return {-inf, 0.0};
    } else if (z == 0.0) {
-      return {0.0, 0.0};
+      return z;
    } else if (z == 1.0) {
       if (n <= 0) {
          return {inf, inf};
       }
-      return {zeta(n), 0.0};
+      return {zeta(n), std::imag(z)};
    } else if (z == -1.0) {
-      return {neg_eta(n), 0.0};
+      return {neg_eta(n), std::imag(z)};
    } else if (n < -1) {
       // arXiv:2010.09860
       const double nz = std::norm(z);

@@ -75,7 +75,7 @@ float Li2(float x) noexcept
       r = -0.5f*l*l;
       s = -1;
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5f) {
       y = x;
       r = 0;
@@ -152,7 +152,7 @@ double Li2(double x) noexcept
       r = -0.5*l*l;
       s = -1;
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5) {
       y = x;
       r = 0;
@@ -279,7 +279,7 @@ long double Li2(long double x) noexcept
       r = -0.5L*l*l;
       s = -1;
    } else if (x == 0) {
-      return 0;
+      return x;
    } else if (x < 0.5L) {
       y = x;
       r = 0;
@@ -334,7 +334,7 @@ std::complex<float> Li2(const std::complex<float>& z_) noexcept
    // special cases
    if (z.im == 0) {
       if (z.re <= 1) {
-         return Li2(z.re);
+         return { Li2(z.re), z.im };
       }
       // z.re > 1
       return { Li2(z.re), -PI*std::log(z.re) };
@@ -410,7 +410,7 @@ std::complex<double> Li2(const std::complex<double>& z_) noexcept
    // special cases
    if (z.im == 0) {
       if (z.re <= 1) {
-         return Li2(z.re);
+         return { Li2(z.re), z.im };
       }
       // z.re > 1
       return { Li2(z.re), -PI*std::log(z.re) };
@@ -501,7 +501,7 @@ std::complex<long double> Li2(const std::complex<long double>& z_) noexcept
    // special cases
    if (z.im == 0) {
       if (z.re <= 1) {
-         return Li2(z.re);
+         return { Li2(z.re), z.im };
       }
       // z.re > 1
       return { Li2(z.re), -PI*std::log(z.re) };

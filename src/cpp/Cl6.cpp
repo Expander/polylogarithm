@@ -38,7 +38,9 @@ double Cl6(double x) noexcept
       sgn = -sgn;
    }
 
-   if (x == 0 || x == PI) {
+   if (x == 0) {
+      return x;
+   } else if (x == PI) {
       return 0;
    }
 
@@ -112,7 +114,9 @@ long double Cl6(long double x) noexcept
       sgn = -sgn;
    }
 
-   if (x == 0 || x == PI) {
+   if (x == 0) {
+      return x;
+   } else if (x == PI) {
       return 0;
    }
 

@@ -124,6 +124,9 @@ double precision function dli4(x)
   elseif (x .eq. -1) then
      dli4 = -7.0D0/8*zeta4
      return
+  elseif (x .eq. 0) then
+     dli4 = x
+     return
   elseif (x .lt. 1) then
      rest = 0
      sgn = 1
@@ -191,7 +194,7 @@ double complex function cdli4(z)
 
    if (iz .eq. 0) then
       if (rz .le. 1) then
-         cdli4 = dli4(rz)
+         cdli4 = dcmplx(dli4(rz), iz)
          return
       else
          lnz = log(rz)

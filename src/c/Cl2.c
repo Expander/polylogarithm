@@ -35,7 +35,9 @@ double cl2(double x)
       sgn = -sgn;
    }
 
-   if (x == 0 || x == PI) {
+   if (x == 0) {
+      return x;
+   } else if (x == PI) {
       return 0;
    }
 
@@ -114,7 +116,9 @@ long double cl2l(long double x)
       sgn = -sgn;
    }
 
-   if (x == 0 || x == PI) {
+   if (x == 0) {
+      return x;
+   } else if (x == PI) {
       return 0;
    }
 

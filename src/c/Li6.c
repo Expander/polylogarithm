@@ -40,13 +40,13 @@ double _Complex cli6(double _Complex z)
 
    if (iz == 0) {
       if (rz == 0) {
-         return 0.0;
+         return CMPLX(rz, iz);
       }
       if (rz == 1) {
-         return zeta6;
+         return CMPLX(zeta6, iz);
       }
       if (rz == -1) {
-         return -31.0*zeta6/32.0;
+         return CMPLX(-31.0*zeta6/32.0, iz);
       }
    }
 
@@ -180,13 +180,13 @@ long double _Complex cli6l(long double _Complex z)
 
    if (iz == 0) {
       if (rz == 0) {
-         return 0.0L;
+         return CMPLXL(rz, iz);
       }
       if (rz == 1) {
-         return zeta6;
+         return CMPLXL(zeta6, iz);
       }
       if (rz == -1) {
-         return -31.0L*zeta6/32.0L;
+         return CMPLXL(-31.0L*zeta6/32.0L, iz);
       }
    }
 

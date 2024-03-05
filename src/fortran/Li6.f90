@@ -45,15 +45,15 @@ double complex function cdli6(z)
 
    if (iz .eq. 0) then
       if (rz .eq. 0) then
-         cdli6 = 0
+         cdli6 = dcmplx(rz, iz)
          return
       endif
       if (rz .eq. 1) then
-         cdli6 = zeta6
+         cdli6 = dcmplx(zeta6, iz)
          return
       endif
       if (rz .eq. -1) then
-         cdli6 = -31*zeta6/32
+         cdli6 = dcmplx(-31*zeta6/32, iz)
          return
       endif
    endif

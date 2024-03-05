@@ -124,6 +124,8 @@ double li4(double x)
       sgn = -1;
    } else if (x == -1) {
       return -7.0/8*zeta4;
+   } else if (x == 0) {
+      return x;
    } else if (x < 1) {
       rest = 0;
       sgn = 1;
@@ -180,10 +182,10 @@ double _Complex cli4(double _Complex z)
 
    if (iz == 0) {
       if (rz <= 1) {
-         return li4(rz);
+         return CMPLX(li4(rz), iz);
       } else {
          const double l = log(rz);
-         return li4(rz) - 1.0/6*PI*l*l*l*I;
+         return CMPLX(li4(rz), -1.0/6*PI*l*l*l);
       }
    }
 
@@ -315,13 +317,13 @@ long double _Complex cli4l(long double _Complex z)
 
    if (iz == 0) {
       if (rz == 0) {
-         return 0.0L;
+         return CMPLXL(rz, iz);
       }
       if (rz == 1) {
-         return zeta4;
+         return CMPLXL(zeta4, iz);
       }
       if (rz == -1.0) {
-         return -7.0L*PI4/720.0L;
+         return CMPLXL(-7.0L*PI4/720.0L, iz);
       }
    }
 

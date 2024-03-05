@@ -295,8 +295,12 @@ double Cl(int64_t n, double x)
 
    const auto sgn = range_reduce(n, x);
 
-   if (is_even(n) && (x == 0 || x == PI)) {
-      return 0;
+   if (is_even(n)) {
+      if (x == 0) {
+         return x;
+      } else if (x == PI) {
+         return 0;
+      }
    }
 
    if (n <= N_THRESH) {

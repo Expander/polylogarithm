@@ -6,6 +6,7 @@
 #include "fortran_wrappers.h"
 #include "Li4.hpp"
 #include "read_data.hpp"
+#include "test.hpp"
 #include <cmath>
 #include <complex>
 #include <vector>
@@ -29,6 +30,14 @@ std::vector<double> float_range(
    }
 
    return result;
+}
+
+double poly_Cl4(double x) {
+   return cl4(x);
+}
+
+long double poly_Cl4(long double x) {
+   return cl4l(x);
 }
 
 #ifdef ENABLE_FORTRAN
@@ -82,6 +91,40 @@ TEST_CASE("test_roots")
    for (int k = -10; k < 10; k++) {
       CHECK_SMALL(Cl4(k*pi), 1e-10);
    }
+}
+
+// tests signbit for 0.0 and -0.0 arguments
+TEST_CASE("test_signed_zero")
+{
+   // skip test if platform does not supprt signed zero
+   if (!has_signed_zero()) {
+      return;
+   }
+
+   using polylogarithm::Cl4;
+
+   const float  pz32 = 0.0f, nz32 = -0.0f;
+   const double pz64 = 0.0, nz64 = -0.0;
+   const long double pz128 = 0.0L, nz128 = -0.0L;
+
+   CHECK( std::signbit(Cl4(nz32)));
+   CHECK(!std::signbit(Cl4(pz32)));
+   CHECK( std::signbit(poly_Cl4(nz32)));
+   CHECK(!std::signbit(poly_Cl4(pz32)));
+
+   CHECK( std::signbit(Cl4(nz64)));
+   CHECK(!std::signbit(Cl4(pz64)));
+   CHECK( std::signbit(poly_Cl4(nz64)));
+   CHECK(!std::signbit(poly_Cl4(pz64)));
+#ifdef ENABLE_FORTRAN
+   CHECK( std::signbit(poly_Cl4_fortran(nz64)));
+   CHECK(!std::signbit(poly_Cl4_fortran(pz64)));
+#endif
+
+   CHECK( std::signbit(Cl4(nz128)));
+   CHECK(!std::signbit(Cl4(pz128)));
+   CHECK( std::signbit(poly_Cl4(nz128)));
+   CHECK(!std::signbit(poly_Cl4(pz128)));
 }
 
 TEST_CASE("test_real_fixed_values")
