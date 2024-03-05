@@ -32,6 +32,8 @@ std::complex<double> gsl_Li2(std::complex<double> z) {
 
 #endif
 
+const std::complex<double> omega(0.5, std::sqrt(3.)/2.);
+
 /// special values to be checked
 const std::vector<std::complex<double>> special_values = {
    { 0.0, 0.0 },
