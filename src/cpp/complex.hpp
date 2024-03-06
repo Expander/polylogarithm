@@ -13,8 +13,9 @@ namespace polylogarithm {
 
 template <typename T>
 struct Complex {
-   constexpr Complex(T re_ = T{}, T im_ = T{}) : re(re_), im(im_) {}
-   operator std::complex<T>() const noexcept { return std::complex<T>(re, im); }
+   constexpr Complex(T re_ = T{}, T im_ = T{}) noexcept : re(re_), im(im_) {}
+   constexpr Complex(const std::complex<T>& z) noexcept : re(std::real(z)), im(std::imag(z)) {}
+   constexpr operator std::complex<T>() const noexcept { return std::complex<T>(re, im); }
    T re{};
    T im{};
 };
@@ -39,7 +40,7 @@ Complex<T> log(const Complex<T>& z) noexcept
    } else if (z.im == T(0)) {
       return { std::log(-z.re), 4*std::atan(T(1)) };
    }
-   return { std::log(norm(z)), arg(z) };
+   return std::log(std::complex<T>(z));
 }
 
 template <typename T>
