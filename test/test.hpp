@@ -48,6 +48,14 @@ inline bool has_signed_zero() noexcept
 }
 
 
+inline bool is_ieee754_compliant() noexcept
+{
+   constexpr bool no_fast_math = (1.0 + 0.1) - 1.0 != 0.1;
+
+   return has_inf() && has_signed_zero() && no_fast_math;
+}
+
+
 inline bool is_close_rel(double x, double y, double eps) noexcept
 {
    const double ma = std::max(std::abs(x), std::abs(y));

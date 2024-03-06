@@ -9,6 +9,10 @@
 // tests log(z) and log1p(1+z) for small complex z
 TEST_CASE("test_log_and_log1p")
 {
+   if (!is_ieee754_compliant()) {
+      return;
+   }
+
    using namespace polylogarithm;
 
    const double eps = std::numeric_limits<double>::epsilon();
