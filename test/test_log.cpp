@@ -19,13 +19,15 @@ TEST_CASE("test_log1p")
    const Complex<double> pl_log = log(pl_z);
    const Complex<double> pl_log1p = log1p(pl_z);
 
-   INFO("z = " << std::setprecision(17) << z
-        << ", std::log(z) = " << cpp_log
-        << ", log(z) = " << std::complex<double>(pl_log)
-        << ", log1p(z) = " << std::complex<double>(pl_log1p));
-
    const std::complex<double> expected_log(4.8351532915892516848328240700759518475389916e-6, 0.00439691240793594643979611108925073970426108463713022280825);
    const std::complex<double> expected_log1p(0.693147181532726411790714997046464927858457, -0.002198461518912911475356949677977809228317);
+
+   INFO("z             = " << std::setprecision(17) << z);
+   INFO("std::log(z)   = " << cpp_log);
+   INFO("log(z)        = " << std::complex<double>(pl_log));
+   INFO("exp. log(z)   = " << expected_log);
+   INFO("log1p(z)      = " << std::complex<double>(pl_log1p));
+   INFO("exp. log1p(z) = " << expected_log1p);
 
    CHECK_CLOSE_REL(std::real(cpp_log), std::real(expected_log), eps);
    CHECK_CLOSE_REL(pl_log.re         , std::real(expected_log), eps);
