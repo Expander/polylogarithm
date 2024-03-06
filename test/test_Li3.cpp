@@ -138,7 +138,6 @@ TEST_CASE("test_signed_zero")
 
    using polylogarithm::Li3;
 
-   const float  pz32 = 0.0f, nz32 = -0.0f;
    const double pz64 = 0.0, nz64 = -0.0;
    const long double pz128 = 0.0L, nz128 = -0.0L;
 
