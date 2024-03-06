@@ -6,7 +6,8 @@
 #include <complex>
 #include <limits>
 
-TEST_CASE("test_log1p")
+// tests log(z) and log1p(1+z) for small complex z
+TEST_CASE("test_log_and_log1p")
 {
    using namespace polylogarithm;
 
