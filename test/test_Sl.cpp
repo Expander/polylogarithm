@@ -53,10 +53,19 @@ TEST_CASE("test_fixed_values")
 
       for (const auto& v: fixed_values) {
          const auto x = v.first;
-         const auto cl_expected = v.second;
+         const auto sl_expected = v.second;
          INFO("n = " << n << ", x = " << x);
-         CHECK_CLOSE(polylogarithm::Sl(n, x), cl_expected, 1e-13);
-         CHECK_CLOSE(Sl_via_Li(n, x), cl_expected, 1e-9);
+         CHECK_CLOSE(polylogarithm::Sl(n, x), sl_expected, 1e-13);
+         CHECK_CLOSE(Sl_via_Li(n, x), sl_expected, 1e-9);
+
+         // test symmetries
+         if (std::abs(std::fmod(x, 2*M_PI)) > 0.1 && std::abs(x - 2*M_PI) > 0.1) {
+            const int sgn = n % 2 == 0 ? 1 : -1;
+            CHECK_CLOSE(polylogarithm::Sl(n,  x + 2*M_PI),     sl_expected, 1e-10);
+            CHECK_CLOSE(polylogarithm::Sl(n,  x - 2*M_PI),     sl_expected, 1e-10);
+            CHECK_CLOSE(polylogarithm::Sl(n, -x         ), sgn*sl_expected, 1e-10);
+            CHECK_CLOSE(polylogarithm::Sl(n, -x         ), sgn*sl_expected, 1e-10);
+         }
       }
    }
 }

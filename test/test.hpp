@@ -9,6 +9,11 @@
 #endif
 
 
+#ifndef M_PIL
+#define M_PIL 3.14159265358979323846264338327950288L
+#endif
+
+
 #define CHECK_CLOSE(a,b,eps)                            \
    do {                                                 \
       if (std::isinf(a) && std::isinf(b)) {             \
