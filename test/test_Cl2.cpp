@@ -277,10 +277,12 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(                 cl2(-x64        ), -cl64_expected ,  10*eps64);
          CHECK_CLOSE(                 cl2(-x64        ), -cl64_expected ,  10*eps64);
 
+#ifdef ENABLE_FORTRAN
          CHECK_CLOSE(    poly_Cl2_fortran(x64 + 2*M_PI),  cl64_expected ,  10*eps64);
          CHECK_CLOSE(    poly_Cl2_fortran(x64 - 2*M_PI),  cl64_expected ,  10*eps64);
          CHECK_CLOSE(    poly_Cl2_fortran(-x64        ), -cl64_expected ,  10*eps64);
          CHECK_CLOSE(    poly_Cl2_fortran(-x64        ), -cl64_expected ,  10*eps64);
+#endif
 
          CHECK_CLOSE(polylogarithm::Cl2(x128 + 2*M_PIL),  cl128_expected, 10*eps128);
          CHECK_CLOSE(polylogarithm::Cl2(x128 - 2*M_PIL),  cl128_expected, 10*eps128);
