@@ -166,5 +166,30 @@ TEST_CASE("test_real_fixed_values")
       CHECK_CLOSE(cl128_li    , cl128_expected, 4*eps128);
       CHECK_CLOSE(cl128_poly  , cl128_expected, 8*eps128);
       CHECK_CLOSE(cl128_poly_c, cl128_expected, 8*eps128);
+
+      // test symmetries
+      if (std::abs(std::fmod(x64, 2*M_PI)) > 0.1 && std::abs(x64 - 2*M_PI) > 0.1) {
+         CHECK_CLOSE(  polylogarithm::Cl6(x64 + 2*M_PI),  cl64_expected ,  10*eps64);
+         CHECK_CLOSE(  polylogarithm::Cl6(x64 - 2*M_PI),  cl64_expected ,  10*eps64);
+         CHECK_CLOSE(  polylogarithm::Cl6(-x64        ), -cl64_expected ,  10*eps64);
+         CHECK_CLOSE(  polylogarithm::Cl6(-x64        ), -cl64_expected ,  10*eps64);
+
+         CHECK_CLOSE(                 cl6(x64 + 2*M_PI),  cl64_expected ,  10*eps64);
+         CHECK_CLOSE(                 cl6(x64 - 2*M_PI),  cl64_expected ,  10*eps64);
+         CHECK_CLOSE(                 cl6(-x64        ), -cl64_expected ,  10*eps64);
+         CHECK_CLOSE(                 cl6(-x64        ), -cl64_expected ,  10*eps64);
+
+#ifdef ENABLE_FORTRAN
+         CHECK_CLOSE(    poly_Cl6_fortran(x64 + 2*M_PI),  cl64_expected ,  10*eps64);
+         CHECK_CLOSE(    poly_Cl6_fortran(x64 - 2*M_PI),  cl64_expected ,  10*eps64);
+         CHECK_CLOSE(    poly_Cl6_fortran(-x64        ), -cl64_expected ,  10*eps64);
+         CHECK_CLOSE(    poly_Cl6_fortran(-x64        ), -cl64_expected ,  10*eps64);
+#endif
+
+         CHECK_CLOSE(polylogarithm::Cl6(x128 + 2*M_PIL),  cl128_expected, 10*eps128);
+         CHECK_CLOSE(polylogarithm::Cl6(x128 - 2*M_PIL),  cl128_expected, 10*eps128);
+         CHECK_CLOSE(polylogarithm::Cl6(-x128         ), -cl128_expected, 10*eps128);
+         CHECK_CLOSE(polylogarithm::Cl6(-x128         ), -cl128_expected, 10*eps128);
+      }
    }
 }

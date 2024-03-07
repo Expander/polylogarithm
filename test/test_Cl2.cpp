@@ -266,7 +266,7 @@ TEST_CASE("test_real_fixed_values")
       CHECK_CLOSE(cl128_li2      , cl128_expected, 10*eps128);
 
       // test symmetries
-      if (std::abs(std::fmod(x64, 2*pi64)) > 0.1 && std::abs(x64 - 2*pi64) > 0.1) {
+      if (std::abs(std::fmod(x64, 2*M_PI)) > 0.1 && std::abs(x64 - 2*M_PI) > 0.1) {
          CHECK_CLOSE(  polylogarithm::Cl2(x64 + 2*M_PI),  cl64_expected ,  10*eps64);
          CHECK_CLOSE(  polylogarithm::Cl2(x64 - 2*M_PI),  cl64_expected ,  10*eps64);
          CHECK_CLOSE(  polylogarithm::Cl2(-x64        ), -cl64_expected ,  10*eps64);
