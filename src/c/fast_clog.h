@@ -10,21 +10,6 @@
 #include <math.h>
 
 
-static inline float _Complex fast_clogf(float _Complex z)
-{
-   const float rz = crealf(z);
-   const float iz = cimagf(z);
-
-   if (iz == 0.0f && rz > 0.0f) {
-      return logf(rz);
-   } else if (iz == 0.0f) {
-      return logf(-rz) + I*3.14159265f;
-   }
-
-   return logf(hypotf(rz, iz)) + I*atan2f(iz, rz);
-}
-
-
 static inline double _Complex clog1p(double _Complex z)
 {
    const double _Complex u = 1.0 + z;

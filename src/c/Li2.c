@@ -331,23 +331,23 @@ float _Complex cli2f(float _Complex z)
    /* transformation to |z|<1, Re(z)<=0.5f */
    if (rz <= 0.5f) {
       if (nz > 1.0f) {
-         const float _Complex lz = fast_clogf(-z);
-         u = -fast_clogf(1.0f - 1.0f / z);
+         const float _Complex lz = clogf(-z);
+         u = -clogf(1.0f - 1.0f / z);
          rest = -0.5f*lz*lz - PI*PI/6;
          sgn = -1;
       } else { /* nz <= 1 */
-         u = -fast_clogf(1.0f - z);
+         u = -clogf(1.0f - z);
          rest = 0;
          sgn = 1;
       }
    } else { /* rz > 0.5f */
       if (nz <= 2*rz) {
-         u = -fast_clogf(z);
-         rest = u*fast_clogf(1.0f - z) + PI*PI/6;
+         u = -clogf(z);
+         rest = u*clogf(1.0f - z) + PI*PI/6;
          sgn = -1;
       } else { /* nz > 2*rz */
-         const float _Complex lz = fast_clogf(-z);
-         u = -fast_clogf(1.0f - 1.0f / z);
+         const float _Complex lz = clogf(-z);
+         u = -clogf(1.0f - 1.0f / z);
          rest = -0.5f*lz*lz - PI*PI/6;
          sgn = -1;
       }
