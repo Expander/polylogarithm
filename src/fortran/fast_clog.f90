@@ -23,6 +23,31 @@ end function fast_cdlog
 
 
 !*********************************************************************
+!> @brief Implementation of log(1 + z) for complex z
+!> @param z complex argument
+!> @return log(1 + z)
+!*********************************************************************
+double complex function fast_cdlog1p(z)
+  implicit none
+  double complex :: z, u
+  double precision :: re, im
+
+  u = 1 + z
+  re = real(u)
+  im = aimag(u)
+
+  if (re .eq. 1 .and. im .eq. 0) then
+     fast_cdlog1p = z
+  elseif (re .le. 0) then
+     fast_cdlog1p = log(u)
+  else
+     fast_cdlog1p = log(u)*(z/(u - 1));
+  endif
+
+end function fast_cdlog1p
+
+
+!*********************************************************************
 !> @brief Fast implementation of complex logarithm
 !> @param z complex argument
 !> @return log(z)
