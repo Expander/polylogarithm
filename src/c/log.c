@@ -51,7 +51,7 @@ double _Complex pos_clog(double _Complex z)
       return log(-rz) + I*3.1415926535897932;
    }
 
-   return log(hypot(rz, iz)) + I*atan2(iz, rz);
+   return clog(z);
 }
 
 
@@ -66,5 +66,5 @@ long double _Complex pos_clogl(long double _Complex z)
       return logl(-rz) + I*3.14159265358979323846264338327950288L;
    }
 
-   return logl(hypotl(rz, iz)) + I*atan2l(iz, rz);
+   return clogl(z);
 }
