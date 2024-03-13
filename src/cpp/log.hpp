@@ -35,6 +35,7 @@ std::complex<T> pos_log(const std::complex<T>& z) noexcept
    } else if (std::imag(z) == T(0)) {
       return { std::log(-std::real(z)), 4*std::atan(T(1)) };
    }
+
    return std::log(z);
 }
 
