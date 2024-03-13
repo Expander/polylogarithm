@@ -412,7 +412,7 @@ double _Complex cli2(double _Complex z)
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5) {
       if (nz > 1.0) {
-         const double _Complex lz = fast_clog(-z);
+         const double _Complex lz = clog(-z);
          u = -clog1p(-1.0/z);
          rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
@@ -423,11 +423,11 @@ double _Complex cli2(double _Complex z)
       }
    } else { /* rz > 0.5 */
       if (nz <= 2*rz) {
-         u = -fast_clog(z);
+         u = -clog(z);
          rest = u*clog1p(-z) + PI*PI/6;
          sgn = -1;
       } else { /* nz > 2*rz */
-         const double _Complex lz = fast_clog(-z);
+         const double _Complex lz = clog(-z);
          u = -clog1p(-1.0/z);
          rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
