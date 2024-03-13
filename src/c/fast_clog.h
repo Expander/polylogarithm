@@ -34,6 +34,22 @@ static inline double _Complex fast_clog(double _Complex z)
 }
 
 
+static inline double _Complex fast_clog1p(double _Complex z)
+{
+   const double _Complex u = 1.0 + z;
+   const double rz = creal(u);
+   const double iz = cimag(u);
+
+   if (rz == 1.0 && iz == 0.0) {
+      return z;
+   } else if (rz <= 0.0) {
+      return clog(u);
+   }
+
+   return clog(u)*(z/(u - 1.0));
+}
+
+
 static inline double _Complex fast_pos_clog(double _Complex z)
 {
    const double rz = creal(z);

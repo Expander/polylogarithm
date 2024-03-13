@@ -413,22 +413,22 @@ double _Complex cli2(double _Complex z)
    if (rz <= 0.5) {
       if (nz > 1.0) {
          const double _Complex lz = fast_clog(-z);
-         u = -fast_clog(1.0 - 1.0 / z);
+         u = -fast_clog1p(-1.0/z);
          rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       } else { /* nz <= 1 */
-         u = -fast_clog(1.0 - z);
+         u = -fast_clog1p(-z);
          rest = 0;
          sgn = 1;
       }
    } else { /* rz > 0.5 */
       if (nz <= 2*rz) {
          u = -fast_clog(z);
-         rest = u*fast_clog(1.0 - z) + PI*PI/6;
+         rest = u*fast_clog1p(-z) + PI*PI/6;
          sgn = -1;
       } else { /* nz > 2*rz */
          const double _Complex lz = fast_clog(-z);
-         u = -fast_clog(1.0 - 1.0 / z);
+         u = -fast_clog1p(-1.0 / z);
          rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       }
