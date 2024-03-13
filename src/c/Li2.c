@@ -517,23 +517,23 @@ long double _Complex cli2l(long double _Complex z)
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5L) {
       if (nz > 1.0L) {
-         const long double _Complex lz = fast_clogl(-z);
-         u = -fast_clogl(1.0L - 1.0L/z);
+         const long double _Complex lz = clogl(-z);
+         u = -clog1pl(-1.0L/z);
          rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       } else { /* nz <= 1 */
-         u = -fast_clogl(1.0L - z);
+         u = -clog1pl(-z);
          rest = 0;
          sgn = 1;
       }
    } else { /* rz > 0.5L */
       if (nz <= 2*rz) {
-         u = -fast_clogl(z);
-         rest = u * fast_clogl(1.0L - z) + PI*PI/6;
+         u = -clogl(z);
+         rest = u * clog1pl(-z) + PI*PI/6;
          sgn = -1;
       } else { /* nz > 2*rz */
-         const long double _Complex lz = fast_clogl(-z);
-         u = -fast_clogl(1.0L - 1.0L/z);
+         const long double _Complex lz = clogl(-z);
+         u = -clog1pl(-1.0L/z);
          rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       }

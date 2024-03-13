@@ -41,6 +41,22 @@ static inline double _Complex clog1p(double _Complex z)
 }
 
 
+static inline long double _Complex clog1pl(long double _Complex z)
+{
+   const long double _Complex u = 1.0L + z;
+   const long double rz = creall(u);
+   const long double iz = cimagl(u);
+
+   if (rz == 1.0L && iz == 0.0L) {
+      return z;
+   } else if (rz <= 0.0L) {
+      return clogl(u);
+   }
+
+   return clogl(u)*(z/(u - 1.0L));
+}
+
+
 static inline double _Complex fast_pos_clog(double _Complex z)
 {
    const double rz = creal(z);
@@ -53,15 +69,6 @@ static inline double _Complex fast_pos_clog(double _Complex z)
    }
 
    return log(hypot(rz, iz)) + I*atan2(iz, rz);
-}
-
-
-static inline long double _Complex fast_clogl(long double _Complex z)
-{
-   const long double rz = creall(z);
-   const long double iz = cimagl(z);
-
-   return logl(hypotl(rz, iz)) + I*atan2l(iz, rz);
 }
 
 
