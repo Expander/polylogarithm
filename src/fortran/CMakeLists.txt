@@ -1,6 +1,5 @@
 if(CMAKE_Fortran_COMPILER)
   add_library(polylogarithm_fortran
-    fast_clog.f90
     Cl2.f90
     Cl3.f90
     Cl4.f90
@@ -11,6 +10,7 @@ if(CMAKE_Fortran_COMPILER)
     Li4.f90
     Li5.f90
     Li6.f90
+    log.f90
     )
   target_include_directories(polylogarithm_fortran PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
   set(FORTRAN_HEADERS
