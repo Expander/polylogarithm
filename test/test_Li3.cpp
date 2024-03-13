@@ -209,6 +209,10 @@ struct Data {
 
 TEST_CASE("test_overflow")
 {
+   if (!has_inf()) {
+      return;
+   }
+
    using polylogarithm::Li3;
 
    const double eps64 = std::pow(10.0, -std::numeric_limits<double>::digits10);
