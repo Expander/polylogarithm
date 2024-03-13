@@ -27,7 +27,7 @@ end function fast_cdlog
 !> @param z complex argument
 !> @return log(1 + z)
 !*********************************************************************
-double complex function fast_cdlog1p(z)
+double complex function cdlog1p(z)
   implicit none
   double complex :: z, u
   double precision :: re, im
@@ -37,14 +37,14 @@ double complex function fast_cdlog1p(z)
   im = aimag(u)
 
   if (re .eq. 1 .and. im .eq. 0) then
-     fast_cdlog1p = z
+     cdlog1p = z
   elseif (re .le. 0) then
-     fast_cdlog1p = log(u)
+     cdlog1p = log(u)
   else
-     fast_cdlog1p = log(u)*(z/(u - 1));
+     cdlog1p = log(u)*(z/(u - 1));
   endif
 
-end function fast_cdlog1p
+end function cdlog1p
 
 
 !*********************************************************************

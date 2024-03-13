@@ -34,7 +34,7 @@ static inline double _Complex fast_clog(double _Complex z)
 }
 
 
-static inline double _Complex fast_clog1p(double _Complex z)
+static inline double _Complex clog1p(double _Complex z)
 {
    const double _Complex u = 1.0 + z;
    const double rz = creal(u);
