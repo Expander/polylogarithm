@@ -311,8 +311,12 @@ TEST_CASE("test_special_values")
       // special point with small real part
       const std::complex<double> z(4.831285545908206e-6, 0.004396919500211628);
       const std::complex<double> expected(-1.94166578202937687444628936853e-9, 0.00439692067657240512726530759719387623);
-      CHECK_CLOSE_REL(std::real(Li2(z)), std::real(expected), 1e-12);
-      CHECK_CLOSE_REL(std::imag(Li2(z)), std::imag(expected), 1e-14);
+      CHECK_CLOSE_REL(std::real(Li2(z))             , std::real(expected), 1e-12);
+      CHECK_CLOSE_REL(std::imag(Li2(z))             , std::imag(expected), 1e-14);
+      CHECK_CLOSE_REL(std::real(poly_Li2(z))        , std::real(expected), 1e-12);
+      CHECK_CLOSE_REL(std::imag(poly_Li2(z))        , std::imag(expected), 1e-14);
+      CHECK_CLOSE_REL(std::real(poly_Li2_fortran(z)), std::real(expected), 1e-12);
+      CHECK_CLOSE_REL(std::imag(poly_Li2_fortran(z)), std::imag(expected), 1e-14);
    }
 }
 
