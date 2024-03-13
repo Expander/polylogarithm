@@ -25,15 +25,6 @@ static inline float _Complex fast_clogf(float _Complex z)
 }
 
 
-static inline double _Complex fast_clog(double _Complex z)
-{
-   const double rz = creal(z);
-   const double iz = cimag(z);
-
-   return log(hypot(rz, iz)) + I*atan2(iz, rz);
-}
-
-
 static inline double _Complex clog1p(double _Complex z)
 {
    const double _Complex u = 1.0 + z;
