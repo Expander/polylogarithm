@@ -315,8 +315,10 @@ TEST_CASE("test_special_values")
       CHECK_CLOSE_REL(std::imag(Li2(z))             , std::imag(expected), 1e-14);
       CHECK_CLOSE_REL(std::real(poly_Li2(z))        , std::real(expected), 1e-12);
       CHECK_CLOSE_REL(std::imag(poly_Li2(z))        , std::imag(expected), 1e-14);
+#ifdef ENABLE_FORTRAN
       CHECK_CLOSE_REL(std::real(poly_Li2_fortran(z)), std::real(expected), 1e-12);
       CHECK_CLOSE_REL(std::imag(poly_Li2_fortran(z)), std::imag(expected), 1e-14);
+#endif
    }
 }
 
