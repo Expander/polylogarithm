@@ -95,7 +95,7 @@ end function dli2
 
 double complex function cdli2(z)
   implicit none
-  double complex :: z, rest, u, u2, u4, sum, fast_cdlog, cdlog1p
+  double complex :: z, rest, u, u2, u4, sum, cdlog1p
   double precision :: rz, iz, nz, sgn, dli2
   double precision, parameter :: PI = 3.14159265358979324D0
   double precision, parameter :: bf(10) = (/ &
@@ -131,7 +131,7 @@ double complex function cdli2(z)
   if (rz .le. 0.5D0) then
      if (nz .gt. 1) then
         u = -cdlog1p(-1/z)
-        rest = -0.5D0*fast_cdlog(-z)**2 - PI**2/6
+        rest = -0.5D0*log(-z)**2 - PI**2/6
         sgn = -1
      else ! nz <= 1
         u = -cdlog1p(-z)
@@ -140,12 +140,12 @@ double complex function cdli2(z)
      endif
   else ! rz > 0.5D0
      if (nz .le. 2*rz) then
-        u = -fast_cdlog(z)
+        u = -log(z)
         rest = u*cdlog1p(-z) + PI**2/6
         sgn = -1
      else ! nz > 2*rz
         u = -cdlog1p(-1/z)
-        rest = -0.5D0*fast_cdlog(-z)**2 - PI**2/6
+        rest = -0.5D0*log(-z)**2 - PI**2/6
         sgn = -1
      endif
   endif

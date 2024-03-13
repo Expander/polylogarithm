@@ -164,7 +164,7 @@ end function dli4
 !*********************************************************************
 double complex function cdli4(z)
   implicit none
-  double complex :: z, u, u2, u4, u8, c3, lmz, r, fast_pos_cdlog
+  double complex :: z, u, u2, u4, u8, c3, lmz, r, pos_cdlog
   double precision :: rz, iz, nz, pz, lnz, arg, sgn, dli4
   double precision, parameter :: PI    = 3.1415926535897932D0
   double precision, parameter :: PI2   = 9.8696044010893586D0
@@ -212,7 +212,7 @@ double complex function cdli4(z)
       u2 = u**2
       u4 = u2**2
       u8 = u4**2
-      c3 = (11D0/6 - fast_pos_cdlog(-u))/6
+      c3 = (11D0/6 - pos_cdlog(-u))/6
       cdli4 = zeta4 + u2 * (c2 + u2 * c4) +                   &
           u * (                                               &
               c1 +                                            &
@@ -225,7 +225,7 @@ double complex function cdli4(z)
    endif
 
    if (nz .le. 1) then
-      u = -fast_pos_cdlog(1 - z)
+      u = -pos_cdlog(1 - z)
       r = 0
       sgn = 1
    else ! nz > 1
@@ -235,7 +235,7 @@ double complex function cdli4(z)
          arg = pz + PI
       endif
       lmz = dcmplx(lnz, arg) ! log(-z)
-      u = -fast_pos_cdlog(1 - 1/z)
+      u = -pos_cdlog(1 - 1/z)
       r = (-7*PI4 + lmz**2*(-30*PI2 - 15*lmz**2))/360
       sgn = -1
    endif

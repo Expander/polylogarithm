@@ -13,7 +13,7 @@
 !*********************************************************************
 double complex function cdli6(z)
   implicit none
-  double complex :: z, u, u2, u4, u8, c5, lmz, r, fast_pos_cdlog
+  double complex :: z, u, u2, u4, u8, c5, lmz, r, pos_cdlog
   double precision :: rz, iz, nz, pz, lnz, arg, sgn
   double precision, parameter :: PI    = 3.1415926535897932D0
   double precision, parameter :: PI2   = 9.8696044010893586D0
@@ -65,7 +65,7 @@ double complex function cdli6(z)
    if (lnz**2 + pz**2 .lt. 1) then ! |log(z)| < 1
       u = dcmplx(lnz, pz) ! log(z)
       u2 = u**2
-      c5 = (137D0/60 - fast_pos_cdlog(-u))/120
+      c5 = (137D0/60 - pos_cdlog(-u))/120
       cdli6 = zeta6 + u * c1 + &
          u2 * (c2 + u * c3 +   &
          u2 * (c4 + u * c5 +   &
@@ -79,7 +79,7 @@ double complex function cdli6(z)
    endif
 
    if (nz .le. 1) then
-      u = -fast_pos_cdlog(1 - z)
+      u = -pos_cdlog(1 - z)
       r = 0
       sgn = 1
    else ! nz > 1
@@ -89,7 +89,7 @@ double complex function cdli6(z)
          arg = pz + PI
       endif
       lmz = dcmplx(lnz, arg) ! log(-z)
-      u = -fast_pos_cdlog(1 - 1/z)
+      u = -pos_cdlog(1 - 1/z)
       r = -31*PI6/15120 + lmz**2*(-7*PI4/720 + lmz**2*(-PI2/144 - lmz**2/720))
       sgn = -1
    endif
