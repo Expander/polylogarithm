@@ -4,13 +4,11 @@
  * Polylogarithm is licenced under the MIT License.
  * ==================================================================== */
 
-#pragma once
-
 #include <complex.h>
 #include <math.h>
 
 
-static inline double _Complex clog1p(double _Complex z)
+double _Complex clog1p(double _Complex z)
 {
    const double _Complex u = 1.0 + z;
    const double rz = creal(u);
@@ -26,7 +24,7 @@ static inline double _Complex clog1p(double _Complex z)
 }
 
 
-static inline long double _Complex clog1pl(long double _Complex z)
+long double _Complex clog1pl(long double _Complex z)
 {
    const long double _Complex u = 1.0L + z;
    const long double rz = creall(u);
@@ -42,7 +40,7 @@ static inline long double _Complex clog1pl(long double _Complex z)
 }
 
 
-static inline double _Complex fast_pos_clog(double _Complex z)
+double _Complex pos_clog(double _Complex z)
 {
    const double rz = creal(z);
    const double iz = cimag(z);
@@ -57,7 +55,7 @@ static inline double _Complex fast_pos_clog(double _Complex z)
 }
 
 
-static inline long double _Complex fast_pos_clogl(long double _Complex z)
+long double _Complex pos_clogl(long double _Complex z)
 {
    const long double rz = creall(z);
    const long double iz = cimagl(z);

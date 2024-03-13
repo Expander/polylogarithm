@@ -7,7 +7,7 @@
 #include <complex.h>
 #include <float.h>
 #include <math.h>
-#include "fast_clog.h"
+#include "log.h"
 
 
 static long double hornerl(long double x, const long double* c, int len)
