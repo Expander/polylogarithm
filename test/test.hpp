@@ -37,7 +37,8 @@
 
 inline bool has_inf() noexcept
 {
-   return std::isinf(2*std::numeric_limits<double>::max());
+   const auto fn = [] (bool return_inf) { return return_inf ? std::numeric_limits<double>::infinity() : 0.0; };
+   return std::isinf(fn(true));
 }
 
 
