@@ -324,7 +324,7 @@ std::complex<float> Li2(const std::complex<float>& z) noexcept
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5f) {
       if (nz > 1) {
-         const auto lz = log(-z);
+         const auto lz = std::log(-z);
          u = -log1p(-1.0f/z);
          rest = -0.5f*lz*lz - PI*PI/6;
          sgn = -1;
@@ -335,11 +335,11 @@ std::complex<float> Li2(const std::complex<float>& z) noexcept
       }
    } else { // rz > 0.5
       if (nz <= 2*rz) {
-         u = -log(z);
+         u = -std::log(z);
          rest = u*log1p(-z) + PI*PI/6;
          sgn = -1;
       } else { // nz > 2*rz
-         const auto lz = log(-z);
+         const auto lz = std::log(-z);
          u = -log1p(-1.0f/z);
          rest = -0.5f*lz*lz - PI*PI/6;
          sgn = -1;
@@ -496,7 +496,7 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
    // transformation to |z|<1, Re(z)<=0.5
    if (rz <= 0.5L) {
       if (nz > 1) {
-         const auto lz = log(-z);
+         const auto lz = std::log(-z);
          u = -log1p(-1.0L/z);
          rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
@@ -507,11 +507,11 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
       }
    } else { // rz > 0.5L
       if (nz <= 2*rz) {
-         u = -log(z);
+         u = -std::log(z);
          rest = u*log1p(-z) + PI*PI/6;
          sgn = -1;
       } else { // nz > 2*rz
-         const auto lz = log(-z);
+         const auto lz = std::log(-z);
          u = -log1p(-1.0L/z);
          rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
