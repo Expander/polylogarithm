@@ -40,7 +40,7 @@ end function cdlog1p
 double complex function pos_cdlog(z)
   implicit none
   double complex :: z
-  double precision :: re, im, arg
+  double precision :: re, im
 
   re = real(z)
   im = aimag(z)
