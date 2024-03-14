@@ -7,7 +7,7 @@
 #include <complex.h>
 #include <float.h>
 #include <math.h>
-#include "fast_clog.h"
+#include "log.h"
 
 
 static long double hornerl(long double x, const long double* c, int len)
@@ -331,23 +331,23 @@ float _Complex cli2f(float _Complex z)
    /* transformation to |z|<1, Re(z)<=0.5f */
    if (rz <= 0.5f) {
       if (nz > 1.0f) {
-         const float _Complex lz = fast_clogf(-z);
-         u = -fast_clogf(1.0f - 1.0f / z);
+         const float _Complex lz = clogf(-z);
+         u = -clogf(1.0f - 1.0f / z);
          rest = -0.5f*lz*lz - PI*PI/6;
          sgn = -1;
       } else { /* nz <= 1 */
-         u = -fast_clogf(1.0f - z);
+         u = -clogf(1.0f - z);
          rest = 0;
          sgn = 1;
       }
    } else { /* rz > 0.5f */
       if (nz <= 2*rz) {
-         u = -fast_clogf(z);
-         rest = u*fast_clogf(1.0f - z) + PI*PI/6;
+         u = -clogf(z);
+         rest = u*clogf(1.0f - z) + PI*PI/6;
          sgn = -1;
       } else { /* nz > 2*rz */
-         const float _Complex lz = fast_clogf(-z);
-         u = -fast_clogf(1.0f - 1.0f / z);
+         const float _Complex lz = clogf(-z);
+         u = -clogf(1.0f - 1.0f / z);
          rest = -0.5f*lz*lz - PI*PI/6;
          sgn = -1;
       }
@@ -412,23 +412,23 @@ double _Complex cli2(double _Complex z)
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5) {
       if (nz > 1.0) {
-         const double _Complex lz = fast_clog(-z);
-         u = -fast_clog(1.0 - 1.0 / z);
+         const double _Complex lz = clog(-z);
+         u = -clog1p(-1.0/z);
          rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       } else { /* nz <= 1 */
-         u = -fast_clog(1.0 - z);
+         u = -clog1p(-z);
          rest = 0;
          sgn = 1;
       }
    } else { /* rz > 0.5 */
       if (nz <= 2*rz) {
-         u = -fast_clog(z);
-         rest = u*fast_clog(1.0 - z) + PI*PI/6;
+         u = -clog(z);
+         rest = u*clog1p(-z) + PI*PI/6;
          sgn = -1;
       } else { /* nz > 2*rz */
-         const double _Complex lz = fast_clog(-z);
-         u = -fast_clog(1.0 - 1.0 / z);
+         const double _Complex lz = clog(-z);
+         u = -clog1p(-1.0/z);
          rest = -0.5*lz*lz - PI*PI/6;
          sgn = -1;
       }
@@ -517,23 +517,23 @@ long double _Complex cli2l(long double _Complex z)
    /* transformation to |z|<1, Re(z)<=0.5 */
    if (rz <= 0.5L) {
       if (nz > 1.0L) {
-         const long double _Complex lz = fast_clogl(-z);
-         u = -fast_clogl(1.0L - 1.0L/z);
+         const long double _Complex lz = clogl(-z);
+         u = -clog1pl(-1.0L/z);
          rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       } else { /* nz <= 1 */
-         u = -fast_clogl(1.0L - z);
+         u = -clog1pl(-z);
          rest = 0;
          sgn = 1;
       }
    } else { /* rz > 0.5L */
       if (nz <= 2*rz) {
-         u = -fast_clogl(z);
-         rest = u * fast_clogl(1.0L - z) + PI*PI/6;
+         u = -clogl(z);
+         rest = u * clog1pl(-z) + PI*PI/6;
          sgn = -1;
       } else { /* nz > 2*rz */
-         const long double _Complex lz = fast_clogl(-z);
-         u = -fast_clogl(1.0L - 1.0L/z);
+         const long double _Complex lz = clogl(-z);
+         u = -clog1pl(-1.0L/z);
          rest = -0.5L*lz*lz - PI*PI/6;
          sgn = -1;
       }

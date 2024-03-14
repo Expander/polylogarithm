@@ -9,6 +9,7 @@ add_library(polylogarithm_c
   Li4.c
   Li5.c
   Li6.c
+  log.c
 )
 
 target_include_directories(polylogarithm_c PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

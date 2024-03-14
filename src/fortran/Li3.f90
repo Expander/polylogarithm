@@ -109,7 +109,7 @@ end function dli3
 !*********************************************************************
 double complex function cdli3(z)
   implicit none
-  double complex :: z, u, u2, u4, u8, c0, c1, lmz, rest, fast_pos_cdlog
+  double complex :: z, u, u2, u4, u8, c0, c1, lmz, rest, pos_cdlog
   double precision :: rz, iz, nz, pz, lnz, arg, dli3
   double precision, parameter :: PI    = 3.1415926535897932D0
   double precision, parameter :: zeta2 = 1.6449340668482264D0
@@ -154,7 +154,7 @@ double complex function cdli3(z)
       u4 = u2**2
       u8 = u4**2
       c0 = zeta3 + u*(zeta2 - u2/12)
-      c1 = 0.25D0*(3 - 2*fast_pos_cdlog(-u))
+      c1 = 0.25D0*(3 - 2*pos_cdlog(-u))
       cdli3 =                                            &
          c0 +                                            &
          c1*u2 +                                         &
@@ -165,7 +165,7 @@ double complex function cdli3(z)
    endif
 
    if (nz .le. 1) then
-      u = -fast_pos_cdlog(1 - z)
+      u = -pos_cdlog(1 - z)
       rest = 0
    else ! nz > 1
       if (pz .gt. 0) then
@@ -174,7 +174,7 @@ double complex function cdli3(z)
          arg = pz + PI
       endif
       lmz = dcmplx(lnz, arg) ! log(-z)
-      u = -fast_pos_cdlog(1 - 1/z)
+      u = -pos_cdlog(1 - 1/z)
       rest = -lmz*(lmz**2/6 + zeta2)
    endif
 

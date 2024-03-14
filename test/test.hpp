@@ -33,9 +33,17 @@
 #define CHECK_SMALL(a,eps) CHECK(std::abs(a) < (eps))
 
 
+#define CHECK_CLOSE_REL(a,b,eps) do {                                   \
+      const bool pred = is_close_rel((a), (b), (eps));                  \
+      INFO("Comparing numbers " << std::setprecision(17) << (a) << " =?= " << (b) << " with relative precision " << (eps)); \
+      CHECK(pred);                                                      \
+   } while (0)
+
+
 inline bool has_inf() noexcept
 {
-   return std::isinf(std::numeric_limits<double>::max() + 1.0);
+   const auto fn = [] (bool return_inf) { return return_inf ? std::numeric_limits<double>::infinity() : 0.0; };
+   return std::isinf(fn(true));
 }
 
 
@@ -43,6 +51,22 @@ inline bool has_signed_zero() noexcept
 {
    const auto fn = [] (double x) { return x == 0.0 ? x : x; };
    return std::signbit(fn(-0.0));
+}
+
+
+inline bool is_ieee754_compliant() noexcept
+{
+   return has_inf() && has_signed_zero();
+}
+
+
+inline bool is_close_rel(double x, double y, double eps) noexcept
+{
+   const double ma = std::max(std::abs(x), std::abs(y));
+   if (ma == 0.0) {
+      return true;
+   }
+   return std::abs(x - y)/ma < std::abs(eps);
 }
 
 

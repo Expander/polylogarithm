@@ -5,31 +5,15 @@
 // ====================================================================
 
 #include "Li3.hpp"
-#include "complex.hpp"
+#include "horner.hpp"
+#include "log.hpp"
 #include <cfloat>
 #include <cmath>
+#include <complex>
 
 namespace polylogarithm {
 
 namespace {
-
-   template <typename T, int N>
-   Complex<T> horner(const Complex<T>& z, const T (&coeffs)[N]) noexcept
-   {
-      static_assert(N >= 2, "more than two coefficients required");
-
-      const T r = z.re + z.re;
-      const T s = z.re * z.re + z.im * z.im;
-      T a = coeffs[N - 1], b = coeffs[N - 2];
-
-      for (int i = N - 3; i >= 0; --i) {
-         const T t = a;
-         a = b + r * a;
-         b = coeffs[i] - s * t;
-      }
-
-      return Complex<T>(z.re*a + b, z.im*a);
-   }
 
    /// Li_3(x) for x in [-1,0]
    double li3_neg(double x) noexcept
@@ -126,11 +110,11 @@ double Li3(double x) noexcept
 
 /**
  * @brief Complex trilogarithm \f$\operatorname{Li}_3(z)\f$
- * @param z_ complex argument
+ * @param z complex argument
  * @return \f$\operatorname{Li}_3(z)\f$
  * @author Alexander Voigt
  */
-std::complex<double> Li3(const std::complex<double>& z_) noexcept
+std::complex<double> Li3(const std::complex<double>& z) noexcept
 {
    const double PI    = 3.1415926535897932;
    const double zeta2 = 1.6449340668482264;
@@ -147,28 +131,29 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
       3.1043578879654623e-14,  5.2617586299125061e-15
    };
 
-   const Complex<double> z = { std::real(z_), std::imag(z_) };
+   const double rz = std::real(z);
+   const double iz = std::imag(z);
 
-   if (z.im == 0) {
-      if (z.re <= 1) {
-         return { Li3(z.re), z.im };
+   if (iz == 0) {
+      if (rz <= 1) {
+         return { Li3(rz), iz };
       } else {
-         const double l = std::log(z.re);
-         return { Li3(z.re), -0.5*PI*l*l };
+         const double l = std::log(rz);
+         return { Li3(rz), -0.5*PI*l*l };
       }
    }
 
-   const double nz  = norm(z);
-   const double pz  = arg(z);
+   const double nz  = std::abs(z);
+   const double pz  = std::arg(z);
    const double lnz = std::log(nz);
 
    if (lnz*lnz + pz*pz < 1) { // |log(z)| < 1
-      const Complex<double> u(lnz, pz); // log(z)
-      const Complex<double> u2 = u*u;
-      const Complex<double> u4 = u2*u2;
-      const Complex<double> u8 = u4*u4;
-      const Complex<double> c0 = zeta3 + u*(zeta2 - u2/12.0);
-      const Complex<double> c1 = 0.25 * (3.0 - 2.0*log(-u));
+      const std::complex<double> u(lnz, pz); // log(z)
+      const auto u2 = u*u;
+      const auto u4 = u2*u2;
+      const auto u8 = u4*u4;
+      const auto c0 = zeta3 + u*(zeta2 - u2/12.0);
+      const auto c1 = 0.25 * (3.0 - 2.0*pos_log(-u));
 
       const double cs[7] = {
          -3.4722222222222222e-03, 1.1574074074074074e-05,
@@ -185,20 +170,20 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
          u8*u8*cs[6];
    }
 
-   Complex<double> u(0.0, 0.0), rest(0.0, 0.0);
+   std::complex<double> u(0.0, 0.0), rest(0.0, 0.0);
 
    if (nz <= 1) {
-      u = -log(1.0 - z);
+      u = -log1p(-z);
    } else { // nz > 1
       const double arg = pz > 0.0 ? pz - PI : pz + PI;
-      const Complex<double> lmz(lnz, arg); // log(-z)
-      u = -log(1.0 - 1.0/z);
+      const std::complex<double> lmz(lnz, arg); // log(-z)
+      u = -log1p(-1.0/z);
       rest = -lmz*(lmz*lmz/6.0 + zeta2);
    }
 
-   const Complex<double> u2 = u*u;
-   const Complex<double> u4 = u2*u2;
-   const Complex<double> u8 = u4*u4;
+   const auto u2 = u*u;
+   const auto u4 = u2*u2;
+   const auto u8 = u4*u4;
 
    return
       rest +
@@ -212,11 +197,11 @@ std::complex<double> Li3(const std::complex<double>& z_) noexcept
 
 /**
  * @brief Complex trilogarithm \f$\operatorname{Li}_3(z)\f$ with long double precision
- * @param z_ complex argument
+ * @param z complex argument
  * @return \f$\operatorname{Li}_3(z)\f$
  * @author Alexander Voigt
  */
-std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
+std::complex<long double> Li3(const std::complex<long double>& z) noexcept
 {
    const long double PI    = 3.14159265358979323846264338327950288L;
    const long double zeta2 = 1.64493406684822643647241516664602519L;
@@ -271,32 +256,33 @@ std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
 #endif
    };
 
-   const Complex<long double> z = { std::real(z_), std::imag(z_) };
+   const long double rz = std::real(z);
+   const long double iz = std::imag(z);
 
-   if (z.im == 0) {
-      if (z.re == 0) {
-         return { z.re, z.im };
+   if (iz == 0) {
+      if (rz == 0) {
+         return { rz, iz };
       }
-      if (z.re == 1) {
-         return { zeta3, z.im };
+      if (rz == 1) {
+         return { zeta3, iz };
       }
-      if (z.re == -1) {
-         return { -0.75L*zeta3, z.im };
+      if (rz == -1) {
+         return { -0.75L*zeta3, iz };
       }
-      if (z.re == 0.5L) {
-         return { 0.537213193608040200940623225594965827L, z.im };
+      if (rz == 0.5L) {
+         return { 0.537213193608040200940623225594965827L, iz };
       }
    }
 
-   const long double nz  = norm(z);
-   const long double pz  = arg(z);
+   const long double nz  = std::abs(z);
+   const long double pz  = std::arg(z);
    const long double lnz = std::log(nz);
 
    if (lnz*lnz + pz*pz < 1) { // |log(z)| < 1
-      const Complex<long double> u(lnz, pz); // log(z)
-      const Complex<long double> u2 = u*u;
-      const Complex<long double> c0 = zeta3 + u*(zeta2 - u2/12.0L);
-      const Complex<long double> c1 = 0.25L * (3.0L - 2.0L*log(-u));
+      const std::complex<long double> u(lnz, pz); // log(z)
+      const auto u2 = u*u;
+      const auto c0 = zeta3 + u*(zeta2 - u2/12.0L);
+      const auto c1 = 0.25L * (3.0L - 2.0L*pos_log(-u));
 
       const long double cs[] = {
         -3.47222222222222222222222222222222222e-03L,
@@ -323,21 +309,21 @@ std::complex<long double> Li3(const std::complex<long double>& z_) noexcept
 #endif
       };
 
-      return c0 + u2*(c1 + u2*horner(u2, cs));
+      return c0 + u2*(c1 + u2*horner<0>(u2, cs));
    }
 
-   Complex<long double> u(0.0L, 0.0L), rest(0.0L, 0.0L);
+   std::complex<long double> u(0.0L, 0.0L), rest(0.0L, 0.0L);
 
    if (nz <= 1) {
-      u = -log(1.0L - z);
+      u = -log1p(-z);
    } else { // nz > 1
       const long double arg = pz > 0.0 ? pz - PI : pz + PI;
-      const Complex<long double> lmz(lnz, arg); // log(-z)
-      u = -log(1.0L - 1.0L/z);
+      const std::complex<long double> lmz(lnz, arg); // log(-z)
+      u = -log1p(-1.0L/z);
       rest = -lmz*(lmz*lmz/6.0L + zeta2);
    }
 
-   return rest + u*horner(u, bf);
+   return rest + u*horner<0>(u, bf);
 }
 
 } // namespace polylogarithm

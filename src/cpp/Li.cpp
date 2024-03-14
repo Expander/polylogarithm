@@ -39,7 +39,7 @@ namespace {
       if (std::imag(z) == 0.0 && std::real(z) > 0.0) {
          return { std::log(std::real(z)), 0.0 };
       } else if (std::imag(z) == 0.0) {
-         return { std::log(-std::real(z)), 4*std::atan(1.0) };
+         return { std::log(-std::real(z)), PI };
       }
       return { std::log(std::hypot(std::real(z), std::imag(z))), std::arg(z) };
    }

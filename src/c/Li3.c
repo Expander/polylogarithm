@@ -7,7 +7,7 @@
 #include <complex.h>
 #include <float.h>
 #include <math.h>
-#include "fast_clog.h"
+#include "log.h"
 
 /// Li_3(x) for x in [-1,0]
 static double li3_neg(double x)
@@ -145,7 +145,7 @@ double _Complex cli3(double _Complex z)
       const double _Complex u4 = u2*u2;
       const double _Complex u8 = u4*u4;
       const double _Complex c0 = zeta3 + u*(zeta2 - u2/12.0);
-      const double _Complex c1 = 0.25 * (3.0 - 2.0*fast_pos_clog(-u));
+      const double _Complex c1 = 0.25 * (3.0 - 2.0*pos_clog(-u));
 
       const double cs[7] = {
          -3.4722222222222222e-03, 1.1574074074074074e-05,
@@ -165,11 +165,11 @@ double _Complex cli3(double _Complex z)
    double _Complex u = 0.0, rest = 0.0;
 
    if (nz <= 1.0) {
-      u = -fast_pos_clog(1.0 - z);
+      u = -pos_clog(1.0 - z);
    } else { // nz > 1
       const double arg = pz > 0.0 ? pz - PI : pz + PI;
       const double _Complex lmz = lnz + arg*I; // clog(-z)
-      u = -fast_pos_clog(1.0 - 1.0/z);
+      u = -pos_clog(1.0 - 1.0/z);
       rest = -lmz*(lmz*lmz/6.0 + zeta2);
    }
 
@@ -275,7 +275,7 @@ long double _Complex cli3l(long double _Complex z)
       const long double _Complex u  = lnz + pz*I; // clog(z)
       const long double _Complex u2 = u*u;
       const long double _Complex c0 = zeta3 + u*(zeta2 - u2/12.0L);
-      const long double _Complex c1 = 0.25L * (3.0L - 2.0L*fast_pos_clogl(-u));
+      const long double _Complex c1 = 0.25L * (3.0L - 2.0L*pos_clogl(-u));
 
       const long double cs[] = {
         -3.47222222222222222222222222222222222e-03L,
@@ -317,11 +317,11 @@ long double _Complex cli3l(long double _Complex z)
    long double _Complex u = 0.0L, rest = 0.0L;
 
    if (nz <= 1.0L) {
-      u = -fast_pos_clogl(1.0L - z);
+      u = -pos_clogl(1.0L - z);
    } else { // nz > 1
       const long double arg = pz > 0.0L ? pz - PI : pz + PI;
       const long double _Complex lmz = lnz + arg*I; // clog(-z)
-      u = -fast_pos_clogl(1.0L - 1.0L/z);
+      u = -pos_clogl(1.0L - 1.0L/z);
       rest = -lmz*(lmz*lmz/6.0L + zeta2);
    }
 
