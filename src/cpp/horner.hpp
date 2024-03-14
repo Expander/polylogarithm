@@ -29,7 +29,7 @@ std::complex<T> horner(const std::complex<T>& z, const T (&coeffs)[N]) noexcept
    const T rz = std::real(z);
    const T iz = std::imag(z);
    const T r = rz + rz;
-   const T s = rz*rz + iz*iz;
+   const T s = std::norm(z);
    T a = coeffs[N - 1], b = coeffs[N - 2];
 
    for (int i = N - 3; i >= Nstart; --i) {

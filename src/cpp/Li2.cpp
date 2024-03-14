@@ -312,7 +312,7 @@ std::complex<float> Li2(const std::complex<float>& z) noexcept
       return { Li2(rz), -PI*std::log(rz) };
    }
 
-   const float nz = rz*rz + iz*iz;
+   const float nz = std::norm(z);
 
    if (nz < std::numeric_limits<float>::epsilon()) {
       return z*(1.0f + 0.25f*z);
@@ -391,7 +391,7 @@ std::complex<double> Li2(const std::complex<double>& z) noexcept
       return { Li2(rz), -PI*std::log(rz) };
    }
 
-   const double nz = rz*rz + iz*iz;
+   const double nz = std::norm(z);
 
    if (nz < std::numeric_limits<double>::epsilon()) {
       return z*(1.0 + 0.25*z);
@@ -484,7 +484,7 @@ std::complex<long double> Li2(const std::complex<long double>& z) noexcept
       return { Li2(rz), -PI*std::log(rz) };
    }
 
-   const long double nz = rz*rz + iz*iz;
+   const long double nz = std::norm(z);
 
    if (nz < std::numeric_limits<long double>::epsilon()) {
       return z*(1.0L + 0.25L*z);
