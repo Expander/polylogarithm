@@ -81,7 +81,7 @@ double inv_fac(int64_t n) noexcept
 {
    if (n < 0) {
       return std::numeric_limits<double>::quiet_NaN();
-   } else if (n < sizeof(INVERSE_FACTORIALS)/sizeof(INVERSE_FACTORIALS[0])) {
+   } else if (n < static_cast<int64_t>(sizeof(INVERSE_FACTORIALS)/sizeof(INVERSE_FACTORIALS[0]))) {
          return INVERSE_FACTORIALS[n];
       } else {
       return 0.0;

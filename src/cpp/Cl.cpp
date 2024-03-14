@@ -189,7 +189,7 @@ double ncal(int64_t n, double x) noexcept
    const auto x2 = x*x;
    double xn = xn1*x2; // x^(n + 3)
 
-   for (int64_t k = 1; k <= sizeof(B)/sizeof(B[0]); ++k) {
+   for (int64_t k = 1; k <= static_cast<int64_t>(sizeof(B)/sizeof(B[0])); ++k) {
       old_sum = sum;
       sum += B[k - 1]*xn/(2*k + n + 1);
       if (sum == old_sum) {

@@ -85,7 +85,7 @@ double zeta(int64_t n) noexcept
    if (n < 0) {
       if (is_even(n)) {
          return 0.0;
-      } else if (-(1 + n)/2 < sizeof(ZETAS_NEG)/sizeof(ZETAS_NEG[0])) {
+      } else if (-(1 + n)/2 < static_cast<int64_t>(sizeof(ZETAS_NEG)/sizeof(ZETAS_NEG[0]))) {
          return ZETAS_NEG[-(1 + n)/2];
       } else if (is_even((1 - n)/2)) {
          return std::numeric_limits<double>::infinity();
@@ -96,7 +96,7 @@ double zeta(int64_t n) noexcept
       return -0.5;
    } else if (n == 1) {
       return std::numeric_limits<double>::infinity();
-   } else if ((n - 2) < sizeof(ZETAS_POS)/sizeof(ZETAS_POS[0])) {
+   } else if ((n - 2) < static_cast<int64_t>(sizeof(ZETAS_POS)/sizeof(ZETAS_POS[0]))) {
       return ZETAS_POS[n - 2];
    }
 

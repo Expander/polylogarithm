@@ -83,7 +83,7 @@ double neg_eta(int64_t n) noexcept
    if (n < 0) {
       if (is_even(n)) {
          return 0.0;
-      } else if (-(1 + n)/2 < sizeof(NEG_ETA_NEG_N)/sizeof(NEG_ETA_NEG_N[0])) {
+      } else if (-(1 + n)/2 < static_cast<int64_t>(sizeof(NEG_ETA_NEG_N)/sizeof(NEG_ETA_NEG_N[0]))) {
          return NEG_ETA_NEG_N[-(1 + n)/2];
       } else if (is_even((1 - n)/2)) {
          return std::numeric_limits<double>::infinity();
@@ -92,7 +92,7 @@ double neg_eta(int64_t n) noexcept
       }
    } else if (n == 0) {
       return -0.5;
-   } else if (n <= sizeof(NEG_ETA)/sizeof(NEG_ETA[0])) {
+   } else if (n <= static_cast<int64_t>(sizeof(NEG_ETA)/sizeof(NEG_ETA[0]))) {
       return NEG_ETA[n - 1];
    } else {
       return -1.0;
