@@ -5,7 +5,7 @@ authors:
   given-names: "Alexander"
   orcid: "https://orcid.org/0000-0001-8963-6512"
 title: "Polylogarithm"
-version: 6.15.0
-date-released: 2023-10-22
+version: 7.0.0
+date-released: 2024-03-15
 url: "https://github.com/Expander/polylogarithm"
 license: MIT
