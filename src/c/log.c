@@ -40,6 +40,13 @@ long double _Complex clog1pl(long double _Complex z)
 }
 
 
+/**
+ * returns log(z) for complex z
+ * @param z complex argument
+ * @note Points on the branch cut are treated differently from std::log(z):
+ * Points with Re(z) < 0 and Im(z) == -0.0 are mapped to Im(z) == 0.0
+ * @return log(z)
+ */
 double _Complex pos_clog(double _Complex z)
 {
    const double rz = creal(z);
@@ -55,6 +62,13 @@ double _Complex pos_clog(double _Complex z)
 }
 
 
+/**
+ * returns log(z) for complex z
+ * @param z complex argument
+ * @note Points on the branch cut are treated differently from std::log(z):
+ * Points with Re(z) < 0 and Im(z) == -0.0 are mapped to Im(z) == 0.0
+ * @return log(z)
+ */
 long double _Complex pos_clogl(long double _Complex z)
 {
    const long double rz = creall(z);

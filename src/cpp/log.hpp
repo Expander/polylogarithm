@@ -12,6 +12,7 @@
 namespace polylogarithm {
 
 
+/// returns log(1 + z) for complex z
 template <typename T>
 std::complex<T> log1p(const std::complex<T>& z) noexcept
 {
@@ -27,6 +28,13 @@ std::complex<T> log1p(const std::complex<T>& z) noexcept
 }
 
 
+/**
+ * returns log(z) for complex z
+ * @param z complex argument
+ * @note Points on the branch cut are treated differently from std::log(z):
+ * Points with Re(z) < 0 and Im(z) == -0.0 are mapped to Im(z) == 0.0
+ * @return log(z)
+ */
 template <typename T>
 std::complex<T> pos_log(const std::complex<T>& z) noexcept
 {
