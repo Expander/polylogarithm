@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.5)
 project(polylogarithm CXX C)
 
 if(NOT CMAKE_BUILD_TYPE)
