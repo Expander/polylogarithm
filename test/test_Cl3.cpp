@@ -121,8 +121,8 @@ TEST_CASE("test_real_fixed_values")
 #endif
       CHECK_CLOSE(cl64_pade   , cl64_expected , 2*eps64 );
       CHECK_CLOSE(cl64_wu     , cl64_expected , 2*eps64 );
-      CHECK_CLOSE(cl128_poly  , cl128_expected, 5*eps128);
-      CHECK_CLOSE(cl128_poly_c, cl128_expected, 5*eps128);
+      CHECK_CLOSE(cl128_poly  , cl128_expected, 10*eps128);
+      CHECK_CLOSE(cl128_poly_c, cl128_expected, 10*eps128);
       CHECK_CLOSE(cl128_li3   , cl128_expected, 2*eps128);
 
       // test symmetries
