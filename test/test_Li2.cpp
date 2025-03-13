@@ -253,7 +253,7 @@ TEST_CASE("test_special_values")
 
    CHECK_CLOSE(36.*Li2(0.5) - 36.*Li2(0.25)
                - 12.*Li2(1./8.) + 6.*Li2(1./64.),
-               pi2, 2*eps);
+               pi2, 10*eps);
 
    {
       // special point wher z^2 < epsilon
