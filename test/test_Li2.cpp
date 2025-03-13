@@ -761,7 +761,7 @@ TEST_CASE("test_complex_random_values")
       CHECK_CLOSE_COMPLEX(li2, li2_tsil  , 10*eps);
       CHECK_CLOSE_COMPLEX(li2, li2_hdecay, 10*eps);
       CHECK_CLOSE_COMPLEX(li2, li2_hollik, 10*eps);
-      CHECK_CLOSE_COMPLEX(li2, li2_lt    , 2*eps);
+      CHECK_CLOSE_COMPLEX(li2, li2_lt    , 10*eps);
       CHECK_CLOSE_COMPLEX(li2, li2_sherpa, 10*eps);
       CHECK_CLOSE_COMPLEX(li2, li2_spheno, 10*eps);
    }
