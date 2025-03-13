@@ -231,13 +231,15 @@ TEST_CASE("test_overflow")
 #endif
    }
 
-   const Data<long double> data128[] = {
-      {{1e4000L, 1.0L}, {-1.3021939960597718633480560501920418668419e11L, 1.3325123323168432929414697360944689612e8L}, eps128}
-   };
+   if (std::numeric_limits<long double>::max_exponent10 >= 4000) {
+      const Data<long double> data128[] = {
+         {{1e4000L, 1.0L}, {-1.3021939960597718633480560501920418668419e11L, 1.3325123323168432929414697360944689612e8L}, eps128}
+      };
 
-   for (const auto& d : data128) {
-      CHECK_CLOSE_COMPLEX(Li3(d.z), d.li_expected, d.eps);
-      CHECK_CLOSE_COMPLEX(poly_Li3(d.z), d.li_expected, d.eps);
+      for (const auto& d : data128) {
+         CHECK_CLOSE_COMPLEX(Li3(d.z), d.li_expected, d.eps);
+         CHECK_CLOSE_COMPLEX(poly_Li3(d.z), d.li_expected, d.eps);
+      }
    }
 }
 
