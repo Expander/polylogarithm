@@ -291,6 +291,7 @@ TEST_CASE("test_special_values")
       CHECK_CLOSE(Li2(std::real(z0))          , std::real(li0), eps);
       CHECK_CLOSE(algorithm_327(std::real(z0)), std::real(li0), eps);
       CHECK_CLOSE(algorithm_490(std::real(z0)), std::real(li0), eps);
+      CHECK_CLOSE(algorithm_490_2(std::real(z0)), std::real(li0), eps);
 #ifdef ENABLE_GSL
       CHECK_CLOSE(gsl_Li2(std::real(z0))      , std::real(li0), eps);
 #endif
@@ -487,6 +488,7 @@ TEST_CASE("test_real_fixed_values")
       if (std::imag(z128) == 0.0L) {
          const auto li64_327      = algorithm_327(x64);
          const auto li64_490      = algorithm_490(x64);
+         const auto li64_490_2    = algorithm_490_2(x64);
          const auto li64_babar    = babar_dilog(x64);
          const auto li64_cephes   = cephes_dilog(x64);
          const auto li64_cephes_2 = cephes_dilog_2(x64);
@@ -516,6 +518,7 @@ TEST_CASE("test_real_fixed_values")
          INFO("Li2(64)  real = " << li64_expected  << " (expected)");
          INFO("Li2(64)  real = " << li64_327       << " (algorithm 327)");
          INFO("Li2(64)  real = " << li64_490       << " (algorithm 490)");
+         INFO("Li2(64)  real = " << li64_490_2     << " (algorithm 490 2)");
          INFO("Li2(64)  real = " << li64_babar     << " (BaBar)");
          INFO("Li2(64)  real = " << li64_cephes    << " (cephes)");
          INFO("Li2(64)  real = " << li64_cephes_2  << " (cephes 2)");
@@ -541,6 +544,7 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(li32_poly_c  , std::real(li32_expected) , 2*eps32);
          CHECK_CLOSE(li64_327     , std::real(li64_expected) , 10*eps64);
          CHECK_CLOSE(li64_490     , std::real(li64_expected) , 2*eps64);
+         CHECK_CLOSE(li64_490_2   , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_babar   , std::real(li64_expected) , 100*eps64);
          CHECK_CLOSE(li64_cephes  , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_cephes_2, std::real(li64_expected) , 2*eps64);
@@ -669,6 +673,7 @@ TEST_CASE("test_real_random_values")
 #endif
       const double li2_327 = algorithm_327(v);
       const double li2_490 = algorithm_490(v);
+      const double li2_490_2 = algorithm_490_2(v);
       const double li2_babar = babar_dilog(v);
       const double li2_cephes = cephes_dilog(v);
       const double li2_cephes_2 = cephes_dilog_2(v);
@@ -687,6 +692,7 @@ TEST_CASE("test_real_random_values")
 #endif
       INFO("Li2(64) real = " << li2_327      << " (algorithm 327)");
       INFO("Li2(64) real = " << li2_490      << " (algorithm 490)");
+      INFO("Li2(64) real = " << li2_490_2    << " (algorithm 490 2)");
       INFO("Li2(64) real = " << li2_babar    << " (BaBar)");
       INFO("Li2(64) real = " << li2_cephes   << " (cephes)");
       INFO("Li2(64) real = " << li2_cephes_2 << " (cephes 2)");
@@ -703,6 +709,7 @@ TEST_CASE("test_real_random_values")
 #endif
       CHECK_CLOSE(li2, li2_327     , 10*eps64);
       CHECK_CLOSE(li2, li2_490     , eps64);
+      CHECK_CLOSE(li2, li2_490_2   , eps64);
       CHECK_CLOSE(li2, li2_babar   , 100*eps64);
       CHECK_CLOSE(li2, li2_cephes  , 2*eps64);
       CHECK_CLOSE(li2, li2_cephes_2, 2*eps64);

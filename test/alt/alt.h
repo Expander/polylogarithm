@@ -7,6 +7,7 @@ extern "C" {
 double algorithm_327(double x);
 
 double algorithm_490(double x);
+double algorithm_490_2(double x);
 
 double babar_dilog(double x);
 
