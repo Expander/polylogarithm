@@ -119,3 +119,82 @@ L100:
 
    return DILOG;
 }
+
+
+/*
+ * Refined version of algorithm 490 without goto statements and with
+ * one division less.
+ *
+ * @author Refined by Alexander Voigt
+ */
+double algorithm_490_2(double x)
+{
+   const double PI = 3.1415926535897932;
+   // Table[1/(n(n+1)(n+2))^2, {n,2,25}] // N[#,17]& // CForm
+   const double C[24] = {
+      0.0017361111111111111, 0.00027777777777777778,
+      0.000069444444444444444, 0.000022675736961451247,
+      8.8577097505668934e-6, 3.9367598891408415e-6,
+      1.9290123456790123e-6, 1.0203040506070809e-6,
+      5.7392102846648301e-7, 3.3959824169614379e-7,
+      2.0964993492466020e-7, 1.3417595835178253e-7,
+      8.8577097505668934e-8, 6.0073048827374087e-8,
+      4.1717395019009783e-8, 2.9583526661680067e-8,
+      2.1374098013063849e-8, 1.5703418948373440e-8,
+      1.1712674050336388e-8, 8.8564643102732612e-9,
+      6.7807304875529656e-9, 5.2509976895610166e-9,
+      4.1091387245233399e-9, 3.2467268934505402e-9
+   };
+
+   double y = 0, r = 0, s = 1;
+
+   /* transform to [0, 1/2] */
+   if (x < -1) {
+      const double l = log(1 - x);
+      y = 1/(1 - x);
+      r = -PI*PI/6 + l*(0.5*l - log(-x));
+      s = 1;
+   } else if (x == -1) {
+      return -PI*PI/12;
+   } else if (x < 0) {
+      const double l = log1p(-x);
+      y = x/(x - 1);
+      r = -0.5*l*l;
+      s = -1;
+   } else if (x == 0) {
+      return x;
+   } else if (x < 0.5) {
+      y = x;
+      r = 0;
+      s = 1;
+   } else if (x < 1) {
+      y = 1 - x;
+      r = PI*PI/6 - log(x)*log1p(-x);
+      s = -1;
+   } else if (x == 1) {
+      return PI*PI/6;
+   } else if (x < 2) {
+      const double l = log(x);
+      y = 1 - 1/x;
+      r = PI*PI/6 - l*(log(y) + 0.5*l);
+      s = 1;
+   } else {
+      const double l = log(x);
+      y = 1/x;
+      r = PI*PI/3 - 0.5*l*l;
+      s = -1;
+   }
+
+   double yn = 4*y*y*y;
+   double sum = yn/36;
+
+   for (int n = 0; n < 24; ++n) {
+      const int d = (n + 2)*(n + 3)*(n + 4);
+      yn *= y;
+      sum += yn/(d*d);
+   }
+
+   const double d = 1 + y*(4 + y);
+
+   return r + s*(sum + y*(4 + 5.75*y) + 3*(1 + y)*(1 - y)*log(1 - y))/d;
+}

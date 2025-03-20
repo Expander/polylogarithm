@@ -311,6 +311,9 @@ int main() {
    bench_fn([&](double x) { return algorithm_490(x); }, values_d,
             "algorithm 490", "double");
 
+   bench_fn([&](double x) { return algorithm_490_2(x); }, values_d,
+            "algorithm 490 2", "double");
+
    bench_fn([&](double x) { return hassani_dilog(x); }, values_d,
             "Hassani", "double");
 
