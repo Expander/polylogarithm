@@ -323,6 +323,12 @@ int main() {
    bench_fn([&](double x) { return morris_dilog(x); }, values_d,
             "Morris", "double");
 
+   bench_fn([&](double x) { return pythia_dilog(x, 100.0, 1e-9); }, values_d,
+            "pythia(default)", "double");
+
+   bench_fn([&](double x) { return pythia_dilog(x, std::numeric_limits<double>::max(), std::numeric_limits<double>::epsilon()); }, values_d,
+            "pythia(max)", "double");
+
    bench_fn([&](long double x) { return polylogarithm::Li2(x); }, values_l,
             "polylogarithm C++", "long double");
 

@@ -496,6 +496,7 @@ TEST_CASE("test_real_fixed_values")
          const auto li64_koelbig  = koelbig_dilog(x64);
          const auto li128_koelbig = koelbig_dilogl(x128);
          const auto li64_morris   = morris_dilog(x64);
+         const auto li64_pythia   = pythia_dilog(x64, 100.0, std::numeric_limits<double>::epsilon());
 #ifdef ENABLE_GSL
          const auto li64_gsl      = gsl_Li2(x64);
 #endif
@@ -525,6 +526,7 @@ TEST_CASE("test_real_fixed_values")
          INFO("Li2(64)  real = " << li64_hassani   << " (hassani)");
          INFO("Li2(64)  real = " << li64_koelbig   << " (koelbig)");
          INFO("Li2(64)  real = " << li64_morris    << " (morris)");
+         INFO("Li2(64)  real = " << li64_pythia    << " (pythia(default))");
 #ifdef ENABLE_GSL
          INFO("Li2(64)  real = " << li64_gsl       << " (GSL)");
 #endif
@@ -551,6 +553,7 @@ TEST_CASE("test_real_fixed_values")
          CHECK_CLOSE(li64_hassani , std::real(li64_expected) , 100*eps64);
          CHECK_CLOSE(li64_koelbig , std::real(li64_expected) , 2*eps64);
          CHECK_CLOSE(li64_morris  , std::real(li64_expected) , 2*eps64);
+         CHECK_CLOSE(li64_pythia  , std::real(li64_expected) , 2*eps64);
 #ifdef ENABLE_GSL
          CHECK_CLOSE(li64_gsl     , std::real(li64_expected) , 2*eps64);
 #endif
@@ -680,6 +683,7 @@ TEST_CASE("test_real_random_values")
       const double li2_hassani = hassani_dilog(v);
       const double li2_koelbig = koelbig_dilog(v);
       const double li2_morris = morris_dilog(v);
+      const double li2_pythia = pythia_dilog(v, 100.0, std::numeric_limits<double>::epsilon());
 
       INFO("x = " << v);
       INFO("Li2(64) real = " << li2          << " (polylogarithm C++)");
@@ -699,6 +703,7 @@ TEST_CASE("test_real_random_values")
       INFO("Li2(64) real = " << li2_hassani  << " (Hassani)");
       INFO("Li2(64) real = " << li2_koelbig  << " (Koelbig)");
       INFO("Li2(64) real = " << li2_morris   << " (Morris)");
+      INFO("Li2(64) real = " << li2_pythia   << " (pythia)");
 
       CHECK_CLOSE(li2, li2_c       , eps64);
 #ifdef ENABLE_FORTRAN
@@ -716,6 +721,7 @@ TEST_CASE("test_real_random_values")
       CHECK_CLOSE(li2, li2_hassani , 100*eps64);
       CHECK_CLOSE(li2, li2_koelbig , 2*eps64);
       CHECK_CLOSE(li2, li2_morris  , eps64);
+      CHECK_CLOSE(li2, li2_pythia  , 2*eps64);
    }
 }
 

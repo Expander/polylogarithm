@@ -25,6 +25,8 @@ void feynhiggs_dilog(long double re, long double im, long double* res_re, long d
 
 double morris_dilog(double x);
 
+double pythia_dilog(const double x, const double kmax, const double xerr);
+
 void hdecay_dilog(double re, double im, double* res_re, double* res_im);
 
 void hollik_dilog(double re, double im, double* res_re, double* res_im);
